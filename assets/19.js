@@ -1,6 +1,6 @@
 
 
-app_version1 = "300"
+app_version1 = "304"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -109,17 +109,17 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
 
         endpoints = [
-            COLLECTIBLES = "/collectibles-categories",
+            COLLECTIBLES = "/collectibles-shop?tab=shop&has-leaks=true",
             COLLECTIBLES_IN_SHOP = "/collectibles-categories-published",
             CONSUMABLES = "/consumables",
-            MISCELLANEOUS = "/miscellaneous-categories",
-            PROFILES_PLUS = "/profiles-plus-categories",
+            MISCELLANEOUS = "/collectibles-shop?tab=miscellaneous",
+            PROFILES_PLUS = "/collectibles-shop?tab=pplus",
             HOME_PAGE_ALL = "/preview-1",
             HOME_PAGE_LEAKS = "/preview-2",
             HOME_PAGE_PPLUS = "/preview-3",
-            PROFILE_EFFECTS = "/user-profile-effects",
+            PROFILE_EFFECTS = "/profile-effects?tab=discord",
             DOWNLOADABLE_DATA = "/downloads",
-            PROFILES_PLUS_EFFECTS = "/profiles-plus-profile-effects",
+            PROFILES_PLUS_EFFECTS = "/profile-effects?tab=pplus",
             LEAKS = "/leaked-categories",
             COLLECTIBLES_MARKETING = "/collectibles-marketing",
             COLLECTIBLES_VARIANTS = "/collectibles-categories-variants",
@@ -2562,7 +2562,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         AESPA = "1346499610977243196",
         NAMEPLATE = "1349849614353829990",
         HOLIDAYS = "1349486948942745691",
-        SHENANIGANS = "1352407446500675708"
+        SHENANIGANS = "1352407446500675708",
+        CHIBI_CAFE = "1354894010849820852"
+    ]
+
+    external_skus = [
+        NITRO_CREDITS_3_DAYS = "1333912750274904064",
+        ORB_PROFILE_BADGE = "1342211853484429445"
     ]
 
     category_types = [
@@ -3316,48 +3322,23 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                                                 const previewHolder = card.querySelector("[data-shop-card-preview-holder]");
     
-                                                if (product.sku_id === "1342211853484429445") {
+                                                if (product.sku_id === ORB_PROFILE_BADGE) {
                                                     previewHolder.classList.add('potion-card-preview-holder');
                                                         
                                                     previewHolder.innerHTML = `
-                                                        <svg class="potion-card-preview profile-badge-orb-preview" width="187" height="187" viewBox="0 0 187 187" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <g clip-path="url(#clip0_140_2)">
-                                                        <g clip-path="url(#clip1_140_2)">
-                                                        <path d="M89.8535 0.718781C92.1618 -0.239594 94.7564 -0.239594 97.0647 0.718781L156.484 25.3327C158.792 26.291 160.627 28.126 161.586 30.4343L186.199 89.8535C187.158 92.1618 187.158 94.7564 186.199 97.0647L161.586 156.484C160.627 158.792 158.792 160.627 156.484 161.586L97.0647 186.199C94.7564 187.158 92.1618 187.158 89.8535 186.199L30.4343 161.586C28.126 160.627 26.291 158.792 25.3327 156.484L0.718781 97.0647C-0.239594 94.7564 -0.239594 92.1618 0.718781 89.8535L25.3327 30.4343C26.291 28.126 28.126 26.291 30.4343 25.3327L89.8535 0.718781Z" fill="white"/>
-                                                        <mask id="mask0_140_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="187" height="187">
-                                                        <path d="M89.8535 0.718781C92.1618 -0.239594 94.7564 -0.239594 97.0647 0.718781L156.484 25.3327C158.792 26.291 160.627 28.126 161.586 30.4343L186.199 89.8535C187.158 92.1618 187.158 94.7564 186.199 97.0647L161.586 156.484C160.627 158.792 158.792 160.627 156.484 161.586L97.0647 186.199C94.7564 187.158 92.1618 187.158 89.8535 186.199L30.4343 161.586C28.126 160.627 26.291 158.792 25.3327 156.484L0.718781 97.0647C-0.239594 94.7564 -0.239594 92.1618 0.718781 89.8535L25.3327 30.4343C26.291 28.126 28.126 26.291 30.4343 25.3327L89.8535 0.718781Z" fill="white"/>
-                                                        </mask>
-                                                        <g mask="url(#mask0_140_2)">
-                                                        <path d="M93.4593 -25.946H-26.5654V213.256H93.4593V-25.946Z" fill="#EF51E8"/>
-                                                        <path d="M24.667 162.252L162.252 24.6665L195.754 38.9837L210.82 158.453L123.555 216.114L27.1973 205.723L24.667 162.252Z" fill="#3C40F3"/>
-                                                        <path d="M24.667 24.6665L162.252 162.252L203.55 62.6159L139.134 -23.6087L36.8045 -31.6614L24.667 24.6665Z" fill="#CF92FF"/>
-                                                        <path d="M213.484 -25.946H93.459V213.256H213.484V-25.946Z" fill="white"/>
-                                                        <path d="M162.252 24.6666L95.376 91.5426L96.0363 170.433L175.593 179.555L206.764 110.733L177.153 22.6855L162.252 24.6666Z" fill="#7AE9D6"/>
-                                                        <path d="M93.459 195.076V129.229L125.629 123.654L162.252 161.574L164.589 173.519L93.459 195.076Z" fill="#7B49FF"/>
-                                                        </g>
-                                                        <path d="M96.5738 25.958C94.8499 24.2341 92.0566 24.2341 90.3327 25.958L25.958 90.3386C24.2341 92.0625 24.2341 94.8558 25.958 96.5797L90.3327 160.96C92.0566 162.684 94.8499 162.684 96.5738 160.96L160.954 96.5797C162.678 94.8558 162.678 92.0625 160.954 90.3386L96.5738 25.958Z" fill="#141414"/>
-                                                        <path d="M96.5738 25.958C94.8499 24.2341 92.0566 24.2341 90.3327 25.958L25.958 90.3386C24.2341 92.0625 24.2341 94.8558 25.958 96.5797L90.3327 160.96C92.0566 162.684 94.8499 162.684 96.5738 160.96L160.954 96.5797C162.678 94.8558 162.678 92.0625 160.954 90.3386L96.5738 25.958Z" fill="#000777"/>
-                                                        <mask id="mask1_140_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="24" y="24" width="139" height="139">
-                                                        <path d="M96.5738 25.958C94.8499 24.2341 92.0566 24.2341 90.3327 25.958L25.958 90.3386C24.2341 92.0625 24.2341 94.8558 25.958 96.5797L90.3327 160.96C92.0566 162.684 94.8499 162.684 96.5738 160.96L160.954 96.5797C162.678 94.8558 162.678 92.0625 160.954 90.3386L96.5738 25.958Z" fill="white"/>
-                                                        </mask>
-                                                        <g mask="url(#mask1_140_2)">
-                                                        <path d="M93.4591 93.459H19.4014V185.983H93.4591V93.459Z" fill="#00043B"/>
-                                                        <path d="M166.962 0.935059H92.9043V93.4591H166.962V0.935059Z" fill="#2F379E"/>
-                                                        </g>
-                                                        <path d="M96.7434 59.501C98.4206 66.9985 102.184 73.8708 107.601 79.3171C113.018 84.7635 119.867 88.5678 127.359 90.2858C128.089 90.4553 128.744 90.8702 129.211 91.4546C129.679 92.0448 129.936 92.7753 129.936 93.5233C129.936 94.2713 129.679 95.0076 129.211 95.592C128.744 96.1822 128.089 96.5913 127.359 96.7607C119.879 98.4379 113.03 102.201 107.607 107.624C102.184 113.047 98.4206 119.896 96.7434 127.376C96.574 128.107 96.1591 128.761 95.5747 129.229C94.9845 129.696 94.254 129.953 93.506 129.953C92.758 129.953 92.0217 129.696 91.4373 129.229C90.8471 128.761 90.438 128.107 90.2686 127.376C88.5564 119.896 84.7696 113.053 79.3408 107.642C73.9119 102.225 67.0572 98.4554 59.5714 96.7666C58.8409 96.5971 58.1863 96.1822 57.7188 95.5978C57.2513 95.0076 56.9941 94.2771 56.9941 93.5291C56.9941 92.7811 57.2513 92.0448 57.7188 91.4604C58.1863 90.8702 58.8409 90.4612 59.5714 90.2917C67.0572 88.5795 73.9061 84.7869 79.3349 79.358C84.7638 73.9292 88.5564 67.0803 90.2686 59.5945C90.4264 58.8582 90.8296 58.1978 91.4139 57.7244C91.9983 57.2511 92.723 56.9823 93.4768 56.9765C94.2306 56.9648 94.9611 57.2102 95.5572 57.6718C96.1532 58.1335 96.574 58.7822 96.7493 59.5127L96.7434 59.501Z" fill="white"/>
-                                                        </g>
-                                                        </g>
-                                                        <defs>
-                                                        <clipPath id="clip0_140_2">
-                                                        <rect width="187" height="187" fill="white"/>
-                                                        </clipPath>
-                                                        <clipPath id="clip1_140_2">
-                                                        <rect width="187" height="187" fill="white"/>
-                                                        </clipPath>
-                                                        </defs>
-                                                        </svg>
+                                                        <video loop disablepictureinpicture class="potion-card-preview profile-badge-orb-preview" id="orb-profile-badge-card-video" src="https://cdn.discordapp.com/assets/content/ccaa60fae2114887bfa2e413be11d62c6d194139ee0f33671825ff06a1050692.webm"></video>
                                                     `;
-                                                } else if (product.sku_id === "1333912750274904064") {
+    
+                                                    if (localStorage.reduced_motion != "true") {
+                                                        card.addEventListener("mouseenter", () => {
+                                                            card.querySelector("#orb-profile-badge-card-video").play();
+                                                        });
+                                                        card.addEventListener("mouseleave", () => {
+                                                            card.querySelector("#orb-profile-badge-card-video").pause();
+                                                            card.querySelector("#orb-profile-badge-card-video").currentTime = 0;
+                                                        });
+                                                    }
+                                                } else if (product.sku_id === NITRO_CREDITS_3_DAYS) {
                                                     previewHolder.classList.add('potion-card-preview-holder');
                                                         
                                                     previewHolder.innerHTML = `
@@ -3711,21 +3692,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             <div class="modalv2-inner">
                                                                 <div class="modalv2-inner-left">
                                                                     <div data-modal-left-preview-holder></div>
-                                                                    <p data-product-modal-sku-id></p>
-                                                                    <p style="font-size: large; font-weight: 900;" data-product-modal-name></p>
-                                                                    <p style="color: var(--8)" data-product-modal-summary></p>
+                                                                    <p class="shop-modal-product-sku-id" data-product-modal-sku-id></p>
+                                                                    <p class="shop-modal-product-name" style="font-size: large; font-weight: 900;" data-product-modal-name></p>
+                                                                    <p class="shop-modal-product-summary" style="color: var(--8)" data-product-modal-summary></p>
                                                                     <div class="shop-modal-var-container-container" data-shop-modal-var-container-container>
                                                                         <div class="shop-modal-var-container" data-shop-modal-var-container></div>
                                                                         <a class="shop-modal-var-title" data-shop-modal-var-title></a>
                                                                     </div>
-                                                                    <div class="modal-shop-price-container" data-shop-price-container>
-                                                                        <div data-price-standard-container>
-                                                                            <a style="font-size: large; font-weight: 900;" data-price-standard></a>
-                                                                        </div>
-                                                                        <div data-price-nitro-container>
-                                                                            <a data-price-nitro></a>
-                                                                        </div>
-                                                                    </div>
+                                                                    <div class="modal-shop-price-container" data-shop-price-container></div>
                                                                     <div class="modal-left-bottom">
                                                                         <div class="modal-buttons" data-modal-buttons></div>
                                                                     </div>
@@ -4556,7 +4530,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 
                                                             const previewHolder = modal.querySelector("[data-modal-preview-holder]");
                 
-                                                            if (product.sku_id === "1342211853484429445") {
+                                                            if (product.sku_id === ORB_PROFILE_BADGE) {
                                                                 previewHolder.classList.add('modal-preview-profile-container');
                                                                 previewHolder.innerHTML = `
                                                                     <div class="modal-preview-profile3">
@@ -4575,7 +4549,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 `;
         
                                                                 document.getElementById("modal-username-preview").textContent = localStorage.discord_username.toLowerCase();
-                                                            } else if (product.sku_id === "1333912750274904064") {
+                                                            } else if (product.sku_id === NITRO_CREDITS_3_DAYS) {
                                                                 previewHolder.classList.add('modal-preview-profile-container');
                                                                     
                                                                 previewHolder.innerHTML = `
@@ -4638,6 +4612,18 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     });
                     
                                                                     if (priceStandard != "N/A" && priceOrb != "N/A") {
+    
+                                                                        let nitro_price = document.createElement("div");
+                                                                
+                                                                        nitro_price.innerHTML = `
+                                                                            <a style="font-size: large; font-weight: 900; margin-left: 23px">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                            <div class="nitro-icon" style="margin-left: -5px"></div>
+                                                                        `;
+                                                                        nitro_price.style.position = `absolute`;
+                                                                        nitro_price.style.left = `0px`;
+                                                                        
+                                                                        priceContainer.appendChild(nitro_price);
+    
                                                                         let orb_price = document.createElement("div");
                                                                 
                                                                         orb_price.innerHTML = `
@@ -4645,25 +4631,22 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <div class="orb-icon" style="margin-left: -25px"></div>
                                                                         `;
                                                                         orb_price.style.position = `absolute`;
-                                                                        orb_price.style.right = `-15px`;
+                                                                        orb_price.style.right = `20px`;
                                                                         
                                                                         priceContainer.appendChild(orb_price);
                     
-                                                                        standardPriceOutput = `US$${(priceStandard / 100).toFixed(2)}`;
-                
-                                                                        priceContainerStandard.innerHTML = `
-                                                                            <a style="font-size: large; font-weight: 900; margin-left: 23px">${standardPriceOutput}</a>
-                                                                            <div class="nitro-icon" style="margin-left: -5px"></div>
-                                                                        `;
-                    
                                                                     } else if (priceStandard != "N/A") {
                     
-                                                                        standardPriceOutput = `US$${(priceStandard / 100).toFixed(2)}`;
-                
-                                                                        priceContainerStandard.innerHTML = `
-                                                                            <a style="font-size: large; font-weight: 900; margin-left: 23px">${standardPriceOutput}</a>
+                                                                        let nitro_price = document.createElement("div");
+                                                                
+                                                                        nitro_price.innerHTML = `
+                                                                            <a style="font-size: large; font-weight: 900; margin-left: 23px">US$${(priceStandard / 100).toFixed(2)}</a>
                                                                             <div class="nitro-icon" style="margin-left: -5px"></div>
                                                                         `;
+                                                                        nitro_price.style.position = `absolute`;
+                                                                        nitro_price.style.left = `0px`;
+                                                                        
+                                                                        priceContainer.appendChild(nitro_price);
                     
                                                                     } else if (priceOrb != "N/A") {
                     
@@ -4674,11 +4657,81 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <div class="orb-icon" style="margin-left: -25px"></div>
                                                                         `;
                                                                         orb_price.style.position = `absolute`;
-                                                                        orb_price.style.left = `18px`;
+                                                                        orb_price.style.left = `23px`;
                                                                         
                                                                         priceContainer.appendChild(orb_price);
                     
-                                                                        card.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                                        modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                                            <div class="unplublished-tag">
+                                                                                <p class="unplublished-tag-text">${getTextString("CARD_ORB_EXCLUSIVE_TAG")}</p>
+                                                                            </div>
+                                                                        `;
+                                                                        
+                                                                    }
+                                                                }
+                                                                if (product.prices && product.prices["0"] && product.prices["0"].country_prices && product.prices["0"].country_prices.prices) {
+                                                                    product.prices["0"].country_prices.prices.forEach(price => {
+                                                                        if (price.currency === "usd") {
+                                                                            priceStandard = price.amount;
+                                                                        }
+                                                                        if (price.currency === "discord_orb") {
+                                                                            priceOrb = price.amount;
+                                                                        }
+                                                                    });
+                    
+                                                                    if (priceStandard != "N/A" && priceOrb != "N/A") {
+    
+                                                                        let standard_price = document.createElement("div");
+                                                                
+                                                                        standard_price.innerHTML = `
+                                                                            <a class="modal-standard-price-crossed">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                        `;
+                                                                        standard_price.style.position = `absolute`;
+                                                                        standard_price.style.left = `0px`;
+                                                                        standard_price.style.marginTop = `30px`;
+                                                                        
+                                                                        priceContainer.appendChild(standard_price);
+    
+                                                                        let orb_standard_price = document.createElement("div");
+                                                                
+                                                                        orb_standard_price.innerHTML = `
+                                                                            <a class="modal-standard-price-crossed">${priceOrb}</a>
+                                                                            <div class="orb-icon-crossed" style="margin-left: -23px"></div>
+                                                                        `;
+                                                                        orb_standard_price.style.position = `absolute`;
+                                                                        orb_standard_price.style.right = `20px`;
+                                                                        orb_standard_price.style.marginTop = `30px`;
+                                                                        
+                                                                        priceContainer.appendChild(orb_standard_price);
+                    
+                                                                    } else if (priceStandard != "N/A") {
+                    
+                                                                        let standard_price = document.createElement("div");
+                                                                
+                                                                        standard_price.innerHTML = `
+                                                                            <a class="modal-standard-price-crossed">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                        `;
+                                                                        standard_price.style.position = `absolute`;
+                                                                        standard_price.style.left = `0px`;
+                                                                        standard_price.style.marginTop = `30px`;
+                                                                        
+                                                                        priceContainer.appendChild(standard_price);
+                    
+                                                                    } else if (priceOrb != "N/A") {
+                    
+                                                                        let orb_standard_price = document.createElement("div");
+                                                                
+                                                                        orb_standard_price.innerHTML = `
+                                                                            <a class="modal-standard-price-crossed">${priceOrb}</a>
+                                                                            <div class="orb-icon-crossed" style="margin-left: -24px"></div>
+                                                                        `;
+                                                                        orb_standard_price.style.position = `absolute`;
+                                                                        orb_standard_price.style.left = `23px`;
+                                                                        orb_standard_price.style.marginTop = `30px`;
+                                                                        
+                                                                        priceContainer.appendChild(orb_standard_price);
+                    
+                                                                        modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
                                                                             <div class="unplublished-tag">
                                                                                 <p class="unplublished-tag-text">${getTextString("CARD_ORB_EXCLUSIVE_TAG")}</p>
                                                                             </div>
@@ -4698,6 +4751,17 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     });
                     
                                                                     if (priceStandard != "N/A" && priceOrb != "N/A") {
+    
+                                                                        let standard_price = document.createElement("div");
+                                                                
+                                                                        standard_price.innerHTML = `
+                                                                            <a style="font-size: large; font-weight: 900;">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                        `;
+                                                                        standard_price.style.position = `absolute`;
+                                                                        standard_price.style.left = `0px`;
+                                                                        
+                                                                        priceContainer.appendChild(standard_price);
+    
                                                                         let orb_price = document.createElement("div");
                                                                 
                                                                         orb_price.innerHTML = `
@@ -4705,15 +4769,21 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <div class="orb-icon" style="margin-left: -25px"></div>
                                                                         `;
                                                                         orb_price.style.position = `absolute`;
-                                                                        orb_price.style.right = `-15px`;
+                                                                        orb_price.style.right = `20px`;
                                                                         
                                                                         priceContainer.appendChild(orb_price);
                     
-                                                                        priceTextStandard.textContent = `US$${(priceStandard / 100).toFixed(2)}`;
-                    
                                                                     } else if (priceStandard != "N/A") {
                     
-                                                                        priceTextStandard.textContent = `US$${(priceStandard / 100).toFixed(2)}`;
+                                                                        let nitro_price = document.createElement("div");
+                                                                
+                                                                        nitro_price.innerHTML = `
+                                                                            <a style="font-size: large; font-weight: 900;">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                        `;
+                                                                        nitro_price.style.position = `absolute`;
+                                                                        nitro_price.style.left = `0px`;
+                                                                        
+                                                                        priceContainer.appendChild(nitro_price);
                     
                                                                     } else if (priceOrb != "N/A") {
                     
@@ -4724,11 +4794,83 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <div class="orb-icon" style="margin-left: -25px"></div>
                                                                         `;
                                                                         orb_price.style.position = `absolute`;
-                                                                        orb_price.style.left = `18px`;
+                                                                        orb_price.style.left = `23px`;
                                                                         
                                                                         priceContainer.appendChild(orb_price);
                     
-                                                                        card.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                                        modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                                            <div class="unplublished-tag">
+                                                                                <p class="unplublished-tag-text">${getTextString("CARD_ORB_EXCLUSIVE_TAG")}</p>
+                                                                            </div>
+                                                                        `;
+                                                                        
+                                                                    }
+                                                                }
+                                                                if (product.prices && product.prices["4"] && product.prices["4"].country_prices && product.prices["4"].country_prices.prices) {
+                                                                    product.prices["4"].country_prices.prices.forEach(price => {
+                                                                        if (price.currency === "usd") {
+                                                                            priceStandard = price.amount;
+                                                                        }
+                                                                        if (price.currency === "discord_orb") {
+                                                                            priceOrb = price.amount;
+                                                                        }
+                                                                    });
+                    
+                                                                    if (priceStandard != "N/A" && priceOrb != "N/A") {
+    
+                                                                        let standard_price = document.createElement("div");
+                                                                
+                                                                        standard_price.innerHTML = `
+                                                                            <a class="modal-standard-price-crossed" style="margin-left: 21px;">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                            <div class="nitro-icon-crossed" style="margin-left: -3px"></div>
+                                                                        `;
+                                                                        standard_price.style.position = `absolute`;
+                                                                        standard_price.style.left = `0px`;
+                                                                        standard_price.style.marginTop = `30px`;
+                                                                        
+                                                                        priceContainer.appendChild(standard_price);
+    
+                                                                        let orb_standard_price = document.createElement("div");
+                                                                
+                                                                        orb_standard_price.innerHTML = `
+                                                                            <a class="modal-standard-price-crossed">${priceOrb}</a>
+                                                                            <div class="orb-icon-crossed" style="margin-left: -23px"></div>
+                                                                        `;
+                                                                        orb_standard_price.style.position = `absolute`;
+                                                                        orb_standard_price.style.right = `20px`;
+                                                                        orb_standard_price.style.marginTop = `30px`;
+                                                                        
+                                                                        priceContainer.appendChild(orb_standard_price);
+                    
+                                                                    } else if (priceStandard != "N/A") {
+                    
+                                                                        let standard_price = document.createElement("div");
+                                                                
+                                                                        standard_price.innerHTML = `
+                                                                            <a class="modal-standard-price-crossed" style="margin-left: 21px;">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                            <div class="nitro-icon-crossed" style="margin-left: -3px"></div>
+                                                                        `;
+                                                                        standard_price.style.position = `absolute`;
+                                                                        standard_price.style.left = `0px`;
+                                                                        standard_price.style.marginTop = `30px`;
+                                                                        
+                                                                        priceContainer.appendChild(standard_price);
+                    
+                                                                    } else if (priceOrb != "N/A") {
+                    
+                                                                        let orb_standard_price = document.createElement("div");
+                                                                
+                                                                        orb_standard_price.innerHTML = `
+                                                                            <a class="modal-standard-price-crossed">${priceOrb}</a>
+                                                                            <div class="orb-icon-crossed" style="margin-left: -24px"></div>
+                                                                        `;
+                                                                        orb_standard_price.style.position = `absolute`;
+                                                                        orb_standard_price.style.left = `23px`;
+                                                                        orb_standard_price.style.marginTop = `30px`;
+                                                                        
+                                                                        priceContainer.appendChild(orb_standard_price);
+                    
+                                                                        modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
                                                                             <div class="unplublished-tag">
                                                                                 <p class="unplublished-tag-text">${getTextString("CARD_ORB_EXCLUSIVE_TAG")}</p>
                                                                             </div>
@@ -4762,26 +4904,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             if (priceTextNitro) {
                                                                 priceTextNitro.textContent = priceNitro !== "N/A" ? `US$${(priceNitro / 100).toFixed(2)} with Nitro` : "null";
                                                             }
-                                                        }
-    
-                                                        if (priceTextStandard.textContent === "null" && priceTextNitro.textContent === "null") {
-                                                            let error_warning = document.createElement("div");
-    
-                                                            error_warning.classList.add('invalid_currency_warning');
-                                                            error_warning.innerHTML = `
-                                                                <p>This item does not support this currency!</p>
-                                                            `;
-                                                                        
-                                                            priceContainer.appendChild(error_warning);
-                                                        } else if (priceTextStandard.textContent === "null" || priceTextNitro.textContent === "null") {
-                                                            let error_warning = document.createElement("div");
-    
-                                                            error_warning.classList.add('invalid_currency_warning');
-                                                            error_warning.innerHTML = `
-                                                                <p>This item does not fully support this currency!</p>
-                                                            `;
-                                                                        
-                                                            priceContainer.appendChild(error_warning);
                                                         }
     
     
@@ -6478,7 +6600,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     } else if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page") {
                                                         if (typeof product.emojiCopy != 'undefined') {
                                                             button_container.innerHTML = `
-                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToGoogle()`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
+                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/Mcwh7hGcWb')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
                                                             `;
                                                         } else {
                                                             button_container.innerHTML = `
@@ -6488,7 +6610,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     } else if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
                                                         if (typeof product.emojiCopy != 'undefined') {
                                                             button_container.innerHTML = `
-                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToGoogle()`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
+                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/Mcwh7hGcWb')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
                                                             `;
                                                             modal.querySelector("[data-download-product-card-button]").innerHTML = `
                                                                 <svg class="downloadIcon_modal" onclick="window.open('https://item.yapper.shop/sku/${product.sku_id}/data.zip');" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.0547 0.999993L11.0547 11.59L7.7547 8.28999C7.66429 8.186 7.55337 8.10181 7.4289 8.04271C7.30442 7.98361 7.16907 7.95088 7.03134 7.94656C6.89362 7.94224 6.75648 7.96643 6.62855 8.01761C6.50061 8.0688 6.38464 8.14587 6.28789 8.24399C6.19115 8.34212 6.11573 8.45917 6.06637 8.58782C6.01701 8.71647 5.99476 8.85393 6.00104 8.99159C6.00731 9.12924 6.04196 9.26411 6.10282 9.38773C6.16368 9.51136 6.24943 9.62107 6.3547 9.70999L11.3547 14.71C11.5416 14.8932 11.7929 14.9959 12.0547 14.9959C12.3164 14.9959 12.5678 14.8932 12.7547 14.71L17.7547 9.70999C17.92 9.51987 18.0074 9.27437 17.9995 9.02257C17.9916 8.77078 17.889 8.53124 17.7121 8.35185C17.5352 8.17245 17.2972 8.06642 17.0455 8.05496C16.7939 8.04349 16.5471 8.12743 16.3547 8.28999L13.0547 11.6L13.0547 0.999993C13.0547 0.734776 12.9493 0.480422 12.7618 0.292885C12.5743 0.105349 12.3199 -7.13283e-06 12.0547 -7.10964e-06C11.7895 -7.08645e-06 11.5351 0.105349 11.3476 0.292885C11.1601 0.480422 11.0547 0.734776 11.0547 0.999993Z" fill="currentColor"/><path d="M4 15C4 14.7348 4.10536 14.4804 4.29289 14.2929C4.48043 14.1054 4.73478 14 5 14H7C7.26522 14 7.51957 13.8946 7.70711 13.7071C7.89464 13.5196 8 13.2652 8 13C8 12.7348 7.89464 12.4804 7.70711 12.2929C7.51957 12.1054 7.26522 12 7 12H5C4.20435 12 3.44129 12.3161 2.87868 12.8787C2.31607 13.4413 2 14.2044 2 15V19C2 19.7956 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7956 22 19V15C22 14.2044 21.6839 13.4413 21.1213 12.8787C20.5587 12.3161 19.7956 12 19 12H17C16.7348 12 16.4804 12.1054 16.2929 12.2929C16.1054 12.4804 16 12.7348 16 13C16 13.2652 16.1054 13.5196 16.2929 13.7071C16.4804 13.8946 16.7348 14 17 14H19C19.2652 14 19.5196 14.1054 19.7071 14.2929C19.8946 14.4804 20 14.7348 20 15V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V15Z" fill="currentColor"/></svg>
@@ -8209,36 +8331,28 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         <div class="modalv2-inner">
                                                             <div class="modalv2-inner-left">
                                                                 <div data-modal-left-preview-holder></div>
-                                                                <p data-product-modal-sku-id></p>
-                                                                <p data-product-modal-credits></p>
-                                                                <p style="font-size: large; font-weight: 900;" data-product-modal-name></p>
-                                                                <p style="color: var(--8)" data-product-modal-summary></p>
+                                                                <p class="shop-modal-product-sku-id" data-product-modal-sku-id></p>
+                                                                <p class="shop-modal-product-credits" data-product-modal-credits></p>
+                                                                <p class="shop-modal-product-name" style="font-size: large; font-weight: 900;" data-product-modal-name></p>
+                                                                <p class="shop-modal-product-summary" style="color: var(--8)" data-product-modal-summary></p>
                                                                 <div class="shop-modal-var-container-container" data-shop-modal-var-container-container>
                                                                     <div class="shop-modal-var-container" data-shop-modal-var-container></div>
                                                                     <a class="shop-modal-var-title" data-shop-modal-var-title></a>
                                                                 </div>
-                                                                <div class="modal-shop-price-container" data-shop-price-container>
-                                                                    <div data-price-standard-container>
-                                                                        <a style="font-size: large; font-weight: 900;" data-price-standard></a>
-                                                                    </div>
-                                                                    <div data-price-nitro-container>
-                                                                        <a data-price-nitro></a>
-                                                                    </div>
-                                                                </div>
+                                                                <div class="modal-shop-price-container" data-shop-price-container></div>
                                                                 <div class="modal-left-bottom">
                                                                     <div class="modal-buttons" data-modal-buttons></div>
                                                                 </div>
                                                             </div>
-                                                            <img class="modalv2-inner-logo" src="https://cdn.yapper.shop/assets/${apiCategory.logo}.png"></img>
+                                                            <img class="modalv2-inner-logo" src="https://cdn.yapper.shop/assets/${apiCategory.logo}.png" data-modalv2-inner-logo></img>
                                                             <div class="shop-modal-tag-container" data-shop-card-tag-container></div>
-
+    
                                                             <div data-modal-top-product-buttons>
                                                                 <div title="Close" data-close-product-card-button>
                                                                     <svg class="closeIcon_modal" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
                                                                 </div>
-                                                                <div title="Download Data" data-download-product-card-button></div>
                                                             </div>
-
+    
                                                             <div id="modalv2-inner-right" class="modalv2-inner-right">
                                                                 <img class="modalv2-inner-img" src="https://cdn.yapper.shop/assets/${pdp}.png"></img>
                                                                 <div data-modal-preview-holder></div>
@@ -8943,7 +9057,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     } else if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page") {
                                                         if (typeof product.emojiCopy != 'undefined') {
                                                             button_container.innerHTML = `
-                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToGoogle()`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
+                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/Mcwh7hGcWb')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
                                                             `;
                                                         } else {
                                                             button_container.innerHTML = `
@@ -8953,7 +9067,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     } else if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
                                                         if (typeof product.emojiCopy != 'undefined') {
                                                             button_container.innerHTML = `
-                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToGoogle()`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
+                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/Mcwh7hGcWb')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
                                                             `;
                                                             modal.querySelector("[data-download-product-card-button]").innerHTML = `
                                                                 <svg class="downloadIcon_modal" onclick="window.open('https://item.yapper.shop/sku/${product.sku_id}/data.zip');" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.0547 0.999993L11.0547 11.59L7.7547 8.28999C7.66429 8.186 7.55337 8.10181 7.4289 8.04271C7.30442 7.98361 7.16907 7.95088 7.03134 7.94656C6.89362 7.94224 6.75648 7.96643 6.62855 8.01761C6.50061 8.0688 6.38464 8.14587 6.28789 8.24399C6.19115 8.34212 6.11573 8.45917 6.06637 8.58782C6.01701 8.71647 5.99476 8.85393 6.00104 8.99159C6.00731 9.12924 6.04196 9.26411 6.10282 9.38773C6.16368 9.51136 6.24943 9.62107 6.3547 9.70999L11.3547 14.71C11.5416 14.8932 11.7929 14.9959 12.0547 14.9959C12.3164 14.9959 12.5678 14.8932 12.7547 14.71L17.7547 9.70999C17.92 9.51987 18.0074 9.27437 17.9995 9.02257C17.9916 8.77078 17.889 8.53124 17.7121 8.35185C17.5352 8.17245 17.2972 8.06642 17.0455 8.05496C16.7939 8.04349 16.5471 8.12743 16.3547 8.28999L13.0547 11.6L13.0547 0.999993C13.0547 0.734776 12.9493 0.480422 12.7618 0.292885C12.5743 0.105349 12.3199 -7.13283e-06 12.0547 -7.10964e-06C11.7895 -7.08645e-06 11.5351 0.105349 11.3476 0.292885C11.1601 0.480422 11.0547 0.734776 11.0547 0.999993Z" fill="currentColor"/><path d="M4 15C4 14.7348 4.10536 14.4804 4.29289 14.2929C4.48043 14.1054 4.73478 14 5 14H7C7.26522 14 7.51957 13.8946 7.70711 13.7071C7.89464 13.5196 8 13.2652 8 13C8 12.7348 7.89464 12.4804 7.70711 12.2929C7.51957 12.1054 7.26522 12 7 12H5C4.20435 12 3.44129 12.3161 2.87868 12.8787C2.31607 13.4413 2 14.2044 2 15V19C2 19.7956 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7956 22 19V15C22 14.2044 21.6839 13.4413 21.1213 12.8787C20.5587 12.3161 19.7956 12 19 12H17C16.7348 12 16.4804 12.1054 16.2929 12.2929C16.1054 12.4804 16 12.7348 16 13C16 13.2652 16.1054 13.5196 16.2929 13.7071C16.4804 13.8946 16.7348 14 17 14H19C19.2652 14 19.5196 14.1054 19.7071 14.2929C19.8946 14.4804 20 14.7348 20 15V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V15Z" fill="currentColor"/></svg>
@@ -9620,9 +9734,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         modal.innerHTML = `
                                             <div class="modalv2-inner">
                                                 <div class="modalv2-inner-left">
-                                                    <p data-product-modal-sku-id></p>
-                                                    <p style="font-size: large; font-weight: 900;" data-product-modal-name></p>
-                                                    <p style="color: var(--8)" data-product-modal-summary></p>
+                                                    <p class="shop-modal-product-sku-id" data-product-modal-sku-id></p>
+                                                    <p class="shop-modal-product-name" style="font-size: large; font-weight: 900;" data-product-modal-name></p>
+                                                    <p class="shop-modal-product-summary" style="color: var(--8)" data-product-modal-summary></p>
                                                     <div class="modal-shop-price-container" data-shop-price-container>
                                                         <div data-price-standard-container>
                                                             <a style="font-size: large; font-weight: 900;" data-price-standard></a>
@@ -10424,6 +10538,19 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 </div>
                                             </div>
                                         `;
+
+                                        if (apiCategory.sku_id === "1349849614353829990" && apiCategory.logo === null) {
+                                            let nameplateWarning = document.createElement("div");
+
+                                            nameplateWarning.classList.add('nameplate-modal-category-warning-container');
+                                            nameplateWarning.innerHTML = `
+                                                <p>${getTextString("SHOP_NAMEPLATE_CATEGORY_NOTICE_1")}</p>
+                                                <p>${getTextString("SHOP_NAMEPLATE_CATEGORY_NOTICE_2")}</p>
+                                            `;
+
+
+                                            modal.querySelector(".category-modalv2-inner-left").appendChild(nameplateWarning);
+                                        }
 
                                         if (localStorage.experiment_2025_03_item_reviews === "Treatment 1: Enabled" || localStorage.experiment_2025_03_item_reviews === "Treatment 2: Simulate not logged in" || localStorage.experiment_2025_03_item_reviews === "Treatment 3: Simulate logged in") {
                                             modal.querySelector("[data-shop-modal-review-title]").textContent = `${getTextString("SHOP_REVIEWS_TITLE")}`;
@@ -11338,48 +11465,23 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                             const previewHolder = card.querySelector("[data-shop-card-preview-holder]");
 
-                                            if (product.sku_id === "1342211853484429445") {
+                                            if (product.sku_id === ORB_PROFILE_BADGE) {
                                                 previewHolder.classList.add('potion-card-preview-holder');
                                                     
                                                 previewHolder.innerHTML = `
-                                                    <svg class="potion-card-preview profile-badge-orb-preview" width="187" height="187" viewBox="0 0 187 187" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                    <g clip-path="url(#clip0_140_2)">
-                                                    <g clip-path="url(#clip1_140_2)">
-                                                    <path d="M89.8535 0.718781C92.1618 -0.239594 94.7564 -0.239594 97.0647 0.718781L156.484 25.3327C158.792 26.291 160.627 28.126 161.586 30.4343L186.199 89.8535C187.158 92.1618 187.158 94.7564 186.199 97.0647L161.586 156.484C160.627 158.792 158.792 160.627 156.484 161.586L97.0647 186.199C94.7564 187.158 92.1618 187.158 89.8535 186.199L30.4343 161.586C28.126 160.627 26.291 158.792 25.3327 156.484L0.718781 97.0647C-0.239594 94.7564 -0.239594 92.1618 0.718781 89.8535L25.3327 30.4343C26.291 28.126 28.126 26.291 30.4343 25.3327L89.8535 0.718781Z" fill="white"/>
-                                                    <mask id="mask0_140_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="0" y="0" width="187" height="187">
-                                                    <path d="M89.8535 0.718781C92.1618 -0.239594 94.7564 -0.239594 97.0647 0.718781L156.484 25.3327C158.792 26.291 160.627 28.126 161.586 30.4343L186.199 89.8535C187.158 92.1618 187.158 94.7564 186.199 97.0647L161.586 156.484C160.627 158.792 158.792 160.627 156.484 161.586L97.0647 186.199C94.7564 187.158 92.1618 187.158 89.8535 186.199L30.4343 161.586C28.126 160.627 26.291 158.792 25.3327 156.484L0.718781 97.0647C-0.239594 94.7564 -0.239594 92.1618 0.718781 89.8535L25.3327 30.4343C26.291 28.126 28.126 26.291 30.4343 25.3327L89.8535 0.718781Z" fill="white"/>
-                                                    </mask>
-                                                    <g mask="url(#mask0_140_2)">
-                                                    <path d="M93.4593 -25.946H-26.5654V213.256H93.4593V-25.946Z" fill="#EF51E8"/>
-                                                    <path d="M24.667 162.252L162.252 24.6665L195.754 38.9837L210.82 158.453L123.555 216.114L27.1973 205.723L24.667 162.252Z" fill="#3C40F3"/>
-                                                    <path d="M24.667 24.6665L162.252 162.252L203.55 62.6159L139.134 -23.6087L36.8045 -31.6614L24.667 24.6665Z" fill="#CF92FF"/>
-                                                    <path d="M213.484 -25.946H93.459V213.256H213.484V-25.946Z" fill="white"/>
-                                                    <path d="M162.252 24.6666L95.376 91.5426L96.0363 170.433L175.593 179.555L206.764 110.733L177.153 22.6855L162.252 24.6666Z" fill="#7AE9D6"/>
-                                                    <path d="M93.459 195.076V129.229L125.629 123.654L162.252 161.574L164.589 173.519L93.459 195.076Z" fill="#7B49FF"/>
-                                                    </g>
-                                                    <path d="M96.5738 25.958C94.8499 24.2341 92.0566 24.2341 90.3327 25.958L25.958 90.3386C24.2341 92.0625 24.2341 94.8558 25.958 96.5797L90.3327 160.96C92.0566 162.684 94.8499 162.684 96.5738 160.96L160.954 96.5797C162.678 94.8558 162.678 92.0625 160.954 90.3386L96.5738 25.958Z" fill="#141414"/>
-                                                    <path d="M96.5738 25.958C94.8499 24.2341 92.0566 24.2341 90.3327 25.958L25.958 90.3386C24.2341 92.0625 24.2341 94.8558 25.958 96.5797L90.3327 160.96C92.0566 162.684 94.8499 162.684 96.5738 160.96L160.954 96.5797C162.678 94.8558 162.678 92.0625 160.954 90.3386L96.5738 25.958Z" fill="#000777"/>
-                                                    <mask id="mask1_140_2" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="24" y="24" width="139" height="139">
-                                                    <path d="M96.5738 25.958C94.8499 24.2341 92.0566 24.2341 90.3327 25.958L25.958 90.3386C24.2341 92.0625 24.2341 94.8558 25.958 96.5797L90.3327 160.96C92.0566 162.684 94.8499 162.684 96.5738 160.96L160.954 96.5797C162.678 94.8558 162.678 92.0625 160.954 90.3386L96.5738 25.958Z" fill="white"/>
-                                                    </mask>
-                                                    <g mask="url(#mask1_140_2)">
-                                                    <path d="M93.4591 93.459H19.4014V185.983H93.4591V93.459Z" fill="#00043B"/>
-                                                    <path d="M166.962 0.935059H92.9043V93.4591H166.962V0.935059Z" fill="#2F379E"/>
-                                                    </g>
-                                                    <path d="M96.7434 59.501C98.4206 66.9985 102.184 73.8708 107.601 79.3171C113.018 84.7635 119.867 88.5678 127.359 90.2858C128.089 90.4553 128.744 90.8702 129.211 91.4546C129.679 92.0448 129.936 92.7753 129.936 93.5233C129.936 94.2713 129.679 95.0076 129.211 95.592C128.744 96.1822 128.089 96.5913 127.359 96.7607C119.879 98.4379 113.03 102.201 107.607 107.624C102.184 113.047 98.4206 119.896 96.7434 127.376C96.574 128.107 96.1591 128.761 95.5747 129.229C94.9845 129.696 94.254 129.953 93.506 129.953C92.758 129.953 92.0217 129.696 91.4373 129.229C90.8471 128.761 90.438 128.107 90.2686 127.376C88.5564 119.896 84.7696 113.053 79.3408 107.642C73.9119 102.225 67.0572 98.4554 59.5714 96.7666C58.8409 96.5971 58.1863 96.1822 57.7188 95.5978C57.2513 95.0076 56.9941 94.2771 56.9941 93.5291C56.9941 92.7811 57.2513 92.0448 57.7188 91.4604C58.1863 90.8702 58.8409 90.4612 59.5714 90.2917C67.0572 88.5795 73.9061 84.7869 79.3349 79.358C84.7638 73.9292 88.5564 67.0803 90.2686 59.5945C90.4264 58.8582 90.8296 58.1978 91.4139 57.7244C91.9983 57.2511 92.723 56.9823 93.4768 56.9765C94.2306 56.9648 94.9611 57.2102 95.5572 57.6718C96.1532 58.1335 96.574 58.7822 96.7493 59.5127L96.7434 59.501Z" fill="white"/>
-                                                    </g>
-                                                    </g>
-                                                    <defs>
-                                                    <clipPath id="clip0_140_2">
-                                                    <rect width="187" height="187" fill="white"/>
-                                                    </clipPath>
-                                                    <clipPath id="clip1_140_2">
-                                                    <rect width="187" height="187" fill="white"/>
-                                                    </clipPath>
-                                                    </defs>
-                                                    </svg>
+                                                    <video loop disablepictureinpicture class="potion-card-preview profile-badge-orb-preview" id="orb-profile-badge-card-video" src="https://cdn.discordapp.com/assets/content/ccaa60fae2114887bfa2e413be11d62c6d194139ee0f33671825ff06a1050692.webm"></video>
                                                 `;
-                                            } else if (product.sku_id === "1333912750274904064") {
+
+                                                if (localStorage.reduced_motion != "true") {
+                                                    card.addEventListener("mouseenter", () => {
+                                                        card.querySelector("#orb-profile-badge-card-video").play();
+                                                    });
+                                                    card.addEventListener("mouseleave", () => {
+                                                        card.querySelector("#orb-profile-badge-card-video").pause();
+                                                        card.querySelector("#orb-profile-badge-card-video").currentTime = 0;
+                                                    });
+                                                }
+                                            } else if (product.sku_id === NITRO_CREDITS_3_DAYS) {
                                                 previewHolder.classList.add('potion-card-preview-holder');
                                                     
                                                 previewHolder.innerHTML = `
@@ -11733,21 +11835,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         <div class="modalv2-inner">
                                                             <div class="modalv2-inner-left">
                                                                 <div data-modal-left-preview-holder></div>
-                                                                <p data-product-modal-sku-id></p>
-                                                                <p style="font-size: large; font-weight: 900;" data-product-modal-name></p>
-                                                                <p style="color: var(--8)" data-product-modal-summary></p>
+                                                                <p class="shop-modal-product-sku-id" data-product-modal-sku-id></p>
+                                                                <p class="shop-modal-product-name" style="font-size: large; font-weight: 900;" data-product-modal-name></p>
+                                                                <p class="shop-modal-product-summary" style="color: var(--8)" data-product-modal-summary></p>
                                                                 <div class="shop-modal-var-container-container" data-shop-modal-var-container-container>
                                                                     <div class="shop-modal-var-container" data-shop-modal-var-container></div>
                                                                     <a class="shop-modal-var-title" data-shop-modal-var-title></a>
                                                                 </div>
-                                                                <div class="modal-shop-price-container" data-shop-price-container>
-                                                                    <div data-price-standard-container>
-                                                                        <a style="font-size: large; font-weight: 900;" data-price-standard></a>
-                                                                    </div>
-                                                                    <div data-price-nitro-container>
-                                                                        <a data-price-nitro></a>
-                                                                    </div>
-                                                                </div>
+                                                                <div class="modal-shop-price-container" data-shop-price-container></div>
                                                                 <div class="modal-left-bottom">
                                                                     <div class="modal-buttons" data-modal-buttons></div>
                                                                 </div>
@@ -12578,7 +12673,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             
                                                         const previewHolder = modal.querySelector("[data-modal-preview-holder]");
             
-                                                        if (product.sku_id === "1342211853484429445") {
+                                                        if (product.sku_id === ORB_PROFILE_BADGE) {
                                                             previewHolder.classList.add('modal-preview-profile-container');
                                                             previewHolder.innerHTML = `
                                                                 <div class="modal-preview-profile3">
@@ -12597,7 +12692,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             `;
     
                                                             document.getElementById("modal-username-preview").textContent = localStorage.discord_username.toLowerCase();
-                                                        } else if (product.sku_id === "1333912750274904064") {
+                                                        } else if (product.sku_id === NITRO_CREDITS_3_DAYS) {
                                                             previewHolder.classList.add('modal-preview-profile-container');
                                                                 
                                                             previewHolder.innerHTML = `
@@ -12660,6 +12755,18 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 });
                 
                                                                 if (priceStandard != "N/A" && priceOrb != "N/A") {
+
+                                                                    let nitro_price = document.createElement("div");
+                                                            
+                                                                    nitro_price.innerHTML = `
+                                                                        <a style="font-size: large; font-weight: 900; margin-left: 23px">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                        <div class="nitro-icon" style="margin-left: -5px"></div>
+                                                                    `;
+                                                                    nitro_price.style.position = `absolute`;
+                                                                    nitro_price.style.left = `0px`;
+                                                                    
+                                                                    priceContainer.appendChild(nitro_price);
+
                                                                     let orb_price = document.createElement("div");
                                                             
                                                                     orb_price.innerHTML = `
@@ -12667,25 +12774,22 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div class="orb-icon" style="margin-left: -25px"></div>
                                                                     `;
                                                                     orb_price.style.position = `absolute`;
-                                                                    orb_price.style.right = `-15px`;
+                                                                    orb_price.style.right = `20px`;
                                                                     
                                                                     priceContainer.appendChild(orb_price);
                 
-                                                                    standardPriceOutput = `US$${(priceStandard / 100).toFixed(2)}`;
-            
-                                                                    priceContainerStandard.innerHTML = `
-                                                                        <a style="font-size: large; font-weight: 900; margin-left: 23px">${standardPriceOutput}</a>
-                                                                        <div class="nitro-icon" style="margin-left: -5px"></div>
-                                                                    `;
-                
                                                                 } else if (priceStandard != "N/A") {
                 
-                                                                    standardPriceOutput = `US$${(priceStandard / 100).toFixed(2)}`;
-            
-                                                                    priceContainerStandard.innerHTML = `
-                                                                        <a style="font-size: large; font-weight: 900; margin-left: 23px">${standardPriceOutput}</a>
+                                                                    let nitro_price = document.createElement("div");
+                                                            
+                                                                    nitro_price.innerHTML = `
+                                                                        <a style="font-size: large; font-weight: 900; margin-left: 23px">US$${(priceStandard / 100).toFixed(2)}</a>
                                                                         <div class="nitro-icon" style="margin-left: -5px"></div>
                                                                     `;
+                                                                    nitro_price.style.position = `absolute`;
+                                                                    nitro_price.style.left = `0px`;
+                                                                    
+                                                                    priceContainer.appendChild(nitro_price);
                 
                                                                 } else if (priceOrb != "N/A") {
                 
@@ -12696,11 +12800,81 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div class="orb-icon" style="margin-left: -25px"></div>
                                                                     `;
                                                                     orb_price.style.position = `absolute`;
-                                                                    orb_price.style.left = `18px`;
+                                                                    orb_price.style.left = `23px`;
                                                                     
                                                                     priceContainer.appendChild(orb_price);
                 
-                                                                    card.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                                    modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                                        <div class="unplublished-tag">
+                                                                            <p class="unplublished-tag-text">${getTextString("CARD_ORB_EXCLUSIVE_TAG")}</p>
+                                                                        </div>
+                                                                    `;
+                                                                    
+                                                                }
+                                                            }
+                                                            if (product.prices && product.prices["0"] && product.prices["0"].country_prices && product.prices["0"].country_prices.prices) {
+                                                                product.prices["0"].country_prices.prices.forEach(price => {
+                                                                    if (price.currency === "usd") {
+                                                                        priceStandard = price.amount;
+                                                                    }
+                                                                    if (price.currency === "discord_orb") {
+                                                                        priceOrb = price.amount;
+                                                                    }
+                                                                });
+                
+                                                                if (priceStandard != "N/A" && priceOrb != "N/A") {
+
+                                                                    let standard_price = document.createElement("div");
+                                                            
+                                                                    standard_price.innerHTML = `
+                                                                        <a class="modal-standard-price-crossed">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                    `;
+                                                                    standard_price.style.position = `absolute`;
+                                                                    standard_price.style.left = `0px`;
+                                                                    standard_price.style.marginTop = `30px`;
+                                                                    
+                                                                    priceContainer.appendChild(standard_price);
+
+                                                                    let orb_standard_price = document.createElement("div");
+                                                            
+                                                                    orb_standard_price.innerHTML = `
+                                                                        <a class="modal-standard-price-crossed">${priceOrb}</a>
+                                                                        <div class="orb-icon-crossed" style="margin-left: -23px"></div>
+                                                                    `;
+                                                                    orb_standard_price.style.position = `absolute`;
+                                                                    orb_standard_price.style.right = `20px`;
+                                                                    orb_standard_price.style.marginTop = `30px`;
+                                                                    
+                                                                    priceContainer.appendChild(orb_standard_price);
+                
+                                                                } else if (priceStandard != "N/A") {
+                
+                                                                    let standard_price = document.createElement("div");
+                                                            
+                                                                    standard_price.innerHTML = `
+                                                                        <a class="modal-standard-price-crossed">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                    `;
+                                                                    standard_price.style.position = `absolute`;
+                                                                    standard_price.style.left = `0px`;
+                                                                    standard_price.style.marginTop = `30px`;
+                                                                    
+                                                                    priceContainer.appendChild(standard_price);
+                
+                                                                } else if (priceOrb != "N/A") {
+                
+                                                                    let orb_standard_price = document.createElement("div");
+                                                            
+                                                                    orb_standard_price.innerHTML = `
+                                                                        <a class="modal-standard-price-crossed">${priceOrb}</a>
+                                                                        <div class="orb-icon-crossed" style="margin-left: -24px"></div>
+                                                                    `;
+                                                                    orb_standard_price.style.position = `absolute`;
+                                                                    orb_standard_price.style.left = `23px`;
+                                                                    orb_standard_price.style.marginTop = `30px`;
+                                                                    
+                                                                    priceContainer.appendChild(orb_standard_price);
+                
+                                                                    modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
                                                                         <div class="unplublished-tag">
                                                                             <p class="unplublished-tag-text">${getTextString("CARD_ORB_EXCLUSIVE_TAG")}</p>
                                                                         </div>
@@ -12720,6 +12894,17 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 });
                 
                                                                 if (priceStandard != "N/A" && priceOrb != "N/A") {
+
+                                                                    let standard_price = document.createElement("div");
+                                                            
+                                                                    standard_price.innerHTML = `
+                                                                        <a style="font-size: large; font-weight: 900;">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                    `;
+                                                                    standard_price.style.position = `absolute`;
+                                                                    standard_price.style.left = `0px`;
+                                                                    
+                                                                    priceContainer.appendChild(standard_price);
+
                                                                     let orb_price = document.createElement("div");
                                                             
                                                                     orb_price.innerHTML = `
@@ -12727,15 +12912,21 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div class="orb-icon" style="margin-left: -25px"></div>
                                                                     `;
                                                                     orb_price.style.position = `absolute`;
-                                                                    orb_price.style.right = `-15px`;
+                                                                    orb_price.style.right = `20px`;
                                                                     
                                                                     priceContainer.appendChild(orb_price);
                 
-                                                                    priceTextStandard.textContent = `US$${(priceStandard / 100).toFixed(2)}`;
-                
                                                                 } else if (priceStandard != "N/A") {
                 
-                                                                    priceTextStandard.textContent = `US$${(priceStandard / 100).toFixed(2)}`;
+                                                                    let nitro_price = document.createElement("div");
+                                                            
+                                                                    nitro_price.innerHTML = `
+                                                                        <a style="font-size: large; font-weight: 900;">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                    `;
+                                                                    nitro_price.style.position = `absolute`;
+                                                                    nitro_price.style.left = `0px`;
+                                                                    
+                                                                    priceContainer.appendChild(nitro_price);
                 
                                                                 } else if (priceOrb != "N/A") {
                 
@@ -12746,11 +12937,83 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div class="orb-icon" style="margin-left: -25px"></div>
                                                                     `;
                                                                     orb_price.style.position = `absolute`;
-                                                                    orb_price.style.left = `18px`;
+                                                                    orb_price.style.left = `23px`;
                                                                     
                                                                     priceContainer.appendChild(orb_price);
                 
-                                                                    card.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                                    modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                                        <div class="unplublished-tag">
+                                                                            <p class="unplublished-tag-text">${getTextString("CARD_ORB_EXCLUSIVE_TAG")}</p>
+                                                                        </div>
+                                                                    `;
+                                                                    
+                                                                }
+                                                            }
+                                                            if (product.prices && product.prices["4"] && product.prices["4"].country_prices && product.prices["4"].country_prices.prices) {
+                                                                product.prices["4"].country_prices.prices.forEach(price => {
+                                                                    if (price.currency === "usd") {
+                                                                        priceStandard = price.amount;
+                                                                    }
+                                                                    if (price.currency === "discord_orb") {
+                                                                        priceOrb = price.amount;
+                                                                    }
+                                                                });
+                
+                                                                if (priceStandard != "N/A" && priceOrb != "N/A") {
+
+                                                                    let standard_price = document.createElement("div");
+                                                            
+                                                                    standard_price.innerHTML = `
+                                                                        <a class="modal-standard-price-crossed" style="margin-left: 21px;">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                        <div class="nitro-icon-crossed" style="margin-left: -3px"></div>
+                                                                    `;
+                                                                    standard_price.style.position = `absolute`;
+                                                                    standard_price.style.left = `0px`;
+                                                                    standard_price.style.marginTop = `30px`;
+                                                                    
+                                                                    priceContainer.appendChild(standard_price);
+
+                                                                    let orb_standard_price = document.createElement("div");
+                                                            
+                                                                    orb_standard_price.innerHTML = `
+                                                                        <a class="modal-standard-price-crossed">${priceOrb}</a>
+                                                                        <div class="orb-icon-crossed" style="margin-left: -23px"></div>
+                                                                    `;
+                                                                    orb_standard_price.style.position = `absolute`;
+                                                                    orb_standard_price.style.right = `20px`;
+                                                                    orb_standard_price.style.marginTop = `30px`;
+                                                                    
+                                                                    priceContainer.appendChild(orb_standard_price);
+                
+                                                                } else if (priceStandard != "N/A") {
+                
+                                                                    let standard_price = document.createElement("div");
+                                                            
+                                                                    standard_price.innerHTML = `
+                                                                        <a class="modal-standard-price-crossed" style="margin-left: 21px;">US$${(priceStandard / 100).toFixed(2)}</a>
+                                                                        <div class="nitro-icon-crossed" style="margin-left: -3px"></div>
+                                                                    `;
+                                                                    standard_price.style.position = `absolute`;
+                                                                    standard_price.style.left = `0px`;
+                                                                    standard_price.style.marginTop = `30px`;
+                                                                    
+                                                                    priceContainer.appendChild(standard_price);
+                
+                                                                } else if (priceOrb != "N/A") {
+                
+                                                                    let orb_standard_price = document.createElement("div");
+                                                            
+                                                                    orb_standard_price.innerHTML = `
+                                                                        <a class="modal-standard-price-crossed">${priceOrb}</a>
+                                                                        <div class="orb-icon-crossed" style="margin-left: -24px"></div>
+                                                                    `;
+                                                                    orb_standard_price.style.position = `absolute`;
+                                                                    orb_standard_price.style.left = `23px`;
+                                                                    orb_standard_price.style.marginTop = `30px`;
+                                                                    
+                                                                    priceContainer.appendChild(orb_standard_price);
+                
+                                                                    modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
                                                                         <div class="unplublished-tag">
                                                                             <p class="unplublished-tag-text">${getTextString("CARD_ORB_EXCLUSIVE_TAG")}</p>
                                                                         </div>
@@ -12784,26 +13047,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         if (priceTextNitro) {
                                                             priceTextNitro.textContent = priceNitro !== "N/A" ? `US$${(priceNitro / 100).toFixed(2)} with Nitro` : "null";
                                                         }
-                                                    }
-
-                                                    if (priceTextStandard.textContent === "null" && priceTextNitro.textContent === "null") {
-                                                        let error_warning = document.createElement("div");
-
-                                                        error_warning.classList.add('invalid_currency_warning');
-                                                        error_warning.innerHTML = `
-                                                            <p>This item does not support this currency!</p>
-                                                        `;
-                                                                    
-                                                        priceContainer.appendChild(error_warning);
-                                                    } else if (priceTextStandard.textContent === "null" || priceTextNitro.textContent === "null") {
-                                                        let error_warning = document.createElement("div");
-
-                                                        error_warning.classList.add('invalid_currency_warning');
-                                                        error_warning.innerHTML = `
-                                                            <p>This item does not fully support this currency!</p>
-                                                        `;
-                                                                    
-                                                        priceContainer.appendChild(error_warning);
                                                     }
 
 
@@ -13185,8 +13428,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     }
     
     // Redirect to Google if emojiCopy is null
-    function redirectToGoogle() {
-        window.location.href = 'https://discord.gg/Mcwh7hGcWb';
+    function redirectToLink(link) {
+        window.location.href = link;
     }
     
 
@@ -13445,7 +13688,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 url = api + COLLECTIBLES_SHOP;
                 apiUrl = new URL(url);
                 apiUrl.searchParams.append("tab", "pplus-home");
-                if (localStorage.unreleased_discord_collectibles == "true") {
+                if (localStorage.unreleased_profiles_plus == "true") {
                     apiUrl.searchParams.append("include-unpublished", "true");
                 }
             } else {
@@ -13463,7 +13706,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 url = api + COLLECTIBLES_SHOP;
                 apiUrl = new URL(url);
                 apiUrl.searchParams.append("tab", "pplus");
-                if (localStorage.unreleased_discord_collectibles == "true") {
+                if (localStorage.unreleased_profiles_plus == "true") {
                     apiUrl.searchParams.append("include-unpublished", "true");
                 }
             } else {
@@ -13504,20 +13747,53 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("ITEM_DEBUG_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder"></div>
             `;
-        } else {
+        } else if (params.get("page")) {
             setParams({page: 'home',err: '404'});
-            document.title = "Home | Shop Archives";
+            document.title = `${getTextString("FEATURED_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
             location.reload();
+            console.log('b')
+        } else {
+            setParams({page: 'home'});
+            document.title = `${getTextString("FEATURED_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
+            location.reload();
+            console.log('a')
         }
 
         const open_help_modals_buttons_holder = document.getElementById('open-help-modals-buttons-holder');
-        open_help_modals_buttons_holder.innerHTML = `
-            <svg title="Dev Tools" x="0" y="0" onclick="openDevModal()" style="display: none;" id="open-dev-tools-button-1" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M2 20.59V19.4a1 1 0 0 1 .3-.7l2.4-2.42a1 1 0 0 1 .71-.29H6l9-9-.85-.85a1 1 0 0 1-.23-.34l-1.49-3.73a.5.5 0 0 1 .65-.65l3.73 1.5a1 1 0 0 1 .34.22l.64.64a1 1 0 0 1 1.42 0l1 1a1 1 0 0 1 0 1.42l1.58 1.58a1 1 0 0 1 0 1.42l-1.58 1.58a1 1 0 0 1-1.42 0L17 9l-9 9v.59a1 1 0 0 1-.3.7l-2.4 2.42a1 1 0 0 1-.71.29H3.4a1 1 0 0 1-.7-.3l-.42-.4a1 1 0 0 1-.29-.71Z" class=""></path><path fill="currentColor" d="M8.23 10.23c.2.2.51.2.7 0l1.3-1.3a.5.5 0 0 0 0-.7L6.5 4.5l.3-.3a1 1 0 0 0 0-1.4l-.5-.5c-.2-.2-.45-.3-.7-.22-.43.14-1.17.49-2.1 1.42a5.37 5.37 0 0 0-1.42 2.1c-.08.25.03.5.21.7l.5.5a1 1 0 0 0 1.42 0l.29-.3 3.73 3.73ZM13.77 15.06a.5.5 0 0 0 0 .7l1.73 1.74 1.44 2.4a1 1 0 0 0 .15.19l1.73 1.73c.1.1.26.1.36 0l2.64-2.64c.1-.1.1-.26 0-.36L20.1 17.1a1 1 0 0 0-.2-.15L17.5 15.5l-1.73-1.73a.5.5 0 0 0-.7 0l-1.3 1.3Z" class=""></path></svg>
-            <svg title="Options" x="0" y="0" onclick="optionsSidebarToggle()" id="open-options-tools-button-1" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16.4483 8.3333H18.3333V11.6667H16.4492C16.2483 12.4425 15.9167 13.165 15.4708 13.8033L16.6667 15 15 16.6667 13.8042 15.47C13.1642 15.9158 12.4433 16.2483 11.6667 16.4483V18.3333H8.3333V16.4483C7.5575 16.2483 6.8358 15.9158 6.1967 15.47L5 16.6667 3.3333 15 4.53 13.8033C4.0842 13.1658 3.7517 12.4433 3.5517 11.6667H1.6667V8.3333H3.5517C3.7517 7.5567 4.0833 6.835 4.53 6.1967L3.3333 5 5 3.3333 6.1967 4.53C6.835 4.0833 7.5567 3.7517 8.3333 3.5517V1.6667H11.6667V3.5508C12.4433 3.7517 13.1642 4.0833 13.8042 4.5292L15 3.3325 16.6667 4.9992 15.47 6.1967C15.9158 6.835 16.2483 7.5575 16.4483 8.3333ZM10 13.3333C11.8409 13.3333 13.3333 11.8409 13.3333 10 13.3333 8.159 11.8409 6.6667 10 6.6667 8.159 6.6667 6.6667 8.159 6.6667 10 6.6667 11.8409 8.159 13.3333 10 13.3333Z")></path></svg>
+        
+        let options_button = document.createElement("div");
+
+        options_button.id = 'open-options-tools-button-1';
+        options_button.setAttribute("onclick","optionsSidebarToggle();");
+        options_button.title = `Options`;
+        options_button.innerHTML = `
+            <svg x="0" y="0" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path d="M19.738 9.99995H22V14H19.7391C19.498 14.931 19.1001 15.798 18.565 16.564L20.0001 18L18 20.0001L16.5651 18.564C15.7971 19.099 14.932 19.498 14 19.738V22H9.99995V19.738C9.06899 19.498 8.20295 19.099 7.43602 18.564L5.99998 20.0001L3.99993 18L5.43597 16.564C4.90101 15.799 4.50201 14.932 4.26201 14H2V9.99995H4.26201C4.50201 9.06803 4.89993 8.20199 5.43597 7.43602L3.99993 5.99998L5.99998 3.99993L7.43602 5.43597C8.20199 4.89993 9.06803 4.50201 9.99995 4.26201V2H14V4.26093C14.932 4.50201 15.7971 4.89993 16.5651 5.43501L18 3.99897L20.0001 5.99902L18.564 7.43602C19.099 8.20199 19.498 9.06899 19.738 9.99995ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79079 14.2091 8.00002 12 8.00002C9.79079 8.00002 8.00002 9.79079 8.00002 12C8.00002 14.2091 9.79079 16 12 16Z" fill="currentColor"/></svg>
         `;
+
+        open_help_modals_buttons_holder.appendChild(options_button);
+
         if (localStorage.dev == "true") {
-            const dev_tool_button = document.querySelector("#open-dev-tools-button-1");
-            dev_tool_button.style.display = 'block';
+            let devtools_button = document.createElement("div");
+
+            devtools_button.id = 'open-dev-tools-button-1';
+            devtools_button.setAttribute("onclick","openDevModal();");
+            devtools_button.title = `Dev Tools`;
+            devtools_button.innerHTML = `
+                <svg x="0" y="0" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M2 20.59V19.4a1 1 0 0 1 .3-.7l2.4-2.42a1 1 0 0 1 .71-.29H6l9-9-.85-.85a1 1 0 0 1-.23-.34l-1.49-3.73a.5.5 0 0 1 .65-.65l3.73 1.5a1 1 0 0 1 .34.22l.64.64a1 1 0 0 1 1.42 0l1 1a1 1 0 0 1 0 1.42l1.58 1.58a1 1 0 0 1 0 1.42l-1.58 1.58a1 1 0 0 1-1.42 0L17 9l-9 9v.59a1 1 0 0 1-.3.7l-2.4 2.42a1 1 0 0 1-.71.29H3.4a1 1 0 0 1-.7-.3l-.42-.4a1 1 0 0 1-.29-.71Z" class=""></path><path fill="currentColor" d="M8.23 10.23c.2.2.51.2.7 0l1.3-1.3a.5.5 0 0 0 0-.7L6.5 4.5l.3-.3a1 1 0 0 0 0-1.4l-.5-.5c-.2-.2-.45-.3-.7-.22-.43.14-1.17.49-2.1 1.42a5.37 5.37 0 0 0-1.42 2.1c-.08.25.03.5.21.7l.5.5a1 1 0 0 0 1.42 0l.29-.3 3.73 3.73ZM13.77 15.06a.5.5 0 0 0 0 .7l1.73 1.74 1.44 2.4a1 1 0 0 0 .15.19l1.73 1.73c.1.1.26.1.36 0l2.64-2.64c.1-.1.1-.26 0-.36L20.1 17.1a1 1 0 0 0-.2-.15L17.5 15.5l-1.73-1.73a.5.5 0 0 0-.7 0l-1.3 1.3Z" class=""></path></svg>
+            `;
+
+            open_help_modals_buttons_holder.appendChild(devtools_button);
+
+            let old_devtools_button = document.createElement("div");
+
+            old_devtools_button.id = 'open-dev-tools-button-1';
+            old_devtools_button.setAttribute("onclick","openOldDevModal();");
+            old_devtools_button.title = `Old Dev Tools`;
+            old_devtools_button.innerHTML = `
+                <svg x="0" y="0" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M2 20.59V19.4a1 1 0 0 1 .3-.7l2.4-2.42a1 1 0 0 1 .71-.29H6l9-9-.85-.85a1 1 0 0 1-.23-.34l-1.49-3.73a.5.5 0 0 1 .65-.65l3.73 1.5a1 1 0 0 1 .34.22l.64.64a1 1 0 0 1 1.42 0l1 1a1 1 0 0 1 0 1.42l1.58 1.58a1 1 0 0 1 0 1.42l-1.58 1.58a1 1 0 0 1-1.42 0L17 9l-9 9v.59a1 1 0 0 1-.3.7l-2.4 2.42a1 1 0 0 1-.71.29H3.4a1 1 0 0 1-.7-.3l-.42-.4a1 1 0 0 1-.29-.71Z" class=""></path><path fill="currentColor" d="M8.23 10.23c.2.2.51.2.7 0l1.3-1.3a.5.5 0 0 0 0-.7L6.5 4.5l.3-.3a1 1 0 0 0 0-1.4l-.5-.5c-.2-.2-.45-.3-.7-.22-.43.14-1.17.49-2.1 1.42a5.37 5.37 0 0 0-1.42 2.1c-.08.25.03.5.21.7l.5.5a1 1 0 0 0 1.42 0l.29-.3 3.73 3.73ZM13.77 15.06a.5.5 0 0 0 0 .7l1.73 1.74 1.44 2.4a1 1 0 0 0 .15.19l1.73 1.73c.1.1.26.1.36 0l2.64-2.64c.1-.1.1-.26 0-.36L20.1 17.1a1 1 0 0 0-.2-.15L17.5 15.5l-1.73-1.73a.5.5 0 0 0-.7 0l-1.3 1.3Z" class=""></path></svg>
+            `;
+
+            open_help_modals_buttons_holder.appendChild(old_devtools_button);
         }
     }
 
@@ -13764,7 +14040,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                     <img class="a2024-recap-img-1" src="${cdn}assets/170.png">
 
-                    <p class="center-text" style="font-size: 18px;">[replace with something from support article, if they release this year]</p>
+                    <p class="center-text" style="font-size: 18px;">Make your name stand out with nameplates! These special designs customize how your name appears in your direct messages (DMs), group chats and servers, giving your name that extra fun and flair wherever you go on Discord.</p>
                 </div>
 
                 <hr style="opacity: 0; height: 30px;">
@@ -16080,6 +16356,15 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     <h1 class="center-text" style="font-size: 30px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_DEV_TITLE")}</h1>
                     <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_DEV_OPTIONS_DISCLAIMER")}</p>
 
+                    <div id="staff-notes">
+                        <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_STAFF_NOTES")}</p>
+                        <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_STAFF_NOTES_1")}</p>
+                    </div>
+
+                    <div class="experiment-card-holder" style="width: 300px; margin-left: auto; margin-right: auto;">
+                        <button class="card-button" onclick="redirectToLink('https://discord.gg/88Kkv6xmck');">${getTextString("OPTIONS_DEV_OPEN_STAFF_DISCORD_SERVER")}</button>
+                    </div>
+
                     <div id="staff-todo-list">
                         <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_STAFF_TODO_LIST")}</p>
                         <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_STAFF_TODO_LIST_1")}</p>
@@ -16094,11 +16379,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                             <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_DEV_UNPUBLISHED_COLLECTIBLES")}</p>
                             <input class="options-toggle-box" onclick="unreleasedDiscordCollectiblesToggle();" style="cursor: pointer; scale: 2; posision: center;" id="unpublished-collectibles-box" type="checkbox">
                         </div>
+                        <div class="options-option-card" id="unpublished-pplus-items-box-option">
+                            <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_DEV_UNPUBLISHED_PPLUS_ITEMS")}</p>
+                            <input class="options-toggle-box" onclick="unreleasedPPlusItemsToggle();" style="cursor: pointer; scale: 2; posision: center;" id="unpublished-pplus-items-box" type="checkbox">
+                        </div>
                     </div>
 
                     <div class="experiment-card-holder" style="width: 300px; margin-left: auto; margin-right: auto;">
                         <button class="card-button" onclick="disableClientRework();">${getTextString("OPTIONS_DEV_DISABLE_CLIENT_REWORK")}</button>
-                        <button class="card-button" onclick="openOldDevModal();">${getTextString("OPTIONS_DEV_OPEN_OLD_DEV_MODAL")}</button>
                     </div>
 
                     <div class="options-option-card" id="options-text-input-option">
@@ -16326,6 +16614,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 if (localStorage.unreleased_discord_collectibles == "true") {
                     document.getElementById("unpublished-collectibles-box").checked = true;
                 }
+
+                if (localStorage.unreleased_profiles_plus == "true") {
+                    document.getElementById("unpublished-pplus-items-box").checked = true;
+                }
             }
         } else {
             console.error('403 (Forbidden)')
@@ -16342,6 +16634,15 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             localStorage.unreleased_discord_collectibles = "true"
         } else {
             localStorage.unreleased_discord_collectibles = "none"
+        }
+        fetchData(pageCheck());
+    }
+
+    function unreleasedPPlusItemsToggle() {
+        if (localStorage.unreleased_profiles_plus === "none") {
+            localStorage.unreleased_profiles_plus = "true"
+        } else {
+            localStorage.unreleased_profiles_plus = "none"
         }
         fetchData(pageCheck());
     }
@@ -16390,7 +16691,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
     function openOldDevModal() {
         if (localStorage.dev == "true") {
-            openDevModal()
             document.getElementById('modal-housing').innerHTML = `
                 <div class="modal-housing-1" id="modal-housing-1">
                     <div class="dev-modal">
