@@ -1,6 +1,6 @@
 
 
-app_version1 = "304"
+app_version1 = "310"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -1488,7 +1488,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                                     // Banner Image/Video asset
                 
-                                    category.querySelector("[data-shop-category-banner-image]").src = `https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.mobile_banner}.png?size=4096`;
+                                    if (apiCategory.mobile_banner === null) {
+                                        category.querySelector("[data-shop-category-banner-image]").src = `https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.banner}.png?size=4096`;
+                                    } else {
+                                        category.querySelector("[data-shop-category-banner-image]").src = `https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.mobile_banner}.png?size=4096`;
+                                    }
                                     category.querySelector("[data-shop-category-banner-image]").alt = 'No Mobile Banner';
 
                                     if (apiCategory.mobile_bg != null) {
@@ -2513,58 +2517,58 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     ]
 
 
-    discord_categories = [
-        FANTASY = "1144003461608906824",
-        ANIME = "1144302037593497701",
-        BREAKFAST = "1144054000099012659",
-        DISXCORE = "1144058340327047249",
-        FALL = "1157406994873991284",
-        HALLOWEEN = "1157410718711304313",
-        WINTER = "1174459301239197856",
-        MONSTERS = "1179493515038818325",
-        CYBERPUNK = "1197342727608746044",
-        LUNAR_NEW_YEAR = "1202069709281828935",
-        ELEMENTS = "1207046915880124426",
-        ANIME_V2 = "1212565175790473246",
-        SPECIAL_EVENTS = "1217175518781243583",
-        SPECIAL_EVENTS_2 = "1309309974266118144",
-        SPRINGTOONS = "1217622942175727736",
-        SHY = "1220513972189663413",
-        LOFI_VIBES = "1228243842684162121",
-        GALAXY = "1232029045928099922",
-        FEELIN_RETRO = "1237649643073044491",
-        PIRATES = "1237653589896200272",
-        ARCADE = "1245086656973901894",
-        TIDE = "1252404112650407998",
-        DARK_FANTASY = "1256321669388308595",
-        ROBERT = "1262491137386614805",
-        STORM = "1265375293397270650",
-        DOJO = "1266520267946201099",
-        THE_VAULT = "1277733175191277721",
-        AUTUMN_EQUINOX = "1282816432056569866",
-        BAND = "1285465421339693076",
-        SPOOKY_NIGHT = "1287835634089594972",
-        CHANCE = "1293373563494993952",
-        MYTHICAL_CREATURES = "1298033986811068497",
-        WARRIOR = "1303490165284802580",
-        KAWAII_MODE = "1306330663213072494",
-        LOFI_GIRL = "1309668861943218229",
-        WINTER_WONDERLAND = "1314020997204283476",
-        FANTASY_V2 = "1324454241254903829",
-        STEAMPUNK = "1326333074241486859",
-        PROGRESS = "1333278032999485461",
-        RADIATE = "1336483992429658112",
-        VALENTINES = "1333866045521395723",
-        ORB = "1332505418219655258",
-        ANIME_V3 = "1341506445249609728",
-        INSOMNIA = "1343751621364027462",
-        NAMEPLATE_TEST = "1344802365307621427",
-        AESPA = "1346499610977243196",
-        NAMEPLATE = "1349849614353829990",
-        HOLIDAYS = "1349486948942745691",
-        SHENANIGANS = "1352407446500675708",
-        CHIBI_CAFE = "1354894010849820852"
-    ]
+    discord_categories = {
+        FANTASY: "1144003461608906824",
+        ANIME: "1144302037593497701",
+        BREAKFAST: "1144054000099012659",
+        DISXCORE: "1144058340327047249",
+        FALL: "1157406994873991284",
+        HALLOWEEN: "1157410718711304313",
+        WINTER: "1174459301239197856",
+        MONSTERS: "1179493515038818325",
+        CYBERPUNK: "1197342727608746044",
+        LUNAR_NEW_YEAR: "1202069709281828935",
+        ELEMENTS: "1207046915880124426",
+        ANIME_V2: "1212565175790473246",
+        SPECIAL_EVENTS: "1217175518781243583",
+        SPECIAL_EVENTS_2: "1309309974266118144",
+        SPRINGTOONS: "1217622942175727736",
+        SHY: "1220513972189663413",
+        LOFI_VIBES: "1228243842684162121",
+        GALAXY: "1232029045928099922",
+        FEELIN_RETRO: "1237649643073044491",
+        PIRATES: "1237653589896200272",
+        ARCADE: "1245086656973901894",
+        TIDE: "1252404112650407998",
+        DARK_FANTASY: "1256321669388308595",
+        ROBERT: "1262491137386614805",
+        STORM: "1265375293397270650",
+        DOJO: "1266520267946201099",
+        THE_VAULT: "1277733175191277721",
+        AUTUMN_EQUINOX: "1282816432056569866",
+        BAND: "1285465421339693076",
+        SPOOKY_NIGHT: "1287835634089594972",
+        CHANCE: "1293373563494993952",
+        MYTHICAL_CREATURES: "1298033986811068497",
+        WARRIOR: "1303490165284802580",
+        KAWAII_MODE: "1306330663213072494",
+        LOFI_GIRL: "1309668861943218229",
+        WINTER_WONDERLAND: "1314020997204283476",
+        FANTASY_V2: "1324454241254903829",
+        STEAMPUNK: "1326333074241486859",
+        PROGRESS: "1333278032999485461",
+        RADIATE: "1336483992429658112",
+        VALENTINES: "1333866045521395723",
+        ORB: "1332505418219655258",
+        ANIME_V3: "1341506445249609728",
+        INSOMNIA: "1343751621364027462",
+        NAMEPLATE_TEST: "1344802365307621427",
+        AESPA: "1346499610977243196",
+        NAMEPLATE: "1349849614353829990",
+        HOLIDAYS: "1349486948942745691",
+        SHENANIGANS: "1352407446500675708",
+        CHIBI_CAFE: "1354894010849820852"
+    };
 
     external_skus = [
         NITRO_CREDITS_3_DAYS = "1333912750274904064",
@@ -2578,15 +2582,15 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         WIDE_BANNER = 3
     ]
 
-    item_types = [
-        NONE = 100,
-        AVATAR_DECORATION = 0,
-        PROFILE_EFFECT = 1,
-        NAMEPLATE = 2,
-        BUNDLE = 1e3,
-        VARIANTS_GROUP = 2e3,
-        EXTERNAL_SKU = 3e3
-    ]
+    item_types = {
+        NONE: 100,
+        AVATAR_DECORATION: 0,
+        PROFILE_EFFECT: 1,
+        NAMEPLATE: 2,
+        BUNDLE: 1e3,
+        VARIANTS_GROUP: 2e3,
+        EXTERNAL_SKU: 3e3
+    }
 
     const nameplate_palettes = {
         crimson: {
@@ -2834,10 +2838,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                                             card.id = product.sku_id;
     
-                                            if (product.type === NONE) {
+                                            if (product.type === item_types.NONE) {
                                                 card.classList.add("type_100");
                                                 card.classList.add('hidden')
-                                            } else if (product.type === AVATAR_DECORATION) {
+                                            } else if (product.type === item_types.AVATAR_DECORATION) {
                                                 product.items.forEach(item => {
                                                     
                                                     card.classList.add("type_0");
@@ -2882,7 +2886,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     }
                                                     
                                                 });
-                                            } else if (product.type === PROFILE_EFFECT) {
+                                            } else if (product.type === item_types.PROFILE_EFFECT) {
                                                 card.classList.add("type_1");
     
                                                 if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
@@ -2948,7 +2952,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         });
                                                     }
                                                 }
-                                            } else if (product.type === NAMEPLATE) {
+                                            } else if (product.type === item_types.NAMEPLATE) {
                                                 card.classList.add("type_2");
     
                                                 if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
@@ -3037,7 +3041,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     }
                                                 });
                                                 
-                                            } else if (product.type === BUNDLE) {
+                                            } else if (product.type === item_types.BUNDLE) {
                                                 card.classList.add("type_1000");
                                                 // Fetch the bundled products for the bundle summary
                                                 const bundledProducts = product.bundled_products || [];
@@ -3132,7 +3136,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         })();
                                                     }
                                                 });
-                                            } else if (product.type === VARIANTS_GROUP) {
+                                            } else if (product.type === item_types.VARIANTS_GROUP) {
                                                 // Update SKU and summary
                                                 if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
                                                     card.querySelector("[data-product-card-sku-id]").textContent = ``;
@@ -3309,7 +3313,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 if (product.variants.length > 0) {
                                                     applyVariant(product.variants[0]);
                                                 }
-                                            } else if (product.type === EXTERNAL_SKU) {
+                                            } else if (product.type === item_types.EXTERNAL_SKU) {
                                                 card.classList.add("type_3000");
     
                                                 if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
@@ -3646,7 +3650,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             }
     
                                             if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
-                                                if (product.type === AVATAR_DECORATION || product.type === PROFILE_EFFECT || product.type === NAMEPLATE || product.type === BUNDLE || product.type === VARIANTS_GROUP || product.type === EXTERNAL_SKU) {
+                                                if (product.type === item_types.AVATAR_DECORATION || product.type === item_types.PROFILE_EFFECT || product.type === item_types.NAMEPLATE || product.type === item_types.BUNDLE || product.type === item_types.VARIANTS_GROUP || product.type === item_types.EXTERNAL_SKU) {
                                                     card.classList.add('clickable');
     
                                                     card.addEventListener("click", (event) => {
@@ -3664,16 +3668,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         setTimeout(() => {
                                                             openItemModal();
                                                         }, 1000);
-                                                        card.classList.add("highlighted")
-    
-                                                        let highlightedGlint = document.createElement("div");
-    
-                                                        highlightedGlint.classList.add('shop-category-card-highlighted-glint');
-    
-                                                        card.appendChild(highlightedGlint);
-                                                        setTimeout(() => {
-                                                            highlightedGlint.remove();
-                                                        }, 3000);
                                                     }
                                                     
     
@@ -3824,7 +3818,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             <button class="card-button" title="${getTextString("CARD_OPEN_IN_SHOP_TITLE")}" onclick="location.href='https://discord.com/shop#itemSkuId=${product.sku_id}';">${getTextString("CARD_OPEN_IN_SHOP")}</button>
                                                         `;
     
-                                                        if (product.type === AVATAR_DECORATION) {
+                                                        if (product.type === item_types.AVATAR_DECORATION) {
     
                                                             modal.classList.add('modal-0');
     
@@ -3897,7 +3891,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 }
     
                                                             });
-                                                        } else if (product.type === PROFILE_EFFECT) {
+                                                        } else if (product.type === item_types.PROFILE_EFFECT) {
                                                             modal.classList.add('modal-1');
             
                                                             modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -4011,7 +4005,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     }
                                                                 }
                                                             }
-                                                        } else if (product.type === NAMEPLATE) {
+                                                        } else if (product.type === item_types.NAMEPLATE) {
                                                             card.classList.add("modal-2");
                 
                                                             modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -4020,6 +4014,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 
                                                             const previewHolder = modal.querySelector("[data-modal-preview-holder]");
                                                             previewHolder.classList.add('nameplate-modal-preview');
+    
+                                                            const previewHolderLeft = modal.querySelector("[data-modal-left-preview-holder]");
                 
                                                             if (localStorage.discord_username && localStorage.discord_username != '') {
                                                                 previewName = localStorage.discord_username;
@@ -4027,17 +4023,26 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 previewName = 'Discord User'
                                                             }
     
-                                                            if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 1: Enabled") {
+                                                            if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning" && product.category_sku_id === discord_categories.NAMEPLATE) {
                                                                 let nameplateWarning = document.createElement("div");
     
                                                                 nameplateWarning.classList.add('nameplate-modal-early-warning-container');
                                                                 nameplateWarning.innerHTML = `
                                                                     <p>${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_1")}</p>
-                                                                    <a style="color: lightblue;" href="https://support.yapper.shop/?page=nameplates">${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_2")}</a>
                                                                 `;
     
-    
                                                                 modal.querySelector(".modalv2-inner-left").appendChild(nameplateWarning);
+                                                            } else if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 1: Nameplate Test Warning" || localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning") {
+                                                                if (product.category_sku_id === discord_categories.NAMEPLATE_TEST) {
+                                                                    let nameplateWarning = document.createElement("div");
+    
+                                                                    nameplateWarning.classList.add('nameplate-modal-early-warning-container');
+                                                                    nameplateWarning.innerHTML = `
+                                                                        <p>${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_2")}</p>
+                                                                    `;
+    
+                                                                    modal.querySelector(".modalv2-inner-left").appendChild(nameplateWarning);
+                                                                }
                                                             }
                 
                                                             previewHolder.innerHTML = `
@@ -4071,6 +4076,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     <div class="nameplate-preview-status-color"></div>
                                                                 </div>
                                                             `;
+    
+                                                            previewHolderLeft.innerHTML = `
+                                                                <div class="nameplate-null-user" data-user-nameplate-preview-left>
+                                                                    <video disablepictureinpicture muted loop class="nameplate-null-user" style="position: absolute; height: 100%; width: auto; right: 0;" data-user-nameplate-preview-img-left></video>
+                                                                    <div class="nameplate-user-avatar" data-nameplate-user-random-avatar-left></div>
+                                                                    <p class="nameplate-user-name">${previewName}</p>
+                                                                </div>
+                                                            `;
                 
                                                             product.items.forEach(item => {
                                                                 const nameplatePreview = previewHolder.querySelector("[data-user-nameplate-preview]");
@@ -4101,9 +4114,35 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 if (localStorage.reduced_motion != "true") {
                                                                     videoElement.play();
                                                                 }
+    
+    
+    
+                                                                const videoElementLeft = previewHolderLeft.querySelector("[data-user-nameplate-preview-img-left]");
+                                                                const nameplatePreviewLeft = previewHolderLeft.querySelector("[data-user-nameplate-preview-left]");
+                                                                previewHolderLeft.classList.add("modal-left-nameplate-preview");
+    
+                                                                videoElementLeft.src = asset;
+    
+                                                                nameplatePreviewLeft.style.backgroundImage = `linear-gradient(90deg, #00000000 -30%, ${bgcolor} 200%)`;
+    
+                                                                const nullUserAvatarLeft = previewHolderLeft.querySelectorAll("[data-nameplate-user-random-avatar-left]");
+                                                            
+                                                                nullUserAvatarLeft.forEach(UserAvatar => {
+                                                                    UserAvatar.style.backgroundImage = `url(${localStorage.discord_avatar})`;
+                                                                });
+    
+                                                                if (localStorage.reduced_motion != "true") {
+                                                                    videoElementLeft.addEventListener("mouseenter", () => {
+                                                                        videoElementLeft.play();
+                                                                    });
+                                                                
+                                                                    videoElementLeft.addEventListener("mouseleave", () => {
+                                                                        videoElementLeft.pause();
+                                                                    });
+                                                                }
                                                             });
                                                             
-                                                        } else if (product.type === BUNDLE) {
+                                                        } else if (product.type === item_types.BUNDLE) {
                                                             modal.classList.add('modal-1000');
     
                                                             const bundledProducts = product.bundled_products || [];
@@ -4247,7 +4286,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     }
                                                                 }
                                                             });
-                                                        } else if (product.type === VARIANTS_GROUP) {
+                                                        } else if (product.type === item_types.VARIANTS_GROUP) {
                                                             modal.querySelector("[data-shop-modal-var-container-container]").classList.add('show');
                                                             // Update SKU and summary
                                                             modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -4521,7 +4560,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             if (product.variants.length > 0) {
                                                                 applyVariant(product.variants[0]);
                                                             }
-                                                        } else if (product.type === EXTERNAL_SKU) {
+                                                        } else if (product.type === item_types.EXTERNAL_SKU) {
                                                             modal.classList.add('modal-3000');
                 
                                                             modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -5051,7 +5090,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 }
                                             }
                                                                                 
-                                            if (newColorsSKUIDS.includes(product.sku_id) && ANIME_V3 === apiCategory.sku_id) {
+                                            if (newColorsSKUIDS.includes(product.sku_id) && discord_categories.ANIME_V3 === apiCategory.sku_id) {
                                                 newColorItemCheck();
                                             }
     
@@ -5130,6 +5169,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                                             // Append card to output
                                             cardOutput.append(card);
+    
+                                            scrollToSKU(product.sku_id, 'true');
                                         }
                                     }
                                     output0.append(category);
@@ -5138,13 +5179,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                     document.getElementById("shop-category-loading-container").style.display = 'none';
     
         
-                                    const lofi_girl_banner = document.getElementById(LOFI_GIRL);
-                                    const kawaii_mode_banner = document.getElementById(KAWAII_MODE);
+                                    const lofi_girl_banner = document.getElementById(discord_categories.LOFI_GIRL);
+                                    const kawaii_mode_banner = document.getElementById(discord_categories.KAWAII_MODE);
         
                                     if (localStorage.reduced_motion != "true") {
         
                                         if (lofi_girl_banner) {  // Check if element exists
-                                            document.getElementById(`${LOFI_GIRL}-preview-banner-container`).innerHTML = `
+                                            document.getElementById(`${discord_categories.LOFI_GIRL}-preview-banner-container`).innerHTML = `
                                                 <video autoplay muted class="home-page-preview-banner" src="https://cdn.discordapp.com/assets/collectibles/drops/lofi_girl/hero_banner.webm" loop></video>
                                             `;
                                         }
@@ -5311,10 +5352,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                         card.id = product.sku_id;
 
-                                        if (product.type === NONE) {
+                                        if (product.type === item_types.NONE) {
                                             card.classList.add("type_100");
                                             card.classList.add('hidden')
-                                        } else if (product.type === AVATAR_DECORATION) {
+                                        } else if (product.type === item_types.AVATAR_DECORATION) {
                                             product.items.forEach(item => {
                                                 card.classList.add("type_0");
                                                 // Set the innerHTML for the preview holder
@@ -5353,7 +5394,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     });
                                                 }
                                             });
-                                        } else if (product.type === PROFILE_EFFECT) {
+                                        } else if (product.type === item_types.PROFILE_EFFECT) {
                                             card.classList.add("type_1");
 
                                             card.querySelector("[data-product-card-sku-id]").textContent = `${getTextString("CARD_PPLUS_MADE_BY")}${product.credits}`;
@@ -5414,7 +5455,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     });
                                                 }
                                             }
-                                        } else if (product.type === NAMEPLATE) {
+                                        } else if (product.type === item_types.NAMEPLATE) {
                                             card.classList.add("type_2");
 
                                             card.querySelector("[data-product-card-sku-id]").textContent = `${getTextString("CARD_PPLUS_MADE_BY")}${product.credits}`;
@@ -5488,7 +5529,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 });
                                             });
                                             
-                                        } else if (product.type === BUNDLE) {
+                                        } else if (product.type === item_types.BUNDLE) {
                                             card.classList.add("type_1000");
                                             // Fetch the bundled products for the bundle summary
                                             const bundledProducts = product.bundled_products || [];
@@ -5580,7 +5621,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     })();
                                                 }
                                             });
-                                        } else if (product.type === VARIANTS_GROUP) {
+                                        } else if (product.type === item_types.VARIANTS_GROUP) {
                                             // Update SKU and summary
                                             card.querySelector("[data-product-card-sku-id]").textContent = `${getTextString("CARD_PPLUS_MADE_BY")}${product.credits}`;
                                             card.querySelector("[data-product-card-summary]").textContent = product.summary;
@@ -5739,7 +5780,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             if (product.variants.length > 0) {
                                                 applyVariant(product.variants[0]);
                                             }
-                                        } else if (product.type === EXTERNAL_SKU) {
+                                        } else if (product.type === item_types.EXTERNAL_SKU) {
                                             card.classList.add("type_3000");
 
                                             if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
@@ -5821,7 +5862,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
 
                                         if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
-                                            if (product.type === AVATAR_DECORATION || product.type === PROFILE_EFFECT || product.type === NAMEPLATE || product.type === BUNDLE || product.type === VARIANTS_GROUP) {
+                                            if (product.type === item_types.AVATAR_DECORATION || product.type === item_types.PROFILE_EFFECT || product.type === item_types.NAMEPLATE || product.type === item_types.BUNDLE || product.type === item_types.VARIANTS_GROUP) {
                                                 card.classList.add('clickable');
 
                                                 card.addEventListener("click", (event) => {
@@ -5839,16 +5880,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     setTimeout(() => {
                                                         openItemModal();
                                                     }, 1000);
-                                                    card.classList.add("highlighted")
-
-                                                    let highlightedGlint = document.createElement("div");
-
-                                                    highlightedGlint.classList.add('shop-category-card-highlighted-glint');
-
-                                                    card.appendChild(highlightedGlint);
-                                                    setTimeout(() => {
-                                                        highlightedGlint.remove();
-                                                    }, 3000);
                                                 }
 
                                                 async function openItemModal() {
@@ -5909,7 +5940,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         modal.classList.add('show');
                                                     }, 1);
 
-                                                    if (product.type === AVATAR_DECORATION) {
+                                                    if (product.type === item_types.AVATAR_DECORATION) {
 
                                                         modal.classList.add('modal-0');
 
@@ -5983,7 +6014,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             }
 
                                                         });
-                                                    } else if (product.type === PROFILE_EFFECT) {
+                                                    } else if (product.type === item_types.PROFILE_EFFECT) {
                                                         modal.classList.add('modal-1');
         
                                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -6093,7 +6124,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 }
                                                             }
                                                         }
-                                                    } else if (product.type === NAMEPLATE) {
+                                                    } else if (product.type === item_types.NAMEPLATE) {
                                                         card.classList.add("modal-2");
             
                                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -6109,17 +6140,26 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             previewName = 'Discord User'
                                                         }
 
-                                                        if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 1: Enabled") {
+                                                        if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning" && product.category_sku_id === discord_categories.NAMEPLATE) {
                                                             let nameplateWarning = document.createElement("div");
 
                                                             nameplateWarning.classList.add('nameplate-modal-early-warning-container');
                                                             nameplateWarning.innerHTML = `
                                                                 <p>${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_1")}</p>
-                                                                <a style="color: lightblue;" href="https://support.yapper.shop/?page=nameplates">${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_2")}</a>
                                                             `;
 
-
                                                             modal.querySelector(".modalv2-inner-left").appendChild(nameplateWarning);
+                                                        } else if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 1: Nameplate Test Warning" || localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning") {
+                                                            if (product.category_sku_id === discord_categories.NAMEPLATE_TEST) {
+                                                                let nameplateWarning = document.createElement("div");
+
+                                                                nameplateWarning.classList.add('nameplate-modal-early-warning-container');
+                                                                nameplateWarning.innerHTML = `
+                                                                    <p>${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_2")}</p>
+                                                                `;
+
+                                                                modal.querySelector(".modalv2-inner-left").appendChild(nameplateWarning);
+                                                            }
                                                         }
             
                                                         previewHolder.innerHTML = `
@@ -6179,7 +6219,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             });
                                                         });
                                                         
-                                                    } else if (product.type === BUNDLE) {
+                                                    } else if (product.type === item_types.BUNDLE) {
                                                         modal.classList.add('modal-1000');
 
                                                         const bundledProducts = product.bundled_products || [];
@@ -6320,7 +6360,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 }
                                                             }
                                                         });
-                                                    } else if (product.type === VARIANTS_GROUP) {
+                                                    } else if (product.type === item_types.VARIANTS_GROUP) {
                                                         modal.querySelector("[data-shop-modal-var-container-container]").classList.add('show');
                                                         // Update SKU and summary
                                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -7172,48 +7212,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     console.error('Error fetching the API:', error);
                 });
             }
-        } else if (params.get("page") === "quick-info") {
-            createQuickInfoElement()
-
-            fetch(apiUrl, {
-                method: "GET",
-                headers: {
-                    "Password": api_password,
-                    "Token": api_token
-                }
-            })
-            .then(response => response.json())
-            .then((data) => {
-                data.forEach(info => {
-                    let infoCard = document.createElement("div");
-
-                    infoCard.classList.add('quick-info-info-card');
-                    infoCard.innerHTML = `
-                        <h1 class="center-text abcgintonord" style="font-size: 25px; margin-top: 0px; margin-bottom: 0px;">${info.name}</h1>
-
-                        <p class="center-text" style="font-size: 18px;">${info.summary}</p>
-
-                        <h1 class="center-text" style="font-size: 40px;">${info.count}</h1>
-                    `;
-
-                    document.getElementById("quick-info-info-container-loading").innerHTML = ``;
-                    document.getElementById("quick-info-info-container").appendChild(infoCard);
-                })
-                
-            })
-            .catch(error => {
-                console.error('Error fetching the API:', error);
-                document.getElementById("quick-info-info-container").innerHTML = `
-                    <div class="quick-info-info-card">
-                        <h1 class="center-text abcgintonord" style="font-size: 25px; margin-top: 0px; margin-bottom: 0px;">${getTextString("SHOP_NOT_LOAD_ERROR_3")}</h1>
-
-                        <p class="center-text" style="font-size: 18px;">${getTextString("SHOP_NOT_LOAD_ERROR")}${error}</p>
-
-                        <button class="refresh-button" onclick="location.reload();">${getTextString("SHOP_NOT_LOAD_ERROR_RELOAD")}</button>
-                    </div>
-                `;
-                document.getElementById("quick-info-info-container-loading").innerHTML = ``;
-            });
         } else {
 
             if (params.get("page") === "consumables") {
@@ -7286,11 +7284,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         if (apiCategory.banner_asset.static != null) {
                                             category.querySelector("[data-shop-banner-banner-container]").innerHTML = `
                                                 <img class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="${apiCategory.banner_asset.static}">
-                                                <video autoplay muted class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px; z-index: 1;" src="${apiCategory.banner_asset.animated}" loop></video>
+                                                <video disablepictureinpicture autoplay muted class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px; z-index: 1;" src="${apiCategory.banner_asset.animated}" loop></video>
                                             `;
                                         } else {
                                             category.querySelector("[data-shop-banner-banner-container]").innerHTML = `
-                                                <video autoplay muted class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px; z-index: 1;" src="${apiCategory.banner_asset.animated}" loop></video>
+                                                <video disablepictureinpicture autoplay muted class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px; z-index: 1;" src="${apiCategory.banner_asset.animated}" loop></video>
                                             `;
                                         }
                                     } else if (apiCategory.banner_asset.static != null) {
@@ -7350,16 +7348,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         setTimeout(() => {
                                             openCategoryModal();
                                         }, 1000);
-                                        category.querySelector("[data-shop-category-banner]").classList.add("highlighted")
-
-                                        let highlightedGlint = document.createElement("div");
-
-                                        highlightedGlint.classList.add('shop-category-highlighted-glint');
-
-                                        category.querySelector("[data-shop-category-banner]").appendChild(highlightedGlint);
-                                        setTimeout(() => {
-                                            highlightedGlint.remove();
-                                        }, 3000);
                                     }
                                     
 
@@ -7538,7 +7526,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                             banner_asset.innerHTML = `
                                                 <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_2")}</p>
-                                                <video autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.animated}" loop></video> 
+                                                <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.animated}" loop></video> 
                                             `;
 
                                             asset_container.appendChild(banner_asset);
@@ -7644,7 +7632,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                             hero_banner_asset.innerHTML = `
                                                 <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_2")}</p>
-                                                <video autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.animated}" loop></video> 
+                                                <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.animated}" loop></video> 
                                             `;
 
                                             asset_container.appendChild(hero_banner_asset);
@@ -7776,10 +7764,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                         card.id = product.sku_id;
 
-                                        if (product.type === NONE) {
+                                        if (product.type === item_types.NONE) {
                                             card.classList.add("type_100");
                                             card.classList.add('hidden')
-                                        } else if (product.type === AVATAR_DECORATION) {
+                                        } else if (product.type === item_types.AVATAR_DECORATION) {
                                             product.items.forEach(item => {
                                                 card.classList.add("type_0");
                                                 // Set the innerHTML for the preview holder
@@ -7818,7 +7806,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     });
                                                 }
                                             });
-                                        } else if (product.type === PROFILE_EFFECT) {
+                                        } else if (product.type === item_types.PROFILE_EFFECT) {
                                             card.classList.add("type_1");
 
                                             card.querySelector("[data-product-card-sku-id]").textContent = `${getTextString("CARD_PPLUS_MADE_BY")}${product.credits}`;
@@ -7879,7 +7867,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     });
                                                 }
                                             }
-                                        } else if (product.type === NAMEPLATE) {
+                                        } else if (product.type === item_types.NAMEPLATE) {
                                             card.classList.add("type_2");
 
                                             card.querySelector("[data-product-card-sku-id]").textContent = `${getTextString("CARD_PPLUS_MADE_BY")}${product.credits}`;
@@ -7953,7 +7941,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 });
                                             });
                                             
-                                        } else if (product.type === BUNDLE) {
+                                        } else if (product.type === item_types.BUNDLE) {
                                             card.classList.add("type_1000");
                                             // Fetch the bundled products for the bundle summary
                                             const bundledProducts = product.bundled_products || [];
@@ -8045,7 +8033,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     })();
                                                 }
                                             });
-                                        } else if (product.type === VARIANTS_GROUP) {
+                                        } else if (product.type === item_types.VARIANTS_GROUP) {
                                             // Update SKU and summary
                                             card.querySelector("[data-product-card-sku-id]").textContent = `${getTextString("CARD_PPLUS_MADE_BY")}${product.credits}`;
                                             card.querySelector("[data-product-card-summary]").textContent = product.summary;
@@ -8204,7 +8192,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             if (product.variants.length > 0) {
                                                 applyVariant(product.variants[0]);
                                             }
-                                        } else if (product.type === EXTERNAL_SKU) {
+                                        } else if (product.type === item_types.EXTERNAL_SKU) {
                                             card.classList.add("type_3000");
 
                                             if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
@@ -8286,7 +8274,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
 
                                         if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
-                                            if (product.type === AVATAR_DECORATION || product.type === PROFILE_EFFECT || product.type === NAMEPLATE || product.type === BUNDLE || product.type === VARIANTS_GROUP) {
+                                            if (product.type === item_types.AVATAR_DECORATION || product.type === item_types.PROFILE_EFFECT || product.type === item_types.NAMEPLATE || product.type === item_types.BUNDLE || product.type === item_types.VARIANTS_GROUP) {
                                                 card.classList.add('clickable');
 
                                                 card.addEventListener("click", (event) => {
@@ -8304,16 +8292,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     setTimeout(() => {
                                                         openItemModal();
                                                     }, 1000);
-                                                    card.classList.add("highlighted")
-
-                                                    let highlightedGlint = document.createElement("div");
-
-                                                    highlightedGlint.classList.add('shop-category-card-highlighted-glint');
-
-                                                    card.appendChild(highlightedGlint);
-                                                    setTimeout(() => {
-                                                        highlightedGlint.remove();
-                                                    }, 3000);
                                                 }
 
                                                 async function openItemModal() {
@@ -8366,7 +8344,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         modal.classList.add('show');
                                                     }, 1);
 
-                                                    if (product.type === AVATAR_DECORATION) {
+                                                    if (product.type === item_types.AVATAR_DECORATION) {
 
                                                         modal.classList.add('modal-0');
 
@@ -8440,7 +8418,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             }
 
                                                         });
-                                                    } else if (product.type === PROFILE_EFFECT) {
+                                                    } else if (product.type === item_types.PROFILE_EFFECT) {
                                                         modal.classList.add('modal-1');
         
                                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -8550,7 +8528,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 }
                                                             }
                                                         }
-                                                    } else if (product.type === NAMEPLATE) {
+                                                    } else if (product.type === item_types.NAMEPLATE) {
                                                         card.classList.add("modal-2");
             
                                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -8566,17 +8544,26 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             previewName = 'Discord User'
                                                         }
 
-                                                        if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 1: Enabled") {
+                                                        if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning" && product.category_sku_id === discord_categories.NAMEPLATE) {
                                                             let nameplateWarning = document.createElement("div");
 
                                                             nameplateWarning.classList.add('nameplate-modal-early-warning-container');
                                                             nameplateWarning.innerHTML = `
                                                                 <p>${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_1")}</p>
-                                                                <a style="color: lightblue;" href="https://support.yapper.shop/?page=nameplates">${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_2")}</a>
                                                             `;
 
-
                                                             modal.querySelector(".modalv2-inner-left").appendChild(nameplateWarning);
+                                                        } else if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 1: Nameplate Test Warning" || localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning") {
+                                                            if (product.category_sku_id === discord_categories.NAMEPLATE_TEST) {
+                                                                let nameplateWarning = document.createElement("div");
+
+                                                                nameplateWarning.classList.add('nameplate-modal-early-warning-container');
+                                                                nameplateWarning.innerHTML = `
+                                                                    <p>${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_2")}</p>
+                                                                `;
+
+                                                                modal.querySelector(".modalv2-inner-left").appendChild(nameplateWarning);
+                                                            }
                                                         }
             
                                                         previewHolder.innerHTML = `
@@ -8636,7 +8623,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             });
                                                         });
                                                         
-                                                    } else if (product.type === BUNDLE) {
+                                                    } else if (product.type === item_types.BUNDLE) {
                                                         modal.classList.add('modal-1000');
 
                                                         const bundledProducts = product.bundled_products || [];
@@ -8777,7 +8764,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 }
                                                             }
                                                         });
-                                                    } else if (product.type === VARIANTS_GROUP) {
+                                                    } else if (product.type === item_types.VARIANTS_GROUP) {
                                                         modal.querySelector("[data-shop-modal-var-container-container]").classList.add('show');
                                                         // Update SKU and summary
                                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -9571,21 +9558,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                 scrollToSKU(apiCategory.sku_id);
 
-                                function scrollToSKU(sku_id) {
-                                    const itemSKUForScroll = params.get("itemSkuId");
-
-                                    if (itemSKUForScroll === sku_id) {
-                                        setTimeout(() => {
-                                            try {
-                                                document.getElementById(itemSKUForScroll).scrollIntoView({ behavior: "smooth" });
-                                            }
-                                            catch(error) {
-                                                scrollToSKU(sku_id)
-                                            }
-                                        }, 10);
-                                    }
-                                }
-
 
                                 const paper_beach2_banner = document.getElementById(PAPER_BEACH_V2);
                                 const geometry_dash_banner = document.getElementById(GEOMETRY_DASH);
@@ -10336,11 +10308,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             if (apiCategory.banner_asset.static != null) {
                                                 category.querySelector("[data-shop-banner-banner-container]").innerHTML = `
                                                     <img class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="${apiCategory.banner_asset.static}">
-                                                    <video autoplay muted class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px; z-index: 1;" src="${apiCategory.banner_asset.animated}" loop></video>
+                                                    <video disablepictureinpicture autoplay muted class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px; z-index: 1;" src="${apiCategory.banner_asset.animated}" loop></video>
                                                 `;
                                             } else {
                                                 category.querySelector("[data-shop-banner-banner-container]").innerHTML = `
-                                                    <video autoplay muted class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px; z-index: 1;" src="${apiCategory.banner_asset.animated}" loop></video>
+                                                    <video disablepictureinpicture autoplay muted class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px; z-index: 1;" src="${apiCategory.banner_asset.animated}" loop></video>
                                                 `;
                                             }
                                         } else if (apiCategory.banner_asset.static != null) {
@@ -10359,6 +10331,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                 
 
                                 category.querySelector("[data-shop-banner-banner-container]").id = `${apiCategory.sku_id}-banner-banner-container`;
+
+                                category.querySelector("[data-shop-category-marketing-bg]").remove();
 
 
                                 // Logo Image/Video asset
@@ -10381,100 +10355,100 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                 category.querySelector("[data-shop-discord-watermark-container]").id = `${apiCategory.sku_id}-discord-watermark-container`;
 
 
-                                if (apiCategory.sku_id === FANTASY) {
+                                if (apiCategory.sku_id === discord_categories.FANTASY) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                 }
-                                if (apiCategory.sku_id === ANIME) {
+                                if (apiCategory.sku_id === discord_categories.ANIME) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                 }
-                                if (apiCategory.sku_id === BREAKFAST) {
+                                if (apiCategory.sku_id === discord_categories.BREAKFAST) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                 }
-                                if (apiCategory.sku_id === DISXCORE) {
+                                if (apiCategory.sku_id === discord_categories.DISXCORE) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                 }
-                                if (apiCategory.sku_id === FALL) {
+                                if (apiCategory.sku_id === discord_categories.FALL) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                 }
-                                if (apiCategory.sku_id === HALLOWEEN) {
+                                if (apiCategory.sku_id === discord_categories.HALLOWEEN) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                 }
-                                if (apiCategory.sku_id === WINTER) {
+                                if (apiCategory.sku_id === discord_categories.WINTER) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                 }
-                                if (apiCategory.sku_id === MONSTERS) {
+                                if (apiCategory.sku_id === discord_categories.MONSTERS) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                 }
-                                if (apiCategory.sku_id === CYBERPUNK) {
+                                if (apiCategory.sku_id === discord_categories.CYBERPUNK) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                 }
-                                if (apiCategory.sku_id === LUNAR_NEW_YEAR) {
+                                if (apiCategory.sku_id === discord_categories.LUNAR_NEW_YEAR) {
                                     if (apiCategory.banner === "1202069953306689626") {
                                         category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                         category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                     }
                                 }
-                                if (apiCategory.sku_id === ELEMENTS) {
+                                if (apiCategory.sku_id === discord_categories.ELEMENTS) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                 }
-                                if (apiCategory.sku_id === ANIME_V2) {
-                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
-                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
-                                    category.querySelector("[data-shop-category-desc]").style.color = 'black';
-                                }
-                                if (apiCategory.sku_id === SPRINGTOONS) {
+                                if (apiCategory.sku_id === discord_categories.ANIME_V2) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
                                     category.querySelector("[data-shop-category-desc]").style.color = 'black';
                                 }
-                                if (apiCategory.sku_id === SHY) {
+                                if (apiCategory.sku_id === discord_categories.SPRINGTOONS) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
                                     category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
-                                }
-                                if (apiCategory.sku_id === LOFI_VIBES) {
-                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
-                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
-                                }
-                                if (apiCategory.sku_id === GALAXY) {
-                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
-                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
-                                }
-                                if (apiCategory.sku_id === FEELIN_RETRO) {
-                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
-                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
-                                }
-                                if (apiCategory.sku_id === PIRATES) {
-                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
-                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
-                                }
-                                if (apiCategory.sku_id === ARCADE) {
-                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
-                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
-                                }
-                                if (apiCategory.sku_id === TIDE) {
-                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
-                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
-                                }
-                                if (apiCategory.sku_id === DARK_FANTASY) {
-                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
-                                }
-                                if (apiCategory.sku_id === ROBERT) {
                                     category.querySelector("[data-shop-category-desc]").style.color = 'black';
                                 }
-                                if (apiCategory.sku_id === DOJO) {
+                                if (apiCategory.sku_id === discord_categories.SHY) {
+                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
+                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
+                                }
+                                if (apiCategory.sku_id === discord_categories.LOFI_VIBES) {
+                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
+                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
+                                }
+                                if (apiCategory.sku_id === discord_categories.GALAXY) {
+                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
+                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
+                                }
+                                if (apiCategory.sku_id === discord_categories.FEELIN_RETRO) {
+                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
+                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
+                                }
+                                if (apiCategory.sku_id === discord_categories.PIRATES) {
+                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
+                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
+                                }
+                                if (apiCategory.sku_id === discord_categories.ARCADE) {
+                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
+                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
+                                }
+                                if (apiCategory.sku_id === discord_categories.TIDE) {
+                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
+                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
+                                }
+                                if (apiCategory.sku_id === discord_categories.DARK_FANTASY) {
+                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
+                                }
+                                if (apiCategory.sku_id === discord_categories.ROBERT) {
                                     category.querySelector("[data-shop-category-desc]").style.color = 'black';
                                 }
-                                if (apiCategory.sku_id === KAWAII_MODE) {
+                                if (apiCategory.sku_id === discord_categories.DOJO) {
+                                    category.querySelector("[data-shop-category-desc]").style.color = 'black';
+                                }
+                                if (apiCategory.sku_id === discord_categories.KAWAII_MODE) {
                                     category.querySelector("[data-shop-category-desc]").style.color = 'black';
                                 }
 
@@ -10493,16 +10467,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         setTimeout(() => {
                                             openCategoryModal();
                                         }, 1000);
-                                        category.querySelector("[data-shop-category-banner]").classList.add("highlighted")
-
-                                        let highlightedGlint = document.createElement("div");
-
-                                        highlightedGlint.classList.add('shop-category-highlighted-glint');
-
-                                        category.querySelector("[data-shop-category-banner]").appendChild(highlightedGlint);
-                                        setTimeout(() => {
-                                            highlightedGlint.remove();
-                                        }, 3000);
                                     }
                                     
 
@@ -10538,19 +10502,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 </div>
                                             </div>
                                         `;
-
-                                        if (apiCategory.sku_id === "1349849614353829990" && apiCategory.logo === null) {
-                                            let nameplateWarning = document.createElement("div");
-
-                                            nameplateWarning.classList.add('nameplate-modal-category-warning-container');
-                                            nameplateWarning.innerHTML = `
-                                                <p>${getTextString("SHOP_NAMEPLATE_CATEGORY_NOTICE_1")}</p>
-                                                <p>${getTextString("SHOP_NAMEPLATE_CATEGORY_NOTICE_2")}</p>
-                                            `;
-
-
-                                            modal.querySelector(".category-modalv2-inner-left").appendChild(nameplateWarning);
-                                        }
 
                                         if (localStorage.experiment_2025_03_item_reviews === "Treatment 1: Enabled" || localStorage.experiment_2025_03_item_reviews === "Treatment 2: Simulate not logged in" || localStorage.experiment_2025_03_item_reviews === "Treatment 3: Simulate logged in") {
                                             modal.querySelector("[data-shop-modal-review-title]").textContent = `${getTextString("SHOP_REVIEWS_TITLE")}`;
@@ -10697,7 +10648,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                             banner_asset.innerHTML = `
                                                 <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_2")}</p>
-                                                <video autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.animated}" loop></video> 
+                                                <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.animated}" loop></video> 
                                             `;
 
                                             asset_container.appendChild(banner_asset);
@@ -10803,7 +10754,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                             hero_banner_asset.innerHTML = `
                                                 <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_2")}</p>
-                                                <video autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.animated}" loop></video> 
+                                                <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.animated}" loop></video> 
                                             `;
 
                                             asset_container.appendChild(hero_banner_asset);
@@ -10977,10 +10928,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                         card.id = product.sku_id;
 
-                                        if (product.type === NONE) {
+                                        if (product.type === item_types.NONE) {
                                             card.classList.add("type_100");
                                             card.classList.add('hidden')
-                                        } else if (product.type === AVATAR_DECORATION) {
+                                        } else if (product.type === item_types.AVATAR_DECORATION) {
                                             product.items.forEach(item => {
                                                 
                                                 card.classList.add("type_0");
@@ -11025,7 +10976,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 }
                                                 
                                             });
-                                        } else if (product.type === PROFILE_EFFECT) {
+                                        } else if (product.type === item_types.PROFILE_EFFECT) {
                                             card.classList.add("type_1");
 
                                             if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
@@ -11091,7 +11042,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     });
                                                 }
                                             }
-                                        } else if (product.type === NAMEPLATE) {
+                                        } else if (product.type === item_types.NAMEPLATE) {
                                             card.classList.add("type_2");
 
                                             if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
@@ -11180,7 +11131,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 }
                                             });
                                             
-                                        } else if (product.type === BUNDLE) {
+                                        } else if (product.type === item_types.BUNDLE) {
                                             card.classList.add("type_1000");
                                             // Fetch the bundled products for the bundle summary
                                             const bundledProducts = product.bundled_products || [];
@@ -11275,7 +11226,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     })();
                                                 }
                                             });
-                                        } else if (product.type === VARIANTS_GROUP) {
+                                        } else if (product.type === item_types.VARIANTS_GROUP) {
                                             // Update SKU and summary
                                             if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
                                                 card.querySelector("[data-product-card-sku-id]").textContent = ``;
@@ -11452,7 +11403,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             if (product.variants.length > 0) {
                                                 applyVariant(product.variants[0]);
                                             }
-                                        } else if (product.type === EXTERNAL_SKU) {
+                                        } else if (product.type === item_types.EXTERNAL_SKU) {
                                             card.classList.add("type_3000");
 
                                             if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
@@ -11768,13 +11719,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         if (localStorage.experiment_2025_03_copy_sku_card === "Treatment 1: Enabled" || localStorage.experiment_2025_03_copy_sku_card === "Treatment 2: w/ share button") {
                                             card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
                                                 <div class="card-multi-button-container" card-multi-button-container>
-                                                    <button class="card-button" onclick="location.href='https://discord.com/shop#itemSkuId=${product.sku_id}';" title="${getTextString("CARD_OPEN_IN_SHOP_TITLE")}">${getTextString("CARD_OPEN_IN_SHOP_V2")}</button>
+                                                    <button class="card-button" onclick="openInDiscordShop('${product.sku_id}', null, 'card', '${product.unpublished_at}', '${product.category_sku_id}');" title="${getTextString("CARD_OPEN_IN_SHOP_TITLE")}">${getTextString("CARD_OPEN_IN_SHOP_V2")}</button>
                                                     <button class="card-button" onclick="copyEmoji('${product.sku_id}'); copyNotice('copysku');" title="${getTextString("CARD_COPU_SKU_ID_TITLE")}">${getTextString("CARD_COPU_SKU_ID")}</button>
                                                 </div>
                                             `;
                                         } else {
                                             card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
-                                                <button class="card-button" onclick="location.href='https://discord.com/shop#itemSkuId=${product.sku_id}';" title="${getTextString("CARD_OPEN_IN_SHOP_TITLE")}">${getTextString("CARD_OPEN_IN_SHOP")}</button>
+                                                <button class="card-button" onclick="openInDiscordShop('${product.sku_id}', null, 'card', '${product.unpublished_at}', '${product.category_sku_id}');" title="${getTextString("CARD_OPEN_IN_SHOP_TITLE")}">${getTextString("CARD_OPEN_IN_SHOP")}</button>
                                             `;
                                         }
 
@@ -11789,7 +11740,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         }
 
                                         if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
-                                            if (product.type === AVATAR_DECORATION || product.type === PROFILE_EFFECT || product.type === NAMEPLATE || product.type === BUNDLE || product.type === VARIANTS_GROUP || product.type === EXTERNAL_SKU) {
+                                            if (product.type === item_types.AVATAR_DECORATION || product.type === item_types.PROFILE_EFFECT || product.type === item_types.NAMEPLATE || product.type === item_types.BUNDLE || product.type === item_types.VARIANTS_GROUP || product.type === item_types.EXTERNAL_SKU) {
                                                 card.classList.add('clickable');
 
                                                 card.addEventListener("click", (event) => {
@@ -11807,16 +11758,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     setTimeout(() => {
                                                         openItemModal();
                                                     }, 1000);
-                                                    card.classList.add("highlighted")
-
-                                                    let highlightedGlint = document.createElement("div");
-
-                                                    highlightedGlint.classList.add('shop-category-card-highlighted-glint');
-
-                                                    card.appendChild(highlightedGlint);
-                                                    setTimeout(() => {
-                                                        highlightedGlint.remove();
-                                                    }, 3000);
                                                 }
                                                 
 
@@ -11967,7 +11908,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         <button class="card-button" title="${getTextString("CARD_OPEN_IN_SHOP_TITLE")}" onclick="location.href='https://discord.com/shop#itemSkuId=${product.sku_id}';">${getTextString("CARD_OPEN_IN_SHOP")}</button>
                                                     `;
 
-                                                    if (product.type === AVATAR_DECORATION) {
+                                                    if (product.type === item_types.AVATAR_DECORATION) {
 
                                                         modal.classList.add('modal-0');
 
@@ -12040,7 +11981,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             }
 
                                                         });
-                                                    } else if (product.type === PROFILE_EFFECT) {
+                                                    } else if (product.type === item_types.PROFILE_EFFECT) {
                                                         modal.classList.add('modal-1');
         
                                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -12154,7 +12095,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 }
                                                             }
                                                         }
-                                                    } else if (product.type === NAMEPLATE) {
+                                                    } else if (product.type === item_types.NAMEPLATE) {
                                                         card.classList.add("modal-2");
             
                                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -12163,6 +12104,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             
                                                         const previewHolder = modal.querySelector("[data-modal-preview-holder]");
                                                         previewHolder.classList.add('nameplate-modal-preview');
+
+                                                        const previewHolderLeft = modal.querySelector("[data-modal-left-preview-holder]");
             
                                                         if (localStorage.discord_username && localStorage.discord_username != '') {
                                                             previewName = localStorage.discord_username;
@@ -12170,17 +12113,26 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             previewName = 'Discord User'
                                                         }
 
-                                                        if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 1: Enabled") {
+                                                        if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning" && product.category_sku_id === discord_categories.NAMEPLATE) {
                                                             let nameplateWarning = document.createElement("div");
 
                                                             nameplateWarning.classList.add('nameplate-modal-early-warning-container');
                                                             nameplateWarning.innerHTML = `
                                                                 <p>${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_1")}</p>
-                                                                <a style="color: lightblue;" href="https://support.yapper.shop/?page=nameplates">${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_2")}</a>
                                                             `;
 
-
                                                             modal.querySelector(".modalv2-inner-left").appendChild(nameplateWarning);
+                                                        } else if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 1: Nameplate Test Warning" || localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning") {
+                                                            if (product.category_sku_id === discord_categories.NAMEPLATE_TEST) {
+                                                                let nameplateWarning = document.createElement("div");
+
+                                                                nameplateWarning.classList.add('nameplate-modal-early-warning-container');
+                                                                nameplateWarning.innerHTML = `
+                                                                    <p>${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_2")}</p>
+                                                                `;
+
+                                                                modal.querySelector(".modalv2-inner-left").appendChild(nameplateWarning);
+                                                            }
                                                         }
             
                                                         previewHolder.innerHTML = `
@@ -12214,6 +12166,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 <div class="nameplate-preview-status-color"></div>
                                                             </div>
                                                         `;
+
+                                                        previewHolderLeft.innerHTML = `
+                                                            <div class="nameplate-null-user" data-user-nameplate-preview-left>
+                                                                <video disablepictureinpicture muted loop class="nameplate-null-user" style="position: absolute; height: 100%; width: auto; right: 0;" data-user-nameplate-preview-img-left></video>
+                                                                <div class="nameplate-user-avatar" data-nameplate-user-random-avatar-left></div>
+                                                                <p class="nameplate-user-name">${previewName}</p>
+                                                            </div>
+                                                        `;
             
                                                         product.items.forEach(item => {
                                                             const nameplatePreview = previewHolder.querySelector("[data-user-nameplate-preview]");
@@ -12244,9 +12204,35 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             if (localStorage.reduced_motion != "true") {
                                                                 videoElement.play();
                                                             }
+
+
+
+                                                            const videoElementLeft = previewHolderLeft.querySelector("[data-user-nameplate-preview-img-left]");
+                                                            const nameplatePreviewLeft = previewHolderLeft.querySelector("[data-user-nameplate-preview-left]");
+                                                            previewHolderLeft.classList.add("modal-left-nameplate-preview");
+
+                                                            videoElementLeft.src = asset;
+
+                                                            nameplatePreviewLeft.style.backgroundImage = `linear-gradient(90deg, #00000000 -30%, ${bgcolor} 200%)`;
+
+                                                            const nullUserAvatarLeft = previewHolderLeft.querySelectorAll("[data-nameplate-user-random-avatar-left]");
+                                                        
+                                                            nullUserAvatarLeft.forEach(UserAvatar => {
+                                                                UserAvatar.style.backgroundImage = `url(${localStorage.discord_avatar})`;
+                                                            });
+
+                                                            if (localStorage.reduced_motion != "true") {
+                                                                videoElementLeft.addEventListener("mouseenter", () => {
+                                                                    videoElementLeft.play();
+                                                                });
+                                                            
+                                                                videoElementLeft.addEventListener("mouseleave", () => {
+                                                                    videoElementLeft.pause();
+                                                                });
+                                                            }
                                                         });
                                                         
-                                                    } else if (product.type === BUNDLE) {
+                                                    } else if (product.type === item_types.BUNDLE) {
                                                         modal.classList.add('modal-1000');
 
                                                         const bundledProducts = product.bundled_products || [];
@@ -12390,7 +12376,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 }
                                                             }
                                                         });
-                                                    } else if (product.type === VARIANTS_GROUP) {
+                                                    } else if (product.type === item_types.VARIANTS_GROUP) {
                                                         modal.querySelector("[data-shop-modal-var-container-container]").classList.add('show');
                                                         // Update SKU and summary
                                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -12664,7 +12650,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         if (product.variants.length > 0) {
                                                             applyVariant(product.variants[0]);
                                                         }
-                                                    } else if (product.type === EXTERNAL_SKU) {
+                                                    } else if (product.type === item_types.EXTERNAL_SKU) {
                                                         modal.classList.add('modal-3000');
             
                                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
@@ -13194,7 +13180,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             }
                                         }
                                                                             
-                                        if (newColorsSKUIDS.includes(product.sku_id) && ANIME_V3 === apiCategory.sku_id) {
+                                        if (newColorsSKUIDS.includes(product.sku_id) && discord_categories.ANIME_V3 === apiCategory.sku_id) {
                                             newColorItemCheck();
                                         }
 
@@ -13282,63 +13268,44 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                 scrollToSKU(apiCategory.sku_id);
 
-                                function scrollToSKU(sku_id) {
-                                    const itemSKUForScroll = params.get("itemSkuId");
-
-                                    if (itemSKUForScroll === sku_id) {
-                                        setTimeout(() => {
-                                            try {
-                                                document.getElementById(itemSKUForScroll).scrollIntoView({ behavior: "smooth" });
-                                            }
-                                            catch(error) {
-                                                scrollToSKU(sku_id)
-                                            }
-                                        }, 10);
-                                    }
-                                }
-
-                                const winter_wonderland_banner = document.getElementById(WINTER_WONDERLAND);
-                                const lofi_girl_banner = document.getElementById(LOFI_GIRL);
-                                const kawaii_mode_banner = document.getElementById(KAWAII_MODE);
-                                const arcane_banner = document.getElementById(WARRIOR);
-                                const mythical_creatures_banner = document.getElementById(MYTHICAL_CREATURES);
-                                const dnd_banner = document.getElementById(CHANCE);
-                                const spooky_night_banner = document.getElementById(SPOOKY_NIGHT);
-                                const street_fighter_banner = document.getElementById(BAND);
-                                const autumn_equinox_banner = document.getElementById(AUTUMN_EQUINOX);
-                                const fall_banner = document.getElementById(FALL);
-                                const the_vault_banner = document.getElementById(THE_VAULT);
-                                const dojo_banner = document.getElementById(DOJO);
-                                const valorant_champions_banner = document.getElementById(STORM);
-                                const sponge_bob_banner = document.getElementById(ROBERT);
-                                const dark_fantasy_banner = document.getElementById(DARK_FANTASY);
-                                const palworld_banner = document.getElementById(TIDE);
-                                const valorant_banner = document.getElementById(SHY);
-                                const springtoons_banner = document.getElementById(SPRINGTOONS);
-                                const anime_v2_banner = document.getElementById(ANIME_V2);
+                                const nameplates_banner = document.getElementById(discord_categories.NAMEPLATE);
+                                const arcane_banner = document.getElementById(discord_categories.WARRIOR);
+                                const dnd_banner = document.getElementById(discord_categories.CHANCE);
+                                const street_fighter_banner = document.getElementById(discord_categories.BAND);
+                                const fall_banner = document.getElementById(discord_categories.FALL);
+                                const palworld_banner = document.getElementById(discord_categories.TIDE);
+                                const valorant_banner = document.getElementById(discord_categories.SHY);
 
                                 if (localStorage.disable_client_banner_overrides != "true") {
+                                    if (nameplates_banner) {
+                                        document.getElementById(`${discord_categories.NAMEPLATE}-discord-watermark-container`).innerHTML = ``;
+                                        document.getElementById(`${discord_categories.NAMEPLATE}-banner-banner-container`).innerHTML = `
+                                            <img class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.discordapp.com/assets/content/6e9143efc20856655971694a3fc651737a9768dcda06dd420f219ddd67b72798.png">
+                                            <video disablepictureinpicture autoplay muted class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px; z-index: 1;" src="https://cdn.discordapp.com/assets/content/6f72be1e45f627e6b43894ca7dcda02c2851a3120a643a85c5132e87af6b50c4.webm" loop></video>
+                                        `;
+                                    }
+
                                     if (palworld_banner) {
-                                        document.getElementById(`${TIDE}-discord-watermark-container`).innerHTML = ``;
-                                        document.getElementById(`${TIDE}-banner-banner-container`).innerHTML = `
+                                        document.getElementById(`${discord_categories.TIDE}-discord-watermark-container`).innerHTML = ``;
+                                        document.getElementById(`${discord_categories.TIDE}-banner-banner-container`).innerHTML = `
                                             <img style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/15.jpg">
                                             <img style="position: absolute; right: 0px; bottom: 0px; width: 400px;" src="https://cdn.yapper.shop/discord-assets/13.png">
                                             <img style="position: absolute; left: 0px; bottom: 0px; width: 400px;" src="https://cdn.yapper.shop/discord-assets/12.png">
                                         `;
-                                        document.getElementById(`${TIDE}-logo-container`).innerHTML = `
+                                        document.getElementById(`${discord_categories.TIDE}-logo-container`).innerHTML = `
                                             <img class="shop-category-banner-logo" src="https://cdn.yapper.shop/discord-assets/9.png" id="shop-banner-logo">
                                         `;
                                     }
                                     
                                     if (valorant_banner) {
-                                        document.getElementById(`${SHY}-discord-watermark-container`).innerHTML = ``;
-                                        document.getElementById(`${SHY}-banner-banner-container`).innerHTML = `
+                                        document.getElementById(`${discord_categories.SHY}-discord-watermark-container`).innerHTML = ``;
+                                        document.getElementById(`${discord_categories.SHY}-banner-banner-container`).innerHTML = `
                                             <div class="shop-category-banner-img" style="background: rgb(255, 70, 85); position: absolute; left: 0px; bottom: 0px; width: 1280px;"></div>
                                             <img style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/23.png">
                                             <img style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/20.png">
                                             <img style="position: absolute; right: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/22.png">
                                         `;
-                                        document.getElementById(`${SHY}-logo-container`).innerHTML = `
+                                        document.getElementById(`${discord_categories.SHY}-logo-container`).innerHTML = `
                                             <img class="shop-category-banner-logo" src="https://cdn.yapper.shop/discord-assets/21.png" id="shop-banner-logo">
                                         `;
                                     }
@@ -13346,48 +13313,48 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                     if (localStorage.reduced_motion != "true") {
     
                                         if (arcane_banner) {
-                                            document.getElementById(`${WARRIOR}-banner-banner-container`).innerHTML = `
+                                            document.getElementById(`${discord_categories.WARRIOR}-banner-banner-container`).innerHTML = `
                                                 <img class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.discordapp.com/app-assets/1096190356233670716/1303490165297123358.png?size=4096">
                                                 <img class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/35.png">
                                             `;
                                         }
                                         
                                         if (dnd_banner) {
-                                            document.getElementById(`${CHANCE}-banner-banner-container`).innerHTML = `
+                                            document.getElementById(`${discord_categories.CHANCE}-banner-banner-container`).innerHTML = `
                                                 <img class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/32.png">
                                                 <img class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/31.png">
                                             `;
                                         }
                                         
                                         if (street_fighter_banner) {
-                                            document.getElementById(`${BAND}-banner-banner-container`).innerHTML = `
+                                            document.getElementById(`${discord_categories.BAND}-banner-banner-container`).innerHTML = `
                                                 <img class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.discordapp.com/app-assets/1096190356233670716/1285465421356732426.png?size=4096">
                                                 <img class="shop-category-banner-img" style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/19.png">
                                             `;
                                         }
     
                                         if (palworld_banner) {
-                                            document.getElementById(`${TIDE}-discord-watermark-container`).innerHTML = ``;
-                                            document.getElementById(`${TIDE}-banner-banner-container`).innerHTML = `
+                                            document.getElementById(`${discord_categories.TIDE}-discord-watermark-container`).innerHTML = ``;
+                                            document.getElementById(`${discord_categories.TIDE}-banner-banner-container`).innerHTML = `
                                                 <img style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/15.jpg">
                                                 <img style="position: absolute; right: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/14.png">
                                                 <img style="position: absolute; right: 0px; bottom: 0px; width: 400px;" src="https://cdn.yapper.shop/discord-assets/13.png">
                                                 <img style="position: absolute; left: 0px; bottom: 0px; width: 400px;" src="https://cdn.yapper.shop/discord-assets/12.png">
                                             `;
-                                            document.getElementById(`${TIDE}-logo-container`).innerHTML = `
+                                            document.getElementById(`${discord_categories.TIDE}-logo-container`).innerHTML = `
                                                 <img class="shop-category-banner-logo" src="https://cdn.yapper.shop/discord-assets/9.png" id="shop-banner-logo">
                                             `;
                                         }
     
                                         if (valorant_banner) {
-                                            document.getElementById(`${SHY}-discord-watermark-container`).innerHTML = ``;
-                                            document.getElementById(`${SHY}-banner-banner-container`).innerHTML = `
+                                            document.getElementById(`${discord_categories.SHY}-discord-watermark-container`).innerHTML = ``;
+                                            document.getElementById(`${discord_categories.SHY}-banner-banner-container`).innerHTML = `
                                                 <div class="shop-category-banner-img" style="background: rgb(255, 70, 85); position: absolute; left: 0px; bottom: 0px; width: 1280px;"></div>
                                                 <img style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/24.png">
                                                 <img style="position: absolute; right: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/22.png">
                                                 <img style="position: absolute; left: 0px; bottom: 0px; width: 1280px;" src="https://cdn.yapper.shop/discord-assets/20.png">
                                             `;
-                                            document.getElementById(`${SHY}-logo-container`).innerHTML = `
+                                            document.getElementById(`${discord_categories.SHY}-logo-container`).innerHTML = `
                                                 <img class="shop-category-banner-logo" src="https://cdn.yapper.shop/discord-assets/21.png" id="shop-banner-logo">
                                             `;
                                         }
@@ -13396,8 +13363,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                 }
 
                                 if (fall_banner) {
-                                    document.getElementById(`${FALL}-discord-watermark-container`).innerHTML = ``;
-                                    document.getElementById(`${FALL}-logo-container`).innerHTML = ``;
+                                    document.getElementById(`${discord_categories.FALL}-discord-watermark-container`).innerHTML = ``;
+                                    document.getElementById(`${discord_categories.FALL}-logo-container`).innerHTML = ``;
                                 }
                             }
                         }
@@ -13447,8 +13414,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     <p class="dm-button-text">${getTextString("FEATURED_TAB_TITLE")}</p>
                 </button>
                 <div id="recap-2024-tab-loading">
-                </div>
-                <div id="quick-info-tab-container">
                 </div>
             </div>
             <div class="dm-divider">${getTextString("SHOP_DM_DEVIDER")}</div>
@@ -13543,14 +13508,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         document.getElementById('recap-2024-tab').style.backgroundImage = "linear-gradient(10deg, rgba(0, 0, 0, 0) 40%, rgb(115, 11, 200) 180%), linear-gradient(170deg, rgba(0, 0, 0, 0) 40%, rgb(115, 11, 200) 180%)";
     }
 
-    if (localStorage.experiment_2025_03_quick_info === "Treatment 1: Enabled") {
-        document.getElementById('quick-info-tab-container').innerHTML = `
-            <button class="dm-button" id="quick-info-tab" onclick="setParams({page: 'quick-info'}); location.reload();">
-                <p class="dm-button-text">${getTextString("QUICK_INFO_TAB_TITLE")}</p>
-            </button>
-        `;
-    }
-
     function pageCheck() {
         privateAPICheck()
         if (params.get("page") === "home") {
@@ -13578,14 +13535,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             localStorage.dismissible_recap_2024 = "Treatment 1: Seen";
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("RECAP_2024_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
-            `;
-        } else if (params.get("page") === "quick-info") {
-            document.title = `${getTextString("QUICK_INFO_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
-            apiUrl = api + QUICK_INFO;
-            document.getElementById("quick-info-tab").classList.add('dm-button-selected');
-            document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("QUICK_INFO_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder"></div>
             `;
         } else if (params.get("page") === "shop") {
@@ -13641,6 +13590,21 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createMainShopElement()
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("LEAKS_TAB_PAGE_TITLE")}</h2>
+                <div id="open-help-modals-buttons-holder"></div>
+            `;
+        } else if (params.get("page") === "nameplates") {
+            document.title = `${getTextString("NAMEPLATES_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
+            if (localStorage.experiment_2025_02_fetch_from_vercel_endpoits === "Treatment 1: Enabled") {
+                url = api + COLLECTIBLES_SHOP;
+                apiUrl = new URL(url);
+                apiUrl.searchParams.append("tab", "nameplates");
+                if (localStorage.unreleased_discord_collectibles == "true") {
+                    apiUrl.searchParams.append("include-unpublished", "true");
+                }
+            }
+            createMainShopElement()
+            document.getElementById("top-bar-container").innerHTML = `
+                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("NAMEPLATES_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder"></div>
             `;
         } else if (params.get("page") === "consumables") {
@@ -14330,51 +14294,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 console.warn("No file selected.");
             }
         });
-
-    }
-
-    function createQuickInfoElement() {
-        document.getElementById("everything-housing-container").innerHTML = `
-            <div class="thy-shop-category-idk" style="height: 100%;">
-                <img class="shop-category-marketing-bg" style="height: 100%; position: absolute; filter: blur(3px);" src="${cdn}assets/110.svg">
-
-                <div style="height: 60px; padding-top: 30px;"></div>
-                
-                <div class="a2024-recap-text-card-1">
-                    <h1 class="center-text abcgintonord" style="font-size: 44px; margin-top: 0px; margin-bottom: 0px;">${getTextString("QUICK_INFO_PAGE_TITLE")}</h1>
-
-                    <p class="center-text" style="font-size: 18px;">${getTextString("QUICK_INFO_DESC")}</p>
-
-                    <div class="quick-info-info-container" id="quick-info-info-container">
-                    </div>
-                    <div class="quick-info-info-container" id="quick-info-info-container-loading">
-                        <div class="quick-info-info-card-loading">
-                            <h1 class="center-text abcgintonord" style="font-size: 25px; margin-top: 0px; margin-bottom: 0px; opacity: 0;">a</h1>
-
-                            <p class="center-text" style="font-size: 18px; opacity: 0;">Loading...</p>
-
-                            <h1 class="center-text" style="font-size: 40px; opacity: 0;">a</h1>
-                        </div>
-                        <div class="quick-info-info-card-loading">
-                            <h1 class="center-text abcgintonord" style="font-size: 25px; margin-top: 0px; margin-bottom: 0px; opacity: 0;">a</h1>
-
-                            <p class="center-text" style="font-size: 18px; opacity: 0;">Loading...</p>
-
-                            <h1 class="center-text" style="font-size: 40px; opacity: 0;">a</h1>
-                        </div>
-                        <div class="quick-info-info-card-loading">
-                            <h1 class="center-text abcgintonord" style="font-size: 25px; margin-top: 0px; margin-bottom: 0px; opacity: 0;">a</h1>
-
-                            <p class="center-text" style="font-size: 18px; opacity: 0;">Loading...</p>
-
-                            <h1 class="center-text" style="font-size: 40px; opacity: 0;">a</h1>
-                        </div>
-                    </div>
-                </div>
-
-                <hr style="opacity: 0; height: 30px;">
-            </div>
-        `;
 
     }
 
@@ -17309,6 +17228,150 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             }, 5000);
             console.warn('Invalid copyNotice')
         }
+    }
+
+    function scrollToSKU(sku_id, noscroll) {
+        const itemSKUForScroll = params.get("itemSkuId");
+        const justScrollSKU = params.get("scrollTo");
+
+        if (itemSKUForScroll === sku_id) {
+            setTimeout(() => {
+                try {
+                    if (noscroll != "true") {
+                        document.getElementById(itemSKUForScroll).scrollIntoView({ behavior: "smooth" });
+                    }
+                    document.getElementById(sku_id).classList.add("highlighted")
+
+                    let highlightedGlint = document.createElement("div");
+
+                    highlightedGlint.classList.add('shop-category-highlighted-glint');
+
+                    document.getElementById(sku_id).appendChild(highlightedGlint);
+                    setTimeout(() => {
+                        highlightedGlint.remove();
+                    }, 3000);
+                }
+                catch(error) {
+                    scrollToSKU(sku_id)
+                }
+            }, 10);
+        } else if (justScrollSKU === sku_id) {
+            setTimeout(() => {
+                try {
+                    if (noscroll != "true") {
+                        document.getElementById(justScrollSKU).scrollIntoView({ behavior: "smooth" });
+                    }
+                    document.getElementById(sku_id).classList.add("highlighted")
+
+                    let highlightedGlint = document.createElement("div");
+
+                    highlightedGlint.classList.add('shop-category-highlighted-glint');
+
+                    document.getElementById(sku_id).appendChild(highlightedGlint);
+                    setTimeout(() => {
+                        highlightedGlint.remove();
+                        removeParams('scrollTo');
+                    }, 3000);
+                }
+                catch(error) {
+                    scrollToSKU(sku_id)
+                }
+            }, 10);
+        }
+    }
+
+    function openInDiscordShop(sku_id, type, from, unpublished_data, category_sku_id) {
+        if (params.get("page") === "shop" && from === "card" && unpublished_data != "null" && localStorage.dismissible_open_in_shop_notice != "Treatment 1: Seen") {
+            createModal(getTextString("SHOP_UNPUBLISHED_WARNING"));
+        } else if (params.get("page") === "orbs" && from === "card" && localStorage.dismissible_open_in_shop_notice != "Treatment 1: Seen") {
+            createModal(getTextString("SHOP_MISCELLANEOUS_WARNING"));
+        } else if (params.get("page") === "leaks" && from === "card" && localStorage.dismissible_open_in_shop_notice != "Treatment 1: Seen") {
+            createModal(getTextString("SHOP_UNRELEASED_WARNING"));
+        } else if (params.get("page") === "miscellaneous" && from === "card" && localStorage.dismissible_open_in_shop_notice != "Treatment 1: Seen") {
+            createModal(getTextString("SHOP_MISCELLANEOUS_WARNING"));
+        } else if (category_sku_id === discord_categories.NAMEPLATE && from === "card" && localStorage.dismissible_open_in_shop_notice != "Treatment 1: Seen") {
+            createModal(getTextString("SHOP_ROLLING_OUT_WARNING"));
+        } else if (params.get("page") === "nameplates" && category_sku_id === discord_categories.NAMEPLATE_TEST && from === "card" && localStorage.dismissible_open_in_shop_notice != "Treatment 1: Seen") {
+            createModal(getTextString("SHOP_MISCELLANEOUS_WARNING"));
+        } else {
+            location.href='https://discord.com/shop#itemSkuId=' + sku_id;
+        }
+
+        function createModal(string) {
+            let modal = document.createElement("div");
+
+            modal.classList.add('modalv2');
+
+            modal.innerHTML = `
+                <div class="modalv2-inner open-in-shop">
+                    <p style="text-align: center; min-width: 800px;">${string}</p>
+                    <div data-modal-top-product-buttons>
+                        <div title="Close" data-close-product-card-button>
+                            <svg class="closeIcon_modal" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                        </div>
+                    </div>
+                    <div class="card-button-container open-in-shop">
+                        <div class="card-multi-button-container open-in-shop">
+                            <button class="card-button" onclick="location.href='https://discord.com/shop#itemSkuId=${sku_id}';">${getTextString("SHOP_MODAL_UNPUBLISHED_WARNING_CONTINUE")}</button>
+                            <button class="card-button" onclick="openAndDismiss('${sku_id}')">${getTextString("SHOP_MODAL_UNPUBLISHED_WARNING_CONTINUE2")}</button>
+                            <button class="card-button" data-go-back-button>${getTextString("SHOP_MODAL_UNPUBLISHED_WARNING_GO_BACK")}</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            document.body.appendChild(modal);
+
+            setTimeout(() => {
+                modal.classList.add('show');
+            }, 1);
+
+            let modal_back = document.createElement("div");
+
+            modal_back.classList.add('modalv2-back');
+            modal_back.id = 'modalv2-back';
+
+            document.body.appendChild(modal_back);
+
+            setTimeout(() => {
+                modal_back.classList.add('show');
+            }, 1);
+
+
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    modal.classList.remove('show');
+                    modal_back.classList.remove('show');
+                    setTimeout(() => {
+                        modal.remove();
+                        modal_back.remove();
+                    }, 300);
+                }
+            });
+
+            modal.querySelector("[data-close-product-card-button]").addEventListener('click', () => {
+                modal.classList.remove('show');
+                modal_back.classList.remove('show');
+                setTimeout(() => {
+                    modal.remove();
+                    modal_back.remove();
+                }, 300);
+            });
+
+            modal.querySelector("[data-go-back-button]").addEventListener('click', () => {
+                modal.classList.remove('show');
+                modal_back.classList.remove('show');
+                setTimeout(() => {
+                    modal.remove();
+                    modal_back.remove();
+                }, 300);
+            });
+        }
+    }
+
+    function openAndDismiss(sku_id) {
+        localStorage.dismissible_open_in_shop_notice = "Treatment 1: Seen";
+        location.href='https://discord.com/shop#itemSkuId=' + sku_id;
     }
     
     
