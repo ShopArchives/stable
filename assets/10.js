@@ -18,6 +18,19 @@ EXPERIMENT_ID_6 = 1
 
 const experimentsList = [
     {
+        title: "Discord Sign In",
+        id: "2025-04_discord_sign_in",
+        name: "experiment_2025_04_discord_sign_in",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Dynamic",
+            "Treatment 2: Force Logged Out",
+            "Treatment 3: Force Logged In"
+        ],
+        rollout: "Treatment -1: Disabled",
+        needs_api_token: "true"
+    },
+    {
         title: "Show items with no skus in misc tab",
         id: "2025-03_items_with_no_sku",
         name: "experiment_2025_03_items_with_no_sku",
@@ -328,13 +341,9 @@ const testFetchAPIList = [
         treatments: [
             "none",
             "collectibles-categories",
-            "consumables",
             "miscellaneous-categories",
-            "preview-1",
-            "user-profile-effects",
             "downloads",
-            "leaked-categories",
-            "orbs-shop-default"
+            "leaked-categories"
         ],
         rollout: "none",
         needs_api_token: "true"

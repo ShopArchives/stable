@@ -1,7 +1,7 @@
 
 
-app_version1 = "310"
-app_version2 = "Stable"
+app_version1 = "315"
+app_version2 = "Dev"
 tcbx926n29 = app_version2 + " " + app_version1;
 
 let modalIsAlreadyOpen = false;
@@ -2466,19 +2466,18 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     if (localStorage.experiment_2025_02_fetch_from_vercel_endpoits === "Treatment 1: Enabled") {
         endpoints = [
             COLLECTIBLES = "/collectibles-categories",
-            CONSUMABLES = "/consumables",
             MISCELLANEOUS = "/miscellaneous-categories",
-            HOME_PAGE_ALL = "/preview-1",
             DOWNLOADABLE_DATA = "/downloads",
             PROFILES_PLUS_EFFECTS = "/profiles-plus-profile-effects",
             LEAKS = "/leaked-categories",
-            COLLECTIBLES_MARKETING = "/collectibles-marketing",
-            EXPERIMENT_ROLLOUTS = "/rollout-handler",
-            COLLECTIBLES_SHOP_HOME = "/collectibles-shop-home",
-            ORBS_SHOP_DEFAULT = "/orbs-shop-default",
             COLLECTIBLES_SHOP = "/collectibles-shop",
             PROFILE_EFFECTS = "/profile-effects"
         ]
+        if (app_version2 === "Dev") {
+            LOGIN_CALLBACK = "/dev/callback"
+        } else {
+            LOGIN_CALLBACK = "/callback"
+        }
     } else {
         endpoints = [
             COLLECTIBLES = "/collectibles-categories.json",
@@ -2567,7 +2566,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         NAMEPLATE: "1349849614353829990",
         HOLIDAYS: "1349486948942745691",
         SHENANIGANS: "1352407446500675708",
-        CHIBI_CAFE: "1354894010849820852"
+        CHIBI_CAFE: "1354894010849820852",
+        GGEZ: "1357589632723849316"
+    };
+
+    discord_app_ids = {
+        COLLECTIBLES_SHOP: "1096190356233670716",
+        SHOP_ARCHIVES: "1342635740768501886"
     };
 
     external_skus = [
@@ -7304,6 +7309,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             
                                 category.querySelector("[data-shop-category-desc]").id = `${apiCategory.sku_id}-summary`;
                                 category.querySelector("[data-shop-category-desc]").textContent = apiCategory.summary;
+                                if (apiCategory.banner_text_color && apiCategory.banner_text_color != null) {
+                                    category.querySelector("[data-shop-category-desc]").style.color = apiCategory.banner_text_color;
+                                }
 
                                 category.querySelector("[data-shop-banner-banner-container]").id = `${apiCategory.sku_id}-banner-banner-container`;
                                 category.querySelector("[data-shop-category-logo-holder]").id = `${apiCategory.sku_id}-logo-container`;
@@ -7363,10 +7371,12 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     <p style="font-size: large; font-weight: 900;" data-product-modal-name></p>
                                                     <p style="color: var(--8)" data-product-modal-summary></p>
                                                     <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ITEM_COUNT")}${apiCategory.products.length}</p>
-                                                    <details>
+                                                    <details style="display: none;">
                                                         <summary class="clickable" style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS")}</summary>
-                                                        <div class="shop-category-modal-assets-container" data-shop-category-modal-assets-container></div>
+                                                        
                                                     </details>
+                                                    <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SHOW")}</p>
+                                                    <div class="shop-category-modal-assets-container" data-shop-category-modal-assets-container></div>
                                                     <div class="shop-modal-review-container" data-shop-modal-review-container>
                                                         <p style="font-size: large; font-weight: 900;" data-shop-modal-review-title></p>
                                                     </div>
@@ -7376,8 +7386,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     <div title="Close" data-close-product-card-button>
                                                         <svg class="closeIcon_modal" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
                                                     </div>
-                                                    <div title="Copy Link" data-share-product-card-button></div>
-                                                    <div title="Download Data" data-download-product-card-button></div>
                                                 </div>
                                             </div>
                                         `;
@@ -7709,14 +7717,85 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         }, 1);
 
                                         
+                                        const top_button_container = document.querySelector("[data-modal-top-product-buttons]");
+
+                                        
                                         if (localStorage.experiment_2025_02_shop_category_modals === "Treatment 2: Enable category modals w/ data downloads") {
-                                            modal.querySelector("[data-download-product-card-button]").innerHTML = `
-                                                <svg class="downloadIcon_modal" onclick="window.open('https://item.yapper.shop/sku/${apiCategory.sku_id}/data.zip');" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.0547 0.999993L11.0547 11.59L7.7547 8.28999C7.66429 8.186 7.55337 8.10181 7.4289 8.04271C7.30442 7.98361 7.16907 7.95088 7.03134 7.94656C6.89362 7.94224 6.75648 7.96643 6.62855 8.01761C6.50061 8.0688 6.38464 8.14587 6.28789 8.24399C6.19115 8.34212 6.11573 8.45917 6.06637 8.58782C6.01701 8.71647 5.99476 8.85393 6.00104 8.99159C6.00731 9.12924 6.04196 9.26411 6.10282 9.38773C6.16368 9.51136 6.24943 9.62107 6.3547 9.70999L11.3547 14.71C11.5416 14.8932 11.7929 14.9959 12.0547 14.9959C12.3164 14.9959 12.5678 14.8932 12.7547 14.71L17.7547 9.70999C17.92 9.51987 18.0074 9.27437 17.9995 9.02257C17.9916 8.77078 17.889 8.53124 17.7121 8.35185C17.5352 8.17245 17.2972 8.06642 17.0455 8.05496C16.7939 8.04349 16.5471 8.12743 16.3547 8.28999L13.0547 11.6L13.0547 0.999993C13.0547 0.734776 12.9493 0.480422 12.7618 0.292885C12.5743 0.105349 12.3199 -7.13283e-06 12.0547 -7.10964e-06C11.7895 -7.08645e-06 11.5351 0.105349 11.3476 0.292885C11.1601 0.480422 11.0547 0.734776 11.0547 0.999993Z" fill="currentColor"/><path d="M4 15C4 14.7348 4.10536 14.4804 4.29289 14.2929C4.48043 14.1054 4.73478 14 5 14H7C7.26522 14 7.51957 13.8946 7.70711 13.7071C7.89464 13.5196 8 13.2652 8 13C8 12.7348 7.89464 12.4804 7.70711 12.2929C7.51957 12.1054 7.26522 12 7 12H5C4.20435 12 3.44129 12.3161 2.87868 12.8787C2.31607 13.4413 2 14.2044 2 15V19C2 19.7956 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7956 22 19V15C22 14.2044 21.6839 13.4413 21.1213 12.8787C20.5587 12.3161 19.7956 12 19 12H17C16.7348 12 16.4804 12.1054 16.2929 12.2929C16.1054 12.4804 16 12.7348 16 13C16 13.2652 16.1054 13.5196 16.2929 13.7071C16.4804 13.8946 16.7348 14 17 14H19C19.2652 14 19.5196 14.1054 19.7071 14.2929C19.8946 14.4804 20 14.7348 20 15V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V15Z" fill="currentColor"/></svg>
+                                            let downloadItemData = document.createElement("div");
+
+                                            downloadItemData.title = getTextString("SHOP_DOWNLOAD_DATA");
+                                            downloadItemData.innerHTML = `
+                                                <svg data-download-product-card-button class="downloadIcon_modal" onclick="window.open('https://item.yapper.shop/sku/${apiCategory.sku_id}/data.zip');" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.0547 0.999993L11.0547 11.59L7.7547 8.28999C7.66429 8.186 7.55337 8.10181 7.4289 8.04271C7.30442 7.98361 7.16907 7.95088 7.03134 7.94656C6.89362 7.94224 6.75648 7.96643 6.62855 8.01761C6.50061 8.0688 6.38464 8.14587 6.28789 8.24399C6.19115 8.34212 6.11573 8.45917 6.06637 8.58782C6.01701 8.71647 5.99476 8.85393 6.00104 8.99159C6.00731 9.12924 6.04196 9.26411 6.10282 9.38773C6.16368 9.51136 6.24943 9.62107 6.3547 9.70999L11.3547 14.71C11.5416 14.8932 11.7929 14.9959 12.0547 14.9959C12.3164 14.9959 12.5678 14.8932 12.7547 14.71L17.7547 9.70999C17.92 9.51987 18.0074 9.27437 17.9995 9.02257C17.9916 8.77078 17.889 8.53124 17.7121 8.35185C17.5352 8.17245 17.2972 8.06642 17.0455 8.05496C16.7939 8.04349 16.5471 8.12743 16.3547 8.28999L13.0547 11.6L13.0547 0.999993C13.0547 0.734776 12.9493 0.480422 12.7618 0.292885C12.5743 0.105349 12.3199 -7.13283e-06 12.0547 -7.10964e-06C11.7895 -7.08645e-06 11.5351 0.105349 11.3476 0.292885C11.1601 0.480422 11.0547 0.734776 11.0547 0.999993Z" fill="currentColor"/><path d="M4 15C4 14.7348 4.10536 14.4804 4.29289 14.2929C4.48043 14.1054 4.73478 14 5 14H7C7.26522 14 7.51957 13.8946 7.70711 13.7071C7.89464 13.5196 8 13.2652 8 13C8 12.7348 7.89464 12.4804 7.70711 12.2929C7.51957 12.1054 7.26522 12 7 12H5C4.20435 12 3.44129 12.3161 2.87868 12.8787C2.31607 13.4413 2 14.2044 2 15V19C2 19.7956 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7956 22 19V15C22 14.2044 21.6839 13.4413 21.1213 12.8787C20.5587 12.3161 19.7956 12 19 12H17C16.7348 12 16.4804 12.1054 16.2929 12.2929C16.1054 12.4804 16 12.7348 16 13C16 13.2652 16.1054 13.5196 16.2929 13.7071C16.4804 13.8946 16.7348 14 17 14H19C19.2652 14 19.5196 14.1054 19.7071 14.2929C19.8946 14.4804 20 14.7348 20 15V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V15Z" fill="currentColor"/></svg>
                                             `;
+
+                                            top_button_container.appendChild(downloadItemData);
                                         }
 
-                                        modal.querySelector("[data-share-product-card-button]").style.display = 'none';
-                                        
+                                        if (localStorage.experiment_2025_03_view_raw_modal === "Treatment 1: Enabled") {
+                                            let rawItemData = document.createElement("div");
+
+                                            rawItemData.title = getTextString("SHOP_VIEW_RAW_DATA");
+                                            rawItemData.innerHTML = `
+                                                <svg data-view-raw-product-card-button class="shareIcon_modal" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.7376 3.18925C15.4883 2.93731 15.0814 2.93686 14.8316 3.18824L14.0087 4.01625C13.7618 4.26471 13.7614 4.66581 14.0078 4.91476L20.3804 11.3527C20.6265 11.6013 20.6265 12.0017 20.3804 12.2503L14.0078 18.6882C13.7614 18.9373 13.7618 19.3383 14.0087 19.5867L14.8316 20.4148C15.0814 20.6662 15.4883 20.6658 15.7376 20.4138L23.815 12.2503C24.061 12.0016 24.061 11.6014 23.815 11.3528L15.7376 3.18925Z" fill="currentColor"/><path d="M9.99171 4.91476C10.2381 4.66581 10.2377 4.26471 9.99081 4.01625L9.16787 3.18824C8.91804 2.93686 8.51118 2.93731 8.2619 3.18925L0.184466 11.3528C-0.0614893 11.6014 -0.061488 12.0016 0.184466 12.2503L8.2619 20.4138C8.51118 20.6658 8.91803 20.6662 9.16787 20.4148L9.99081 19.5867C10.2377 19.3383 10.2381 18.9373 9.99171 18.6882L3.61906 12.2503C3.37298 12.0017 3.37298 11.6013 3.61906 11.3527L9.99171 4.91476Z" fill="currentColor"/></svg>
+                                            `;
+
+                                            top_button_container.appendChild(rawItemData);
+
+                                            modal.querySelector("[data-view-raw-product-card-button]").onclick = function(){
+                                                openRawModal();
+                                            };
+
+                                            async function openRawModal() {
+                                                let modal = document.createElement("div");
+                    
+                                                modal.classList.add('modalv2');
+                    
+                                                modal.innerHTML = `
+                                                    <div class="view-raw-modalv2-inner">
+                                                        <textarea class="view-raw-modal-textbox" readonly>${JSON.stringify(apiCategory, undefined, 4)}</textarea>
+                                                    </div>
+                                                `;
+                    
+                                                document.body.appendChild(modal);
+                    
+                                                setTimeout(() => {
+                                                    modal.classList.add('show');
+                                                }, 1);
+                                                
+                    
+                                                let modal_back = document.createElement("div");
+                    
+                                                modal_back.classList.add('modalv2-back');
+                                                modal_back.id = 'modalv2-back';
+                    
+                                                document.body.appendChild(modal_back);
+                    
+                                                setTimeout(() => {
+                                                    modal_back.classList.add('show');
+                                                }, 1);
+                    
+                    
+                                                modal.addEventListener('click', (event) => {
+                                                    if (event.target === modal) {
+                                                        modal.classList.remove('show');
+                                                        modal_back.classList.remove('show');
+                                                        setTimeout(() => {
+                                                            modal.remove();
+                                                            modal_back.remove();
+                                                        }, 300);
+                                                    }
+                                                });
+                    
+                                                document.querySelector("[data-close-product-card-button]").addEventListener('click', () => {
+                                                    modal.classList.remove('show');
+                                                    modal_back.classList.remove('show');
+                                                    setTimeout(() => {
+                                                        modal.remove();
+                                                        modal_back.remove();
+                                                    }, 300);
+                                                });
+                                            }
+                                        }
 
 
                                         let modal_back = document.createElement("div");
@@ -7876,70 +7955,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                             const previewHolder = card.querySelector("[data-shop-card-preview-holder]");
 
-                                            if (localStorage.discord_username && localStorage.discord_username != '') {
-                                                previewName = localStorage.discord_username;
-                                            } else {
-                                                previewName = 'Discord User'
-                                            }
-
                                             previewHolder.innerHTML = `
-                                                <div class="nameplate-null-user">
-                                                    <div class="nameplate-null-user-avatar"></div>
-                                                    <div class="nameplate-null-user-name _1"></div>
-                                                    <div class="nameplate-preview-status-bg"></div>
-                                                    <div class="nameplate-preview-status-color"></div>
-                                                </div>
-                                                <div class="nameplate-null-user">
-                                                    <div class="nameplate-null-user-avatar"></div>
-                                                    <div class="nameplate-null-user-name _2"></div>
-                                                    <div class="nameplate-preview-status-bg"></div>
-                                                    <div class="nameplate-preview-status-color"></div>
-                                                </div>
-                                                <div class="nameplate-null-user" data-user-nameplate-preview>
-                                                    <video muted loop class="nameplate-null-user" style="position: absolute;" data-user-nameplate-preview-img></video>
-                                                    <div class="nameplate-user-avatar" data-nameplate-user-random-avatar></div>
-                                                    <p class="nameplate-user-name">${previewName}</p>
-                                                </div>
-                                                <div class="nameplate-null-user">
-                                                    <div class="nameplate-null-user-avatar"></div>
-                                                    <div class="nameplate-null-user-name _2"></div>
-                                                    <div class="nameplate-preview-status-bg"></div>
-                                                    <div class="nameplate-preview-status-color"></div>
-                                                </div>
-                                                <div class="nameplate-null-user">
-                                                    <div class="nameplate-null-user-avatar"></div>
-                                                    <div class="nameplate-null-user-name _1"></div>
-                                                    <div class="nameplate-preview-status-bg"></div>
-                                                    <div class="nameplate-preview-status-color"></div>
-                                                </div>
-                                                <div class="nameplate-fade-top"></div>
-                                                <div class="nameplate-fade-bottom"></div>
+                                                <p>${getTextString("CARD_TYPE_NAMEPLATE_PPLUS_ERROR")}</p>
                                             `;
-
-                                            product.items.forEach(item => {
-                                                const nameplatePreview = previewHolder.querySelector("[data-user-nameplate-preview]");
-                                                const paletteName = item.palette;
-                                                const asset = `https://cdn.yapper.shop/custom-collectibles/${item.asset}.png`;
-                                                const bgcolor = nameplate_palettes[paletteName].darkBackground;
-
-                                                previewHolder.querySelector("[data-user-nameplate-preview-img]").src = asset;
-
-                                                nameplatePreview.style.backgroundImage = `linear-gradient(10deg, #00000000 40%, ${bgcolor} 180%), linear-gradient(170deg, #00000000 40%, ${bgcolor} 180%)`;
-                                                // nameplatePreview.style.boxShadow = `0 0 0 1px #a10606`;
-                                                
-                                                const nullUserNameRandomWidth = previewHolder.querySelectorAll("[data-null-user-random-name]");
-                                                
-                                                nullUserNameRandomWidth.forEach(UserName => {
-                                                    const randomWidth = Math.floor(Math.random() * (180 - 80 + 1)) + 80;
-                                                    UserName.style.width = randomWidth + `px`;
-                                                });
-                                            
-                                                const nullUserAvatar = previewHolder.querySelectorAll("[data-nameplate-user-random-avatar]");
-                                            
-                                                nullUserAvatar.forEach(UserAvatar => {
-                                                    UserAvatar.style.backgroundImage = `url(${localStorage.discord_avatar})`;
-                                                });
-                                            });
                                             
                                         } else if (product.type === item_types.BUNDLE) {
                                             card.classList.add("type_1000");
@@ -8274,7 +8292,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
 
                                         if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 1: Enable modals" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 2: Enable modals w/ data downloads" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
-                                            if (product.type === item_types.AVATAR_DECORATION || product.type === item_types.PROFILE_EFFECT || product.type === item_types.NAMEPLATE || product.type === item_types.BUNDLE || product.type === item_types.VARIANTS_GROUP) {
+                                            if (product.type === item_types.AVATAR_DECORATION || product.type === item_types.PROFILE_EFFECT || product.type === item_types.BUNDLE || product.type === item_types.VARIANTS_GROUP) {
                                                 card.classList.add('clickable');
 
                                                 card.addEventListener("click", (event) => {
@@ -8369,7 +8387,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
                                                                         <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
-                                                                        <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.yapper.shop/custom-collectibles/avatar-decorations/${item.asset}.png">
+                                                                        <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.yapper.shop/custom-collectibles/avatar-decorations/a_${item.asset}.png">
                                                                         <div class="options-preview-profile-status-bg"></div>
                                                                         <div class="options-preview-profile-status-color"></div>
                                                                     </div>
@@ -8528,101 +8546,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 }
                                                             }
                                                         }
-                                                    } else if (product.type === item_types.NAMEPLATE) {
-                                                        card.classList.add("modal-2");
-            
-                                                        modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${product.sku_id}`;
-                                                        modal.querySelector("[data-product-modal-name]").textContent = product.name;
-                                                        modal.querySelector("[data-product-modal-summary]").textContent = product.summary;
-            
-                                                        const previewHolder = modal.querySelector("[data-modal-preview-holder]");
-                                                        previewHolder.classList.add('nameplate-modal-preview');
-            
-                                                        if (localStorage.discord_username && localStorage.discord_username != '') {
-                                                            previewName = localStorage.discord_username;
-                                                        } else {
-                                                            previewName = 'Discord User'
-                                                        }
-
-                                                        if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning" && product.category_sku_id === discord_categories.NAMEPLATE) {
-                                                            let nameplateWarning = document.createElement("div");
-
-                                                            nameplateWarning.classList.add('nameplate-modal-early-warning-container');
-                                                            nameplateWarning.innerHTML = `
-                                                                <p>${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_1")}</p>
-                                                            `;
-
-                                                            modal.querySelector(".modalv2-inner-left").appendChild(nameplateWarning);
-                                                        } else if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 1: Nameplate Test Warning" || localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning") {
-                                                            if (product.category_sku_id === discord_categories.NAMEPLATE_TEST) {
-                                                                let nameplateWarning = document.createElement("div");
-
-                                                                nameplateWarning.classList.add('nameplate-modal-early-warning-container');
-                                                                nameplateWarning.innerHTML = `
-                                                                    <p>${getTextString("SHOP_NAMEPLATE_WARNING_NOTICE_2")}</p>
-                                                                `;
-
-                                                                modal.querySelector(".modalv2-inner-left").appendChild(nameplateWarning);
-                                                            }
-                                                        }
-            
-                                                        previewHolder.innerHTML = `
-                                                            <div class="nameplate-null-user">
-                                                                <div class="nameplate-null-user-avatar"></div>
-                                                                <div class="nameplate-null-user-name _1"></div>
-                                                                <div class="nameplate-preview-status-bg"></div>
-                                                                <div class="nameplate-preview-status-color"></div>
-                                                            </div>
-                                                            <div class="nameplate-null-user">
-                                                                <div class="nameplate-null-user-avatar"></div>
-                                                                <div class="nameplate-null-user-name _2"></div>
-                                                                <div class="nameplate-preview-status-bg"></div>
-                                                                <div class="nameplate-preview-status-color"></div>
-                                                            </div>
-                                                            <div class="nameplate-null-user" data-user-nameplate-preview>
-                                                                <video muted loop class="nameplate-null-user" style="position: absolute;" data-user-nameplate-preview-img></video>
-                                                                <div class="nameplate-user-avatar" data-nameplate-user-random-avatar></div>
-                                                                <p class="nameplate-user-name">${previewName}</p>
-                                                            </div>
-                                                            <div class="nameplate-null-user">
-                                                                <div class="nameplate-null-user-avatar"></div>
-                                                                <div class="nameplate-null-user-name _2"></div>
-                                                                <div class="nameplate-preview-status-bg"></div>
-                                                                <div class="nameplate-preview-status-color"></div>
-                                                            </div>
-                                                            <div class="nameplate-null-user">
-                                                                <div class="nameplate-null-user-avatar"></div>
-                                                                <div class="nameplate-null-user-name _1"></div>
-                                                                <div class="nameplate-preview-status-bg"></div>
-                                                                <div class="nameplate-preview-status-color"></div>
-                                                            </div>
-                                                        `;
-            
-                                                        product.items.forEach(item => {
-                                                            const nameplatePreview = previewHolder.querySelector("[data-user-nameplate-preview]");
-                                                            const paletteName = item.palette;
-                                                            const asset = `https://cdn.discordapp.com/assets/collectibles/${item.asset}img.png`;
-                                                            const bgcolor = nameplate_palettes[paletteName].darkBackground;
-            
-                                                            previewHolder.querySelector("[data-user-nameplate-preview-img]").src = asset;
-            
-                                                            nameplatePreview.style.backgroundImage = `linear-gradient(10deg, #00000000 40%, ${bgcolor} 180%), linear-gradient(170deg, #00000000 40%, ${bgcolor} 180%)`;
-                                                            // nameplatePreview.style.boxShadow = `0 0 0 1px #a10606`;
-                                                            
-                                                            const nullUserNameRandomWidth = previewHolder.querySelectorAll("[data-null-user-random-name]");
-                                                            
-                                                            nullUserNameRandomWidth.forEach(UserName => {
-                                                                const randomWidth = Math.floor(Math.random() * (180 - 80 + 1)) + 80;
-                                                                UserName.style.width = randomWidth + `px`;
-                                                            });
-                                                        
-                                                            const nullUserAvatar = previewHolder.querySelectorAll("[data-nameplate-user-random-avatar]");
-                                                        
-                                                            nullUserAvatar.forEach(UserAvatar => {
-                                                                UserAvatar.style.backgroundImage = `url(${localStorage.discord_avatar})`;
-                                                            });
-                                                        });
-                                                        
                                                     } else if (product.type === item_types.BUNDLE) {
                                                         modal.classList.add('modal-1000');
 
@@ -9576,9 +9499,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             <img class="paper-beach-sun-banner-decoration" src="https://cdn.yapper.shop/assets/116.png">
                                         `;
                                         document.getElementById(`${PAPER_BEACH_V2}-logo-container`).innerHTML = `
-                                                <img class="shop-category-banner-logo-1 shop-logo-sway" src="https://cdn.yapper.shop/assets/115.png" id="shop-banner-logo">
-                                            `;
-                                        document.getElementById(`${PAPER_BEACH_V2}-summary`).style.color = 'black';
+                                            <img class="shop-category-banner-logo-1 shop-logo-sway" src="https://cdn.yapper.shop/assets/115.png" id="shop-banner-logo">
+                                        `;
                                     }
                                     
                                     if (windowkill2_banner) {
@@ -9607,37 +9529,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             </div>
                                         `;
                                     }
-                                }
-
-
-                                if (paper_beach2_banner) {
-                                    try {
-                                        document.getElementById(`${PAPER_BEACH_V2}-summary`).style.color = 'black';
-                                    } catch (error) {}
-                                }
-
-                                if (windowkill2_banner) {
-                                    try {
-                                        document.getElementById(`${WINDOWKILL_V2}-summary`).style.color = 'black';
-                                    } catch (error) {}
-                                }
-
-                                if (paper_beach_banner) {
-                                    try {
-                                        document.getElementById(`${PAPER_BEACH}-summary`).style.color = 'black';
-                                    } catch (error) {}
-                                }
-
-                                if (bopl_battle_banner) {
-                                    try {
-                                        document.getElementById(`${BOPL_BATTLE}-summary`).style.color = 'black';
-                                    } catch (error) {}
-                                }
-
-                                if (windowkill_banner) {
-                                    try {
-                                        document.getElementById(`${WINDOWKILL}-summary`).style.color = 'black';
-                                    } catch (error) {}
                                 }
 
 
@@ -10350,6 +10241,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             
                                 category.querySelector("[data-shop-category-desc]").id = `${apiCategory.sku_id}-summary`;
                                 category.querySelector("[data-shop-category-desc]").textContent = apiCategory.summary;
+                                if (apiCategory.banner_text_color && apiCategory.banner_text_color != null) {
+                                    category.querySelector("[data-shop-category-desc]").style.color = apiCategory.banner_text_color;
+                                }
 
 
                                 category.querySelector("[data-shop-discord-watermark-container]").id = `${apiCategory.sku_id}-discord-watermark-container`;
@@ -10497,8 +10391,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     <div title="Close" data-close-product-card-button>
                                                         <svg class="closeIcon_modal" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
                                                     </div>
-                                                    <div title="Copy Link" data-share-product-card-button></div>
-                                                    <div title="Download Data" data-download-product-card-button></div>
                                                 </div>
                                             </div>
                                         `;
@@ -10807,13 +10699,85 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         }, 1);
 
                                         
+                                        const top_button_container = document.querySelector("[data-modal-top-product-buttons]");
+
+                                        
                                         if (localStorage.experiment_2025_02_shop_category_modals === "Treatment 2: Enable category modals w/ data downloads") {
-                                            modal.querySelector("[data-download-product-card-button]").innerHTML = `
-                                                <svg class="downloadIcon_modal" onclick="window.open('https://item.yapper.shop/sku/${apiCategory.sku_id}/data.zip');" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.0547 0.999993L11.0547 11.59L7.7547 8.28999C7.66429 8.186 7.55337 8.10181 7.4289 8.04271C7.30442 7.98361 7.16907 7.95088 7.03134 7.94656C6.89362 7.94224 6.75648 7.96643 6.62855 8.01761C6.50061 8.0688 6.38464 8.14587 6.28789 8.24399C6.19115 8.34212 6.11573 8.45917 6.06637 8.58782C6.01701 8.71647 5.99476 8.85393 6.00104 8.99159C6.00731 9.12924 6.04196 9.26411 6.10282 9.38773C6.16368 9.51136 6.24943 9.62107 6.3547 9.70999L11.3547 14.71C11.5416 14.8932 11.7929 14.9959 12.0547 14.9959C12.3164 14.9959 12.5678 14.8932 12.7547 14.71L17.7547 9.70999C17.92 9.51987 18.0074 9.27437 17.9995 9.02257C17.9916 8.77078 17.889 8.53124 17.7121 8.35185C17.5352 8.17245 17.2972 8.06642 17.0455 8.05496C16.7939 8.04349 16.5471 8.12743 16.3547 8.28999L13.0547 11.6L13.0547 0.999993C13.0547 0.734776 12.9493 0.480422 12.7618 0.292885C12.5743 0.105349 12.3199 -7.13283e-06 12.0547 -7.10964e-06C11.7895 -7.08645e-06 11.5351 0.105349 11.3476 0.292885C11.1601 0.480422 11.0547 0.734776 11.0547 0.999993Z" fill="currentColor"/><path d="M4 15C4 14.7348 4.10536 14.4804 4.29289 14.2929C4.48043 14.1054 4.73478 14 5 14H7C7.26522 14 7.51957 13.8946 7.70711 13.7071C7.89464 13.5196 8 13.2652 8 13C8 12.7348 7.89464 12.4804 7.70711 12.2929C7.51957 12.1054 7.26522 12 7 12H5C4.20435 12 3.44129 12.3161 2.87868 12.8787C2.31607 13.4413 2 14.2044 2 15V19C2 19.7956 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7956 22 19V15C22 14.2044 21.6839 13.4413 21.1213 12.8787C20.5587 12.3161 19.7956 12 19 12H17C16.7348 12 16.4804 12.1054 16.2929 12.2929C16.1054 12.4804 16 12.7348 16 13C16 13.2652 16.1054 13.5196 16.2929 13.7071C16.4804 13.8946 16.7348 14 17 14H19C19.2652 14 19.5196 14.1054 19.7071 14.2929C19.8946 14.4804 20 14.7348 20 15V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V15Z" fill="currentColor"/></svg>
+                                            let downloadItemData = document.createElement("div");
+
+                                            downloadItemData.title = getTextString("SHOP_DOWNLOAD_DATA");
+                                            downloadItemData.innerHTML = `
+                                                <svg data-download-product-card-button class="downloadIcon_modal" onclick="window.open('https://item.yapper.shop/sku/${apiCategory.sku_id}/data.zip');" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.0547 0.999993L11.0547 11.59L7.7547 8.28999C7.66429 8.186 7.55337 8.10181 7.4289 8.04271C7.30442 7.98361 7.16907 7.95088 7.03134 7.94656C6.89362 7.94224 6.75648 7.96643 6.62855 8.01761C6.50061 8.0688 6.38464 8.14587 6.28789 8.24399C6.19115 8.34212 6.11573 8.45917 6.06637 8.58782C6.01701 8.71647 5.99476 8.85393 6.00104 8.99159C6.00731 9.12924 6.04196 9.26411 6.10282 9.38773C6.16368 9.51136 6.24943 9.62107 6.3547 9.70999L11.3547 14.71C11.5416 14.8932 11.7929 14.9959 12.0547 14.9959C12.3164 14.9959 12.5678 14.8932 12.7547 14.71L17.7547 9.70999C17.92 9.51987 18.0074 9.27437 17.9995 9.02257C17.9916 8.77078 17.889 8.53124 17.7121 8.35185C17.5352 8.17245 17.2972 8.06642 17.0455 8.05496C16.7939 8.04349 16.5471 8.12743 16.3547 8.28999L13.0547 11.6L13.0547 0.999993C13.0547 0.734776 12.9493 0.480422 12.7618 0.292885C12.5743 0.105349 12.3199 -7.13283e-06 12.0547 -7.10964e-06C11.7895 -7.08645e-06 11.5351 0.105349 11.3476 0.292885C11.1601 0.480422 11.0547 0.734776 11.0547 0.999993Z" fill="currentColor"/><path d="M4 15C4 14.7348 4.10536 14.4804 4.29289 14.2929C4.48043 14.1054 4.73478 14 5 14H7C7.26522 14 7.51957 13.8946 7.70711 13.7071C7.89464 13.5196 8 13.2652 8 13C8 12.7348 7.89464 12.4804 7.70711 12.2929C7.51957 12.1054 7.26522 12 7 12H5C4.20435 12 3.44129 12.3161 2.87868 12.8787C2.31607 13.4413 2 14.2044 2 15V19C2 19.7956 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7956 22 19V15C22 14.2044 21.6839 13.4413 21.1213 12.8787C20.5587 12.3161 19.7956 12 19 12H17C16.7348 12 16.4804 12.1054 16.2929 12.2929C16.1054 12.4804 16 12.7348 16 13C16 13.2652 16.1054 13.5196 16.2929 13.7071C16.4804 13.8946 16.7348 14 17 14H19C19.2652 14 19.5196 14.1054 19.7071 14.2929C19.8946 14.4804 20 14.7348 20 15V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V15Z" fill="currentColor"/></svg>
                                             `;
+
+                                            top_button_container.appendChild(downloadItemData);
                                         }
 
-                                        modal.querySelector("[data-share-product-card-button]").style.display = 'none';
+                                        if (localStorage.experiment_2025_03_view_raw_modal === "Treatment 1: Enabled") {
+                                            let rawItemData = document.createElement("div");
+
+                                            rawItemData.title = getTextString("SHOP_VIEW_RAW_DATA");
+                                            rawItemData.innerHTML = `
+                                                <svg data-view-raw-product-card-button class="shareIcon_modal" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15.7376 3.18925C15.4883 2.93731 15.0814 2.93686 14.8316 3.18824L14.0087 4.01625C13.7618 4.26471 13.7614 4.66581 14.0078 4.91476L20.3804 11.3527C20.6265 11.6013 20.6265 12.0017 20.3804 12.2503L14.0078 18.6882C13.7614 18.9373 13.7618 19.3383 14.0087 19.5867L14.8316 20.4148C15.0814 20.6662 15.4883 20.6658 15.7376 20.4138L23.815 12.2503C24.061 12.0016 24.061 11.6014 23.815 11.3528L15.7376 3.18925Z" fill="currentColor"/><path d="M9.99171 4.91476C10.2381 4.66581 10.2377 4.26471 9.99081 4.01625L9.16787 3.18824C8.91804 2.93686 8.51118 2.93731 8.2619 3.18925L0.184466 11.3528C-0.0614893 11.6014 -0.061488 12.0016 0.184466 12.2503L8.2619 20.4138C8.51118 20.6658 8.91803 20.6662 9.16787 20.4148L9.99081 19.5867C10.2377 19.3383 10.2381 18.9373 9.99171 18.6882L3.61906 12.2503C3.37298 12.0017 3.37298 11.6013 3.61906 11.3527L9.99171 4.91476Z" fill="currentColor"/></svg>
+                                            `;
+
+                                            top_button_container.appendChild(rawItemData);
+
+                                            modal.querySelector("[data-view-raw-product-card-button]").onclick = function(){
+                                                openRawModal();
+                                            };
+
+                                            async function openRawModal() {
+                                                let modal = document.createElement("div");
+                    
+                                                modal.classList.add('modalv2');
+                    
+                                                modal.innerHTML = `
+                                                    <div class="view-raw-modalv2-inner">
+                                                        <textarea class="view-raw-modal-textbox" readonly>${JSON.stringify(apiCategory, undefined, 4)}</textarea>
+                                                    </div>
+                                                `;
+                    
+                                                document.body.appendChild(modal);
+                    
+                                                setTimeout(() => {
+                                                    modal.classList.add('show');
+                                                }, 1);
+                                                
+                    
+                                                let modal_back = document.createElement("div");
+                    
+                                                modal_back.classList.add('modalv2-back');
+                                                modal_back.id = 'modalv2-back';
+                    
+                                                document.body.appendChild(modal_back);
+                    
+                                                setTimeout(() => {
+                                                    modal_back.classList.add('show');
+                                                }, 1);
+                    
+                    
+                                                modal.addEventListener('click', (event) => {
+                                                    if (event.target === modal) {
+                                                        modal.classList.remove('show');
+                                                        modal_back.classList.remove('show');
+                                                        setTimeout(() => {
+                                                            modal.remove();
+                                                            modal_back.remove();
+                                                        }, 300);
+                                                    }
+                                                });
+                    
+                                                document.querySelector("[data-close-product-card-button]").addEventListener('click', () => {
+                                                    modal.classList.remove('show');
+                                                    modal_back.classList.remove('show');
+                                                    setTimeout(() => {
+                                                        modal.remove();
+                                                        modal_back.remove();
+                                                    }, 300);
+                                                });
+                                            }
+                                        }
 
 
                                         const unpublishedAt = new Date(apiCategory.unpublished_at);
@@ -13179,6 +13143,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 `;
                                             }
                                         }
+
+                                        if (params.get("page") === "leaks") {
+                                            card.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                <div class="unplublished-tag">
+                                                    <p class="unplublished-tag-text">${getTextString("CARD_LEAKED_TAG")}</p>
+                                                </div>
+                                            `;
+                                        }
                                                                             
                                         if (newColorsSKUIDS.includes(product.sku_id) && discord_categories.ANIME_V3 === apiCategory.sku_id) {
                                             newColorItemCheck();
@@ -15447,39 +15419,42 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById("username-picker-container-dev").innerHTML = `
                     <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE")}</p>
                     <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DESC")}</p>
-                    <div class="options-option-card" id="options-text-input-option">
-                        <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_USERNAME")}</p>
-                        <input class="options-text-input" autocomplete="off" oninput="changeUsernameFromInput();" style="posision: center;" id="profile-username-text-input" value="${localStorage.discord_username}" type="text">
-                    </div>
-                    <div class="options-option-card" id="options-text-input-option">
-                        <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_BANNER_COLOR")}</p>
-                        <input class="options-color-input" autocomplete="off" oninput="changeBannerColorFromInput();" style="posision: center;" id="profile-banner-color-input" value="${localStorage.discord_banner_color}" type="color">
-                    </div>
-                    <div class="options-option-card" id="options-img-input-option">
-                        <label for="profileAvatarInput" class="profile-avatar-upload-label">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_AVATAR")}</label>
-                        <input type="file" id="profileAvatarInput" class="profile-avatar-file-input" accept="image/*">
-                        <button id="removeProfileAvatarButton" class="profile-avatar-remove-button">${getTextString("OPTIONS_EXTRA_PROFILE_REMOVE_AVATAR")}</button>
-                    </div>
-                    <div id="options-avatar-img-input-option-error"></div>
-                    <div class="options-option-card" id="options-img-input-option">
-                        <label for="profileBannerInput" class="profile-avatar-upload-label">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_BANNER")}</label>
-                        <input type="file" id="profileBannerInput" class="profile-avatar-file-input" accept="image/*">
-                        <button id="removeProfileBannerButton" class="profile-avatar-remove-button">${getTextString("OPTIONS_EXTRA_PROFILE_REMOVE_BANNER")}</button>
-                    </div>
-                    <div id="options-banner-img-input-option-error"></div>
-                    <div class="options-preview-profile">
-                        <div class="options-preview-profile-banner-color" id="options-preview-profile-banner-color" style="background-color: ${localStorage.discord_banner_color};"></div>
-                        <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
-                        <div class="profile-avatar-preview-bg"></div>
-                        <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                        <div class="options-preview-profile-status-bg"></div>
-                        <div class="options-preview-profile-status-color"></div>
-                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
-                        <p class="options-preview-profile-username" id="options-username-preview"></p>
+                    <div class="experiment-card-holder" id="discord-integration-options-container" style="width: 300px; margin-left: auto; margin-right: auto;"></div>
+                    <div id="profile-change-settings">
+                        <div class="options-option-card" id="options-text-input-option">
+                            <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_USERNAME")}</p>
+                            <input class="options-text-input" autocomplete="off" oninput="changeUsernameFromInput();" style="posision: center;" id="profile-username-text-input" value="${localStorage.discord_username}" type="text">
+                        </div>
+                        <div class="options-option-card" id="options-text-input-option">
+                            <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_BANNER_COLOR")}</p>
+                            <input class="options-color-input" autocomplete="off" oninput="changeBannerColorFromInput();" style="posision: center;" id="profile-banner-color-input" value="${localStorage.discord_banner_color}" type="color">
+                        </div>
+                        <div class="options-option-card" id="options-img-input-option">
+                            <label for="profileAvatarInput" class="profile-avatar-upload-label">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_AVATAR")}</label>
+                            <input type="file" id="profileAvatarInput" class="profile-avatar-file-input" accept="image/*">
+                            <button id="removeProfileAvatarButton" class="profile-avatar-remove-button">${getTextString("OPTIONS_EXTRA_PROFILE_REMOVE_AVATAR")}</button>
+                        </div>
+                        <div id="options-avatar-img-input-option-error"></div>
+                        <div class="options-option-card" id="options-img-input-option">
+                            <label for="profileBannerInput" class="profile-avatar-upload-label">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_BANNER")}</label>
+                            <input type="file" id="profileBannerInput" class="profile-avatar-file-input" accept="image/*">
+                            <button id="removeProfileBannerButton" class="profile-avatar-remove-button">${getTextString("OPTIONS_EXTRA_PROFILE_REMOVE_BANNER")}</button>
+                        </div>
+                        <div id="options-banner-img-input-option-error"></div>
+                        <div class="options-preview-profile">
+                            <div class="options-preview-profile-banner-color" id="options-preview-profile-banner-color" style="background-color: ${localStorage.discord_banner_color};"></div>
+                            <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
+                            <div class="profile-avatar-preview-bg"></div>
+                            <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
+                            <div class="options-preview-profile-status-bg"></div>
+                            <div class="options-preview-profile-status-color"></div>
+                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                            <p class="options-preview-profile-username" id="options-username-preview"></p>
+                        </div>
                     </div>
                 `;
 
-                if (localStorage.experiment_2025_03_item_reviews === "Treatment 3: Simulate logged in") {
+                if (localStorage.experiment_2025_04_discord_sign_in === "Treatment 3: Force Logged In" || localStorage.experiment_2025_04_discord_sign_in === "Treatment 1: Dynamic" && localStorage.getItem('discord_token')) {
                     let cantChangeProfileWhenLoggedIn = document.createElement("div");
 
                     cantChangeProfileWhenLoggedIn.classList.add('cant-change-profile-when-logged-in-container');
@@ -15487,11 +15462,23 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                         <div class="profile-no-text-container">
                             <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: white;">${getTextString("OPTIONS_EXTRA_PROFILE_ERROR_1")}</p>
                             <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: white;">${getTextString("OPTIONS_EXTRA_PROFILE_ERROR_2")}</p>
+                            <button class="discord-profile-logout-button" onclick="logoutOfDiscord()">${getTextString("OPTIONS_EXTRA_PROFILE_ERROR_BUTTON")}</button>
+                            <button class="discord-profile-logout-button" onclick="updateDiscordProfilePlaceholder()">${getTextString("OPTIONS_EXTRA_PROFILE_RESYNC")}</button>
                         </div>
                     `;
 
 
-                    document.getElementById("username-picker-container-dev").appendChild(cantChangeProfileWhenLoggedIn);
+                    document.getElementById("profile-change-settings").appendChild(cantChangeProfileWhenLoggedIn);
+
+                    document.getElementById("discord-integration-options-container").innerHTML = `
+                        <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                        <button class="card-button" onclick="logoutOfDiscord()">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGOUT")}</button>
+                    `;
+                } else if (localStorage.experiment_2025_04_discord_sign_in === "Treatment 1: Dynamic" || localStorage.experiment_2025_04_discord_sign_in === "Treatment 2: Force Logged Out") {
+                    document.getElementById("discord-integration-options-container").innerHTML = `
+                        <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                        <button class="card-button" onclick="loginToDiscord()">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGIN")}</button>
+                    `;
                 }
 
                 
@@ -15812,6 +15799,62 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         }
     }
 
+
+    function loginToDiscord() {
+        const discordUrl = `https://discord.com/api/oauth2/authorize?client_id=${discord_app_ids.SHOP_ARCHIVES}&redirect_uri=${encodeURIComponent(api + LOGIN_CALLBACK)}&response_type=code&scope=identify`;
+        window.location.href = discordUrl;
+    }
+
+    function logoutOfDiscord() {
+        localStorage.removeItem('discord_token');
+        localStorage.removeItem('discord_profile');
+        localStorage.removeItem('discord_avatar');
+        localStorage.removeItem('discord_username');
+        localStorage.removeItem('discord_banner_color');
+        localStorage.removeItem('discord_banner');
+        location.reload();
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+        const hash = window.location.hash;
+        const match = hash.match(/#token=([^&]+)/);
+  
+        if (match) {
+            const token = match[1];
+            localStorage.setItem('discord_token', token);
+            if (sessionStorage.discord_profile) {
+                
+            } else {
+                updateDiscordProfile(token)
+            }
+            window.location.hash = '';
+        }
+    });
+
+    function updateDiscordProfilePlaceholder() {
+        updateDiscordProfile(localStorage.discord_token);
+        optionsSidebarToggle();
+        optionsSidebarToggle();
+        if (apiUrl) {
+            fetchData(pageCheck());
+        }
+    }
+
+    async function updateDiscordProfile(token) {
+        const userInfo = await fetch('https://discord.com/api/users/@me', {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+        const user = await userInfo.json();
+        sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
+        localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=128`;
+        localStorage.discord_username = user.global_name;
+        localStorage.discord_banner_color = user.banner_color;
+        if (user.banner != null) {
+            localStorage.discord_banner = `https://cdn.discordapp.com/banners/${user.id}/${user.banner}.png?size=480`;
+        } else {
+            localStorage.removeItem('discord_banner')
+        }
+    }
 
     function changeUsernameFromInput() {
         const input = document.getElementById('profile-username-text-input')
@@ -16306,6 +16349,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                     <div class="experiment-card-holder" style="width: 300px; margin-left: auto; margin-right: auto;">
                         <button class="card-button" onclick="disableClientRework();">${getTextString("OPTIONS_DEV_DISABLE_CLIENT_REWORK")}</button>
+                        <button class="card-button" onclick="setPageToNameplatePage();">${getTextString("OPTIONS_DEV_OPEN_NAMEPLATES_PAGE")}</button>
                     </div>
 
                     <div class="options-option-card" id="options-text-input-option">
@@ -16545,6 +16589,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
     function disableClientRework() {
         localStorage.full_client_rework = "false"
+        location.reload();
+    }
+
+    function setPageToNameplatePage() {
+        setParams({page: 'nameplates'});
         location.reload();
     }
 

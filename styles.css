@@ -486,6 +486,36 @@ body {
     justify-content: center;
 }
 
+#profile-change-settings {
+    position: relative;
+}
+
+#discord-integration-options-container:has(.discord-integration-multi-button-container) {
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    text-align: center;
+    width: 100%;
+}
+
+.discord-profile-logout-button {
+    display: block;
+    margin: 5px 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 20px;
+    background-color: var(--brand-500);
+    color: #fff;
+    border: 2px var(--6) solid;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50%;
+    transition: background-color 0.2s ease;
+    z-index: 5;
+}
+
+.discord-profile-logout-button:hover {
+    background-color: var(--brand-500-hover);
+}
+
 .dev-modal {
     background-color: var(--background-primary);
     border-radius: 10px;
