@@ -682,7 +682,7 @@ body {
     right: 10px;
 }
 
-#open-help-modals-buttons-holder {
+#open-help-modals-buttons-holder-new {
     position: absolute;
     top: 7px;
     width: 200px;
@@ -694,7 +694,7 @@ body {
     grid-template-columns: repeat(auto-fill, 29px);
 }
 
-#open-help-modals-buttons-holder div {
+#open-help-modals-buttons-holder-new div {
     overflow: hidden;
 }
 

@@ -1,6 +1,6 @@
 
 
-app_version1 = "322"
+app_version1 = "325"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -100,6 +100,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         sessionStorage.setItem('api-token', 'token');
 
         const api_password = localStorage.getItem("api-password");
+        const discord_token = localStorage.getItem("discord_token");
         const api_token = sessionStorage.getItem("api-token");
         api = 'https://shop-archives-api.vercel.app/api';
         discordsupport = 'https://support.discord.com/hc/en-us/articles/';
@@ -327,7 +328,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             //     document.getElementById("home-tab").classList.add('dm-button-selected');
             //     document.getElementById("top-bar-container").innerHTML = `
             //         <h2 style="margin-left: 260px; margin-top: 10px;">Featured</h2>
-            //         <div id="open-help-modals-buttons-holder"></div>
+            //         <div id="open-help-modals-buttons-holder-new"></div>
             //     `;
             // } else if (params.get("page") === "year_recap") {
             //     document.title = "2025 Recap | Shop Archives";
@@ -335,7 +336,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             //     localStorage.dismissible_recap_2024 = "Treatment 1: Seen";
             //     document.getElementById("top-bar-container").innerHTML = `
             //         <h2 style="margin-left: 260px; margin-top: 10px;">2025 Recap</h2>
-            //         <div id="open-help-modals-buttons-holder"></div>
+            //         <div id="open-help-modals-buttons-holder-new"></div>
             //     `;
             // } else 
             
@@ -356,7 +357,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById("shop-tab").classList.add('dm-button-selected');
                 document.getElementById("top-bar-container").innerHTML = `
                     <h2 style="margin-left: 10px; margin-top: 10px;">Shop > Shop All</h2>
-                    <div id="open-help-modals-buttons-holder"></div>
+                    <div id="open-help-modals-buttons-holder-new"></div>
                 `;
             }
             
@@ -370,7 +371,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             //     createMainPotionsElement()
             //     document.getElementById("top-bar-container").innerHTML = `
             //         <h2 style="margin-left: 260px; margin-top: 10px;">Shop > Orb Rewards</h2>
-            //         <div id="open-help-modals-buttons-holder"></div>
+            //         <div id="open-help-modals-buttons-holder-new"></div>
             //     `;
             // }
             // else if (params.get("page") === "leaks") {
@@ -389,7 +390,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             //     createMainShopElement()
             //     document.getElementById("top-bar-container").innerHTML = `
             //         <h2 style="margin-left: 260px; margin-top: 10px;">Shop > Leaks</h2>
-            //         <div id="open-help-modals-buttons-holder"></div>
+            //         <div id="open-help-modals-buttons-holder-new"></div>
             //     `;
             // } 
             else if (params.get("page") === "consumables") {
@@ -409,7 +410,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById("potions-tab").classList.add('dm-button-selected');
                 document.getElementById("top-bar-container").innerHTML = `
                     <h2 style="margin-left: 10px; margin-top: 10px;">Shop > Potions</h2>
-                    <div id="open-help-modals-buttons-holder"></div>
+                    <div id="open-help-modals-buttons-holder-new"></div>
                 `;
             } else if (params.get("page") === "miscellaneous") {
                 document.title = "Miscellaneous | Shop Archives";
@@ -428,7 +429,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById("miscellaneous-tab").classList.add('dm-button-selected');
                 document.getElementById("top-bar-container").innerHTML = `
                     <h2 style="margin-left: 10px; margin-top: 10px;">Shop > Miscellaneous</h2>
-                    <div id="open-help-modals-buttons-holder"></div>
+                    <div id="open-help-modals-buttons-holder-new"></div>
                 `;
             }
             // else if (params.get("page") === "pplus-home") {
@@ -448,7 +449,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             //     document.getElementById("pplus-home-tab").classList.add('dm-button-selected');
             //     document.getElementById("top-bar-container").innerHTML = `
             //         <h2 style="margin-left: 260px; margin-top: 10px;">Profiles Plus > Featured</h2>
-            //         <div id="open-help-modals-buttons-holder"></div>
+            //         <div id="open-help-modals-buttons-holder-new"></div>
             //     `;
             // }
 
@@ -474,7 +475,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById("pplus-tab").classList.add('dm-button-selected');
                 document.getElementById("top-bar-container").innerHTML = `
                     <h2 style="margin-left: 10px; margin-top: 10px;">Profiles Plus > Browse All</h2>
-                    <div id="open-help-modals-buttons-holder"></div>
+                    <div id="open-help-modals-buttons-holder-new"></div>
                 `;
             } else if (params.get("page") === "published_listings") {
                 document.title = "Published Listings | Shop Archives";
@@ -482,7 +483,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById("published-listings-tab").classList.add('dm-button-selected');
                 document.getElementById("top-bar-container").innerHTML = `
                     <h2 style="margin-left: 260px; margin-top: 10px;">Published Listings</h2>
-                    <div id="open-help-modals-buttons-holder"></div>
+                    <div id="open-help-modals-buttons-holder-new"></div>
                 `;
             } else if (params.get("page") === "orb_converter") {
                 document.title = "Orb Converter | Shop Archives";
@@ -490,7 +491,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById("orb-converter-tab").classList.add('dm-button-selected');
                 document.getElementById("top-bar-container").innerHTML = `
                     <h2 style="margin-left: 260px; margin-top: 10px;">Orb Converter</h2>
-                    <div id="open-help-modals-buttons-holder"></div>
+                    <div id="open-help-modals-buttons-holder-new"></div>
                 `;
             } else if (params.get("page") === "item_tool") {
                 document.title = "Item Tool | Shop Archives";
@@ -498,7 +499,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById("avatar-decorations-debug-tab").classList.add('dm-button-selected');
                 document.getElementById("top-bar-container").innerHTML = `
                     <h2 style="margin-left: 260px; margin-top: 10px;">Item Tool | Staff Only</h2>
-                    <div id="open-help-modals-buttons-holder"></div>
+                    <div id="open-help-modals-buttons-holder-new"></div>
                 `;
             } else {
                 setParams({page: 'shop',err: '404'});
@@ -518,6 +519,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     method: "GET",
                     headers: {
                         "Password": api_password,
+                        "Authorization": discord_token,
                         "Token": api_token
                     }
                 })
@@ -633,6 +635,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         method: "GET",
                                                         headers: {
                                                             "Password": api_password,
+                                                            "Authorization": discord_token,
                                                             "Token": api_token
                                                         }
                                                     });
@@ -799,6 +802,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     method: "GET",
                                                                     headers: {
                                                                         "Password": api_password,
+                                                                        "Authorization": discord_token,
                                                                         "Token": api_token
                                                                     }
                                                                 });
@@ -947,6 +951,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     method: "GET",
                                                                     headers: {
                                                                         "Password": api_password,
+                                                                        "Authorization": discord_token,
                                                                         "Token": api_token
                                                                     }
                                                                 });
@@ -1622,6 +1627,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         method: "GET",
                                                         headers: {
                                                             "Password": api_password,
+                                                            "Authorization": discord_token,
                                                             "Token": api_token
                                                         }
                                                     });
@@ -1820,6 +1826,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     method: "GET",
                                                                     headers: {
                                                                         "Password": api_password,
+                                                                        "Authorization": discord_token,
                                                                         "Token": api_token
                                                                     }
                                                                 });
@@ -1986,6 +1993,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     method: "GET",
                                                                     headers: {
                                                                         "Password": api_password,
+                                                                        "Authorization": discord_token,
                                                                         "Token": api_token
                                                                     }
                                                                 });
@@ -2430,6 +2438,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     sessionStorage.setItem('api-token', 'token');
 
     const api_password = localStorage.getItem("api-password");
+    const discord_token = localStorage.getItem("discord_token");
     const api_token = sessionStorage.getItem("api-token");
 
     // api = 'https://raw.githubusercontent.com/Yappering/api/main/v2';
@@ -2502,6 +2511,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         ]
     }
 
+    staff_ids = ["1169899815983915121", "1049207768785100880", "194749476269719552"]
 
     yapper_categories = [
         WINDOWKILL = "1",
@@ -2671,6 +2681,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             method: "GET",
             headers: {
                 "Password": api_password,
+                "Authorization": discord_token,
                 "Token": api_token
             }
         });
@@ -2688,6 +2699,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             method: "GET",
             headers: {
                 "Password": api_password,
+                "Authorization": discord_token,
                 "Token": api_token
             }
         });
@@ -2762,6 +2774,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     method: "GET",
                     headers: {
                         "Password": api_password,
+                        "Authorization": discord_token,
                         "Token": api_token
                     }
                 })
@@ -4247,6 +4260,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                     method: "GET",
                                                                                     headers: {
                                                                                         "Password": api_password,
+                                                                                        "Authorization": discord_token,
                                                                                         "Token": api_token
                                                                                     }
                                                                                 });
@@ -4513,6 +4527,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                     method: "GET",
                                                                                     headers: {
                                                                                         "Password": api_password,
+                                                                                        "Authorization": discord_token,
                                                                                         "Token": api_token
                                                                                     }
                                                                                 });
@@ -5307,6 +5322,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     method: "GET",
                     headers: {
                         "Password": api_password,
+                        "Authorization": discord_token,
                         "Token": api_token
                     }
                 })
@@ -6352,6 +6368,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                 method: "GET",
                                                                                 headers: {
                                                                                     "Password": api_password,
+                                                                                    "Authorization": discord_token,
                                                                                     "Token": api_token
                                                                                 }
                                                                             });
@@ -6612,6 +6629,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                 method: "GET",
                                                                                 headers: {
                                                                                     "Password": api_password,
+                                                                                    "Authorization": discord_token,
                                                                                     "Token": api_token
                                                                                 }
                                                                             });
@@ -7301,6 +7319,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 method: "GET",
                 headers: {
                     "Password": api_password,
+                    "Authorization": discord_token,
                     "Token": api_token
                 }
             })
@@ -7466,6 +7485,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 method: "GET",
                                                 headers: {
                                                     "Password": api_password,
+                                                    "Authorization": discord_token,
                                                     "Token": api_token
                                                 }
                                             }) // Replace with your API URL
@@ -8705,6 +8725,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                 method: "GET",
                                                                                 headers: {
                                                                                     "Password": api_password,
+                                                                                    "Authorization": discord_token,
                                                                                     "Token": api_token
                                                                                 }
                                                                             });
@@ -8965,6 +8986,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                 method: "GET",
                                                                                 headers: {
                                                                                     "Password": api_password,
+                                                                                    "Authorization": discord_token,
                                                                                     "Token": api_token
                                                                                 }
                                                                             });
@@ -10501,6 +10523,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 method: "GET",
                                                 headers: {
                                                     "Password": api_password,
+                                                    "Authorization": discord_token,
                                                     "Token": api_token
                                                 }
                                             }) // Replace with your API URL
@@ -12388,6 +12411,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                 method: "GET",
                                                                                 headers: {
                                                                                     "Password": api_password,
+                                                                                    "Authorization": discord_token,
                                                                                     "Token": api_token
                                                                                 }
                                                                             });
@@ -12654,6 +12678,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                 method: "GET",
                                                                                 headers: {
                                                                                     "Password": api_password,
+                                                                                    "Authorization": discord_token,
                                                                                     "Token": api_token
                                                                                 }
                                                                             });
@@ -13622,7 +13647,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("home-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("FEATURED_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "year-recap") {
             document.title = `${getTextString("RECAP_2024_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13631,7 +13656,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             localStorage.dismissible_recap_2024 = "Treatment 1: Seen";
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("RECAP_2024_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "shop") {
             document.title = `${getTextString("SHOP_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13649,7 +13674,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("shop-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("SHOP_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "orbs") {
             document.title = `${getTextString("ORB_SHOP_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13669,7 +13694,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createMainPotionsElement()
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("ORB_SHOP_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "leaks") {
             document.title = `${getTextString("LEAKS_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13686,7 +13711,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createMainShopElement()
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("LEAKS_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "nameplates") {
             document.title = `${getTextString("NAMEPLATES_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13701,7 +13726,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createMainShopElement()
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("NAMEPLATES_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "consumables") {
             document.title = `${getTextString("POTIONS_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13719,7 +13744,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("potions-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("POTIONS_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "miscellaneous") {
             document.title = `${getTextString("MISCELLANEOUS_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13740,7 +13765,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("miscellaneous-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("MISCELLANEOUS_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "pplus-home") {
             document.title = `${getTextString("PROFILES_PLUS_FEATURED_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13758,7 +13783,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("pplus-home-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("PROFILES_PLUS_FEATURED_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "pplus") {
             document.title = `${getTextString("PROFILES_PLUS_BROWSE_ALL_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13781,7 +13806,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("pplus-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("PROFILES_PLUS_BROWSE_ALL_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "published_listings") {
             document.title = `${getTextString("PUBLISHED_LISTINGS_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13789,7 +13814,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("published-listings-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("PUBLISHED_LISTINGS_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "orb_converter") {
             document.title = `${getTextString("ORB_CONVERTER_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13797,7 +13822,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("orb-converter-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("ORB_CONVERTER_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "item_tool") {
             document.title = `${getTextString("ITEM_DEBUG_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13805,7 +13830,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("avatar-decorations-debug-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("ITEM_DEBUG_TAB_PAGE_TITLE")}</h2>
-                <div id="open-help-modals-buttons-holder"></div>
+                <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "login") {
             document.title = `${getTextString("DOCUMENT_TITLE_WEBSITE_NAME")}`;
@@ -13838,7 +13863,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                     sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
                                     localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=4096`;
                                     localStorage.discord_username = user.username;
-                                    localStorage.discord_displayname = user.global_name;
+                                    if (user.global_name != null) {
+                                        localStorage.discord_displayname = user.global_name;
+                                    } else {
+                                        localStorage.discord_displayname = user.username;
+                                    }
                                     localStorage.discord_banner_color = user.banner_color;
                                     localStorage.discord_premium_type = user.premium_type;
                           
@@ -13846,6 +13875,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         localStorage.discord_banner = `https://cdn.discordapp.com/banners/${user.id}/${user.banner}.png?size=4096`;
                                     } else {
                                         localStorage.removeItem('discord_banner');
+                                    }
+
+                                    if (staff_ids.includes(user.id)) {
+                                        localStorage.dev = "true";
+                                        console.log('yapper')
                                     }
                           
                                     console.log('success');
@@ -13893,7 +13927,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             removeParams('login');
         }
 
-        const open_help_modals_buttons_holder = document.getElementById('open-help-modals-buttons-holder');
+        const open_help_modals_buttons_holder = document.getElementById('open-help-modals-buttons-holder-new');
 
         if (localStorage.discord_token) {
             let user_button = document.createElement("div");
@@ -13983,6 +14017,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 method: "GET",
                 headers: {
                     "Password": api_password,
+                    "Authorization": discord_token,
                     "Token": api_token
                 }
             })
@@ -16023,6 +16058,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 method: "GET",
                 headers: {
                     "Password": api_password,
+                    "Authorization": discord_token,
                     "Token": api_token
                 }
             })
@@ -16185,6 +16221,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         localStorage.removeItem('discord_banner_color');
         localStorage.removeItem('discord_banner');
         localStorage.removeItem('discord_premium_type');
+        localStorage.dev = "false";
         location.reload();
     }
 
@@ -16223,7 +16260,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
             localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=4096`;
             localStorage.discord_username = user.username;
-            localStorage.discord_displayname = user.global_name;
+            if (user.global_name != null) {
+                localStorage.discord_displayname = user.global_name;
+            } else {
+                localStorage.discord_displayname = user.username;
+            }
             localStorage.discord_banner_color = user.banner_color;
             localStorage.discord_premium_type = user.premium_type;
   
@@ -16231,6 +16272,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 localStorage.discord_banner = `https://cdn.discordapp.com/banners/${user.id}/${user.banner}.png?size=4096`;
             } else {
                 localStorage.removeItem('discord_banner');
+            }
+
+            if (staff_ids.includes(user.id)) {
+                localStorage.dev = "true";
+                console.log('yapper')
             }
   
             console.log('success');
@@ -16593,6 +16639,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             method: "GET",
             headers: {
                 "Password": api_password,
+                "Authorization": discord_token,
                 "Token": api_token
             }
         })
@@ -17055,6 +17102,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             method: "GET",
             headers: {
                 "Password": api_password,
+                "Authorization": discord_token,
                 "Token": api_token
             }
         })
