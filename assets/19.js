@@ -1,7 +1,7 @@
 
 
-app_version1 = "315"
-app_version2 = "Dev"
+app_version1 = "322"
+app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
 let modalIsAlreadyOpen = false;
@@ -82,6 +82,7 @@ function setRandomDiscordUsername() {
     .then(response => response.json())
     .then((data) => {
         localStorage.discord_username = data.name;
+        localStorage.discord_displayname = data.name;
     })
 
 }
@@ -689,8 +690,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                                                 const previewHolder = card.querySelector("[data-shop-card-preview-holder]");
     
-                                                if (localStorage.discord_username && localStorage.discord_username != '') {
-                                                    previewName = localStorage.discord_username;
+                                                if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
+                                                    previewName = localStorage.discord_displayname;
                                                 } else {
                                                     previewName = 'Discord User'
                                                 }
@@ -1678,8 +1679,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                                                 const previewHolder = card.querySelector("[data-shop-card-preview-holder]");
     
-                                                if (localStorage.discord_username && localStorage.discord_username != '') {
-                                                    previewName = localStorage.discord_username;
+                                                if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
+                                                    previewName = localStorage.discord_displayname;
                                                 } else {
                                                     previewName = 'Discord User'
                                                 }
@@ -2102,7 +2103,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             let priceOrb = "N/A";
     
                                             if (localStorage.experiment_2025_02_extra_options === "Treatment 4: Enabled") {
-                                                if (localStorage.is_nitro_user === "true") {
+                                                if (localStorage.discord_premium_type === "2") {
                                                     if (product.prices && product.prices["4"] && product.prices["4"].country_prices && product.prices["4"].country_prices.prices) {
                                                         product.prices["4"].country_prices.prices.forEach(price => {
                                                             if (price.currency === "discord_orb") {
@@ -2970,8 +2971,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                                                 const previewHolder = card.querySelector("[data-shop-card-preview-holder]");
     
-                                                if (localStorage.discord_username && localStorage.discord_username != '') {
-                                                    previewName = localStorage.discord_username;
+                                                if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
+                                                    previewName = localStorage.discord_displayname;
                                                 } else {
                                                     previewName = 'Discord User'
                                                 }
@@ -3491,7 +3492,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             let priceOrb = "N/A";
     
                                             if (localStorage.experiment_2025_02_extra_options && localStorage.experiment_2025_02_extra_options != "Treatment 5: Enabled w/o currency picker" && localStorage.experiment_2025_02_extra_options != "Treatment -1: Disabled") {
-                                                if (localStorage.is_nitro_user === "true") {
+                                                if (localStorage.discord_premium_type === "2") {
                                                     if (product.prices && product.prices["4"] && product.prices["4"].country_prices && product.prices["4"].country_prices.prices) {
                                                         product.prices["4"].country_prices.prices.forEach(price => {
                                                             if (price.currency === "usd") {
@@ -3845,7 +3846,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                             <div class="profile-avatar-preview-bg"></div>
                                                                             <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                             <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                             <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.discordapp.com/avatar-decoration-presets/${item.asset}.png?size=4096&passthrough=true">
                                                                             <div class="options-preview-profile-status-bg"></div>
@@ -3936,7 +3937,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                             <div class="profile-avatar-preview-bg"></div>
                                                                             <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                             <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                             <div class="options-preview-profile-status-bg"></div>
                                                                             <div class="options-preview-profile-status-color"></div>
@@ -4022,8 +4023,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                                                             const previewHolderLeft = modal.querySelector("[data-modal-left-preview-holder]");
                 
-                                                            if (localStorage.discord_username && localStorage.discord_username != '') {
-                                                                previewName = localStorage.discord_username;
+                                                            if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
+                                                                previewName = localStorage.discord_displayname;
                                                             } else {
                                                                 previewName = 'Discord User'
                                                             }
@@ -4207,7 +4208,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                 <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                                 <div class="profile-avatar-preview-bg"></div>
                                                                                 <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                                <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                                <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                                 <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                                 <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.discordapp.com/avatar-decoration-presets/${decosrc}.png?size=4096&passthrough=true">
                                                                                 <div class="options-preview-profile-status-bg"></div>
@@ -4358,7 +4359,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                     <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                                     <div class="profile-avatar-preview-bg"></div>
                                                                                     <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                                    <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                                    <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                                     <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                                     <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.discordapp.com/avatar-decoration-presets/${item.asset}.png?size=4096&passthrough=true">
                                                                                     <div class="options-preview-profile-status-bg"></div>
@@ -4420,7 +4421,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                             <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                                             <div class="profile-avatar-preview-bg"></div>
                                                                                             <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                                             <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                                             <div class="options-preview-profile-status-bg"></div>
                                                                                             <div class="options-preview-profile-status-color"></div>
@@ -4582,7 +4583,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                         <div class="profile-avatar-preview-bg"></div>
                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                         <div class="options-preview-profile-status-bg"></div>
                                                                         <div class="options-preview-profile-status-color"></div>
@@ -4644,7 +4645,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         let priceOrb = "N/A";
     
                                                         if (localStorage.experiment_2025_02_extra_options && localStorage.experiment_2025_02_extra_options != "Treatment 5: Enabled w/o currency picker" && localStorage.experiment_2025_02_extra_options != "Treatment -1: Disabled") {
-                                                            if (localStorage.is_nitro_user === "true") {
+                                                            if (localStorage.discord_premium_type === "2") {
                                                                 if (product.prices && product.prices["4"] && product.prices["4"].country_prices && product.prices["4"].country_prices.prices) {
                                                                     product.prices["4"].country_prices.prices.forEach(price => {
                                                                         if (price.currency === "usd") {
@@ -5019,6 +5020,37 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
                                                                 <div class="premiumWheelBadge_c23530 textBadge_df8943 base_df8943 eyebrow_df8943 baseShapeRound_df8943" aria-label="This bonus item is yours to keep and use anytime with an active Nitro subscription." style="background-color: var(--status-danger);"><svg class="premiumWheel_c23530" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M15 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M7 4a1 1 0 0 0 0 2h3a1 1 0 1 1 0 2H5.5a1 1 0 0 0 0 2H8a1 1 0 1 1 0 2H6a1 1 0 1 0 0 2h1.25A8 8 0 1 0 15 4H7Zm8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" clip-rule="evenodd" class=""></path><path fill="currentColor" d="M2.5 10a1 1 0 0 0 0-2H2a1 1 0 0 0 0 2h.5Z" class=""></path></svg></div>
                                                             `;
+                                                        }
+
+                                                        if (localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1" && product.type != 3000) {
+
+                                                            if (localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen") {
+                                                                let newLogInWithDiscordDismissible = document.createElement("div");
+                                                    
+                                                                newLogInWithDiscordDismissible.innerHTML = `
+                                                                    <div class="newLogInWithDiscordDismissible-inner">
+                                                                        <svg class="closeIcon_modal_discord_login" onclick="closeLoginDismissibleCoachtip()" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                                                                        <hr style="opacity: 0;">
+                                                                        <p class="center-text options-medium-title" style="margin-top: 0px;">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_TITLE")}</p>
+                                                                        <hr style="opacity: 0;">
+                                                                        <p class="center-text options-summary-text">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_1")}</p>
+                                                                        <hr style="opacity: 0;">
+                                                                        <p class="center-text options-summary-text">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_2")}</p>
+                                                                        <hr style="opacity: 0;">
+                                                                        <img src="https://cdn.yapper.shop/assets/178.png">
+                                                                        <hr style="opacity: 0;">
+                                                                        <button class="card-button" onclick="loginToDiscord()">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_LOG_IN")}</button>
+                                                                        <button class="card-button" onclick="closeLoginDismissibleCoachtip()">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_NO_THANKS")}</button>
+                                                                    </div>
+                                                                    <div class="newLogInWithDiscordDismissible-pointer"></div>
+                                                                `;
+                                                    
+                                                                newLogInWithDiscordDismissible.classList.add('newLogInWithDiscordDismissible');
+                                                    
+                                                                newLogInWithDiscordDismissible.id = `newLogInWithDiscordDismissible`;
+                                                    
+                                                                modal.appendChild(newLogInWithDiscordDismissible);
+                                                            }
                                                         }
                                                         
     
@@ -5469,8 +5501,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                             const previewHolder = card.querySelector("[data-shop-card-preview-holder]");
 
-                                            if (localStorage.discord_username && localStorage.discord_username != '') {
-                                                previewName = localStorage.discord_username;
+                                            if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
+                                                previewName = localStorage.discord_displayname;
                                             } else {
                                                 previewName = 'Discord User'
                                             }
@@ -5968,7 +6000,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                         <div class="profile-avatar-preview-bg"></div>
                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                         <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.yapper.shop/custom-collectibles/avatar-decorations/${item.asset}.png">
                                                                         <div class="options-preview-profile-status-bg"></div>
@@ -6055,7 +6087,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                         <div class="profile-avatar-preview-bg"></div>
                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                         <div class="options-preview-profile-status-bg"></div>
                                                                         <div class="options-preview-profile-status-color"></div>
@@ -6139,8 +6171,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         const previewHolder = modal.querySelector("[data-modal-preview-holder]");
                                                         previewHolder.classList.add('nameplate-modal-preview');
             
-                                                        if (localStorage.discord_username && localStorage.discord_username != '') {
-                                                            previewName = localStorage.discord_username;
+                                                        if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
+                                                            previewName = localStorage.discord_displayname;
                                                         } else {
                                                             previewName = 'Discord User'
                                                         }
@@ -6281,7 +6313,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                             <div class="profile-avatar-preview-bg"></div>
                                                                             <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                             <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                             <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.yapper.shop/custom-collectibles/avatar-decorations/a_${decosrc}.png">
                                                                             <div class="options-preview-profile-status-bg"></div>
@@ -6431,7 +6463,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                 <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                                 <div class="profile-avatar-preview-bg"></div>
                                                                                 <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                                <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                                <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                                 <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                                 <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.yapper.shop/custom-collectibles/avatar-decorations/a_${item.asset}.png">
                                                                                 <div class="options-preview-profile-status-bg"></div>
@@ -6488,7 +6520,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                         <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                                         <div class="profile-avatar-preview-bg"></div>
                                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                                         <div class="options-preview-profile-status-bg"></div>
                                                                                         <div class="options-preview-profile-status-color"></div>
@@ -6774,6 +6806,37 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
                                                             <div class="premiumWheelBadge_c23530 textBadge_df8943 base_df8943 eyebrow_df8943 baseShapeRound_df8943" aria-label="This bonus item is yours to keep and use anytime with an active Nitro subscription." style="background-color: var(--status-danger);"><svg class="premiumWheel_c23530" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M15 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M7 4a1 1 0 0 0 0 2h3a1 1 0 1 1 0 2H5.5a1 1 0 0 0 0 2H8a1 1 0 1 1 0 2H6a1 1 0 1 0 0 2h1.25A8 8 0 1 0 15 4H7Zm8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" clip-rule="evenodd" class=""></path><path fill="currentColor" d="M2.5 10a1 1 0 0 0 0-2H2a1 1 0 0 0 0 2h.5Z" class=""></path></svg></div>
                                                         `;
+                                                    }
+
+                                                    if (localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1" && product.type != 3000) {
+
+                                                        if (localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen") {
+                                                            let newLogInWithDiscordDismissible = document.createElement("div");
+                                                
+                                                            newLogInWithDiscordDismissible.innerHTML = `
+                                                                <div class="newLogInWithDiscordDismissible-inner">
+                                                                    <svg class="closeIcon_modal_discord_login" onclick="closeLoginDismissibleCoachtip()" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                                                                    <hr style="opacity: 0;">
+                                                                    <p class="center-text options-medium-title" style="margin-top: 0px;">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_TITLE")}</p>
+                                                                    <hr style="opacity: 0;">
+                                                                    <p class="center-text options-summary-text">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_1")}</p>
+                                                                    <hr style="opacity: 0;">
+                                                                    <p class="center-text options-summary-text">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_2")}</p>
+                                                                    <hr style="opacity: 0;">
+                                                                    <img src="https://cdn.yapper.shop/assets/178.png">
+                                                                    <hr style="opacity: 0;">
+                                                                    <button class="card-button" onclick="loginToDiscord()">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_LOG_IN")}</button>
+                                                                    <button class="card-button" onclick="closeLoginDismissibleCoachtip()">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_NO_THANKS")}</button>
+                                                                </div>
+                                                                <div class="newLogInWithDiscordDismissible-pointer"></div>
+                                                            `;
+                                                
+                                                            newLogInWithDiscordDismissible.classList.add('newLogInWithDiscordDismissible');
+                                                
+                                                            newLogInWithDiscordDismissible.id = `newLogInWithDiscordDismissible`;
+                                                
+                                                            modal.appendChild(newLogInWithDiscordDismissible);
+                                                        }
                                                     }
                                                     
 
@@ -8385,7 +8448,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                         <div class="profile-avatar-preview-bg"></div>
                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                         <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.yapper.shop/custom-collectibles/avatar-decorations/a_${item.asset}.png">
                                                                         <div class="options-preview-profile-status-bg"></div>
@@ -8472,7 +8535,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                         <div class="profile-avatar-preview-bg"></div>
                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                         <div class="options-preview-profile-status-bg"></div>
                                                                         <div class="options-preview-profile-status-color"></div>
@@ -8603,7 +8666,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                             <div class="profile-avatar-preview-bg"></div>
                                                                             <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                             <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                             <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.yapper.shop/custom-collectibles/avatar-decorations/a_${decosrc}.png">
                                                                             <div class="options-preview-profile-status-bg"></div>
@@ -8753,7 +8816,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                 <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                                 <div class="profile-avatar-preview-bg"></div>
                                                                                 <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                                <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                                <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                                 <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                                 <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.yapper.shop/custom-collectibles/avatar-decorations/a_${item.asset}.png">
                                                                                 <div class="options-preview-profile-status-bg"></div>
@@ -8810,7 +8873,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                         <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                                         <div class="profile-avatar-preview-bg"></div>
                                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                                         <div class="options-preview-profile-status-bg"></div>
                                                                                         <div class="options-preview-profile-status-color"></div>
@@ -9098,6 +9161,36 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         `;
                                                     }
                                                     
+                                                    if (localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1" && product.type != 3000) {
+
+                                                        if (localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen") {
+                                                            let newLogInWithDiscordDismissible = document.createElement("div");
+                                                
+                                                            newLogInWithDiscordDismissible.innerHTML = `
+                                                                <div class="newLogInWithDiscordDismissible-inner">
+                                                                    <svg class="closeIcon_modal_discord_login" onclick="closeLoginDismissibleCoachtip()" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                                                                    <hr style="opacity: 0;">
+                                                                    <p class="center-text options-medium-title" style="margin-top: 0px;">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_TITLE")}</p>
+                                                                    <hr style="opacity: 0;">
+                                                                    <p class="center-text options-summary-text">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_1")}</p>
+                                                                    <hr style="opacity: 0;">
+                                                                    <p class="center-text options-summary-text">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_2")}</p>
+                                                                    <hr style="opacity: 0;">
+                                                                    <img src="https://cdn.yapper.shop/assets/178.png">
+                                                                    <hr style="opacity: 0;">
+                                                                    <button class="card-button" onclick="loginToDiscord()">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_LOG_IN")}</button>
+                                                                    <button class="card-button" onclick="closeLoginDismissibleCoachtip()">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_NO_THANKS")}</button>
+                                                                </div>
+                                                                <div class="newLogInWithDiscordDismissible-pointer"></div>
+                                                            `;
+                                                
+                                                            newLogInWithDiscordDismissible.classList.add('newLogInWithDiscordDismissible');
+                                                
+                                                            newLogInWithDiscordDismissible.id = `newLogInWithDiscordDismissible`;
+                                                
+                                                            modal.appendChild(newLogInWithDiscordDismissible);
+                                                        }
+                                                    }
 
 
                                                     let modal_back = document.createElement("div");
@@ -11019,8 +11112,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                             const previewHolder = card.querySelector("[data-shop-card-preview-holder]");
 
-                                            if (localStorage.discord_username && localStorage.discord_username != '') {
-                                                previewName = localStorage.discord_username;
+                                            if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
+                                                previewName = localStorage.discord_displayname;
                                             } else {
                                                 previewName = 'Discord User'
                                             }
@@ -11540,7 +11633,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         let priceOrb = "N/A";
 
                                         if (localStorage.experiment_2025_02_extra_options && localStorage.experiment_2025_02_extra_options != "Treatment 5: Enabled w/o currency picker" && localStorage.experiment_2025_02_extra_options != "Treatment -1: Disabled") {
-                                            if (localStorage.is_nitro_user === "true") {
+                                            if (localStorage.discord_premium_type === "2") {
                                                 if (product.prices && product.prices["4"] && product.prices["4"].country_prices && product.prices["4"].country_prices.prices) {
                                                     product.prices["4"].country_prices.prices.forEach(price => {
                                                         if (price.currency === "usd") {
@@ -11894,7 +11987,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                         <div class="profile-avatar-preview-bg"></div>
                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                         <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.discordapp.com/avatar-decoration-presets/${item.asset}.png?size=4096&passthrough=true">
                                                                         <div class="options-preview-profile-status-bg"></div>
@@ -11985,7 +12078,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                         <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                         <div class="profile-avatar-preview-bg"></div>
                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                         <div class="options-preview-profile-status-bg"></div>
                                                                         <div class="options-preview-profile-status-color"></div>
@@ -12071,8 +12164,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                                         const previewHolderLeft = modal.querySelector("[data-modal-left-preview-holder]");
             
-                                                        if (localStorage.discord_username && localStorage.discord_username != '') {
-                                                            previewName = localStorage.discord_username;
+                                                        if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
+                                                            previewName = localStorage.discord_displayname;
                                                         } else {
                                                             previewName = 'Discord User'
                                                         }
@@ -12256,7 +12349,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                             <div class="profile-avatar-preview-bg"></div>
                                                                             <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                             <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                             <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.discordapp.com/avatar-decoration-presets/${decosrc}.png?size=4096&passthrough=true">
                                                                             <div class="options-preview-profile-status-bg"></div>
@@ -12407,7 +12500,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                 <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                                 <div class="profile-avatar-preview-bg"></div>
                                                                                 <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                                <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                                <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                                 <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                                 <img id="profileAvatarDecoPreview" class="profile-avatar-deco-preview" src="https://cdn.discordapp.com/avatar-decoration-presets/${item.asset}.png?size=4096&passthrough=true">
                                                                                 <div class="options-preview-profile-status-bg"></div>
@@ -12469,7 +12562,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                                         <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                                         <div class="profile-avatar-preview-bg"></div>
                                                                                         <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                                        <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                                         <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                                         <div class="options-preview-profile-status-bg"></div>
                                                                                         <div class="options-preview-profile-status-color"></div>
@@ -12631,7 +12724,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
                                                                     <div class="profile-avatar-preview-bg"></div>
                                                                     <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-                                                                    <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                                                                    <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                                                                     <p class="options-preview-profile-username" id="modal-username-preview"></p>
                                                                     <div class="options-preview-profile-status-bg"></div>
                                                                     <div class="options-preview-profile-status-color"></div>
@@ -12693,7 +12786,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let priceOrb = "N/A";
 
                                                     if (localStorage.experiment_2025_02_extra_options && localStorage.experiment_2025_02_extra_options != "Treatment 5: Enabled w/o currency picker" && localStorage.experiment_2025_02_extra_options != "Treatment -1: Disabled") {
-                                                        if (localStorage.is_nitro_user === "true") {
+                                                        if (localStorage.discord_premium_type === "2") {
                                                             if (product.prices && product.prices["4"] && product.prices["4"].country_prices && product.prices["4"].country_prices.prices) {
                                                                 product.prices["4"].country_prices.prices.forEach(price => {
                                                                     if (price.currency === "usd") {
@@ -13068,6 +13161,37 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
                                                             <div class="premiumWheelBadge_c23530 textBadge_df8943 base_df8943 eyebrow_df8943 baseShapeRound_df8943" aria-label="This bonus item is yours to keep and use anytime with an active Nitro subscription." style="background-color: var(--status-danger);"><svg class="premiumWheel_c23530" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M15 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M7 4a1 1 0 0 0 0 2h3a1 1 0 1 1 0 2H5.5a1 1 0 0 0 0 2H8a1 1 0 1 1 0 2H6a1 1 0 1 0 0 2h1.25A8 8 0 1 0 15 4H7Zm8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8Z" clip-rule="evenodd" class=""></path><path fill="currentColor" d="M2.5 10a1 1 0 0 0 0-2H2a1 1 0 0 0 0 2h.5Z" class=""></path></svg></div>
                                                         `;
+                                                    }
+
+                                                    if (localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1" && product.type != 3000) {
+
+                                                        if (localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen") {
+                                                            let newLogInWithDiscordDismissible = document.createElement("div");
+                                                
+                                                            newLogInWithDiscordDismissible.innerHTML = `
+                                                                <div class="newLogInWithDiscordDismissible-inner">
+                                                                    <svg class="closeIcon_modal_discord_login" onclick="closeLoginDismissibleCoachtip()" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                                                                    <hr style="opacity: 0;">
+                                                                    <p class="center-text options-medium-title" style="margin-top: 0px;">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_TITLE")}</p>
+                                                                    <hr style="opacity: 0;">
+                                                                    <p class="center-text options-summary-text">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_1")}</p>
+                                                                    <hr style="opacity: 0;">
+                                                                    <p class="center-text options-summary-text">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_2")}</p>
+                                                                    <hr style="opacity: 0;">
+                                                                    <img src="https://cdn.yapper.shop/assets/178.png">
+                                                                    <hr style="opacity: 0;">
+                                                                    <button class="card-button" onclick="loginToDiscord()">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_LOG_IN")}</button>
+                                                                    <button class="card-button" onclick="closeLoginDismissibleCoachtip()">${getTextString("DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_NO_THANKS")}</button>
+                                                                </div>
+                                                                <div class="newLogInWithDiscordDismissible-pointer"></div>
+                                                            `;
+                                                
+                                                            newLogInWithDiscordDismissible.classList.add('newLogInWithDiscordDismissible');
+                                                
+                                                            newLogInWithDiscordDismissible.id = `newLogInWithDiscordDismissible`;
+                                                
+                                                            modal.appendChild(newLogInWithDiscordDismissible);
+                                                        }
                                                     }
                                                     
 
@@ -13683,6 +13807,72 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("ITEM_DEBUG_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder"></div>
             `;
+        } else if (params.get("page") === "login") {
+            document.title = `${getTextString("DOCUMENT_TITLE_WEBSITE_NAME")}`;
+                document.body.innerHTML = `logging in...`;
+                window.addEventListener('DOMContentLoaded', () => {
+                    const hash = window.location.hash;
+                    const match = hash.match(/#token=([^&]+)/);
+
+                    if (match) {
+                        async function login() {
+                            try {
+                                const token = match[1];
+                                localStorage.setItem('discord_token', token);
+                                window.location.hash = '';
+                                localStorage.dismissible_newLogInWithDiscord = "Treatment 1: Seen";
+                          
+                                if (!sessionStorage.discord_profile) {
+                                    const userInfo = await fetch('https://discord.com/api/users/@me', {
+                                        headers: { Authorization: `Bearer ${token}` }
+                                    });
+                          
+                                    if (!userInfo.ok) {
+                                        // If the response is not ok (e.g., 401 Unauthorized)
+                                        setParams({ page: 'home', login: 'false' });
+                                        actuallyLogOutOfDiscord();
+                                        return;
+                                    }
+                          
+                                    const user = await userInfo.json();
+                                    sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
+                                    localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=4096`;
+                                    localStorage.discord_username = user.username;
+                                    localStorage.discord_displayname = user.global_name;
+                                    localStorage.discord_banner_color = user.banner_color;
+                                    localStorage.discord_premium_type = user.premium_type;
+                          
+                                    if (user.banner != null) {
+                                        localStorage.discord_banner = `https://cdn.discordapp.com/banners/${user.id}/${user.banner}.png?size=4096`;
+                                    } else {
+                                        localStorage.removeItem('discord_banner');
+                                    }
+                          
+                                    console.log('success');
+                                    setParams({ page: 'home', login: 'true' });
+                                    location.reload();
+                                }
+                          
+                                // Optional: additional check (but `sessionStorage.discord_profile` is a string, so this check won't work unless parsed)
+                                const parsedProfile = JSON.parse(sessionStorage.discord_profile);
+                                if (parsedProfile.code === 0) {
+                                    setParams({ page: 'home', login: 'false' });
+                                    actuallyLogOutOfDiscord();
+                                }
+                          
+                            } catch (error) {
+                                setParams({ page: 'home', login: 'false' });
+                                actuallyLogOutOfDiscord();
+                            }
+                        }
+                          
+                        login();
+                          
+                    } else {
+                        setParams({page: 'home', login: 'false'});
+                        location.reload();
+                    }
+                });
         } else if (params.get("page")) {
             setParams({page: 'home',err: '404'});
             document.title = `${getTextString("FEATURED_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
@@ -13695,16 +13885,45 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             console.log('a')
         }
 
+        if (params.get("login") === "true") {
+            copyNotice('logintrue');
+            removeParams('login');
+        } else if (params.get("login") === "false") {
+            copyNotice('loginfalse');
+            removeParams('login');
+        }
+
         const open_help_modals_buttons_holder = document.getElementById('open-help-modals-buttons-holder');
+
+        if (localStorage.discord_token) {
+            let user_button = document.createElement("div");
+
+            user_button.id = 'open-profile-settings-button-1';
+            // user_button.setAttribute("onclick","logoutOfDiscord();");
+            // user_button.title = `Log Out`;
+            user_button.title = getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGGED_IN_AS") + localStorage.discord_displayname;
+            user_button.innerHTML = `
+                <img style="width: 100%;" src="${localStorage.discord_avatar}">
+            `;
+
+            open_help_modals_buttons_holder.appendChild(user_button);
+        }
         
         let options_button = document.createElement("div");
 
         options_button.id = 'open-options-tools-button-1';
         options_button.setAttribute("onclick","optionsSidebarToggle();");
         options_button.title = `Options`;
-        options_button.innerHTML = `
-            <svg x="0" y="0" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path d="M19.738 9.99995H22V14H19.7391C19.498 14.931 19.1001 15.798 18.565 16.564L20.0001 18L18 20.0001L16.5651 18.564C15.7971 19.099 14.932 19.498 14 19.738V22H9.99995V19.738C9.06899 19.498 8.20295 19.099 7.43602 18.564L5.99998 20.0001L3.99993 18L5.43597 16.564C4.90101 15.799 4.50201 14.932 4.26201 14H2V9.99995H4.26201C4.50201 9.06803 4.89993 8.20199 5.43597 7.43602L3.99993 5.99998L5.99998 3.99993L7.43602 5.43597C8.20199 4.89993 9.06803 4.50201 9.99995 4.26201V2H14V4.26093C14.932 4.50201 15.7971 4.89993 16.5651 5.43501L18 3.99897L20.0001 5.99902L18.564 7.43602C19.099 8.20199 19.498 9.06899 19.738 9.99995ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79079 14.2091 8.00002 12 8.00002C9.79079 8.00002 8.00002 9.79079 8.00002 12C8.00002 14.2091 9.79079 16 12 16Z" fill="currentColor"/></svg>
-        `;
+        if (localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1" && localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen") {
+            options_button.innerHTML = `
+                <svg x="0" y="0" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path d="M19.738 9.99995H22V14H19.7391C19.498 14.931 19.1001 15.798 18.565 16.564L20.0001 18L18 20.0001L16.5651 18.564C15.7971 19.099 14.932 19.498 14 19.738V22H9.99995V19.738C9.06899 19.498 8.20295 19.099 7.43602 18.564L5.99998 20.0001L3.99993 18L5.43597 16.564C4.90101 15.799 4.50201 14.932 4.26201 14H2V9.99995H4.26201C4.50201 9.06803 4.89993 8.20199 5.43597 7.43602L3.99993 5.99998L5.99998 3.99993L7.43602 5.43597C8.20199 4.89993 9.06803 4.50201 9.99995 4.26201V2H14V4.26093C14.932 4.50201 15.7971 4.89993 16.5651 5.43501L18 3.99897L20.0001 5.99902L18.564 7.43602C19.099 8.20199 19.498 9.06899 19.738 9.99995ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79079 14.2091 8.00002 12 8.00002C9.79079 8.00002 8.00002 9.79079 8.00002 12C8.00002 14.2091 9.79079 16 12 16Z" fill="currentColor"/></svg>
+                <div class="guys-theres-a-new-log-in-with-discord-feature-on-yapper-dot-shop"></div>
+            `;
+        } else {
+            options_button.innerHTML = `
+                <svg x="0" y="0" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path d="M19.738 9.99995H22V14H19.7391C19.498 14.931 19.1001 15.798 18.565 16.564L20.0001 18L18 20.0001L16.5651 18.564C15.7971 19.099 14.932 19.498 14 19.738V22H9.99995V19.738C9.06899 19.498 8.20295 19.099 7.43602 18.564L5.99998 20.0001L3.99993 18L5.43597 16.564C4.90101 15.799 4.50201 14.932 4.26201 14H2V9.99995H4.26201C4.50201 9.06803 4.89993 8.20199 5.43597 7.43602L3.99993 5.99998L5.99998 3.99993L7.43602 5.43597C8.20199 4.89993 9.06803 4.50201 9.99995 4.26201V2H14V4.26093C14.932 4.50201 15.7971 4.89993 16.5651 5.43501L18 3.99897L20.0001 5.99902L18.564 7.43602C19.099 8.20199 19.498 9.06899 19.738 9.99995ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79079 14.2091 8.00002 12 8.00002C9.79079 8.00002 8.00002 9.79079 8.00002 12C8.00002 14.2091 9.79079 16 12 16Z" fill="currentColor"/></svg>
+            `;
+        }
 
         open_help_modals_buttons_holder.appendChild(options_button);
 
@@ -15343,7 +15562,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             <img id="ubar-avatar" class="ubar-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
             <div class="ubar-status-bg"></div>
             <div class="ubar-status-color"></div>
-            <p class="ubar-displayname" id="ubar-displayname">${localStorage.discord_username}</p>
+            <p class="ubar-displayname" id="ubar-displayname">${localStorage.discord_displayname}</p>
             <svg title="Options" x="0" y="0" onclick="optionsSidebarToggle()" id="ubar-options-cog" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16.4483 8.3333H18.3333V11.6667H16.4492C16.2483 12.4425 15.9167 13.165 15.4708 13.8033L16.6667 15 15 16.6667 13.8042 15.47C13.1642 15.9158 12.4433 16.2483 11.6667 16.4483V18.3333H8.3333V16.4483C7.5575 16.2483 6.8358 15.9158 6.1967 15.47L5 16.6667 3.3333 15 4.53 13.8033C4.0842 13.1658 3.7517 12.4433 3.5517 11.6667H1.6667V8.3333H3.5517C3.7517 7.5567 4.0833 6.835 4.53 6.1967L3.3333 5 5 3.3333 6.1967 4.53C6.835 4.0833 7.5567 3.7517 8.3333 3.5517V1.6667H11.6667V3.5508C12.4433 3.7517 13.1642 4.0833 13.8042 4.5292L15 3.3325 16.6667 4.9992 15.47 6.1967C15.9158 6.835 16.2483 7.5575 16.4483 8.3333ZM10 13.3333C11.8409 13.3333 13.3333 11.8409 13.3333 10 13.3333 8.159 11.8409 6.6667 10 6.6667 8.159 6.6667 6.6667 8.159 6.6667 10 6.6667 11.8409 8.159 13.3333 10 13.3333Z" )=""></path></svg>
         `;
 
@@ -15400,7 +15619,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 <div class="experiment-card-holder" id="yapper-article-container" style="width: 300px; margin-left: auto; margin-right: auto;">
                     <button class="card-button" onclick="window.open('https://discord.gg/Mcwh7hGcWb/');">${getTextString("OPTIONS_SIDEBAR_YAPPER_DISCORD_SERVER")}</button>
                     <button class="card-button" onclick="window.open('https://github.com/Yappering/');">${getTextString("OPTIONS_SIDEBAR_YAPPER_GITHUB")}</button>
-                    <button class="card-button" onclick="window.open('https://www.youtube.com/@DTACat');">${getTextString("OPTIONS_SIDEBAR_YAPPER_YOUTUBE_1")}</button>
                 </div>
                 ${getTextString("APP_VERSION")}${tcbx926n29}
             `;
@@ -15417,30 +15635,33 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
             if (localStorage.experiment_2025_02_extra_options === "Treatment 4: Enabled" || localStorage.experiment_2025_02_extra_options === "Treatment 5: Enabled w/o currency picker" || localStorage.experiment_2025_02_extra_options === "Treatment 6: Settings like discord") {
                 document.getElementById("username-picker-container-dev").innerHTML = `
-                    <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE")}</p>
+                    <p class="center-text" style="font-size: 20px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE")}</p>
                     <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DESC")}</p>
                     <div class="experiment-card-holder" id="discord-integration-options-container" style="width: 300px; margin-left: auto; margin-right: auto;"></div>
                     <div id="profile-change-settings">
-                        <div class="options-option-card" id="options-text-input-option">
-                            <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_USERNAME")}</p>
-                            <input class="options-text-input" autocomplete="off" oninput="changeUsernameFromInput();" style="posision: center;" id="profile-username-text-input" value="${localStorage.discord_username}" type="text">
+                        <div id="options-profile-nono-change-container"></div>
+                        <div id="profile-settings-edit">
+                            <div class="options-option-card" id="options-text-input-option">
+                                <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_USERNAME")}</p>
+                                <input class="options-text-input" autocomplete="off" oninput="changeUsernameFromInput();" style="posision: center;" id="profile-username-text-input" value="${localStorage.discord_displayname}" type="text">
+                            </div>
+                            <div class="options-option-card" id="options-text-input-option">
+                                <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_BANNER_COLOR")}</p>
+                                <input class="options-color-input" autocomplete="off" oninput="changeBannerColorFromInput();" style="posision: center;" id="profile-banner-color-input" value="${localStorage.discord_banner_color}" type="color">
+                            </div>
+                            <div class="options-option-card" id="options-img-input-option">
+                                <label for="profileAvatarInput" class="profile-avatar-upload-label">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_AVATAR")}</label>
+                                <input type="file" id="profileAvatarInput" class="profile-avatar-file-input" accept="image/*">
+                                <button id="removeProfileAvatarButton" class="profile-avatar-remove-button">${getTextString("OPTIONS_EXTRA_PROFILE_REMOVE_AVATAR")}</button>
+                            </div>
+                            <div id="options-avatar-img-input-option-error"></div>
+                            <div class="options-option-card" id="options-img-input-option">
+                                <label for="profileBannerInput" class="profile-avatar-upload-label">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_BANNER")}</label>
+                                <input type="file" id="profileBannerInput" class="profile-avatar-file-input" accept="image/*">
+                                <button id="removeProfileBannerButton" class="profile-avatar-remove-button">${getTextString("OPTIONS_EXTRA_PROFILE_REMOVE_BANNER")}</button>
+                            </div>
+                            <div id="options-banner-img-input-option-error"></div>
                         </div>
-                        <div class="options-option-card" id="options-text-input-option">
-                            <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_BANNER_COLOR")}</p>
-                            <input class="options-color-input" autocomplete="off" oninput="changeBannerColorFromInput();" style="posision: center;" id="profile-banner-color-input" value="${localStorage.discord_banner_color}" type="color">
-                        </div>
-                        <div class="options-option-card" id="options-img-input-option">
-                            <label for="profileAvatarInput" class="profile-avatar-upload-label">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_AVATAR")}</label>
-                            <input type="file" id="profileAvatarInput" class="profile-avatar-file-input" accept="image/*">
-                            <button id="removeProfileAvatarButton" class="profile-avatar-remove-button">${getTextString("OPTIONS_EXTRA_PROFILE_REMOVE_AVATAR")}</button>
-                        </div>
-                        <div id="options-avatar-img-input-option-error"></div>
-                        <div class="options-option-card" id="options-img-input-option">
-                            <label for="profileBannerInput" class="profile-avatar-upload-label">${getTextString("OPTIONS_EXTRA_PROFILE_CHANGE_BANNER")}</label>
-                            <input type="file" id="profileBannerInput" class="profile-avatar-file-input" accept="image/*">
-                            <button id="removeProfileBannerButton" class="profile-avatar-remove-button">${getTextString("OPTIONS_EXTRA_PROFILE_REMOVE_BANNER")}</button>
-                        </div>
-                        <div id="options-banner-img-input-option-error"></div>
                         <div class="options-preview-profile">
                             <div class="options-preview-profile-banner-color" id="options-preview-profile-banner-color" style="background-color: ${localStorage.discord_banner_color};"></div>
                             <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url(${localStorage.discord_banner});"></div>
@@ -15448,7 +15669,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                             <img id="profileAvatarPreview" class="profile-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
                             <div class="options-preview-profile-status-bg"></div>
                             <div class="options-preview-profile-status-color"></div>
-                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_username}</p>
+                            <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">${localStorage.discord_displayname}</p>
                             <p class="options-preview-profile-username" id="options-username-preview"></p>
                         </div>
                     </div>
@@ -15460,6 +15681,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     cantChangeProfileWhenLoggedIn.classList.add('cant-change-profile-when-logged-in-container');
                     cantChangeProfileWhenLoggedIn.innerHTML = `
                         <div class="profile-no-text-container">
+                            <img style="width: 150px;" src="https://cdn.yapper.shop/assets/177.png">
                             <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: white;">${getTextString("OPTIONS_EXTRA_PROFILE_ERROR_1")}</p>
                             <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: white;">${getTextString("OPTIONS_EXTRA_PROFILE_ERROR_2")}</p>
                             <button class="discord-profile-logout-button" onclick="logoutOfDiscord()">${getTextString("OPTIONS_EXTRA_PROFILE_ERROR_BUTTON")}</button>
@@ -15471,14 +15693,82 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     document.getElementById("profile-change-settings").appendChild(cantChangeProfileWhenLoggedIn);
 
                     document.getElementById("discord-integration-options-container").innerHTML = `
-                        <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                        <div id="discord-sign-in-title-container"></div>
+                        <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGGED_IN_AS")}${localStorage.discord_displayname} (${localStorage.discord_username})</p>
                         <button class="card-button" onclick="logoutOfDiscord()">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGOUT")}</button>
                     `;
+                    if (localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen" && localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1") {
+                        document.getElementById('discord-sign-in-title-container').innerHTML = `
+                            <p class="center-text" style="font-size: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                            <div class="dm-new-icon">${getTextString("DM_NEW")}</div>
+                        `;
+                    } else {
+                        document.getElementById('discord-sign-in-title-container').innerHTML = `
+                            <p class="center-text" style="font-size: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                        `;
+                    }
                 } else if (localStorage.experiment_2025_04_discord_sign_in === "Treatment 1: Dynamic" || localStorage.experiment_2025_04_discord_sign_in === "Treatment 2: Force Logged Out") {
                     document.getElementById("discord-integration-options-container").innerHTML = `
-                        <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                        <div id="discord-sign-in-title-container"></div>
+                        <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_SUMMARY")}</p>
                         <button class="card-button" onclick="loginToDiscord()">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGIN")}</button>
                     `;
+                    if (localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen" && localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1") {
+                        document.getElementById('discord-sign-in-title-container').innerHTML = `
+                            <p class="center-text" style="font-size: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                            <div class="dm-new-icon">${getTextString("DM_NEW")}</div>
+                        `;
+                    } else {
+                        document.getElementById('discord-sign-in-title-container').innerHTML = `
+                            <p class="center-text" style="font-size: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                        `;
+                    }
+                }
+
+                if (localStorage.experiment_2025_04_discord_sign_in === "Treatment 6: Force Logged In v2" || localStorage.experiment_2025_04_discord_sign_in === "Treatment 4: Dynamic v2" && localStorage.getItem('discord_token')) {
+
+                    document.getElementById("options-profile-nono-change-container").innerHTML = `
+                        <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_ERROR_1")}</p>
+                        <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_ERROR_2")}</p>
+                        <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_ERROR_3")}</p>
+                    `;
+
+                    document.getElementById("profile-settings-edit").style.display = 'none';
+
+                    document.getElementById("discord-integration-options-container").innerHTML = `
+                        <div id="discord-sign-in-title-container"></div>
+                        <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGGED_IN_AS")}${localStorage.discord_displayname} (${localStorage.discord_username})</p>
+                        <div class="card-multi-button-container">
+                            <button class="card-button" onclick="updateDiscordProfilePlaceholder()">${getTextString("OPTIONS_EXTRA_PROFILE_RESYNC")}</button>
+                            <button class="card-button" onclick="logoutOfDiscord()">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGOUT")}</button>
+                        </div>
+                    `;
+                    if (localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen" && localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1") {
+                        document.getElementById('discord-sign-in-title-container').innerHTML = `
+                            <p class="center-text" style="font-size: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                            <div class="dm-new-icon">${getTextString("DM_NEW")}</div>
+                        `;
+                    } else {
+                        document.getElementById('discord-sign-in-title-container').innerHTML = `
+                            <p class="center-text" style="font-size: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                        `;
+                    }
+                } else if (localStorage.experiment_2025_04_discord_sign_in === "Treatment 4: Dynamic v2") {
+                    document.getElementById("discord-integration-options-container").innerHTML = `
+                        <div id="discord-sign-in-title-container"></div>
+                        <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_SUMMARY")}</p>
+                        <button class="card-button" onclick="loginToDiscord()">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGIN")}</button>
+                    `;
+                    if (localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen" && localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1") {
+                        document.getElementById('discord-sign-in-title-container').innerHTML = `
+                            <p class="center-text" style="font-size: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                            <div class="dm-new-icon">${getTextString("DM_NEW")}</div>
+                        `;
+                    } else {
+                        document.getElementById('discord-sign-in-title-container').innerHTML = `
+                            <p class="center-text" style="font-size: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD")}</p>
+                        `;
+                    }
                 }
 
                 
@@ -15495,19 +15785,19 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                 document.getElementById("options-username-preview").textContent = localStorage.discord_username.toLowerCase();
 
-                if (localStorage.experiment_2025_02_extra_options != "Treatment 5: Enabled w/o currency picker") {
-                    document.getElementById("currency-picker-experiment-container").innerHTML = `
-                        <div class="options-option-card" id="has-nitro-box-option">
-                            <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_SIDEBAR_NITRO_DISCOUNT")}</p>
-                            <input class="options-toggle-box" onclick="optionsHasNitroChecked();" style="cursor: pointer; scale: 2; posision: center;" id="options-has-nitro-box" type="checkbox">
-                        </div>
-                    `;
-                    // <div class="options-option-card">
-                    //     <p class="option-card-title" style="color: var(--white);">Currency</p>
-                    //     <select id="currency_picker_container" class="options-dropdown">
-                    //     </select>
-                    // </div>
-                }
+                // if (localStorage.experiment_2025_02_extra_options != "Treatment 5: Enabled w/o currency picker") {
+                //     document.getElementById("currency-picker-experiment-container").innerHTML = `
+                //         <div class="options-option-card" id="has-nitro-box-option">
+                //             <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_SIDEBAR_NITRO_DISCOUNT")}</p>
+                //             <input class="options-toggle-box" onclick="optionsHasNitroChecked();" style="cursor: pointer; scale: 2; posision: center;" id="options-has-nitro-box" type="checkbox">
+                //         </div>
+                //     `;
+                //     <div class="options-option-card">
+                //         <p class="option-card-title" style="color: var(--white);">Currency</p>
+                //         <select id="currency_picker_container" class="options-dropdown">
+                //         </select>
+                //     </div>
+                // }
 
 
                 const avatarImageInput = document.getElementById("profileAvatarInput");
@@ -15721,9 +16011,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById("reduced-motion-box").checked = true;
             }
 
-            if (localStorage.is_nitro_user == "true" && localStorage.experiment_2025_02_extra_options && localStorage.experiment_2025_02_extra_options != "Treatment 5: Enabled w/o currency picker" && localStorage.experiment_2025_02_extra_options != "Treatment -1: Disabled") {
-                document.getElementById("options-has-nitro-box").checked = true;
-            }
+            // if (localStorage.is_nitro_user == "true" && localStorage.experiment_2025_02_extra_options && localStorage.experiment_2025_02_extra_options != "Treatment 5: Enabled w/o currency picker" && localStorage.experiment_2025_02_extra_options != "Treatment -1: Disabled") {
+            //     document.getElementById("options-has-nitro-box").checked = true;
+            // }
 
             if (localStorage.disable_client_banner_overrides == "true") {
                 document.getElementById("disable-banner-overrides-box").checked = true;
@@ -15796,6 +16086,17 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     document.getElementById("newProfileSettingsDismissible").remove();
                 }
             }
+            if (localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1" && localStorage.staff_dont_dismiss_discord_login != "true") {
+                localStorage.dismissible_newLogInWithDiscord = "Treatment 1: Seen"
+                if (document.getElementById("open-options-tools-button-1")) {
+                    document.getElementById("open-options-tools-button-1").innerHTML = `
+                        <svg x="0" y="0" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path d="M19.738 9.99995H22V14H19.7391C19.498 14.931 19.1001 15.798 18.565 16.564L20.0001 18L18 20.0001L16.5651 18.564C15.7971 19.099 14.932 19.498 14 19.738V22H9.99995V19.738C9.06899 19.498 8.20295 19.099 7.43602 18.564L5.99998 20.0001L3.99993 18L5.43597 16.564C4.90101 15.799 4.50201 14.932 4.26201 14H2V9.99995H4.26201C4.50201 9.06803 4.89993 8.20199 5.43597 7.43602L3.99993 5.99998L5.99998 3.99993L7.43602 5.43597C8.20199 4.89993 9.06803 4.50201 9.99995 4.26201V2H14V4.26093C14.932 4.50201 15.7971 4.89993 16.5651 5.43501L18 3.99897L20.0001 5.99902L18.564 7.43602C19.099 8.20199 19.498 9.06899 19.738 9.99995ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79079 14.2091 8.00002 12 8.00002C9.79079 8.00002 8.00002 9.79079 8.00002 12C8.00002 14.2091 9.79079 16 12 16Z" fill="currentColor"/></svg>
+                    `;
+                }
+                if (document.getElementById("newLogInWithDiscordDismissible")) {
+                    document.getElementById("newLogInWithDiscordDismissible").remove();
+                }
+            }
         }
     }
 
@@ -15806,33 +16107,96 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     }
 
     function logoutOfDiscord() {
+        let modal = document.createElement("div");
+
+        modal.classList.add('modalv2');
+
+        modal.innerHTML = `
+            <div class="modalv2-inner open-in-shop" style="display: unset; height: 500px; width: 700px;">
+                <div data-modal-top-product-buttons>
+                    <div title="Close" data-close-product-card-button>
+                        <svg class="closeIcon_modal" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                    </div>
+                </div>
+                <p class="center-text" style="font-size: 30px; margin-top: 20px; margin-bottom: 0px; color: var(--white); min-width: 500px;">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGOUT_1")}</p>
+                <img style="display: block; width: 700px; margin-left: auto; margin-right: auto;" src="https://cdn.yapper.shop/assets/179.png">
+                <p class="center-text options-medium-title" style="margin-top: 0px; min-width: 500px;">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGOUT_2")}</p>
+                <div class="card-button-container open-in-shop">
+                    <button class="card-button" onclick="actuallyLogOutOfDiscord();">${getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGOUT_3")}</button>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 1);
+
+        let modal_back = document.createElement("div");
+
+        modal_back.classList.add('modalv2-back');
+        modal_back.id = 'modalv2-back';
+
+        document.body.appendChild(modal_back);
+
+        setTimeout(() => {
+            modal_back.classList.add('show');
+        }, 1);
+
+
+        modal.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.remove('show');
+                modal_back.classList.remove('show');
+                setTimeout(() => {
+                    modal.remove();
+                    modal_back.remove();
+                }, 300);
+            }
+        });
+
+        modal.querySelector("[data-close-product-card-button]").addEventListener('click', () => {
+            modal.classList.remove('show');
+            modal_back.classList.remove('show');
+            setTimeout(() => {
+                modal.remove();
+                modal_back.remove();
+            }, 300);
+        });
+
+        modal.querySelector("[data-go-back-button]").addEventListener('click', () => {
+            modal.classList.remove('show');
+            modal_back.classList.remove('show');
+            setTimeout(() => {
+                modal.remove();
+                modal_back.remove();
+            }, 300);
+        });
+    }
+
+    function actuallyLogOutOfDiscord() {
         localStorage.removeItem('discord_token');
         localStorage.removeItem('discord_profile');
+        sessionStorage.removeItem('discord_profile');
         localStorage.removeItem('discord_avatar');
         localStorage.removeItem('discord_username');
+        localStorage.removeItem('discord_displayname');
         localStorage.removeItem('discord_banner_color');
         localStorage.removeItem('discord_banner');
+        localStorage.removeItem('discord_premium_type');
         location.reload();
     }
 
-    window.addEventListener('DOMContentLoaded', () => {
-        const hash = window.location.hash;
-        const match = hash.match(/#token=([^&]+)/);
-  
-        if (match) {
-            const token = match[1];
-            localStorage.setItem('discord_token', token);
-            if (sessionStorage.discord_profile) {
-                
-            } else {
-                updateDiscordProfile(token)
-            }
-            window.location.hash = '';
+    function closeLoginDismissibleCoachtip() {
+        if (document.getElementById('newLogInWithDiscordDismissible')) {
+            localStorage.dismissible_newLogInWithDiscord = "Treatment 1: Seen";
+            document.getElementById('newLogInWithDiscordDismissible').remove();
         }
-    });
+    }
 
-    function updateDiscordProfilePlaceholder() {
-        updateDiscordProfile(localStorage.discord_token);
+    async function updateDiscordProfilePlaceholder() {
+        await updateDiscordProfile(localStorage.discord_token);
         optionsSidebarToggle();
         optionsSidebarToggle();
         if (apiUrl) {
@@ -15840,19 +16204,47 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         }
     }
 
+    window.updateDiscordProfilePlaceholder = updateDiscordProfilePlaceholder;
+
     async function updateDiscordProfile(token) {
-        const userInfo = await fetch('https://discord.com/api/users/@me', {
-            headers: { Authorization: `Bearer ${token}` }
-        });
-        const user = await userInfo.json();
-        sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
-        localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=128`;
-        localStorage.discord_username = user.global_name;
-        localStorage.discord_banner_color = user.banner_color;
-        if (user.banner != null) {
-            localStorage.discord_banner = `https://cdn.discordapp.com/banners/${user.id}/${user.banner}.png?size=480`;
-        } else {
-            localStorage.removeItem('discord_banner')
+        try {
+            const userInfo = await fetch('https://discord.com/api/users/@me', {
+                headers: { Authorization: `Bearer ${token}` }
+            });
+  
+            if (!userInfo.ok) {
+                // If the response is not ok (e.g., 401 Unauthorized)
+                setParams({ page: 'home', login: 'false' });
+                actuallyLogOutOfDiscord();
+                return;
+            }
+  
+            const user = await userInfo.json();
+            sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
+            localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=4096`;
+            localStorage.discord_username = user.username;
+            localStorage.discord_displayname = user.global_name;
+            localStorage.discord_banner_color = user.banner_color;
+            localStorage.discord_premium_type = user.premium_type;
+  
+            if (user.banner != null) {
+                localStorage.discord_banner = `https://cdn.discordapp.com/banners/${user.id}/${user.banner}.png?size=4096`;
+            } else {
+                localStorage.removeItem('discord_banner');
+            }
+  
+            console.log('success');
+      
+            // Optional: additional check (but `sessionStorage.discord_profile` is a string, so this check won't work unless parsed)
+            const parsedProfile = JSON.parse(sessionStorage.discord_profile);
+            if (parsedProfile.code === 0) {
+                setParams({ page: 'home', login: 'false' });
+                actuallyLogOutOfDiscord();
+            }
+      
+        } catch (error) {
+            setParams({ page: 'home', login: 'false' });
+            actuallyLogOutOfDiscord();
         }
     }
 
@@ -15860,6 +16252,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         const input = document.getElementById('profile-username-text-input')
 
         localStorage.discord_username = input.value;
+        localStorage.discord_displayname = input.value;
 
         const displayname = document.getElementById('options-preview-profile-displayname')
 
@@ -16320,6 +16713,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                     <div id="staff-notes">
                         <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_STAFF_NOTES")}</p>
+                        <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_STAFF_NOTES_2")}</p>
                         <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_STAFF_NOTES_1")}</p>
                     </div>
 
@@ -16344,6 +16738,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                         <div class="options-option-card" id="unpublished-pplus-items-box-option">
                             <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_DEV_UNPUBLISHED_PPLUS_ITEMS")}</p>
                             <input class="options-toggle-box" onclick="unreleasedPPlusItemsToggle();" style="cursor: pointer; scale: 2; posision: center;" id="unpublished-pplus-items-box" type="checkbox">
+                        </div>
+                        <div class="options-option-card" id="dont-dismiss-discord-login-box-option">
+                            <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_DEV_NO_SEEN_DISCORD_LOG_IN_OPTIONS_OPEN")}</p>
+                            <input class="options-toggle-box" onclick="dontSetDiscordLoginDismissibleToSeenToggle();" style="cursor: pointer; scale: 2; posision: center;" id="dont-dismiss-discord-login-box" type="checkbox">
                         </div>
                     </div>
 
@@ -16581,6 +16979,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 if (localStorage.unreleased_profiles_plus == "true") {
                     document.getElementById("unpublished-pplus-items-box").checked = true;
                 }
+
+                if (localStorage.staff_dont_dismiss_discord_login == "true") {
+                    document.getElementById("dont-dismiss-discord-login-box").checked = true;
+                }
             }
         } else {
             console.error('403 (Forbidden)')
@@ -16613,6 +17015,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             localStorage.unreleased_profiles_plus = "none"
         }
         fetchData(pageCheck());
+    }
+
+    function dontSetDiscordLoginDismissibleToSeenToggle() {
+        if (localStorage.staff_dont_dismiss_discord_login === "none") {
+            localStorage.staff_dont_dismiss_discord_login = "true"
+        } else {
+            localStorage.staff_dont_dismiss_discord_login = "none"
+        }
     }
 
     function testFetchAPI(fetcherName) {
@@ -17228,55 +17638,31 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
     function copyNotice(type) {
         if (type === "copylink") {
-            let copyNotice = document.createElement("div");
-
-            copyNotice.classList.add('copy-notice-container');
-            copyNotice.innerHTML = `
-                <p>${getTextString("SHOP_LINK_COPY_SUCCESS")}</p>
-            `;
-                         
-            document.body.appendChild(copyNotice);
-            setTimeout(() => {
-                copyNotice.remove();
-            }, 5000);
+            string = getTextString("SHOP_LINK_COPY_SUCCESS");
         } else if (type === "copysku") {
-            let copyNotice = document.createElement("div");
-
-            copyNotice.classList.add('copy-notice-container');
-            copyNotice.innerHTML = `
-                <p>${getTextString("SHOP_SKU_ID_COPY_SUCCESS")}</p>
-            `;
-                         
-            document.body.appendChild(copyNotice);
-            setTimeout(() => {
-                copyNotice.remove();
-            }, 5000);
+            string = getTextString("SHOP_SKU_ID_COPY_SUCCESS");
         } else if (type === "copyemoji") {
-            let copyNotice = document.createElement("div");
-
-            copyNotice.classList.add('copy-notice-container');
-            copyNotice.innerHTML = `
-                <p>${getTextString("SHOP_EMOJI_COPY_SUCCESS")}</p>
-            `;
-                         
-            document.body.appendChild(copyNotice);
-            setTimeout(() => {
-                copyNotice.remove();
-            }, 5000);
+            string = getTextString("SHOP_EMOJI_COPY_SUCCESS");
+        } else if (type === "logintrue") {
+            string = getTextString("SHOP_DISCORD_LOGIN_SUCCESS");
+        } else if (type === "loginfalse") {
+            string = getTextString("SHOP_DISCORD_LOGIN_FAIL");
         } else {
-            let copyNotice = document.createElement("div");
-
-            copyNotice.classList.add('copy-notice-container');
-            copyNotice.innerHTML = `
-                <p>${getTextString("SHOP_LINK_COPY_FAIL")}</p>
-            `;
-                         
-            document.body.appendChild(copyNotice);
-            setTimeout(() => {
-                copyNotice.remove();
-            }, 5000);
+            string = getTextString("SHOP_LINK_COPY_FAIL");
             console.warn('Invalid copyNotice')
         }
+
+        let copyNotice = document.createElement("div");
+
+        copyNotice.classList.add('copy-notice-container');
+        copyNotice.innerHTML = `
+            <p>${string}</p>
+        `;
+                     
+        document.body.appendChild(copyNotice);
+        setTimeout(() => {
+            copyNotice.remove();
+        }, 5000);
     }
 
     function scrollToSKU(sku_id, noscroll) {

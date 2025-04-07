@@ -18,6 +18,16 @@ EXPERIMENT_ID_6 = 1
 
 const experimentsList = [
     {
+        title: "Discord Sign In Dismissible",
+        id: "2025-04_discord_sign_in_dismissible",
+        name: "experiment_2025_04_discord_sign_in_dismissible",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: V1"
+        ],
+        rollout: "Treatment 1: V1"
+    },
+    {
         title: "Discord Sign In",
         id: "2025-04_discord_sign_in",
         name: "experiment_2025_04_discord_sign_in",
@@ -25,9 +35,11 @@ const experimentsList = [
             "Treatment -1: Disabled",
             "Treatment 1: Dynamic",
             "Treatment 2: Force Logged Out",
-            "Treatment 3: Force Logged In"
+            "Treatment 3: Force Logged In",
+            "Treatment 4: Dynamic v2",
+            "Treatment 6: Force Logged In v2"
         ],
-        rollout: "Treatment -1: Disabled",
+        rollout: "Treatment 4: Dynamic v2",
         needs_api_token: "true"
     },
     {
@@ -142,7 +154,6 @@ const experimentsList = [
         treatments: [
             "Treatment -1: Disabled",
             "Treatment 4: Enabled",
-            "Treatment 5: Enabled w/o currency picker",
             "Treatment 6: Settings like discord"
         ],
         rollout: "Treatment 4: Enabled"
@@ -277,6 +288,15 @@ const experimentsList = [
 ];
 
 const dismissibleContentList = [
+    {
+        title: "Discord Sign In",
+        id: "dismissible_content_newLogInWithDiscord",
+        name: "dismissible_newLogInWithDiscord",
+        treatments: [
+            "Treatment -1: Unseen",
+            "Treatment 1: Seen"
+        ]
+    },
     {
         title: "Open In Shop Notice",
         id: "dismissible_content_open_in_shop_notice",
