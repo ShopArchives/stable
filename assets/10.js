@@ -18,6 +18,18 @@ EXPERIMENT_ID_6 = 1
 
 const experimentsList = [
     {
+        title: "Collectibles Marketing Page",
+        id: "2025-04_collectibles_marketing_page",
+        name: "experiment_2025_04_collectibles_marketing_page",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled",
+            "Treatment 2: Enable v2"
+        ],
+        rollout: "Treatment -1: Disabled",
+        needs_api_token: "true"
+    },
+    {
         title: "Discord Sign In Dismissible",
         id: "2025-04_discord_sign_in_dismissible",
         name: "experiment_2025_04_discord_sign_in_dismissible",
