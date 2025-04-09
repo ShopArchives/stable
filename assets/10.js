@@ -18,6 +18,17 @@ EXPERIMENT_ID_6 = 1
 
 const experimentsList = [
     {
+        title: "Use api.yapper.shop for api",
+        id: "2025-04_use_api_dot_yapper_dot_shop",
+        name: "experiment_2025_04_use_api_dot_yapper_dot_shop",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment 1: Enabled",
+        needs_api_token: "true"
+    },
+    {
         title: "Collectibles Marketing Page",
         id: "2025-04_collectibles_marketing_page",
         name: "experiment_2025_04_collectibles_marketing_page",
@@ -367,20 +378,6 @@ const dismissibleContentList = [
 
 const testFetchAPIList = [
     {
-        title: "Test Fetch Old API",
-        id: "testfetch",
-        name: "testfetch_testfetch",
-        treatments: [
-            "none",
-            "collectibles-categories",
-            "miscellaneous-categories",
-            "downloads",
-            "leaked-categories"
-        ],
-        rollout: "none",
-        needs_api_token: "true"
-    },
-    {
         title: "Test Fetch Collectibles Shop API",
         id: "testfetch_collectibles-shop",
         name: "testfetch_testfetchnew",
@@ -393,6 +390,7 @@ const testFetchAPIList = [
             "nameplates",
             "consumables",
             "miscellaneous",
+            "marketing",
             "pplus-home",
             "pplus"
         ],

@@ -1437,7 +1437,7 @@ body {
 
 .dm-button-text {
     margin-left: 10px;
-    margin-top: 13px;
+    margin-top: 14px;
     font-weight: 600;
     font-size: large;
 }
@@ -2236,6 +2236,15 @@ body {
     opacity: 1;
 }
 
+.shop-marketing-silly-crap-container {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.shop-category-card:hover .shop-marketing-silly-crap-container {
+    opacity: 1;
+}
+
 .shareIcon_f4a996:hover {
     color: white;
     background-color: var(--7);
@@ -2732,6 +2741,22 @@ data-share-product-card-button {
     border: 2px solid var(--4);
 }
 
+.shop-category-card.shop-marketing-card {
+    background-color: var(--shop-card-background);
+    border-radius: 15px;
+    color: white;
+    font-family: 'gg sans', sans-serif;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.5s, box-shadow 0.2s;
+    display: flex;
+    flex-direction: column;
+    height: 150px; /* Fixed height for the entire card */
+    overflow: hidden; /* Prevents content from overflowing */
+    position: relative; /* Allows positioning of the card bottom */
+    border: unset;
+    z-index: 1;
+}
+
 .shop-category-card.highlighted {
     box-shadow: unset;
     animation: fsysuit4s6bnot 2s !important;
@@ -2952,8 +2977,8 @@ data-share-product-card-button {
 
 .avatar-decoration-image {
     border-radius: 15px;
-    width: 220px !important;
-    height: 220px !important;
+    width: 220px;
+    height: 220px;
     margin-left: auto;
     margin-right: auto;
     margin-top: 35px;
@@ -2964,8 +2989,8 @@ data-share-product-card-button {
     background-size: 83%; /* Ensures the background image covers the whole element */
     background-position: center; /* Centers the background image */
     background-repeat: no-repeat; /* Prevents the background image from repeating */
-    width: 220px !important;
-    height: 220px !important;
+    width: 220px ;
+    height: 220px;
     border-radius: 15px;
     z-index: 2;
 }
@@ -2976,8 +3001,8 @@ data-share-product-card-button {
     background-size: 100%;
     background-position: center;
     background-repeat: no-repeat;
-    width: 220px !important;
-    height: 220px !important;
+    width: 220px;
+    height: 220px;
     border-radius: 500px;
     scale: 83%;
     transition: background-image 0.3s ease;
@@ -3139,6 +3164,18 @@ data-share-product-card-button {
     margin-left: -20px;
     margin-top: -50px;
     margin-bottom: -50px;
+}
+
+.shop-category-card-holder:has(.shop-marketing-card) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(600px, 1fr));
+    gap: 20px;
+    justify-content: center; /* Center the grid horizontally */
+    max-width: 1200px; /* Limit the width of the card holder */
+    margin: 0 auto; /* Center the card holder container */
+    padding: 20px 0; /* Add some space between the banner and cards */
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .shop-category-card-holder-standard {
