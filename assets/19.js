@@ -1,12 +1,13 @@
 
 
-app_version1 = "331"
+app_version1 = "356"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
 let modalIsAlreadyOpen = false;
 let discordProfileEffectsCache = null;
 let pplusProfileEffectsCache = null;
+let communityThemesCache = null;
 
 defaultAvatar1 = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAAAY1BMVEVYZfJib/OMlfahqPeWn/eBi/XLz/vq6/7////19f5tePTq7P22vPnV2Pyrsvirsvl3gvT09f7Axfp3gfRtePNsePPg4v22vPq2u/qCi/WhqPjf4/zf4v2Xn/essvjLzvuXnvdbidFTAAAETElEQVR4AezBgQAAAACAoP2pF6kCAAAAAAAAAAAAAAAAAAAAAIDZudMtV1UlDuCFRKlWIEJ6uOwbzXn/lzzzYc/GWiT6zya/79WrLeYSc5Vq9IFWa3Sr6JehWt0ZZn5RtFJvmHnodPsrPLx1/B9PKx1ziLOPnIRRO84EXaAP/CWnR3pArTWcybpA5G8NsX20pw+cSbpAngEeOQenY+Cf8KIZ4FuDfSV4Ko/7hS7wNjYH7W3MvNeHtn2jvxn+OXcgaP0x8KJo43vgnwqu85EXDfGVULWON9G1BOmDN/M/AnTgDSWC0xve0KAITeSsykFw4qzOQWB4YwNBOfLmPAHpeXsvr5XOgJkjGA3vIlU6A2bvOHvAnXwiCMrwTl5UpUtg5us7BAB2gcg78nXugaC6QORd+bo7AEAXiLwzX+8SANEFNHPdXcAwV90FDgxA037+zwAc7aZlCKnSNTDrADZBdU6DBwbha5wCAabBkWGkSqfAzFa6C8xeADYB9Y2ByEBsbSMAYAy0zHWPActQLPQuKBh3DiwiDRlwzwFOv9JfTpORh5x5rVfQc8CQiLLJiEMaA1oW6XgVq+grVh4yY56JA68x07fm8hCIhXCUPn823zgkG/HK4Rf6kYv8YBt5BQ03BQyv9CMq8M/JQ7IItw+e6cd8QQjKTqCX3OMTtOdCCNZOoCnqkrYgZEFD2/FF/08qDAE4Dji+TtHPKHknVmBboVB2i9HI9zIGahZUhaVqVxCyQEEVQ7rSBMj3QiPUUTCWJkC+8zrQVjzmELBYG2H5jDYUFqAiQDlMtAwKQgjr+nwoq9O2BSEQJQFVWKeNBSEQ6+BYeG3BFIUAHIfasmsLh7IQgLcjDZd0AWXEIZRDMDYCuuj73g95yJGxEuBLPmr6VBSyzMO9Fpzko3kqeA1r8W4GHOWNKQ/JIl4COL4SZf2lPAQhAY4lYrv860rlIVmHlYAsuBhjFwpCwO4LOkb0TMAzAc8EPBPwTMAGngl4JuCZgMig4jMB27AMykJUhCr4ekwzKI10T9hpwzcz6DNSUbRdORzThW/CJSKagd4LjKurof1suFCYVR54MDckpsBXDLk3pliQgxBTHneBrwiaNtOfeUUKCnMQYlKC32x2r7SlmSUpoOQdi5xtoqx1DNP8WW9kKSCVvAu8QnC2USR4/I2bP5vDmhS80pdOjXULw8dc7HSiL6ljYLTmz/ooKvJTdkqTt9G5s/mHczH6qXlV9I32Ehi0+QVfQbn7HryHhvY033V1Tuu3CRncOIj3rL3EV9pf7+53ced0bY+MIZm7ndEt9uNnkxN8OSWhAvjjZ8ktnIoKaMDHF0yH8S416C4Rpv7bU094pWJ9QFv4BJOBvnkFzjWKMvhu4G78IibMIz2EFM3KFUAwCEI+ID9MDia6kd/+enpFj+YE+af+aA8OZAAAAAAG+Vvf46sAAAAAAAAAAAAAAAAAAAAAAFYCeHSjWah9hFcAAAAASUVORK5CYII=`;
 defaultAvatar2 = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABrrFhUAAAAhFBMVEV1fop9hpGgpq+ytr2prraXnqfT19vu7/H////29/iGjpju7/DCxszc3+K6vsS6v8WOlqD39/fLztPLz9OPlqDl5+nDx8ygpq6xtr6xtr3m5+iOlp/Dxsvc3+Hd3+GorraGjpnT19rT1tv29/eOlqHU19p+hpGprrWxt72or7bLz9Kfpq+ibmTzAAAEY0lEQVR4AezBAQEAAAQAIPB/swkMqAIAAAAAAAAAAAAAAAAAAAAAgBNZPfFWy86dLimOw3AAV5qYEXFicMKxHIFs03e///PtvaouagjRGMKfNr/vmhorsiMbpwcm+UZjN4PhD2YedR5TZpnZDgfmOww+L/h/jjoaS0iRG7pdk0HBQlECmeevisGEbpDJf7DQlUDJh2xlbm30noWmBGQFuOUcTMeej3CqFeCQzTOCl8i8bymBbPKQDlxeCecGqTH/Dc/ycUVK0LKx51ZVXs08H+WLoSu5la0yQmUK7sXQEKQ592ZOgFLukSE4meUe2YTQlCyinARTFnFOAss9swRlzL1zBCTj/o2ySFdAURCMBV+FiXQFFLP4esADvxGExPKVjJJIX4HCxbcJACyBkq/IxdkDQZVAyVfl4i4AgBIo+cpcvK8AiBJYMsddApY56hJIGcCSrmfFAAq6GsMQTKTvQDEEaILiXAZTBuEAlsAYl8E1wzCRLoEij7QLFKNYmwBhIp0BIo9tBgDMAcMc9xzYMJQcugvytl55VtCHWNx9wHaZ0d+mO6sP6Z7mBnQfYA2R2Fl1yMKCHov8zp3kycHKoQ9x3Mkj9Wv/i9s0FxCC9CJca8cv3JlDxBPecfgz/cwzt9j+etO5hFsCbEM/89I2e/QhoqI+2YBzGnfWEGHRuoBRQ6R9nu0hQJ3AIqgkNwEhLR6oPy7o/2MCQwC2AwWfltAxL/oifgFrhfZhtxitvpexAKug7nnU+gKqw2sO6DDk8bwJKKF6wZRPq8IToO28XqkvDnMK5FiNMB1n9SErqGZ4xeGvQV0IYV2f34ed05qgEIAjgZfAc9oyIATiPbgOvLZgA0IgtkMm7NpCGhCC8evIgkNKILHqEJIQjEZgGfR971wfMmasBLiQj5regkLaObifBd/p0Ls+xHBXOd7NgLH+YepDRIWXAK4yIpE9B4QAJaBgjcq0/3Wl8BDxiJUA4Yuqqob+YiGi7i0BiO4JuCfgnoB7Au4J6ME9AfcE3BNQMqjqnoAYrgkDnAc4BuWoH0sGtUS6J7xdWj4bu5wBHIqqL+yYZz6Lrek47wzOL0M7+kfjLAfyLpGJB3NDYrfnE2wq5VLagNF/GJl3nk/wS+pNM+PuKZAc6EefKP5m87ahPjnWpICMq1lllRsSpmCYxy8aq0sBJcbVnjvw23yR0OHwcR6/cPsuKcjoq+kir1d8lH3O0yl9lYw9oz1+0ZSqQ34SU5O6/KOuV/Zfdf3x4dJFltAB8+wZ9PErvoKqL7vxtp90TY5Pmlyy5ZI2QcDNg+qSZy9VQ9fX1Je7uDM91SNjMPZie/QN9vDFrtZ8OaXwsgcfvjB1y64owBJp+PrlsLrIGfSzIUzN4a7HNxSs2cO8+PSLwfLsJ3Dbh4QEfBlsz/xDjHcTQicHAPIGONck8LJBvpkc7OhMduxzk9CtmUL+U3+2BwcyAAAAAIP8re/xVQAAAAAAAAAAAAAAAAAAAAAAKwFiKavpSRGzHgAAAABJRU5ErkJggg==`;
@@ -17,20 +18,33 @@ defaultAvatar6 = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAQAAAAEACAMAAABr
 
 localStorage.experiment_2025_02_mobile_render = "Treatment 1: Use new mobile check";
 
-if (localStorage.sa_theme == "dark") {
-    document.body.classList.add('theme-dark');
-} else if (localStorage.sa_theme == "midnight") {
-    document.body.classList.add('theme-midnight');
-} else if (localStorage.sa_theme == "light") {
-    document.body.classList.add('theme-light');
-} else if (localStorage.sa_theme == "neongreen") {
-    document.body.classList.add('theme-neongreen');
-} else if (localStorage.sa_theme == "neonpurple") {
-    document.body.classList.add('theme-neonpurple');
-} else {
+if (!localStorage.reviews_filter_type) {
+    localStorage.reviews_filter_type = "2";
+}
+
+if (!localStorage.reviews_privacy_type) {
+    localStorage.reviews_privacy_type = "1";
+}
+
+if (!localStorage.reviews_time_type) {
+    localStorage.reviews_time_type = "us";
+}
+
+if (localStorage.sa_theme) {
+    document.body.classList.add('theme-' + localStorage.sa_theme);
+} else if (!localStorage.sa_theme) {
     localStorage.sa_theme = "dark";
     document.body.classList.add('theme-dark');
 }
+
+let communityThemeImport = document.createElement("style");
+
+communityThemeImport.id = 'community-theme-import';
+if (localStorage.community_theme_raw) {
+    communityThemeImport.innerHTML = `${localStorage.community_theme_raw}`;
+}
+
+document.body.appendChild(communityThemeImport);
 
 if (localStorage.discord_banner) {
     
@@ -77,13 +91,15 @@ if (localStorage.discord_username && localStorage.discord_username != '') {
 }
 
 function setRandomDiscordUsername() {
-    localStorage.discord_username = ``;
-    fetch('https://apis.kahoot.it/namerator')
-    .then(response => response.json())
-    .then((data) => {
-        localStorage.discord_username = data.name;
-        localStorage.discord_displayname = data.name;
-    })
+    // localStorage.discord_username = ``;
+    // fetch('https://apis.kahoot.it/namerator')
+    // .then(response => response.json())
+    // .then((data) => {
+    //     localStorage.discord_username = data.name;
+    //     localStorage.discord_displayname = data.name;
+    // })
+    localStorage.discord_displayname = 'Default User';
+    localStorage.discord_username = 'default_user';
 
 }
 
@@ -102,7 +118,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         const api_password = localStorage.getItem("api-password");
         const discord_token = localStorage.getItem("discord_token");
         const api_token = sessionStorage.getItem("api-token");
-        api = 'https://shop-archives-api.vercel.app/api';
+        api = 'https://api.yapper.shop/v2';
         discordsupport = 'https://support.discord.com/hc/en-us/articles/';
         discordblog = 'https://discord.com/blog/';
         yapperblog = 'https://yapper.shop/blog/';
@@ -696,7 +712,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
                                                     previewName = localStorage.discord_displayname;
                                                 } else {
-                                                    previewName = 'Discord User'
+                                                    previewName = 'Default User'
                                                 }
     
                                                 previewHolder.innerHTML = `
@@ -1059,7 +1075,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                                             if (product.emojiCopy === null) {
                                                 card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
-                                                    <button class="card-button" onclick="location.href='https://discord.gg/Mcwh7hGcWb';" title="Request item in our Discord server">Request to P+</button>
+                                                    <button class="card-button" onclick="location.href='https://discord.gg/SVKQEYeTsN';" title="Request item in our Discord server">Request to P+</button>
                                                 `;
                                             } else {
                                                 card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
@@ -1688,7 +1704,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
                                                     previewName = localStorage.discord_displayname;
                                                 } else {
-                                                    previewName = 'Discord User'
+                                                    previewName = 'Default User'
                                                 }
     
                                                 previewHolder.innerHTML = `
@@ -2442,7 +2458,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     const api_token = sessionStorage.getItem("api-token");
 
     // api = 'https://raw.githubusercontent.com/Yappering/api/main/v2';
-    api = 'https://shop-archives-api.vercel.app/api';
+    api = 'https://api.yapper.shop/v2';
     prvapi = 'https://raw.githubusercontent.com/Yappering/private-api/refs/heads/main/v2';
     discordsupport = 'https://support.discord.com/hc/en-us/articles/';
     discordblog = 'https://discord.com/blog/';
@@ -2451,10 +2467,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     yappersupport = 'https://support.yapper.shop/?page=';
     cdn = 'https://cdn.yapper.shop/';
     tmpapi = 'https://api.yapper.shop/tmp';
-
-    if (localStorage.experiment_2025_04_use_api_dot_yapper_dot_shop === "Treatment 1: Enabled") {
-        api = 'https://api.yapper.shop/v2'
-    }
 
     function privateAPICheck() {
         // if (localStorage.force_all_api_to_fectch_private_api == "true") {
@@ -2472,7 +2484,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     endpoints = [
         DOWNLOADABLE_DATA = "/downloads",
         COLLECTIBLES_SHOP = "/collectibles-shop",
-        PROFILE_EFFECTS = "/profile-effects"
+        PROFILE_EFFECTS = "/profile-effects",
+        COMMUNITY = "/community",
+        APISTATUS = "/status",
+        REVIEWSAPI = "/reviews"
     ]
     if (app_version2 === "Dev") {
         LOGIN_CALLBACK = "/dev/callback"
@@ -2481,6 +2496,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     }
 
     staff_ids = ["1169899815983915121", "1049207768785100880", "194749476269719552"]
+
+    review_mod_ids = ["1169899815983915121", "1049207768785100880"]
 
     yapper_categories = [
         WINDOWKILL = "1",
@@ -2677,6 +2694,86 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     }
 
     setPplusProfileEffectCache()
+
+    async function setCommunityThemesCache() {
+        url = api + COMMUNITY;
+        communityapiUrl = new URL(url);
+        communityapiUrl.searchParams.append("tab", "themes");
+        if (localStorage.staff_unpublished_community_features == "true") {
+            communityapiUrl.searchParams.append("include-unpublished", "true");
+        }
+        const response = await fetch(communityapiUrl, {
+            method: "GET",
+            headers: {
+                "Password": api_password,
+                "Authorization": discord_token,
+                "Token": api_token
+            }
+        });
+        const themesData = await response.json();
+        communityThemesCache = themesData;
+    }
+
+    setCommunityThemesCache()
+    
+    async function checkIfValidDiscordToken() {
+        if (localStorage.discord_token && !sessionStorage.discord_profile) {
+            try {
+                if (localStorage.discord_token && !sessionStorage.discord_profile) {
+                    const userInfo = await fetch('https://discord.com/api/users/@me', {
+                        headers: { Authorization: `Bearer ${localStorage.discord_token}` }
+                    });
+          
+                    if (!userInfo.ok) {
+                        // If the response is not ok (e.g., 401 Unauthorized)
+                        setParams({ page: 'home', login: 'false' });
+                        actuallyLogOutOfDiscord();
+                        return;
+                    }
+          
+                    const user = await userInfo.json();
+                    sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
+                    localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=4096`;
+                    localStorage.discord_username = user.username;
+                    if (user.global_name != null) {
+                        localStorage.discord_displayname = user.global_name;
+                    } else {
+                        localStorage.discord_displayname = user.username;
+                    }
+                    localStorage.discord_banner_color = user.banner_color;
+                    localStorage.discord_premium_type = user.premium_type;
+          
+                    if (user.banner != null) {
+                        localStorage.discord_banner = `https://cdn.discordapp.com/banners/${user.id}/${user.banner}.png?size=4096`;
+                    } else {
+                        localStorage.removeItem('discord_banner');
+                    }
+    
+                    if (staff_ids.includes(user.id)) {
+                        localStorage.dev = "true";
+                        console.log('yapper')
+                    }
+          
+                    console.log('success');
+                    setParams({ page: 'home', login: 'true' });
+                    location.reload();
+                }
+          
+                // Optional: additional check (but `sessionStorage.discord_profile` is a string, so this check won't work unless parsed)
+                const parsedProfile = JSON.parse(sessionStorage.discord_profile);
+                if (parsedProfile.code === 0) {
+                    setParams({ page: 'home', login: 'false' });
+                    actuallyLogOutOfDiscord();
+                }
+          
+            } catch (error) {
+                setParams({ page: 'home', login: 'false' });
+                actuallyLogOutOfDiscord();
+            }
+        }
+    }
+
+    checkIfValidDiscordToken();
 
     const params = new URLSearchParams(window.location.search);
 
@@ -2958,7 +3055,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
                                                     previewName = localStorage.discord_displayname;
                                                 } else {
-                                                    previewName = 'Discord User'
+                                                    previewName = 'Default User'
                                                 }
     
                                                 previewHolder.innerHTML = `
@@ -4010,7 +4107,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
                                                                 previewName = localStorage.discord_displayname;
                                                             } else {
-                                                                previewName = 'Discord User'
+                                                                previewName = 'Default User'
                                                             }
     
                                                             if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning" && product.category_sku_id === discord_categories.NAMEPLATE) {
@@ -5491,7 +5588,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
                                                 previewName = localStorage.discord_displayname;
                                             } else {
-                                                previewName = 'Discord User'
+                                                previewName = 'Default User'
                                             }
 
                                             previewHolder.innerHTML = `
@@ -5854,7 +5951,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             if (product.emojiCopy === null && product.type != 'plus_more') {
                                                 card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
                                                     <div class="card-multi-button-container" card-multi-button-container>
-                                                        <button class="card-button" onclick="location.href='https://discord.gg/Mcwh7hGcWb';" title="${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}">${getTextString("CARD_REQUEST_PPLUS_EMOJI_v2")}</button>
+                                                        <button class="card-button" onclick="location.href='https://discord.gg/SVKQEYeTsN';" title="${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}">${getTextString("CARD_REQUEST_PPLUS_EMOJI_v2")}</button>
                                                         <button class="card-button" onclick="copyEmoji('${product.sku_id}'); copyNotice('copysku');" title="${getTextString("CARD_COPU_SKU_ID_TITLE")}">${getTextString("CARD_COPU_SKU_ID")}</button>
                                                     </div>
                                                 `;
@@ -5869,7 +5966,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         } else {
                                             if (product.emojiCopy === null && product.type != 'plus_more') {
                                                 card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
-                                                    <button class="card-button" onclick="location.href='https://discord.gg/Mcwh7hGcWb';" title="${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}">${getTextString("CARD_REQUEST_PPLUS_EMOJI")}</button>
+                                                    <button class="card-button" onclick="location.href='https://discord.gg/SVKQEYeTsN';" title="${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}">${getTextString("CARD_REQUEST_PPLUS_EMOJI")}</button>
                                                 `;
                                             } else if (product.type != 'plus_more') {
                                                 card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
@@ -6161,7 +6258,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
                                                             previewName = localStorage.discord_displayname;
                                                         } else {
-                                                            previewName = 'Discord User'
+                                                            previewName = 'Default User'
                                                         }
 
                                                         if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning" && product.category_sku_id === discord_categories.NAMEPLATE) {
@@ -6666,7 +6763,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     } else if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page") {
                                                         if (typeof product.emojiCopy != 'undefined') {
                                                             button_container.innerHTML = `
-                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/Mcwh7hGcWb')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
+                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/SVKQEYeTsN')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
                                                             `;
                                                         } else {
                                                             button_container.innerHTML = `
@@ -6676,7 +6773,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     } else if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
                                                         if (typeof product.emojiCopy != 'undefined') {
                                                             button_container.innerHTML = `
-                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/Mcwh7hGcWb')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
+                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/SVKQEYeTsN')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
                                                             `;
                                                             modal.querySelector("[data-download-product-card-button]").innerHTML = `
                                                                 <svg class="downloadIcon_modal" onclick="window.open('https://item.yapper.shop/sku/${product.sku_id}/data.zip');" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.0547 0.999993L11.0547 11.59L7.7547 8.28999C7.66429 8.186 7.55337 8.10181 7.4289 8.04271C7.30442 7.98361 7.16907 7.95088 7.03134 7.94656C6.89362 7.94224 6.75648 7.96643 6.62855 8.01761C6.50061 8.0688 6.38464 8.14587 6.28789 8.24399C6.19115 8.34212 6.11573 8.45917 6.06637 8.58782C6.01701 8.71647 5.99476 8.85393 6.00104 8.99159C6.00731 9.12924 6.04196 9.26411 6.10282 9.38773C6.16368 9.51136 6.24943 9.62107 6.3547 9.70999L11.3547 14.71C11.5416 14.8932 11.7929 14.9959 12.0547 14.9959C12.3164 14.9959 12.5678 14.8932 12.7547 14.71L17.7547 9.70999C17.92 9.51987 18.0074 9.27437 17.9995 9.02257C17.9916 8.77078 17.889 8.53124 17.7121 8.35185C17.5352 8.17245 17.2972 8.06642 17.0455 8.05496C16.7939 8.04349 16.5471 8.12743 16.3547 8.28999L13.0547 11.6L13.0547 0.999993C13.0547 0.734776 12.9493 0.480422 12.7618 0.292885C12.5743 0.105349 12.3199 -7.13283e-06 12.0547 -7.10964e-06C11.7895 -7.08645e-06 11.5351 0.105349 11.3476 0.292885C11.1601 0.480422 11.0547 0.734776 11.0547 0.999993Z" fill="currentColor"/><path d="M4 15C4 14.7348 4.10536 14.4804 4.29289 14.2929C4.48043 14.1054 4.73478 14 5 14H7C7.26522 14 7.51957 13.8946 7.70711 13.7071C7.89464 13.5196 8 13.2652 8 13C8 12.7348 7.89464 12.4804 7.70711 12.2929C7.51957 12.1054 7.26522 12 7 12H5C4.20435 12 3.44129 12.3161 2.87868 12.8787C2.31607 13.4413 2 14.2044 2 15V19C2 19.7956 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7956 22 19V15C22 14.2044 21.6839 13.4413 21.1213 12.8787C20.5587 12.3161 19.7956 12 19 12H17C16.7348 12 16.4804 12.1054 16.2929 12.2929C16.1054 12.4804 16 12.7348 16 13C16 13.2652 16.1054 13.5196 16.2929 13.7071C16.4804 13.8946 16.7348 14 17 14H19C19.2652 14 19.5196 14.1054 19.7071 14.2929C19.8946 14.4804 20 14.7348 20 15V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V15Z" fill="currentColor"/></svg>
@@ -7443,7 +7540,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             </div>
                                         `;
 
-                                        if (localStorage.experiment_2025_03_item_reviews === "Treatment 1: Enabled" || localStorage.experiment_2025_03_item_reviews === "Treatment 2: Simulate not logged in" || localStorage.experiment_2025_03_item_reviews === "Treatment 3: Simulate logged in") {
+                                        if (localStorage.experiment_2025_04_reviews_v2 === "Treatment 1: Enabled") {
                                             modal.querySelector("[data-shop-modal-review-title]").textContent = `${getTextString("SHOP_REVIEWS_TITLE")}`;
 
                                             let reviewLoadingElement = document.createElement("div");
@@ -7452,7 +7549,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             `;
                                             reviewLoadingElement.classList.add("review-element");
                                             modal.querySelector("[data-shop-modal-review-container]").appendChild(reviewLoadingElement);
-                                            fetch(`https://shop-archives-api.vercel.app/api/reviews?sku_id=${apiCategory.sku_id}`, {
+                                            fetch(`${localStorage.api_database_base_url}/reviews/${apiCategory.sku_id}`, {
                                                 method: "GET",
                                                 headers: {
                                                     "Password": api_password,
@@ -8314,7 +8411,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             if (product.emojiCopy === null && product.type != 'plus_more') {
                                                 card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
                                                     <div class="card-multi-button-container" card-multi-button-container>
-                                                        <button class="card-button" onclick="location.href='https://discord.gg/Mcwh7hGcWb';" title="${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}">${getTextString("CARD_REQUEST_PPLUS_EMOJI_v2")}</button>
+                                                        <button class="card-button" onclick="location.href='https://discord.gg/SVKQEYeTsN';" title="${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}">${getTextString("CARD_REQUEST_PPLUS_EMOJI_v2")}</button>
                                                         <button class="card-button" onclick="copyEmoji('${product.sku_id}'); copyNotice('copysku');" title="${getTextString("CARD_COPU_SKU_ID_TITLE")}">${getTextString("CARD_COPU_SKU_ID")}</button>
                                                     </div>
                                                 `;
@@ -8329,7 +8426,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         } else {
                                             if (product.emojiCopy === null && product.type != 'plus_more') {
                                                 card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
-                                                    <button class="card-button" onclick="location.href='https://discord.gg/Mcwh7hGcWb';" title="${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}">${getTextString("CARD_REQUEST_PPLUS_EMOJI")}</button>
+                                                    <button class="card-button" onclick="location.href='https://discord.gg/SVKQEYeTsN';" title="${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}">${getTextString("CARD_REQUEST_PPLUS_EMOJI")}</button>
                                                 `;
                                             } else if (product.type != 'plus_more') {
                                                 card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
@@ -9023,7 +9120,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     } else if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 3: Enable modals w/ p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 4: Enable modals w/ p+ on p+ page") {
                                                         if (typeof product.emojiCopy != 'undefined') {
                                                             button_container.innerHTML = `
-                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/Mcwh7hGcWb')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
+                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/SVKQEYeTsN')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
                                                             `;
                                                         } else {
                                                             button_container.innerHTML = `
@@ -9033,7 +9130,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     } else if (localStorage.experiment_2025_02_shop_card_modals === "Treatment 5: Enable modals w/ data downloads and p+" || localStorage.experiment_2025_02_shop_card_modals === "Treatment 6: Enable modals w/ data downloads and p+ on p+ page") {
                                                         if (typeof product.emojiCopy != 'undefined') {
                                                             button_container.innerHTML = `
-                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/Mcwh7hGcWb')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
+                                                                <button class="card-button ${product.emojiCopy ? '' : 'card-button-no-emoji'}" onclick="${product.emojiCopy ? `copyEmoji('${product.emojiCopy}'); copyNotice('copyemoji');` : `redirectToLink('https://discord.gg/SVKQEYeTsN')`}" title="${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI_TITLE")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI_TITLE")}`}">${product.emojiCopy ? `${getTextString("CARD_COPY_PPLUS_EMOJI")}` : `${getTextString("CARD_REQUEST_PPLUS_EMOJI")}`}</button>
                                                             `;
                                                             modal.querySelector("[data-download-product-card-button]").innerHTML = `
                                                                 <svg class="downloadIcon_modal" onclick="window.open('https://item.yapper.shop/sku/${product.sku_id}/data.zip');" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M11.0547 0.999993L11.0547 11.59L7.7547 8.28999C7.66429 8.186 7.55337 8.10181 7.4289 8.04271C7.30442 7.98361 7.16907 7.95088 7.03134 7.94656C6.89362 7.94224 6.75648 7.96643 6.62855 8.01761C6.50061 8.0688 6.38464 8.14587 6.28789 8.24399C6.19115 8.34212 6.11573 8.45917 6.06637 8.58782C6.01701 8.71647 5.99476 8.85393 6.00104 8.99159C6.00731 9.12924 6.04196 9.26411 6.10282 9.38773C6.16368 9.51136 6.24943 9.62107 6.3547 9.70999L11.3547 14.71C11.5416 14.8932 11.7929 14.9959 12.0547 14.9959C12.3164 14.9959 12.5678 14.8932 12.7547 14.71L17.7547 9.70999C17.92 9.51987 18.0074 9.27437 17.9995 9.02257C17.9916 8.77078 17.889 8.53124 17.7121 8.35185C17.5352 8.17245 17.2972 8.06642 17.0455 8.05496C16.7939 8.04349 16.5471 8.12743 16.3547 8.28999L13.0547 11.6L13.0547 0.999993C13.0547 0.734776 12.9493 0.480422 12.7618 0.292885C12.5743 0.105349 12.3199 -7.13283e-06 12.0547 -7.10964e-06C11.7895 -7.08645e-06 11.5351 0.105349 11.3476 0.292885C11.1601 0.480422 11.0547 0.734776 11.0547 0.999993Z" fill="currentColor"/><path d="M4 15C4 14.7348 4.10536 14.4804 4.29289 14.2929C4.48043 14.1054 4.73478 14 5 14H7C7.26522 14 7.51957 13.8946 7.70711 13.7071C7.89464 13.5196 8 13.2652 8 13C8 12.7348 7.89464 12.4804 7.70711 12.2929C7.51957 12.1054 7.26522 12 7 12H5C4.20435 12 3.44129 12.3161 2.87868 12.8787C2.31607 13.4413 2 14.2044 2 15V19C2 19.7956 2.31607 20.5587 2.87868 21.1213C3.44129 21.6839 4.20435 22 5 22H19C19.7956 22 20.5587 21.6839 21.1213 21.1213C21.6839 20.5587 22 19.7956 22 19V15C22 14.2044 21.6839 13.4413 21.1213 12.8787C20.5587 12.3161 19.7956 12 19 12H17C16.7348 12 16.4804 12.1054 16.2929 12.2929C16.1054 12.4804 16 12.7348 16 13C16 13.2652 16.1054 13.5196 16.2929 13.7071C16.4804 13.8946 16.7348 14 17 14H19C19.2652 14 19.5196 14.1054 19.7071 14.2929C19.8946 14.4804 20 14.7348 20 15V19C20 19.2652 19.8946 19.5196 19.7071 19.7071C19.5196 19.8946 19.2652 20 19 20H5C4.73478 20 4.48043 19.8946 4.29289 19.7071C4.10536 19.5196 4 19.2652 4 19V15Z" fill="currentColor"/></svg>
@@ -10103,14 +10200,12 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                     category.querySelector("[data-shop-category-logo-holder]").id = `${apiCategory.sku_id}-logo-container`;
                                     category.querySelector("[data-shop-discord-watermark-container]").id = `${apiCategory.sku_id}-discord-watermark-container`;
 
-                                    if (document.getElementById("-1")) {
-                                        document.getElementById("-1").innerHTML = `
-                                            <img class="shop-category-condensed-banner-img" src="https://cdn.yapper.shop/assets/180.png">
-                                            <div class="shop-category-condensed-logo-holder" style="left: 23%;">
-                                                <img class="shop-category-banner-logo" src="https://cdn.yapper.shop/assets/181.png" id="shop-banner-logo">
-                                            </div>
-                                        `;
-                                    }
+                                    category.querySelector("[data-shop-category-banner]").innerHTML = `
+                                        <img class="shop-category-condensed-banner-img" src="https://cdn.yapper.shop/assets/180.png">
+                                        <div class="shop-category-condensed-logo-holder" style="left: 23%;">
+                                            <img class="shop-category-banner-logo" src="https://cdn.yapper.shop/assets/181.png" id="shop-banner-logo">
+                                        </div>
+                                    `;
 
 
                                     const cardOutput = category.querySelector("[data-shop-category-card-holder]");
@@ -10137,12 +10232,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     <h3 style="margin-left: 186px; z-index: 2;" data-product-card-name>Failed to load name</h3>
                                                     <p class="shop-card-summary" style="margin-left: 186px; z-index: 2;" data-product-card-summary>Failed to load summary</p>
                                                 </div>
+                                                <p style="display: none; z-index: 1; position: absolute; top: 10px; right: 305px;" data-shop-tab-preview-text>${getTextString("CARD_MARKETING_SHOP_TAB_PREVIEW_TEXT")}</p>
                                                 <div class="dm-button" style="display: none; position: absolute; top: 45px; right: 200px; overflow: hidden;" title="${getTextString("CARD_MARKETING_SHOP_TAB_PREVIEW_TITLE")}" data-shop-tab-preview>
                                                     <img style="position: absolute; bottom: 0px; right: 0px; width: 270px;" src="https://cdn.yapper.shop/assets/31.png" data-shop-tab-preview-img>
                                                     <svg style="margin-left: 10px; margin-top: 14px; z-index: 1;" class="linkButtonIcon__972a0" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M2.63 4.19A3 3 0 0 1 5.53 2H7a1 1 0 0 1 1 1v3.98a3.07 3.07 0 0 1-.3 1.35A2.97 2.97 0 0 1 4.98 10c-2 0-3.44-1.9-2.9-3.83l.55-1.98ZM10 2a1 1 0 0 0-1 1v4a3 3 0 0 0 3 3 3 3 0 0 0 3-2.97V3a1 1 0 0 0-1-1h-4ZM17 2a1 1 0 0 0-1 1v3.98a2.43 2.43 0 0 0 0 .05A2.95 2.95 0 0 0 19.02 10c2 0 3.44-1.9 2.9-3.83l-.55-1.98A3 3 0 0 0 18.47 2H17Z" class=""></path><path fill="currentColor" d="M21 11.42V19a3 3 0 0 1-3 3h-2.75a.25.25 0 0 1-.25-.25V16a2 2 0 0 0-2-2h-2a2 2 0 0 0-2 2v5.75c0 .14-.11.25-.25.25H6a3 3 0 0 1-3-3v-7.58c0-.18.2-.3.37-.24a4.46 4.46 0 0 0 4.94-1.1c.1-.12.3-.12.4 0a4.49 4.49 0 0 0 6.58 0c.1-.12.3-.12.4 0a4.45 4.45 0 0 0 4.94 1.1c.17-.07.37.06.37.24Z" class=""></path></svg>
                                                     <p style="z-index: 1;" class="dm-button-text">${getTextString("CARD_MARKETING_SHOP_TAB_PREVIEW")}</p>
                                                 </div>
-                                                <div class="card-button-container" style="width: 400px; left: 400px;" data-product-card-open-in-shop></div>
+                                                <div class="card-button-container" style="position: absolute; width: 550px; left: 475px;" data-product-card-open-in-shop></div>
                                             `;
 
                                             if (product.raw != null && product.raw.marketings["2"] && product.raw.marketings["2"].asset != null) {
@@ -10151,6 +10247,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                             if (product.raw != null && product.raw.marketings["0"] && product.raw.marketings["0"].ref_target_background != null) {
                                                 card.querySelector("[data-shop-tab-preview]").style.display = 'flex';
+                                                card.querySelector("[data-shop-tab-preview-text]").style.display = 'flex';
                                                 if (product.raw != null && product.raw.marketings["0"] && product.raw.marketings["0"].ref_target_background != null && product.raw.marketings["0"].ref_target_background.asset.resting.dark && product.raw.marketings["0"].ref_target_background.asset.resting.dark != null) {
                                                     card.querySelector("[data-shop-tab-preview-img]").src = product.raw.marketings["0"].ref_target_background.asset.resting.dark;
                                                 }
@@ -10255,7 +10352,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 card.querySelector("[data-product-card-sku-id]").textContent = `${getTextString("CARD_SHOP_MARKETING_ID")}${product.id}`;
                                                 card.querySelector("[data-product-card-name]").textContent = product.name;
                                                 card.querySelector("[data-product-card-summary]").textContent = product.summary;
-                                                if (product.raw.marketings["2"] && product.raw.marketings["2"].revert_text_color === true) {
+                                                if (product.raw != null && product.raw.marketings["2"] && product.raw.marketings["2"].revert_text_color === true) {
                                                     card.querySelector("[data-product-card-sku-id]").style.color = `black`;
                                                     card.querySelector("[data-product-card-name]").style.color = `black`;
                                                     card.querySelector("[data-product-card-summary]").style.color = `black`;
@@ -10283,12 +10380,16 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 const imgElement = document.createElement("img");
                                                 imgElement.id = "shop-card-deco-image";
                                                 imgElement.src = `https://cdn.yapper.shop/custom-collectibles/avatar-decorations/${product.asset}.png`;
+                                                imgElement.style.height = `150px`;
+                                                imgElement.style.width = `150px`;
 
                                                 previewHolder.appendChild(imgElement);
 
                                                 const bgimg = document.createElement("div");
                                                 bgimg.id = "shop-card-deco-bg-image";
                                                 bgimg.style.backgroundImage = `url('${product.src}')`;
+                                                bgimg.style.height = `150px`;
+                                                bgimg.style.width = `150px`;
 
                                                 previewHolder.appendChild(bgimg);
 
@@ -10296,6 +10397,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 card.querySelector("[data-product-card-sku-id]").textContent = `${getTextString("CARD_SHOP_MARKETING_ID")}${product.id}`;
                                                 card.querySelector("[data-product-card-name]").textContent = product.name;
                                                 card.querySelector("[data-product-card-summary]").textContent = product.summary;
+                                                if (product.raw != null && product.raw.marketings["2"] && product.raw.marketings["2"].revert_text_color === true) {
+                                                    card.querySelector("[data-product-card-sku-id]").style.color = `black`;
+                                                    card.querySelector("[data-product-card-name]").style.color = `black`;
+                                                    card.querySelector("[data-product-card-summary]").style.color = `black`;
+                                                } 
 
                                                 // Hover effect: Change the image src on mouse enter and leave
                                                 if (localStorage.reduced_motion != "true") {
@@ -10309,7 +10415,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 }
 
                                                 card.querySelector("[data-product-card-open-in-shop]").innerHTML = `
-                                                    <button class="card-button" onclick="location.href='https://item.yapper.shop/profiles-plus-marketing/${product.id}/data.zip';">${getTextString("CARD_DOWNLOAD_MARKETING_DATA")}</button>
+                                                    <div class="card-multi-button-container" card-multi-button-container>
+                                                        <button class="card-button" onclick="location.href='https://item.yapper.shop/profiles-plus-marketing/${product.id}/data.zip';">${getTextString("CARD_DOWNLOAD_MARKETING_DATA")}</button>
+                                                        <button class="card-button" onclick="setParams({page: 'pplus'}); addParams({scrollTo: '${product.category_sku_id}'}); location.reload();">${getTextString("CARD_MARKETING_GO_TO_CATEGORY")}</button>
+                                                    </div>
                                                 `;
                                             } else {
                                                 card.classList.add("hidden");
@@ -10520,14 +10629,15 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     <p style="font-size: large; font-weight: 900;" data-product-modal-name></p>
                                                     <p style="color: var(--8)" data-product-modal-summary></p>
                                                     <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ITEM_COUNT")}${apiCategory.products.length}</p>
-                                                    <details style="display: none;">
-                                                        <summary class="clickable" style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS")}</summary>
-                                                        
-                                                    </details>
-                                                    <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SHOW")}</p>
-                                                    <div class="shop-category-modal-assets-container" data-shop-category-modal-assets-container></div>
-                                                    <div class="shop-modal-review-container" data-shop-modal-review-container>
-                                                        <p style="font-size: large; font-weight: 900;" data-shop-modal-review-title></p>
+                                                    <div class="category-modal-content-container" data-category-modal-content-container>
+                                                        <div class="change-category-modal-content-button selected" data-shop-category-modal-tabs-tab-button-1>
+                                                            <p>${getTextString("SHOP_CATEGORY_MODAL_ASSETS_TAB")}</p>
+                                                        </div>
+                                                        <div class="change-category-modal-content-button" style="display: none;" data-shop-category-modal-tabs-tab-button-2>
+                                                            <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_TAB")}</p>
+                                                        </div>
+                                                        <div class="category-modal-inner-content-container" data-category-modal-inner-content-container>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="shop-modal-tag-container" data-shop-card-tag-container></div>
@@ -10539,299 +10649,518 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             </div>
                                         `;
 
-                                        if (localStorage.experiment_2025_03_item_reviews === "Treatment 1: Enabled" || localStorage.experiment_2025_03_item_reviews === "Treatment 2: Simulate not logged in" || localStorage.experiment_2025_03_item_reviews === "Treatment 3: Simulate logged in") {
-                                            modal.querySelector("[data-shop-modal-review-title]").textContent = `${getTextString("SHOP_REVIEWS_TITLE")}`;
+                                        if (localStorage.experiment_2025_04_reviews_v2 === "Treatment 1: Enabled") {
+                                            modal.querySelector("[data-shop-category-modal-tabs-tab-button-2]").style.display = 'unset';
+                                        }
 
-                                            let reviewLoadingElement = document.createElement("div");
-                                            reviewLoadingElement.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_REVIEWS_LOADING")}</p>
-                                            `;
-                                            reviewLoadingElement.classList.add("review-element");
-                                            modal.querySelector("[data-shop-modal-review-container]").appendChild(reviewLoadingElement);
-                                            fetch(`https://shop-archives-api.vercel.app/api/reviews?sku_id=${apiCategory.sku_id}`, {
-                                                method: "GET",
-                                                headers: {
-                                                    "Password": api_password,
-                                                    "Authorization": discord_token,
-                                                    "Token": api_token
-                                                }
-                                            }) // Replace with your API URL
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                if (data.message) {
-                                                    const reviewContainer = modal.querySelector("[data-shop-modal-review-container]");
-                                                    let reviewElement = document.createElement("div");
-    
-                                                    reviewElement.classList.add("review-element");
-                                                    if (data.message === "Unknown SKU") {
-            
-                                                        reviewElement.innerHTML = `
-                                                            <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_REVIEWS_NONE_TITLE")}</p>
-                                                            <p style="color: var(--8)">${getTextString("SHOP_REVIEWS_NONE_DESC")}</p>
-                                                        `;
-                                                    } else if (data.message === "Missing Access") {
-                                                        
-                                                        reviewElement.innerHTML = `
-                                                            <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_REVIEWS_NO_ACCESS_TITLE")}</p>
-                                                            <p style="color: var(--8)">${getTextString("SHOP_REVIEWS_NO_ACCESS_DESC")}</p>
-                                                        `;
-                                                    } else {
-                                                        
-                                                        reviewElement.innerHTML = `
-                                                            <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_REVIEWS_ERROR_TITLE")}</p>
-                                                            <p style="color: var(--8)">${getTextString("SHOP_REVIEWS_ERROR_DESC")}</p>
-                                                        `;
-                                                    }
-                                                    reviewContainer.appendChild(reviewElement);
-                                                } else {
-                                                    renderReviews(data)
-                                                }
+                                        fillCategoryModalContentContainer('assets');
 
-                                                reviewLoadingElement.remove();
-                                                
-                                            })
-                                            .catch(error => console.error('Error fetching data:', error));
-    
-                                            function renderReviews(datareview) {
-                                                const reviewContainer = modal.querySelector("[data-shop-modal-review-container]");
-                                                datareview.forEach(review => {
-                                                    let reviewElement = document.createElement("div");
-    
-                                                    reviewElement.classList.add("review-element");
-        
-                                                    reviewElement.innerHTML = `
-                                                        <div class="shop-modal-review-name-container" data-shop-modal-review-name-container>
-                                                            <p class="shop-modal-review-name" style="font-size: large; font-weight: 900;">${review.reviewer.name}</p>
-                                                        </div>
-                                                        <div class="shop-modal-review-star-container" data-shop-modal-review-star-container></div>
-                                                        <p style="color: var(--8)">${review.review}</p>
+                                        const tab_button_1 = modal.querySelector("[data-shop-category-modal-tabs-tab-button-1]");
+                                        const tab_button_2 = modal.querySelector("[data-shop-category-modal-tabs-tab-button-2]");
+
+                                        tab_button_1.addEventListener('click', () => {
+                                            if (tab_button_2.classList.contains("selected")) {
+                                                tab_button_2.classList.remove("selected");
+                                            }
+                                            tab_button_1.classList.add("selected");
+                                            fillCategoryModalContentContainer('assets');
+                                        });
+
+                                        tab_button_2.addEventListener('click', () => {
+                                            if (tab_button_1.classList.contains("selected")) {
+                                                tab_button_1.classList.remove("selected");
+                                            }
+                                            tab_button_2.classList.add("selected");
+                                            fillCategoryModalContentContainer('reviews');
+                                        });
+
+                                        function fillCategoryModalContentContainer(tab) {
+                                            if (document.getElementById("shop-category-modal-write-review-container")) {
+                                                document.getElementById("shop-category-modal-write-review-container").remove();
+                                            }
+                                            if (tab === "assets") {
+
+                                                modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = ``;
+
+                                                const asset_container = modal.querySelector("[data-category-modal-inner-content-container]");
+
+                                                if (apiCategory.banner != null) {
+                                                    let banner_asset = document.createElement("div");
+
+                                                    banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.banner}</p>
+                                                        <img class="category-modalv2-inner-img-banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.banner}.png?size=4096"></img> 
                                                     `;
 
-                                                    if (review.reviewer.moderator === "true") {
-                                                        let moderatorNametag = document.createElement("p");
-    
-                                                        moderatorNametag.classList.add("shop-modal-review-nametag-moderator");
-                                                        moderatorNametag.textContent = `${getTextString("SHOP_REVIEWS_NAMETAG_MODERATOR")}`;
-                                                        
-                                                        reviewElement.querySelector("[data-shop-modal-review-name-container]").appendChild(moderatorNametag);
-                                                    } else if (review.reviewer.special === "true") {
-                                                        let moderatorNametag = document.createElement("p");
-    
-                                                        moderatorNametag.classList.add("shop-modal-review-nametag-special");
-                                                        moderatorNametag.textContent = `${getTextString("SHOP_REVIEWS_NAMETAG_SPECIAL")}`;
-                                                        
-                                                        reviewElement.querySelector("[data-shop-modal-review-name-container]").appendChild(moderatorNametag);
+                                                    asset_container.appendChild(banner_asset);
+                                                }
+
+                                                if (apiCategory.banner_asset && apiCategory.banner_asset.static != null) {
+                                                    let banner_asset = document.createElement("div");
+
+                                                    banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_1")}</p>
+                                                        <img class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.static}"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(banner_asset);
+                                                }
+
+                                                if (apiCategory.banner_asset && apiCategory.banner_asset.animated != null) {
+                                                    let banner_asset = document.createElement("div");
+
+                                                    banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_2")}</p>
+                                                        <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.animated}" loop></video> 
+                                                    `;
+
+                                                    asset_container.appendChild(banner_asset);
+                                                }
+
+                                                if (apiCategory.logo != null) {
+                                                    let logo_asset = document.createElement("div");
+
+                                                    logo_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_LOGO")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.logo}</p>
+                                                        <img class="category-modalv2-inner-img-logo" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.logo}.png?size=4096"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(logo_asset);
+                                                }
+
+                                                if (apiCategory.mobile_bg != null) {
+                                                    let mobile_bg_asset = document.createElement("div");
+
+                                                    mobile_bg_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BG")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_bg}</p>
+                                                        <img class="category-modalv2-inner-img-mobile_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.mobile_bg}.png?size=4096"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(mobile_bg_asset);
+                                                }
+
+                                                if (apiCategory.pdp_bg != null) {
+                                                    let pdp_bg_asset = document.createElement("div");
+
+                                                    pdp_bg_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_PDP_BG")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.pdp_bg}</p>
+                                                        <img class="category-modalv2-inner-img-pdp_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.pdp_bg}.png?size=4096"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(pdp_bg_asset);
+                                                }
+
+                                                if (apiCategory.success_modal_bg != null) {
+                                                    let success_modal_bg_asset = document.createElement("div");
+
+                                                    success_modal_bg_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SUCCESS_MODAL_BG")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.success_modal_bg}</p>
+                                                        <img class="category-modalv2-inner-img-success_modal_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.success_modal_bg}.png?size=4096"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(success_modal_bg_asset);
+                                                }
+
+                                                if (apiCategory.mobile_banner != null) {
+                                                    let mobile_banner_asset = document.createElement("div");
+
+                                                    mobile_banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BANNER")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_banner}</p>
+                                                        <img class="category-modalv2-inner-img-mobile_banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.mobile_banner}.png?size=4096"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(mobile_banner_asset);
+                                                }
+
+                                                if (apiCategory.featured_block != null) {
+                                                    let featured_block_asset = document.createElement("div");
+
+                                                    featured_block_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_FEATURED_BLOCK")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.featured_block}</p>
+                                                        <img class="category-modalv2-inner-img-featured_block" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.featured_block}.png?size=4096"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(featured_block_asset);
+                                                }
+
+                                                if (apiCategory.hero_banner != null) {
+                                                    let hero_banner_asset = document.createElement("div");
+
+                                                    hero_banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_banner}</p>
+                                                        <img class="category-modalv2-inner-img-hero_banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.hero_banner}.png?size=4096"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(hero_banner_asset);
+                                                }
+
+                                                if (apiCategory.hero_banner_asset && apiCategory.hero_banner_asset.static != null) {
+                                                    let hero_banner_asset = document.createElement("div");
+
+                                                    hero_banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_1")}</p>
+                                                        <img class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.static}"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(hero_banner_asset);
+                                                }
+
+                                                if (apiCategory.hero_banner_asset && apiCategory.hero_banner_asset.animated != null) {
+                                                    let hero_banner_asset = document.createElement("div");
+
+                                                    hero_banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_2")}</p>
+                                                        <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.animated}" loop></video> 
+                                                    `;
+
+                                                    asset_container.appendChild(hero_banner_asset);
+                                                }
+
+                                                if (apiCategory.wide_banner != null) {
+                                                    let wide_banner_asset = document.createElement("div");
+
+                                                    wide_banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_WIDE_BANNER")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.wide_banner}</p>
+                                                        <img class="category-modalv2-inner-img-wide_banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.wide_banner}.png?size=4096"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(wide_banner_asset);
+                                                }
+
+                                                if (apiCategory.hero_logo != null) {
+                                                    let hero_logo_asset = document.createElement("div");
+
+                                                    hero_logo_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_LOGO")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_logo}</p>
+                                                        <img class="category-modalv2-inner-img-hero_logo" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.hero_logo}.png?size=4096"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(hero_logo_asset);
+                                                }
+
+                                                if (apiCategory.category_bg != null) {
+                                                    let category_bg_asset = document.createElement("div");
+
+                                                    category_bg_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_CATEGORY_BG")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.category_bg}</p>
+                                                        <img class="category-modalv2-inner-img-category_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.category_bg}.png?size=4096"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(category_bg_asset);
+                                                }
+                                            } else if (tab === "reviews") {
+
+                                                modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
+                                                    <div class="review-element" id="loading-category-reviews">
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_LOADING")}</p>
+                                                    </div>
+                                                `;
+
+                                                fetch(api + REVIEWSAPI + '/' + apiCategory.sku_id, {
+                                                    method: "GET",
+                                                    headers: {
+                                                        "Password": api_password,
+                                                        "Authorization": discord_token,
+                                                        "Token": api_token
                                                     }
+                                                }) // Replace with your API URL
+                                                .then(response => response.json())
+                                                .then(data => {
+                                                    renderReviews(data);
+
+                                                    let hasReviewAlready = false;
+
+                                                    data.forEach(review => {
+                                                        if (review.users.id === localStorage.discord_user_id) {
+                                                            hasReviewAlready = true;
+                                                        }
+                                                    });
+
+                                                    if (localStorage.discord_token && hasReviewAlready === false) {
+                                                        let writeReviewContainer = document.createElement("div");
         
-                                                    if (review.stars === "5") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzIxKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iI0ZGRUMzRSIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzIxIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
+                                                        writeReviewContainer.classList.add("shop-category-modal-write-review-container");
+                                                        writeReviewContainer.id = 'shop-category-modal-write-review-container';
+                                                        writeReviewContainer.innerHTML = `
+                                                            <p class="shop-category-modal-write-review-disclaimer-error" id="shop-category-modal-write-review-error-output"></p>
+                                                            <div id="star-rating" class="stars">
+                                                                <svg data-value="1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                <svg data-value="2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                <svg data-value="3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                <svg data-value="4" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                <svg data-value="5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                            </div>
+
+                                                            <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="Write a review for ${apiCategory.name}...">
+                                                            <button data-post-review-button>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_POST_REVIEW")}</button>
+                                                            <div class="shop-category-modal-write-review-disclaimer-container">
+                                                                <p class="shop-category-modal-write-review-disclaimer">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER")}</p>
+                                                                <a class="shop-category-modal-write-review-disclaimer-link" href="https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY")}</a>
+                                                            </div>
                                                         `;
-                                                    } else if (review.stars === "4") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzMyKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iI0ZGRUMzRSIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzMyIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
+
+                                                        writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
+                                                            postReview(`${apiCategory.sku_id}`, 0);
+                                                        };
+
+
+                                                        const stars = writeReviewContainer.querySelectorAll('#star-rating svg');
+                                                        let selectedRating = 0;
+
+                                                        stars.forEach(star => {
+                                                            star.addEventListener('click', () => {
+                                                                selectedRating = parseInt(star.getAttribute('data-value'));
+                                                                updateStars(selectedRating);
+                                                            });
+                                                        });
+                                                    
+                                                        function updateStars(rating) {
+                                                            stars.forEach(star => {
+                                                                const value = parseInt(star.getAttribute('data-value'));
+                                                                star.classList.toggle('filled', value <= rating);
+                                                            });
+                                                            console.error(writeReviewContainer.querySelector("[data-post-review-button]"))
+                                                            writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
+                                                                postReview(`${apiCategory.sku_id}`, selectedRating);
+                                                            };
+                                                        }
+    
+                                                        modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
+                                                    } else if (localStorage.discord_token) {
+                                                        let writeReviewContainer = document.createElement("div");
+        
+                                                        writeReviewContainer.classList.add("shop-category-modal-write-review-container");
+                                                        writeReviewContainer.id = 'shop-category-modal-write-review-container';
+                                                        writeReviewContainer.innerHTML = `
+                                                            <p class="shop-category-modal-write-review-disclaimer-error" id="shop-category-modal-write-review-error-output"></p>
+                                                            <div id="star-rating" class="stars">
+                                                                <svg data-value="1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                <svg data-value="2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                <svg data-value="3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                <svg data-value="4" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                <svg data-value="5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                            </div>
+
+                                                            <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="Edit your review for ${apiCategory.name}...">
+                                                            <button data-post-review-button>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_EDIT_REVIEW")}</button>
                                                         `;
-                                                    } else if (review.stars === "3") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzM5KSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iI0ZGRUMzRSIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzM5Ij4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
+
+                                                        writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
+                                                            postReview(`${apiCategory.sku_id}`, 0);
+                                                        };
+
+
+                                                        const stars = writeReviewContainer.querySelectorAll('#star-rating svg');
+                                                        let selectedRating = 0;
+
+                                                        stars.forEach(star => {
+                                                            star.addEventListener('click', () => {
+                                                                selectedRating = parseInt(star.getAttribute('data-value'));
+                                                                updateStars(selectedRating);
+                                                            });
+                                                        });
+                                                    
+                                                        function updateStars(rating) {
+                                                            stars.forEach(star => {
+                                                                const value = parseInt(star.getAttribute('data-value'));
+                                                                star.classList.toggle('filled', value <= rating);
+                                                            });
+                                                            console.error(writeReviewContainer.querySelector("[data-post-review-button]"))
+                                                            writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
+                                                                postReview(`${apiCategory.sku_id}`, selectedRating);
+                                                            };
+                                                        }
+
+    
+                                                        modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
+                                                    } else {
+                                                        let writeReviewContainer = document.createElement("div");
+        
+                                                        writeReviewContainer.classList.add("shop-category-modal-write-review-container");
+                                                        writeReviewContainer.id = 'shop-category-modal-write-review-container';
+                                                        writeReviewContainer.innerHTML = `
+                                                            <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="Log In with Discord to write reviews..." disabled>
+                                                            <button onclick="loginToDiscord();">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_LOG_IN_REVIEW")}</button>
                                                         `;
-                                                    } else if (review.stars === "2") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzQ2KSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iIzU3NTc1NyIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzQ2Ij4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
-                                                        `;
-                                                    } else if (review.stars === "1") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzUzKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iIzU3NTc1NyIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzUzIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
-                                                        `;
-                                                    } else if (review.stars === "0") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMyXzYwKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iIzU3NTc1NyIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMyXzYwIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
-                                                        `;
+    
+                                                        modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
                                                     }
-        
-                                                    reviewContainer.appendChild(reviewElement);
+
+                                                })
+                                                .catch(error => {
+                                                    modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
+                                                        <div class="review-element" id="loading-category-reviews">
+                                                            <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_ERROR")}</p>
+                                                            <p style="font-size: medium; font-weight: 200;">${error}</p>
+                                                        </div>
+                                                    `;
+                                                    console.error(error);
                                                 });
+    
+                                                function renderReviews(datareview) {
+                                                    if (Array.isArray(datareview) && datareview.length === 0) {
+                                                        modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
+                                                            <div class="review-element" id="loading-category-reviews">
+                                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_NONE")}</p>
+                                                                <p style="font-size: medium; font-weight: 200;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_BE_THE_FIRST")}</p>
+                                                            </div>
+                                                        `;
+
+                                                        if (apiCategory.sku_id === discord_categories.NAMEPLATE || apiCategory.sku_id === discord_categories.NAMEPLATE_TEST) {
+                                                            let reviewWarningElement = document.createElement("div");
+
+                                                            reviewWarningElement.classList.add("review-element");
+        
+                                                            reviewWarningElement.innerHTML = `
+                                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WARNING")}</p>
+                                                                <p style="font-size: medium; font-weight: 200; width: 95%;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WARNING_1")}</p>
+                                                            `;
+
+                                                            modal.querySelector("[data-category-modal-inner-content-container]").appendChild(reviewWarningElement);
+                                                        }
+                                                    } else {
+                                                        const reviewContainer = modal.querySelector("[data-category-modal-inner-content-container]");
+
+                                                        if (apiCategory.sku_id === discord_categories.NAMEPLATE || apiCategory.sku_id === discord_categories.NAMEPLATE_TEST) {
+                                                            let reviewWarningElement = document.createElement("div");
+
+                                                            reviewWarningElement.classList.add("review-element");
+        
+                                                            reviewWarningElement.innerHTML = `
+                                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WARNING")}</p>
+                                                                <p style="font-size: medium; font-weight: 200; width: 95%;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WARNING_1")}</p>
+                                                            `;
+
+                                                            reviewContainer.appendChild(reviewWarningElement);
+                                                        }
+
+                                                        datareview.forEach(review => {
+                                                            if (localStorage.reviews_filter_type === "1"|| localStorage.reviews_filter_type === "2" && review.review_flag_type != 2) {
+                                                                let reviewElement = document.createElement("div");
+    
+                                                                reviewElement.classList.add("review-element");
+        
+                                                                reviewElement.innerHTML = `
+                                                                    <div class="shop-modal-review-name-container" data-shop-modal-review-name-container>
+                                                                        <p class="shop-modal-review-name" style="font-size: large; font-weight: 900;">${review.users.username}</p>
+                                                                    </div>
+                                                                    <p style="color: var(--8)">${review.review_text}</p>
+                                                                    <div class="shop-modal-review-moderation-buttons" data-shop-modal-review-moderation-buttons></div>
+                                                                `;
+
+                                                                if (review_mod_ids.includes(localStorage.discord_user_id)) {
+                                                                    let deleteReviewIcon = document.createElement("div");
+
+                                                                    deleteReviewIcon.innerHTML = `
+                                                                        <svg class="closeIcon_modal" onclick="adminDeleteReview('${review.id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M14.25 1c.41 0 .75.34.75.75V3h5.25c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H3.75A.75.75 0 0 1 3 4.25v-.5c0-.41.34-.75.75-.75H9V1.75c0-.41.34-.75.75-.75h4.5Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M5.06 7a1 1 0 0 0-1 1.06l.76 12.13a3 3 0 0 0 3 2.81h8.36a3 3 0 0 0 3-2.81l.75-12.13a1 1 0 0 0-1-1.06H5.07ZM11 12a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm3-1a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
+                                                                    `;
+
+                                                                    reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(deleteReviewIcon);
+                                                                } else if (review.users.id === localStorage.discord_user_id) {
+                                                                    let deleteReviewIcon = document.createElement("div");
+
+                                                                    deleteReviewIcon.innerHTML = `
+                                                                        <svg class="closeIcon_modal" onclick="deleteReview('${apiCategory.sku_id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M14.25 1c.41 0 .75.34.75.75V3h5.25c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H3.75A.75.75 0 0 1 3 4.25v-.5c0-.41.34-.75.75-.75H9V1.75c0-.41.34-.75.75-.75h4.5Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M5.06 7a1 1 0 0 0-1 1.06l.76 12.13a3 3 0 0 0 3 2.81h8.36a3 3 0 0 0 3-2.81l.75-12.13a1 1 0 0 0-1-1.06H5.07ZM11 12a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm3-1a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
+                                                                    `;
+
+                                                                    reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(deleteReviewIcon);
+                                                                }
+
+                                                                if (review_mod_ids.includes(review.users.id)) {
+                                                                    let moderatorNametag = document.createElement("p");
+    
+                                                                    moderatorNametag.classList.add("shop-modal-review-nametag-moderator");
+                                                                    moderatorNametag.textContent = `${getTextString("SHOP_CATEGORY_MODAL_NAMETAG_MODERATOR")}`;
+
+                                                                    reviewElement.querySelector("[data-shop-modal-review-name-container]").appendChild(moderatorNametag);
+                                                                }
+
+                                                                let starRating = document.createElement("div");
+    
+                                                                starRating.classList.add("shop-modal-review-star-container");
+                                                                starRating.setAttribute('data-shop-modal-review-star-container', '');
+
+                                                                reviewElement.querySelector("[data-shop-modal-review-name-container]").appendChild(starRating);
+
+
+                                                                const date = new Date(review.created_at);
+
+                                                                const day = String(date.getDate()).padStart(2, '0');
+                                                                const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth is 0-indexed
+                                                                const year = date.getFullYear();
+
+                                                                if (localStorage.reviews_time_type === "uk") {
+                                                                    const formatted = `${day}/${month}/${year}`;
+
+                                                                    let createdAtTag = document.createElement("p");
+                                                                    
+                                                                    createdAtTag.classList.add("shop-modal-review-time-container");
+                                                                    createdAtTag.textContent = `${formatted}`;
+
+                                                                    reviewElement.querySelector("[data-shop-modal-review-name-container]").appendChild(createdAtTag);
+                                                                } else {
+                                                                    const formatted = `${month}/${day}/${year}`;
+
+                                                                    let createdAtTag = document.createElement("p");
+                                                                    
+                                                                    createdAtTag.classList.add("shop-modal-review-time-container");
+                                                                    createdAtTag.textContent = `${formatted}`;
+
+                                                                    reviewElement.querySelector("[data-shop-modal-review-name-container]").appendChild(createdAtTag);
+                                                                }
+
+        
+                                                                if (review.rating === 5) {
+                                                                    reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
+                                                                        <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzIxKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iI0ZGRUMzRSIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzIxIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
+                                                                    `;
+                                                                } else if (review.rating === 4) {
+                                                                    reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
+                                                                        <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzMyKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iI0ZGRUMzRSIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzMyIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
+                                                                    `;
+                                                                } else if (review.rating === 3) {
+                                                                    reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
+                                                                        <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzM5KSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iI0ZGRUMzRSIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzM5Ij4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
+                                                                    `;
+                                                                } else if (review.rating === 2) {
+                                                                    reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
+                                                                        <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzQ2KSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iIzU3NTc1NyIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzQ2Ij4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
+                                                                    `;
+                                                                } else if (review.rating === 1) {
+                                                                    reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
+                                                                        <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzUzKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iIzU3NTc1NyIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzUzIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
+                                                                    `;
+                                                                } else if (review.rating === 0) {
+                                                                    reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
+                                                                        <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMyXzYwKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iIzU3NTc1NyIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMyXzYwIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
+                                                                    `;
+                                                                }
+                                                                if (document.getElementById("loading-category-reviews")) {
+                                                                    document.getElementById("loading-category-reviews").remove();
+                                                                }
+
+                                                                reviewContainer.appendChild(reviewElement);
+                                                            }
+                                                        });
+                                                    }
+                                                    
+                                                }
                                             }
                                         }
 
+                                        window.fillCategoryModalContentContainer = fillCategoryModalContentContainer;
 
-                                        const asset_container = modal.querySelector("[data-shop-category-modal-assets-container]");
-
-                                        if (apiCategory.banner != null) {
-                                            let banner_asset = document.createElement("div");
-
-                                            banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.banner}</p>
-                                                <img class="category-modalv2-inner-img-banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.banner}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(banner_asset);
-                                        }
-
-                                        if (apiCategory.banner_asset && apiCategory.banner_asset.static != null) {
-                                            let banner_asset = document.createElement("div");
-
-                                            banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_1")}</p>
-                                                <img class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.static}"></img> 
-                                            `;
-
-                                            asset_container.appendChild(banner_asset);
-                                        }
-
-                                        if (apiCategory.banner_asset && apiCategory.banner_asset.animated != null) {
-                                            let banner_asset = document.createElement("div");
-
-                                            banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_2")}</p>
-                                                <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.animated}" loop></video> 
-                                            `;
-
-                                            asset_container.appendChild(banner_asset);
-                                        }
-
-                                        if (apiCategory.logo != null) {
-                                            let logo_asset = document.createElement("div");
-
-                                            logo_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_LOGO")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.logo}</p>
-                                                <img class="category-modalv2-inner-img-logo" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.logo}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(logo_asset);
-                                        }
-
-                                        if (apiCategory.mobile_bg != null) {
-                                            let mobile_bg_asset = document.createElement("div");
-
-                                            mobile_bg_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BG")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_bg}</p>
-                                                <img class="category-modalv2-inner-img-mobile_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.mobile_bg}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(mobile_bg_asset);
-                                        }
-
-                                        if (apiCategory.pdp_bg != null) {
-                                            let pdp_bg_asset = document.createElement("div");
-
-                                            pdp_bg_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_PDP_BG")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.pdp_bg}</p>
-                                                <img class="category-modalv2-inner-img-pdp_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.pdp_bg}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(pdp_bg_asset);
-                                        }
-
-                                        if (apiCategory.success_modal_bg != null) {
-                                            let success_modal_bg_asset = document.createElement("div");
-
-                                            success_modal_bg_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SUCCESS_MODAL_BG")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.success_modal_bg}</p>
-                                                <img class="category-modalv2-inner-img-success_modal_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.success_modal_bg}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(success_modal_bg_asset);
-                                        }
-
-                                        if (apiCategory.mobile_banner != null) {
-                                            let mobile_banner_asset = document.createElement("div");
-
-                                            mobile_banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BANNER")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_banner}</p>
-                                                <img class="category-modalv2-inner-img-mobile_banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.mobile_banner}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(mobile_banner_asset);
-                                        }
-
-                                        if (apiCategory.featured_block != null) {
-                                            let featured_block_asset = document.createElement("div");
-
-                                            featured_block_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_FEATURED_BLOCK")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.featured_block}</p>
-                                                <img class="category-modalv2-inner-img-featured_block" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.featured_block}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(featured_block_asset);
-                                        }
-
-                                        if (apiCategory.hero_banner != null) {
-                                            let hero_banner_asset = document.createElement("div");
-
-                                            hero_banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_banner}</p>
-                                                <img class="category-modalv2-inner-img-hero_banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.hero_banner}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(hero_banner_asset);
-                                        }
-
-                                        if (apiCategory.hero_banner_asset && apiCategory.hero_banner_asset.static != null) {
-                                            let hero_banner_asset = document.createElement("div");
-
-                                            hero_banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_1")}</p>
-                                                <img class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.static}"></img> 
-                                            `;
-
-                                            asset_container.appendChild(hero_banner_asset);
-                                        }
-
-                                        if (apiCategory.hero_banner_asset && apiCategory.hero_banner_asset.animated != null) {
-                                            let hero_banner_asset = document.createElement("div");
-
-                                            hero_banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_2")}</p>
-                                                <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.animated}" loop></video> 
-                                            `;
-
-                                            asset_container.appendChild(hero_banner_asset);
-                                        }
-
-                                        if (apiCategory.wide_banner != null) {
-                                            let wide_banner_asset = document.createElement("div");
-
-                                            wide_banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_WIDE_BANNER")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.wide_banner}</p>
-                                                <img class="category-modalv2-inner-img-wide_banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.wide_banner}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(wide_banner_asset);
-                                        }
-
-                                        if (apiCategory.hero_logo != null) {
-                                            let hero_logo_asset = document.createElement("div");
-
-                                            hero_logo_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_LOGO")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_logo}</p>
-                                                <img class="category-modalv2-inner-img-hero_logo" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.hero_logo}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(hero_logo_asset);
-                                        }
-
-                                        if (apiCategory.category_bg != null) {
-                                            let category_bg_asset = document.createElement("div");
-
-                                            category_bg_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_CATEGORY_BG")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.category_bg}</p>
-                                                <img class="category-modalv2-inner-img-category_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.category_bg}.png?size=4096"></img> 
-                                            `;
-
-                                            asset_container.appendChild(category_bg_asset);
-                                        }
 
                                         modal.querySelector("[data-product-modal-sku-id]").textContent = `${getTextString("SHOP_CATEGORY_MODAL_SKU_ID")}${apiCategory.sku_id}`;
                                         modal.querySelector("[data-product-modal-name]").textContent = apiCategory.name;
@@ -11167,7 +11496,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
                                                 previewName = localStorage.discord_displayname;
                                             } else {
-                                                previewName = 'Discord User'
+                                                previewName = 'Default User'
                                             }
 
                                             previewHolder.innerHTML = `
@@ -12219,7 +12548,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         if (localStorage.discord_displayname && localStorage.discord_displayname != '') {
                                                             previewName = localStorage.discord_displayname;
                                                         } else {
-                                                            previewName = 'Discord User'
+                                                            previewName = 'Default User'
                                                         }
 
                                                         if (localStorage.experiment_2025_03_early_nameplate_warning === "Treatment 2: Nameplate & Nameplate Test Warning" && product.category_sku_id === discord_categories.NAMEPLATE) {
@@ -13538,6 +13867,108 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
         }
     }
+
+
+    const postReview = async (itemId, rating) => {
+
+        // By running this function you agreen to the Shop Archives Privacy Policy: https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md
+
+        // By running this function you agreen to the Shop Archives Privacy Policy: https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md
+
+        // By running this function you agreen to the Shop Archives Privacy Policy: https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md
+
+        const accessToken = localStorage.discord_token;
+
+        const reviewText = document.getElementById("shop-category-modal-write-review-post-input").value;
+
+        if (!accessToken) {
+            console.error('Access token is missing!');
+            return;
+        }
+
+        const response = await fetch(api + REVIEWSAPI, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                "Password": api_password,
+                "Authorization": discord_token,
+                "Token": api_token
+            },
+            body: JSON.stringify({
+                accessToken,
+                itemId,
+                rating,
+                reviewText
+            })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+            fillCategoryModalContentContainer('reviews');
+        } else {
+            if (document.getElementById("shop-category-modal-write-review-error-output")) {
+                document.getElementById("shop-category-modal-write-review-error-output").textContent = `${result.message}`;
+            }
+        }
+
+        // By running this function you agreen to the Shop Archives Privacy Policy: https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md
+
+        // By running this function you agreen to the Shop Archives Privacy Policy: https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md
+
+        // By running this function you agreen to the Shop Archives Privacy Policy: https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md
+    };
+
+    // Example usage:
+    // postReview('item123', 5, 'This is my review text.');
+
+    window.postReview = postReview;
+
+    function deleteReview(itemId) {
+        const accessToken = discord_token;
+      
+        fetch(api + REVIEWSAPI, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Password": api_password,
+                "Authorization": discord_token,
+                "Token": api_token
+            },
+            body: JSON.stringify({
+                accessToken,
+                itemId
+            })
+        })
+        .then(response => response.json())
+        .then((data) => {
+            fillCategoryModalContentContainer('reviews');
+        })
+        .catch(error => {
+            console.error(error)
+        });
+    }
+
+
+    function deleteAllStoredUserData() {
+        const accessToken = discord_token;
+      
+        fetch(api + REVIEWSAPI + '/all', {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Password": api_password,
+                "Authorization": discord_token,
+                "Token": api_token
+            },
+            body: JSON.stringify({
+                accessToken
+            })
+        })
+        .catch(error => {
+            console.error(error)
+        });
+    }
+
     
     // Function to copy the emoji to clipboard
     function copyEmoji(emoji) {
@@ -13601,6 +14032,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 <div id="secret-tools">
                 </div>
             </div>
+            <div style="width: 100%; height: 70px;"></div>
         `;
 
         if (localStorage.experiment_2025_02_profiles_plus_home === "Treatment 2: Enabled") {
@@ -13918,6 +14350,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                     sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
                                     localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=4096`;
                                     localStorage.discord_username = user.username;
+                                    localStorage.discord_user_id = user.id;
                                     if (user.global_name != null) {
                                         localStorage.discord_displayname = user.global_name;
                                     } else {
@@ -13984,37 +14417,39 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
         const open_help_modals_buttons_holder = document.getElementById('open-help-modals-buttons-holder-new');
 
-        if (localStorage.discord_token) {
-            let user_button = document.createElement("div");
-
-            user_button.id = 'open-profile-settings-button-1';
-            // user_button.setAttribute("onclick","logoutOfDiscord();");
-            // user_button.title = `Log Out`;
-            user_button.title = getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGGED_IN_AS") + localStorage.discord_displayname;
-            user_button.innerHTML = `
-                <img style="width: 100%;" src="${localStorage.discord_avatar}">
-            `;
-
-            open_help_modals_buttons_holder.appendChild(user_button);
+        if (localStorage.experiment_2025_02_extra_options != "Treatment 6: Settings like discord") {
+            if (localStorage.discord_token) {
+                let user_button = document.createElement("div");
+    
+                user_button.id = 'open-profile-settings-button-1';
+                // user_button.setAttribute("onclick","logoutOfDiscord();");
+                // user_button.title = `Log Out`;
+                user_button.title = getTextString("OPTIONS_EXTRA_PROFILE_DISCORD_LOGGED_IN_AS") + localStorage.discord_displayname;
+                user_button.innerHTML = `
+                    <img style="width: 100%;" src="${localStorage.discord_avatar}">
+                `;
+    
+                open_help_modals_buttons_holder.appendChild(user_button);
+            }
+            
+            let options_button = document.createElement("div");
+    
+            options_button.id = 'open-options-tools-button-1';
+            options_button.setAttribute("onclick","optionsSidebarToggle();");
+            options_button.title = `Options`;
+            if (localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1" && localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen") {
+                options_button.innerHTML = `
+                    <svg x="0" y="0" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path d="M19.738 9.99995H22V14H19.7391C19.498 14.931 19.1001 15.798 18.565 16.564L20.0001 18L18 20.0001L16.5651 18.564C15.7971 19.099 14.932 19.498 14 19.738V22H9.99995V19.738C9.06899 19.498 8.20295 19.099 7.43602 18.564L5.99998 20.0001L3.99993 18L5.43597 16.564C4.90101 15.799 4.50201 14.932 4.26201 14H2V9.99995H4.26201C4.50201 9.06803 4.89993 8.20199 5.43597 7.43602L3.99993 5.99998L5.99998 3.99993L7.43602 5.43597C8.20199 4.89993 9.06803 4.50201 9.99995 4.26201V2H14V4.26093C14.932 4.50201 15.7971 4.89993 16.5651 5.43501L18 3.99897L20.0001 5.99902L18.564 7.43602C19.099 8.20199 19.498 9.06899 19.738 9.99995ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79079 14.2091 8.00002 12 8.00002C9.79079 8.00002 8.00002 9.79079 8.00002 12C8.00002 14.2091 9.79079 16 12 16Z" fill="currentColor"/></svg>
+                    <div class="guys-theres-a-new-log-in-with-discord-feature-on-yapper-dot-shop"></div>
+                `;
+            } else {
+                options_button.innerHTML = `
+                    <svg x="0" y="0" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path d="M19.738 9.99995H22V14H19.7391C19.498 14.931 19.1001 15.798 18.565 16.564L20.0001 18L18 20.0001L16.5651 18.564C15.7971 19.099 14.932 19.498 14 19.738V22H9.99995V19.738C9.06899 19.498 8.20295 19.099 7.43602 18.564L5.99998 20.0001L3.99993 18L5.43597 16.564C4.90101 15.799 4.50201 14.932 4.26201 14H2V9.99995H4.26201C4.50201 9.06803 4.89993 8.20199 5.43597 7.43602L3.99993 5.99998L5.99998 3.99993L7.43602 5.43597C8.20199 4.89993 9.06803 4.50201 9.99995 4.26201V2H14V4.26093C14.932 4.50201 15.7971 4.89993 16.5651 5.43501L18 3.99897L20.0001 5.99902L18.564 7.43602C19.099 8.20199 19.498 9.06899 19.738 9.99995ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79079 14.2091 8.00002 12 8.00002C9.79079 8.00002 8.00002 9.79079 8.00002 12C8.00002 14.2091 9.79079 16 12 16Z" fill="currentColor"/></svg>
+                `;
+            }
+    
+            open_help_modals_buttons_holder.appendChild(options_button);
         }
-        
-        let options_button = document.createElement("div");
-
-        options_button.id = 'open-options-tools-button-1';
-        options_button.setAttribute("onclick","optionsSidebarToggle();");
-        options_button.title = `Options`;
-        if (localStorage.experiment_2025_04_discord_sign_in_dismissible === "Treatment 1: V1" && localStorage.dismissible_newLogInWithDiscord != "Treatment 1: Seen") {
-            options_button.innerHTML = `
-                <svg x="0" y="0" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path d="M19.738 9.99995H22V14H19.7391C19.498 14.931 19.1001 15.798 18.565 16.564L20.0001 18L18 20.0001L16.5651 18.564C15.7971 19.099 14.932 19.498 14 19.738V22H9.99995V19.738C9.06899 19.498 8.20295 19.099 7.43602 18.564L5.99998 20.0001L3.99993 18L5.43597 16.564C4.90101 15.799 4.50201 14.932 4.26201 14H2V9.99995H4.26201C4.50201 9.06803 4.89993 8.20199 5.43597 7.43602L3.99993 5.99998L5.99998 3.99993L7.43602 5.43597C8.20199 4.89993 9.06803 4.50201 9.99995 4.26201V2H14V4.26093C14.932 4.50201 15.7971 4.89993 16.5651 5.43501L18 3.99897L20.0001 5.99902L18.564 7.43602C19.099 8.20199 19.498 9.06899 19.738 9.99995ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79079 14.2091 8.00002 12 8.00002C9.79079 8.00002 8.00002 9.79079 8.00002 12C8.00002 14.2091 9.79079 16 12 16Z" fill="currentColor"/></svg>
-                <div class="guys-theres-a-new-log-in-with-discord-feature-on-yapper-dot-shop"></div>
-            `;
-        } else {
-            options_button.innerHTML = `
-                <svg x="0" y="0" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path d="M19.738 9.99995H22V14H19.7391C19.498 14.931 19.1001 15.798 18.565 16.564L20.0001 18L18 20.0001L16.5651 18.564C15.7971 19.099 14.932 19.498 14 19.738V22H9.99995V19.738C9.06899 19.498 8.20295 19.099 7.43602 18.564L5.99998 20.0001L3.99993 18L5.43597 16.564C4.90101 15.799 4.50201 14.932 4.26201 14H2V9.99995H4.26201C4.50201 9.06803 4.89993 8.20199 5.43597 7.43602L3.99993 5.99998L5.99998 3.99993L7.43602 5.43597C8.20199 4.89993 9.06803 4.50201 9.99995 4.26201V2H14V4.26093C14.932 4.50201 15.7971 4.89993 16.5651 5.43501L18 3.99897L20.0001 5.99902L18.564 7.43602C19.099 8.20199 19.498 9.06899 19.738 9.99995ZM12 16C14.2091 16 16 14.2091 16 12C16 9.79079 14.2091 8.00002 12 8.00002C9.79079 8.00002 8.00002 9.79079 8.00002 12C8.00002 14.2091 9.79079 16 12 16Z" fill="currentColor"/></svg>
-            `;
-        }
-
-        open_help_modals_buttons_holder.appendChild(options_button);
 
         if (localStorage.dev == "true") {
             let devtools_button = document.createElement("div");
@@ -14027,17 +14462,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             `;
 
             open_help_modals_buttons_holder.appendChild(devtools_button);
-
-            let old_devtools_button = document.createElement("div");
-
-            old_devtools_button.id = 'open-dev-tools-button-1';
-            old_devtools_button.setAttribute("onclick","openOldDevModal();");
-            old_devtools_button.title = `Old Dev Tools`;
-            old_devtools_button.innerHTML = `
-                <svg x="0" y="0" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M2 20.59V19.4a1 1 0 0 1 .3-.7l2.4-2.42a1 1 0 0 1 .71-.29H6l9-9-.85-.85a1 1 0 0 1-.23-.34l-1.49-3.73a.5.5 0 0 1 .65-.65l3.73 1.5a1 1 0 0 1 .34.22l.64.64a1 1 0 0 1 1.42 0l1 1a1 1 0 0 1 0 1.42l1.58 1.58a1 1 0 0 1 0 1.42l-1.58 1.58a1 1 0 0 1-1.42 0L17 9l-9 9v.59a1 1 0 0 1-.3.7l-2.4 2.42a1 1 0 0 1-.71.29H3.4a1 1 0 0 1-.7-.3l-.42-.4a1 1 0 0 1-.29-.71Z" class=""></path><path fill="currentColor" d="M8.23 10.23c.2.2.51.2.7 0l1.3-1.3a.5.5 0 0 0 0-.7L6.5 4.5l.3-.3a1 1 0 0 0 0-1.4l-.5-.5c-.2-.2-.45-.3-.7-.22-.43.14-1.17.49-2.1 1.42a5.37 5.37 0 0 0-1.42 2.1c-.08.25.03.5.21.7l.5.5a1 1 0 0 0 1.42 0l.29-.3 3.73 3.73ZM13.77 15.06a.5.5 0 0 0 0 .7l1.73 1.74 1.44 2.4a1 1 0 0 0 .15.19l1.73 1.73c.1.1.26.1.36 0l2.64-2.64c.1-.1.1-.26 0-.36L20.1 17.1a1 1 0 0 0-.2-.15L17.5 15.5l-1.73-1.73a.5.5 0 0 0-.7 0l-1.3 1.3Z" class=""></path></svg>
-            `;
-
-            open_help_modals_buttons_holder.appendChild(old_devtools_button);
         }
     }
 
@@ -14777,6 +15201,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         document.getElementById("shop-category-loading-container").innerHTML = `
             <div class="shop-category-loading" id="shop-category-loading">
                 <div>
+                    <div class="potion-card-loading">
+                    </div>
+                    <div class="potion-card-loading">
+                    </div>
+                    <div class="potion-card-loading">
+                    </div>
+                    <div class="potion-card-loading">
+                    </div>
                     <div class="potion-card-loading">
                     </div>
                     <div class="potion-card-loading">
@@ -15667,14 +16099,1251 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         u_bar.classList.add("ubar-profile-and-settings")
         u_bar.innerHTML = `
             <img id="ubar-avatar" class="ubar-avatar-preview" src="${localStorage.discord_avatar}" alt="No image uploaded">
-            <div class="ubar-status-bg"></div>
-            <div class="ubar-status-color"></div>
-            <p class="ubar-displayname" id="ubar-displayname">${localStorage.discord_displayname}</p>
-            <svg title="Options" x="0" y="0" onclick="optionsSidebarToggle()" id="ubar-options-cog" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16.4483 8.3333H18.3333V11.6667H16.4492C16.2483 12.4425 15.9167 13.165 15.4708 13.8033L16.6667 15 15 16.6667 13.8042 15.47C13.1642 15.9158 12.4433 16.2483 11.6667 16.4483V18.3333H8.3333V16.4483C7.5575 16.2483 6.8358 15.9158 6.1967 15.47L5 16.6667 3.3333 15 4.53 13.8033C4.0842 13.1658 3.7517 12.4433 3.5517 11.6667H1.6667V8.3333H3.5517C3.7517 7.5567 4.0833 6.835 4.53 6.1967L3.3333 5 5 3.3333 6.1967 4.53C6.835 4.0833 7.5567 3.7517 8.3333 3.5517V1.6667H11.6667V3.5508C12.4433 3.7517 13.1642 4.0833 13.8042 4.5292L15 3.3325 16.6667 4.9992 15.47 6.1967C15.9158 6.835 16.2483 7.5575 16.4483 8.3333ZM10 13.3333C11.8409 13.3333 13.3333 11.8409 13.3333 10 13.3333 8.159 11.8409 6.6667 10 6.6667 8.159 6.6667 6.6667 8.159 6.6667 10 6.6667 11.8409 8.159 13.3333 10 13.3333Z" )=""></path></svg>
+            <p class="ubar-displayname" id="ubar-displayname">${localStorage.discord_displayname ? localStorage.discord_displayname : "Default User"}</p>
+            <p class="ubar-username" id="ubar-username">${localStorage.discord_username ? localStorage.discord_username : "default_user"}</p>
+            <svg title="User Options" x="0" y="0" onclick="openNewDiscordLikeSettings()" id="ubar-options-cog" aria-hidden="true" role="img" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M16.4483 8.3333H18.3333V11.6667H16.4492C16.2483 12.4425 15.9167 13.165 15.4708 13.8033L16.6667 15 15 16.6667 13.8042 15.47C13.1642 15.9158 12.4433 16.2483 11.6667 16.4483V18.3333H8.3333V16.4483C7.5575 16.2483 6.8358 15.9158 6.1967 15.47L5 16.6667 3.3333 15 4.53 13.8033C4.0842 13.1658 3.7517 12.4433 3.5517 11.6667H1.6667V8.3333H3.5517C3.7517 7.5567 4.0833 6.835 4.53 6.1967L3.3333 5 5 3.3333 6.1967 4.53C6.835 4.0833 7.5567 3.7517 8.3333 3.5517V1.6667H11.6667V3.5508C12.4433 3.7517 13.1642 4.0833 13.8042 4.5292L15 3.3325 16.6667 4.9992 15.47 6.1967C15.9158 6.835 16.2483 7.5575 16.4483 8.3333ZM10 13.3333C11.8409 13.3333 13.3333 11.8409 13.3333 10 13.3333 8.159 11.8409 6.6667 10 6.6667 8.159 6.6667 6.6667 8.159 6.6667 10 6.6667 11.8409 8.159 13.3333 10 13.3333Z" )=""></path></svg>
         `;
 
         dm_container.appendChild(u_bar);
     }
+
+    function openNewDiscordLikeSettings() {
+        let modal = document.createElement("div");
+
+        modal.classList.add('modalv3');
+
+        modal.innerHTML = `
+            <div class="modalv3-inner" style="color: var(--white);">
+                <div class="modalv3-inner-left">
+                    <div class="modalv3-side-tabs-container-backer">
+                    
+                    </div>
+                    <div class="modalv3-side-tabs-container" id="modalv3-side-tabs-container">
+                    
+                    </div>
+                </div>
+                <div class="modalv3-inner-right" id="modalv3-inner-right">
+                    <div class="modalv3-right-content-container" id="modalv3-right-content-container">
+                        <div class="modalv3-right-content-container-inner" id="modalv3-right-content-container-inner">
+                        
+                        </div>
+                        <div class="container_c2b141" data-discord-like-settings-close-button>
+                            <div class="closeButton_c2b141" aria-label="Close" role="button" tabindex="0">
+                                <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="none" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path>
+                                </svg>
+                            </div>
+                            <div class="keybind_c2b141" aria-hidden="true">ESC</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        document.body.appendChild(modal);
+
+        document.getElementById("modalv3-side-tabs-container").innerHTML = `
+            <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_USER_SETTINGS")}</p>
+            <button class="side-tabs-button" id="modal-v3-tab-account" onclick="setModalv3InnerContent('account')">
+                <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_ACCOUNT")}</p>
+            </button>
+
+            <div id="modalv3-side-tabs-profile-container"></div>
+
+            <div id="modalv3-side-tabs-reviews-container"></div>
+
+            <hr>
+            <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_SITE_SETTINGS")}</p>
+            <button class="side-tabs-button" id="modal-v3-tab-appearance" onclick="setModalv3InnerContent('appearance')">
+                <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_APPEARANCE")}</p>
+            </button>
+
+            <div id="modalv3-side-tabs-accessibility-container"></div>
+
+            <div id="staff-options-modalv3-container"></div>
+
+            <div id="login-logout-options-modalv3-container"></div>
+
+            <hr>
+            <div class="modalv3-side-tabs-app-info-container">
+                <p>Website made by: </p><a class="link" href="https://github.com/DTACat/">DTACat</a>
+                <p>${app_version2} ${app_version1}</p>
+            </div>
+        `;
+
+        if (localStorage.experiment_2025_04_profile_tab_v2 === "Treatment 1: Enabled") {
+            document.getElementById("modalv3-side-tabs-profile-container").innerHTML = `
+                <button class="side-tabs-button" id="modal-v3-tab-profile" onclick="setModalv3InnerContent('profile')">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_PROFILE")}</p>
+                </button>
+            `;
+        }
+
+        if (localStorage.experiment_2025_04_reviews_v2 === "Treatment 1: Enabled") {
+            document.getElementById("modalv3-side-tabs-reviews-container").innerHTML = `
+                <button class="side-tabs-button" id="modal-v3-tab-reviews" onclick="setModalv3InnerContent('reviews')">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_REVIEWS")}</p>
+                </button>
+            `;
+        }
+
+        if (localStorage.experiment_2025_04_accessibility_v2 === "Treatment 1: Enabled") {
+            document.getElementById("modalv3-side-tabs-accessibility-container").innerHTML = `
+                <button class="side-tabs-button" id="modal-v3-tab-accessibility" onclick="setModalv3InnerContent('accessibility')">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_ACCESSIBILITY")}</p>
+                </button>
+            `;
+        }
+
+        if (localStorage.dev === "true") {
+            document.getElementById("staff-options-modalv3-container").innerHTML = `
+                <hr>
+                <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_STAFF_ONLY")}</p>
+                <button class="side-tabs-button" id="modal-v3-tab-experiments" onclick="setModalv3InnerContent('experiments')">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_EXPERIMENTS")}</p>
+                </button>
+                <button class="side-tabs-button" id="modal-v3-tab-dismissible_content" onclick="setModalv3InnerContent('dismissible_content')">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_DISMISSIBLE_CONTENT")}</p>
+                </button>
+                <button class="side-tabs-button" id="modal-v3-tab-api_test_fetch" onclick="setModalv3InnerContent('api_test_fetch')">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_API_TEST_FETCH")}</p>
+                </button>
+                <button class="side-tabs-button" id="modal-v3-tab-local_storage" onclick="setModalv3InnerContent('local_storage')">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_LOCAL_STORAGE")}</p>
+                </button>
+                <button class="side-tabs-button" id="modal-v3-tab-misc" onclick="setModalv3InnerContent('misc')">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_MISC")}</p>
+                </button>
+            `;
+        }
+
+        setTimeout(() => {
+            modal.classList.add('show');
+        }, 1);
+
+        setModalv3InnerContent('account');
+
+
+        document.addEventListener("keydown", function (event) {
+            if (event.key === "Escape") {
+                modal.classList.remove('show');
+                setTimeout(() => {
+                    modal.remove();
+                }, 300);
+            }
+        });
+
+        document.querySelector("[data-discord-like-settings-close-button]").addEventListener('click', (event) => {
+            modal.classList.remove('show');
+            setTimeout(() => {
+                modal.remove();
+            }, 300);
+        });
+    }
+
+    function setModalv3InnerContent(tab) {
+        if (!document.getElementById("modalv3-right-content-container-inner")) {
+            openNewDiscordLikeSettings();
+        }
+        const tabPageOutput = document.getElementById("modalv3-right-content-container-inner");
+
+        if (document.querySelector(".side-tabs-button-selected")) {
+            document.querySelectorAll('.side-tabs-button-selected').forEach((el) => {
+                el.classList.remove("side-tabs-button-selected");
+            });
+        }
+
+        document.getElementById("modalv3-right-content-container").scrollTo(0,0);
+
+        if (localStorage.discord_token) {
+            document.getElementById("login-logout-options-modalv3-container").innerHTML = `
+                <hr>
+                <button class="side-tabs-button" id="modal-v3-tab-log_out" onclick="logoutOfDiscord()">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_LOG_OUT")}</p>
+                </button>
+            `;
+        } else {
+            document.getElementById("login-logout-options-modalv3-container").innerHTML = `
+                <hr>
+                <button class="side-tabs-button" id="modal-v3-tab-log_in" onclick="loginToDiscord()">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_LOG_IN")}</p>
+                </button>
+            `;
+        }
+
+        if (tab === "account") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            tabPageOutput.innerHTML = `
+                <h2>${getTextString("MODAL_V3_TAB_ACCOUNT_HEADER")}</h2>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_SUMMARY")}</p>
+
+                    <div id="modalv3-account-account-details-container">
+
+                    </div>
+                </div>
+            `;
+
+            const accountDetails = document.getElementById("modalv3-account-account-details-container");
+            
+            if (localStorage.discord_token) {
+                const discordProfile = JSON.parse(sessionStorage.discord_profile);
+                accountDetails.innerHTML = `
+                    <div class="modalv3-account-account-details">
+                        <div class="modalv3-account-banner-color" style="background-color: ${localStorage.discord_banner_color};"></div>
+                        <div class="modalv3-account-banner-image" style="background-image: url(${localStorage.discord_banner});"></div>
+                        <div class="modalv3-account-banner-filler"></div>
+
+                        <div class="modalv3-account-avatar-preview-bg"></div>
+                        <img class="modalv3-account-avatar-preview" src="${localStorage.discord_avatar}">
+                        <p class="modalv3-account-displayname">${localStorage.discord_displayname}</p>
+                        <button class="modalv3-resync-profiles-button" onclick="updateDiscordProfileModalv3()">Resync Profile</button>
+
+                        <div class="modalv3-account-account-details-inners-padding">
+                            <div class="modalv3-account-account-details-inner">
+                                <div class="modalv3-account-account-details-card">
+                                    <p class="modalv3-account-displayname-header">${getTextString("MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_DISPLAY_NAME")}</p>
+                                    <p class="modalv3-account-displayname-text">${localStorage.discord_displayname}</p>
+                                </div>
+                                <div class="modalv3-account-account-details-card">
+                                    <p class="modalv3-account-username-header">${getTextString("MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_USERNAME")}</p>
+                                    <p class="modalv3-account-username-text">${localStorage.discord_username}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } else {
+                accountDetails.style.marginTop = '20px';
+                accountDetails.style.marginBottom = '20px';
+                accountDetails.innerHTML = `
+                    <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_NOT_LOGGED_IN_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_NOT_LOGGED_IN_SUMMARY")}</p>
+                    <button class="modalv3-content-card-button" onclick="loginToDiscord()">${getTextString("MODAL_V3_TAB_ACCOUNT_LOGIN_WITH_DISCORD_BUTTON")}</button>
+                `;
+            }
+        } else if (tab === "profile") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            tabPageOutput.innerHTML = `
+                <h2>${getTextString("MODAL_V3_TAB_PROFILE_HEADER")}</h2>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_SUMMARY")}</p>
+                    <div class="modalv3-profile-editor-container">
+                        <div class="modalv3-profile-editor-content-container" id="modalv3-profile-editor-content-container"></div>
+                        <div class="modalv3-profile-editor-preview-container" id="modalv3-profile-editor-preview-container"></div>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById("modalv3-profile-editor-preview-container").innerHTML = `
+                <p>Preview:</p>
+                <div class="modal-preview-profile2">
+                    <div class="options-preview-profile-banner-color" id="options-preview-profile-banner-color" style="background-color: #829ff4;"></div>
+                    <div id="profileBannerPreview" class="options-preview-profile-banner" style="background-image: url();"></div>
+                    <div class="profile-avatar-preview-bg"></div>
+                    <img id="profileAvatarPreview" class="profile-avatar-preview" src="https://cdn.discordapp.com/assets/content/0f4ee362d733e1d6132719911c897fb4d167bc3eb98ac3265ad72eb7dceec551.png" alt="No image uploaded">
+                    <div class="options-preview-profile-status-bg"></div>
+                    <div class="options-preview-profile-status-color"></div>
+                    <p class="options-preview-profile-displayname" id="options-preview-profile-displayname">Default User</p>
+                    <p class="options-preview-profile-username" id="options-username-preview">default_user</p>
+                </div>
+            `;
+
+            document.getElementById("modalv3-profile-editor-content-container").innerHTML = `
+                <div class="modalv3-profile-editor-content-card">
+                    <p class="modalv3-profile-editor-option-header">${getTextString("MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_CHANGE_DISPLAY_NAME_HEADER")}</p>
+                    <input type="text" class="modalv3-profile-editor-text-input" value="${localStorage.discord_displayname}" placeholder="${getTextString("MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_CHANGE_DISPLAY_NAME_PLACEHOLDER")}">
+                </div>
+                <hr>
+                <div class="modalv3-profile-editor-content-card">
+                    <p class="modalv3-profile-editor-option-header-with-button">${getTextString("MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_CHANGE_AVATAR_HEADER")}</p>
+                    <label class="modalv3-profile-editor-image-upload" for="profileAvatarInput">Upload Avatar</label>
+                    <input style="display: none;" type="file" id="profileAvatarInput" accept="image/*">
+                    <button id="removeProfileAvatarButton">Remove Avatar</button>
+                </div>
+                <hr>
+                <div class="modalv3-profile-editor-content-card">
+                    <p class="modalv3-profile-editor-option-header-with-button">${getTextString("MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_CHANGE_BANNER_HEADER")}</p>
+                    <label class="modalv3-profile-editor-image-upload" for="profileBannerInput">Upload Banner</label>
+                    <input style="display: none;" type="file" id="profileBannerInput" accept="image/*">
+                    <button id="removeProfileBannerButton" style="display: none;">Remove Banner</button>
+                </div>
+                <hr>
+                <div class="modalv3-profile-editor-content-card">
+                    <p class="modalv3-profile-editor-option-header">${getTextString("MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_CHANGE_BANNER_COLOR_HEADER")}</p>
+                    <input type="color" autocomplete="off" class="modalv3-profile-editor-color-input" oninput="changeBannerColorFromInput();" id="profile-banner-color-input" value="#829ff4">
+                </div>
+            `;
+        } else if (tab === "reviews") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            if (localStorage.discord_token) {
+                tabPageOutput.innerHTML = `
+                    <h2>${getTextString("MODAL_V3_TAB_REVIEWS_HEADER")}</h2>
+                    <div class="modalv3-content-card-1">
+                        <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_HEADER")}</h2>
+                        <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SUMMARY")}</p>
+
+                        <div class="modalv3-content-ratio-card green" id="modalv3-ratio-card-reviews-filter-3" onclick="updateReviewsFilterStore('3');">
+                            <div class="modalv3-content-ratio-card-inner">
+                                <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_3")}</h2>
+                                <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_3_SUMMARY")}</p>
+                            </div>
+                        </div>
+                        <div class="modalv3-content-ratio-card orange" id="modalv3-ratio-card-reviews-filter-2" onclick="updateReviewsFilterStore('2');">
+                            <div class="modalv3-content-ratio-card-inner">
+                                <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_2")}</h2>
+                                <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_2_SUMMARY")}</p>
+                            </div>
+                        </div>
+                        <div class="modalv3-content-ratio-card red" id="modalv3-ratio-card-reviews-filter-1"  onclick="updateReviewsFilterStore('1');">
+                            <div class="modalv3-content-ratio-card-inner">
+                                <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_1")}</h2>
+                                <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_1_SUMMARY")}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="modalv3-content-card-1">
+                        <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_HEADER")}</h2>
+                        <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_SUMMARY")}</p>
+                        <div class="modalv3-content-ratio-card green" id="modalv3-ratio-card-reviews-time-us" onclick="updateReviewsTimeFormatStore('us');">
+                            <div class="modalv3-content-ratio-card-inner">
+                                <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_SETTINGS_2")}</h2>
+                                <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_SETTINGS_2_SUMMARY")}</p>
+                            </div>
+                        </div>
+                        <div class="modalv3-content-ratio-card green" id="modalv3-ratio-card-reviews-time-uk" onclick="updateReviewsTimeFormatStore('uk');">
+                            <div class="modalv3-content-ratio-card-inner">
+                                <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_SETTINGS_1")}</h2>
+                                <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_SETTINGS_1_SUMMARY")}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="modalv3-content-card-1">
+                        <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_DELETE_ALL_HEADER")}</h2>
+                        <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_DELETE_ALL_SUMMARY")}</p>
+
+                        <button class="modalv3-content-card-button" onclick="deleteAllStoredUserData()">Delete Data</button>
+                    </div>
+                `;
+
+                updateReviewsFilterStore();
+
+                updateReviewsTimeFormatStore();
+
+                // updateReviewsPrivacyStore();
+
+                // <hr>
+                // <div class="modalv3-content-card-1">
+                //     <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_HEADER")}</h2>
+                //     <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SUMMARY")}</p>
+
+                //     <div class="modalv3-content-ratio-card green" id="modalv3-ratio-card-reviews-privacy-3" onclick="updateReviewsPrivacyStore('3');">
+                //         <div class="modalv3-content-ratio-card-inner">
+                //             <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_3")}</h2>
+                //             <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_3_SUMMARY")}</p>
+                //         </div>
+                //     </div>
+                //     <div class="modalv3-content-ratio-card orange" id="modalv3-ratio-card-reviews-privacy-2" onclick="updateReviewsPrivacyStore('2');">
+                //         <div class="modalv3-content-ratio-card-inner">
+                //             <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_2")}</h2>
+                //             <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_2_SUMMARY")}</p>
+                //         </div>
+                //     </div>
+                //     <div class="modalv3-content-ratio-card red" id="modalv3-ratio-card-reviews-privacy-1"  onclick="updateReviewsPrivacyStore('1');">
+                //         <div class="modalv3-content-ratio-card-inner">
+                //             <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_1")}</h2>
+                //             <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_1_SUMMARY")}</p>
+                //         </div>
+                //     </div>
+                // </div>
+            } else {
+                tabPageOutput.innerHTML = `
+                    <h2>${getTextString("MODAL_V3_TAB_REVIEWS_HEADER")}</h2>
+                    <div class="modalv3-content-card-1">
+                        <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_DISCORD_ACCOUNT_NOT_LOGGED_IN_HEADER")}</h2>
+                        <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_DISCORD_ACCOUNT_NOT_LOGGED_IN_SUMMARY")}</p>
+                        <button class="modalv3-content-card-button" onclick="loginToDiscord()">${getTextString("MODAL_V3_TAB_ACCOUNT_LOGIN_WITH_DISCORD_BUTTON")}</button>
+                    </div>
+                `;
+            }
+
+        } else if (tab === "appearance") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            tabPageOutput.innerHTML = `
+                <h2>${getTextString("MODAL_V3_TAB_APPEARANCE_HEADER")}</h2>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_APPEARANCE_THEME_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_APPEARANCE_THEME_SUMMARY")}</p>
+
+                    <div class="modalv3-theme-selection-container" id="modalv3-theme-selection-container">
+                    </div>
+                </div>
+                <div id="modal-v3-color-themes-experiment-output"></div>
+                <div id="modal-v3-custom-themes-experiment-output"></div>
+                <div id="modal-v3-community-themes-experiment-output"></div>
+            `;
+
+            document.getElementById("modalv3-theme-selection-container").innerHTML = `
+                <div class="theme-selection-box" title="${getTextString("THEME_PICKER_V2_LIGHT")}" id="theme-light-button" onclick="updateThemeStore('light', 'true', null);"></div>
+                <div class="theme-selection-box" title="${getTextString("THEME_PICKER_V2_DARK")}" id="theme-dark-button" onclick="updateThemeStore('dark', 'true', null);"></div>
+                <div class="theme-selection-box" title="${getTextString("THEME_PICKER_V2_MIDNIGHT")}" id="theme-midnight-button" onclick="updateThemeStore('midnight', 'true', null);"></div>
+            `;
+
+            if (localStorage.experiment_2025_04_theme_picker_v2_color === "Treatment 1: Enabled") {
+                document.getElementById("modal-v3-color-themes-experiment-output").innerHTML = `
+                    <hr>
+                    <div class="modalv3-content-card-1">
+                        <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_APPEARANCE_THEME_COLOR_HEADER")}</h2>
+                        <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_APPEARANCE_THEME_COLOR_SUMMARY")}</p>
+
+                        <div class="modalv3-theme-selection-container" id="modalv3-color-theme-selection-container">
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById("modalv3-color-theme-selection-container").innerHTML = `
+                    <div class="theme-selection-box" title="${getTextString("THEME_PICKER_V2_BLUE")}" id="theme-color_blue-button" onclick="updateThemeStore('color_blue', 'true', null);"></div>
+                    <div class="theme-selection-box" title="${getTextString("THEME_PICKER_V2_RED")}" id="theme-color_red-button" onclick="updateThemeStore('color_red', 'true', null);"></div>
+                    <div class="theme-selection-box" title="${getTextString("THEME_PICKER_V2_GREEN")}" id="theme-color_green-button" onclick="updateThemeStore('color_green', 'true', null);"></div>
+                `;
+            }
+
+            if (localStorage.experiment_2025_04_theme_picker_v2_custom === "Treatment 1: Enabled") {
+                document.getElementById("modal-v3-custom-themes-experiment-output").innerHTML = `
+                    <hr>
+                    <div class="modalv3-content-card-1">
+                        <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_APPEARANCE_THEME_CUSTOM_HEADER")}</h2>
+                        <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_APPEARANCE_THEME_CUSTOM_SUMMARY")}</p>
+
+                        <div class="modalv3-theme-selection-container" id="modalv3-custom-theme-selection-container">
+                        </div>
+                    </div>
+                `;
+
+                document.getElementById("modalv3-custom-theme-selection-container").innerHTML = `
+                    <div style="text-align: center;" class="theme-selection-box" title="${getTextString("THEME_PICKER_V2_CUSTOM")}" id="theme-custom_css-button" onclick="updateThemeStore('custom_css', 'true', null);" bis_skin_checked="1">
+                        <svg class="circleIcon_db6521" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M13 5a1 1 0 1 0-2 0v6H5a1 1 0 1 0 0 2h6v6a1 1 0 1 0 2 0v-6h6a1 1 0 1 0 0-2h-6V5Z" class=""></path></svg>
+                    </div>
+                `;
+            }
+
+            if (localStorage.experiment_2025_04_theme_picker_v2_community === "Treatment 1: Enabled") {
+                document.getElementById("modal-v3-community-themes-experiment-output").innerHTML = `
+                    <hr>
+                    <div class="modalv3-content-card-1">
+                        <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_APPEARANCE_THEME_COMMUNITY_HEADER")}</h2>
+                        <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_APPEARANCE_THEME_COMMUNITY_SUMMARY")}</p>
+
+                        <div class="modalv3-theme-selection-container" id="modalv3-community-theme-selection-container">
+                        </div>
+                    </div>
+                `;
+                fetchAndRenderCommunityThemes();
+            } else if (localStorage.experiment_2025_04_theme_picker_v2_community === "Treatment 2: As banners") {
+                document.getElementById("modal-v3-community-themes-experiment-output").innerHTML = `
+                    <hr>
+                    <div class="modalv3-content-card-1">
+                        <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_APPEARANCE_THEME_COMMUNITY_HEADER")}</h2>
+                        <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_APPEARANCE_THEME_COMMUNITY_SUMMARY")}</p>
+
+                        <div id="modalv3-community-theme-selection-container">
+                        </div>
+                    </div>
+                `;
+                fetchAndRenderCommunityThemesAsBanners();
+            }
+            async function fetchAndRenderCommunityThemes() {
+                if (!communityThemesCache) {
+                    await setCommunityThemesCache();
+                }
+
+                try {
+                    communityThemesCache.forEach(theme => {
+                        let themeIcon = document.createElement("div");
+
+                        themeIcon.classList.add("theme-selection-box");
+                        themeIcon.id = 'theme-community-' + theme.id + '-button'
+                        themeIcon.title = theme.name;
+                        if (theme.icon.color_secondary != null) {
+                            themeIcon.style.backgroundImage = `linear-gradient(-45deg, ${theme.icon.color_secondary} 50%,${theme.icon.color_primary} 50%)`;
+                        }
+                        themeIcon.style.backgroundColor = theme.icon.color_primary;
+
+                        themeIcon.onclick = function() {
+                            updateThemeStore('community-' + theme.id, 'true', theme.github.raw);
+                        };
+
+                        document.getElementById("modalv3-community-theme-selection-container").appendChild(themeIcon);
+                    });
+                    if (document.getElementById("theme-" + localStorage.sa_theme + "-button")) {
+                        document.getElementById("theme-" + localStorage.sa_theme + "-button").classList.add('theme-selection-box-selected');
+                    }
+                }
+                catch(error) {
+                    document.getElementById("modalv3-community-theme-selection-container").innerHTML = `There was an error loading community themes`;
+                }
+            }
+
+            async function fetchAndRenderCommunityThemesAsBanners() {
+                if (!communityThemesCache) {
+                    await setCommunityThemesCache();
+                }
+
+                try {
+                    communityThemesCache.forEach(theme => {
+                        let themeIcon = document.createElement("div");
+
+                        themeIcon.classList.add("modalv3-community-theme-banner");
+                        themeIcon.id = 'theme-community-' + theme.id + '-button'
+                        themeIcon.style.color = theme.text_color;
+                        if (theme.banner.src != null) {
+                            themeIcon.style.backgroundImage = `linear-gradient(-90deg,rgba(0, 0, 0, 0) 30%,${theme.banner.color_primary}), url('${theme.banner.src}')`;
+                        } else if (theme.banner.color_secondary != null) {
+                            themeIcon.style.backgroundImage = `linear-gradient(-90deg, ${theme.banner.color_secondary} 30%,${theme.banner.color_primary})`;
+                        } else {
+                            themeIcon.style.backgroundColor = theme.banner.color_primary;
+                        }
+
+                        themeIcon.innerHTML = `
+                            <p class="modalv3-community-theme-banner-header">${theme.name}</p>
+                            <button class="modalv3-apply-theme-button" onclick="updateThemeStore('community-${theme.id}', 'true', '${theme.github.raw}');">Apply</button>
+                            <div class="modalv3-community-theme-banner-creddits-container">
+                                <div title="Github">
+                                    <svg class="shareIcon_modal" onclick="window.open('https://github.com/${theme.github.user}/${theme.github.repo}');" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M20.0001 2.4375C20.0001 1.725 19.9521 0.8505 19.6251 0C19.6251 0 17.4861 0.0149998 15.4686 1.926C14.5371 1.6545 13.5411 1.5 12.5001 1.5C11.4591 1.5 10.4631 1.6545 9.53157 1.926C7.51407 0.0149998 5.37507 0 5.37507 0C5.04957 0.8505 5.00007 1.725 5.00007 2.4375C5.00007 3.516 5.19207 4.1775 5.30757 4.5045C4.17807 5.7585 3.50007 7.311 3.50007 9C3.50007 12.279 5.98257 14.2965 9.50007 15C8.70957 15.6945 8.22507 16.665 8.07057 17.754C7.73607 17.916 7.25007 18 6.68757 18C6.23607 18 5.35857 17.787 4.54107 16.5135C4.21107 15.9975 3.50007 15 2.56257 15C2.37957 15 1.99407 14.988 2.00007 15.2715C2.00307 15.4065 2.21007 15.408 2.65257 15.8025C3.02307 16.134 3.36807 16.677 3.50007 17.25C3.71757 18.1905 4.58907 20.0625 6.68757 20.0625C7.43757 20.0625 8.00007 19.875 8.00007 19.875V23.3115C9.42057 23.757 10.9326 24 12.5001 24C14.0676 24 15.5796 23.757 17.0001 23.3115V18.375C17.0001 17.0265 16.4391 15.825 15.5001 15C19.0176 14.2965 21.5001 12.279 21.5001 9C21.5001 7.341 20.8461 5.8125 19.7511 4.5705C19.8456 4.278 20.0001 3.6 20.0001 2.4375Z" fill="currentColor"/></svg>
+                                </div>
+                            </div>
+                        `;
+
+                        document.getElementById("modalv3-community-theme-selection-container").appendChild(themeIcon);
+                    });
+                    if (document.getElementById("theme-" + localStorage.sa_theme + "-button")) {
+                        document.getElementById("theme-" + localStorage.sa_theme + "-button").classList.add('theme-selection-box-selected');
+                    }
+                }
+                catch(error) {
+                    document.getElementById("modalv3-community-theme-selection-container").innerHTML = `There was an error loading community themes`;
+                }
+            }
+
+            if (document.getElementById("theme-" + localStorage.sa_theme + "-button")) {
+                document.getElementById("theme-" + localStorage.sa_theme + "-button").classList.add('theme-selection-box-selected');
+            }
+        } else if (tab === "accessibility") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            tabPageOutput.innerHTML = `
+                <h2>${getTextString("MODAL_V3_TAB_ACCESSIBILITY_HEADER")}</h2>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_ACCESSIBILITY_REDUCED_MOTION_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_ACCESSIBILITY_REDUCED_MOTION_SUMMARY")}</p>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_ACCESSIBILITY_REDUCED_MOTION_SUMMARY2")}</p>
+
+                    <input class="modalv3-toggle" onclick="reducedMotionChecked();" id="reduced-motion-box" type="checkbox">
+                </div>
+            `;
+        } else if (tab === "experiments") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            tabPageOutput.innerHTML = `
+                <h2>${getTextString("MODAL_V3_TAB_EXPERIMENTS_HEADER")}</h2>
+
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_EXPERIMENTS_DISABLE_FORCE_ROLLOUT_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_EXPERIMENTS_DISABLE_FORCE_ROLLOUT_SUMMARY")}</p>
+
+                    <input class="modalv3-toggle" onclick="disabledExperimentForceRolloutV2();" id="experiments-force-rollout-checkbox" type="checkbox">
+                </div>
+
+                <div class="modalv3-content-card-1" id="modalv3-experiment-output">
+                </div>
+            `;
+
+            if (localStorage.experiment_force_rollout === "false") {
+                document.getElementById("experiments-force-rollout-checkbox").checked = true;
+            }
+
+            experimentsList.forEach(({ title, id, name, treatments, needs_api_token, not_needed }) => {
+                if (not_needed != "true") {
+                    try {
+
+                        let hrel = document.createElement("hr");
+    
+                        document.getElementById("modalv3-experiment-output").appendChild(hrel);
+
+                        let experimentCard = document.createElement("div");
+    
+                        experimentCard.classList.add('modalv3-experiment-container');
+                        experimentCard.innerHTML = `
+                            <p class="modalv3-experiment-title">${title}</p>
+                            <p class="modalv3-experiment-id">${id}</p>
+                            <div class="modalv3-experiment-treatment-info-container">
+                                <select id="${name}_treatment_container" class="modalv3-experiment-treatment-container">
+                                </select>
+                                <button class="modalv3-experiment-treatment-clear-button" onclick="clearSetExperiment('${name}')">Clear</button>
+                            </div>
+                        `;
+    
+                        if (needs_api_token === "true") {
+                            let apiNotice = document.createElement("p");
+    
+                            apiNotice.classList.add('modalv3-experiment-api-notice');
+                            apiNotice.textContent = getTextString("OPTIONS_SIDEBAR_EXPERIMENTS_API_PASSWORD")
+    
+                            experimentCard.appendChild(apiNotice);
+                        }
+    
+    
+                        document.getElementById("modalv3-experiment-output").appendChild(experimentCard);
+    
+                        const treatmentPicker = document.getElementById(`${name}_treatment_container`);
+                
+                        if (!treatmentPicker) return; // Skip if element doesn't exist
+                
+                        populateExperimentOptions(treatmentPicker, treatments);
+                
+                        const storedTreatment = localStorage.getItem(name);
+                        if (storedTreatment) {
+                            treatmentPicker.value = storedTreatment;
+                        }
+                
+                        treatmentPicker.addEventListener("change", () => {
+                            localStorage.setItem(name, treatmentPicker.value);
+                        });
+                
+                    } catch (error) {
+                        console.error(`Error setting up experiment: ${name}`, error);
+                    }
+                }
+            });
+            
+            function populateExperimentOptions(selectElement, treatments) {
+                treatments.forEach((treatment) => {
+                    const optElement = document.createElement("option");
+                    optElement.value = treatment;
+                    optElement.textContent = treatment;
+                    selectElement.appendChild(optElement);
+                });
+            }
+        } else if (tab === "dismissible_content") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            tabPageOutput.innerHTML = `
+                <h2>${getTextString("MODAL_V3_TAB_DISMISSIBLE_CONTENT_HEADER")}</h2>
+
+                <div class="modalv3-content-card-1" id="modalv3-dismissible-content-output">
+                </div>
+            `;
+
+            dismissibleContentList.forEach(({ title, id, name, treatments, needs_api_token }) => {
+                try {
+
+                    let hrel = document.createElement("hr");
+    
+                    document.getElementById("modalv3-dismissible-content-output").appendChild(hrel);
+
+                    let experimentCard = document.createElement("div");
+    
+                    experimentCard.classList.add('modalv3-experiment-container');
+                    experimentCard.innerHTML = `
+                        <p class="modalv3-experiment-title">${title}</p>
+                        <p class="modalv3-experiment-id">${id}</p>
+                        <div class="modalv3-experiment-treatment-info-container">
+                            <select id="${name}_treatment_container" class="modalv3-experiment-treatment-container">
+                            </select>
+                        </div>
+                    `;
+    
+    
+                    document.getElementById("modalv3-dismissible-content-output").appendChild(experimentCard);
+
+                    const treatmentPicker = document.getElementById(`${name}_treatment_container`);
+            
+                    if (!treatmentPicker) return; // Skip if element doesn't exist
+            
+                    populateDismissibleContentOptions(treatmentPicker, treatments);
+            
+                    const storedTreatment = localStorage.getItem(name);
+                    if (storedTreatment) {
+                        treatmentPicker.value = storedTreatment;
+                    }
+            
+                    treatmentPicker.addEventListener("change", () => {
+                        localStorage.setItem(name, treatmentPicker.value);
+                    });
+            
+                } catch (error) {
+                    console.error(`Error setting up experiment: ${name}`, error);
+                }
+            });
+            
+            function populateDismissibleContentOptions(selectElement, treatments) {
+                treatments.forEach((treatment) => {
+                    const optElement = document.createElement("option");
+                    optElement.value = treatment;
+                    optElement.textContent = treatment;
+                    selectElement.appendChild(optElement);
+                });
+            }
+        } else if (tab === "api_test_fetch") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            tabPageOutput.innerHTML = `
+                <h2>${getTextString("MODAL_V3_TAB_API_TEST_FETCH_HEADER")}</h2>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_API_TESTING_API_STATUS_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_API_TESTING_API_STATUS_SUMMARY")}</p>
+
+                    <div class="modalv3-api-status-container" id="modalv3-api-status-container">
+                    </div>
+                </div>
+                <hr>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_API_TESTING_TEST_FETCH_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_API_TESTING_TEST_FETCH_SUMMARY")}</p>
+
+                    <div class="modalv3-content-card-2">
+                        <p class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_API_TESTING_TEST_FETCH_BASE_URL")}</p>
+                        <input type="text" readonly class="modalv3-api-testfetch-text-input" id="modalv3-test-fetch-base-url" value="https://api.yapper.shop">
+                    </div>
+
+                    <div class="modalv3-content-card-2">
+                        <p class="modalv3-content-card-sub-header" >${getTextString("MODAL_V3_TAB_API_TESTING_TEST_FETCH_API_VERSION")}</p>
+                        <select class="modalv3-api-testfetch-select-input" id="modalv3-test-fetch-version">
+                        <option value="v2">v2</option>
+                        </select>
+                    </div>
+
+                    <div class="modalv3-content-card-2">
+                        <p class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_API_TESTING_TEST_FETCH_ENDPOINT")}</p>
+                        <select class="modalv3-api-testfetch-select-input" id="modalv3-test-fetch-endpoint">
+                        <option value="/collectibles-shop">/collectibles-shop</option>
+                        <option value="/profile-effects">/profile-effects</option>
+                        <option value="/community">/community</option>
+                        <option value="/status">/status</option>
+                        </select>
+                    </div>
+
+                    <div class="modalv3-content-card-2">
+                        <p class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_API_TESTING_TEST_FETCH_PARAMS")}</p>
+                        <select class="modalv3-api-testfetch-select-input" id="modalv3-test-fetch-search-params-key">
+                        <option value="tab">tab</option>
+                        <option value="has-leaks">has-leaks</option>
+                        <option value="include-no-sku-items">include-no-sku-items</option>
+                        <option value="include-unpublished">include-unpublished</option>
+                        </select>
+                        <input type="text" class="modalv3-api-testfetch-text-input" id="modalv3-test-fetch-search-params-value" placeholder="Key">
+                        <button class="modalv3-testfetch-button-1" onclick="modalv3AddTestFetchParam()">Add</button>
+                    </div>
+
+                    <div id="modalv3-test-fetch-params-output">
+                        <div class="modalv3-api-testfetch-param-card">
+                            <input type="text" class="modalv3-api-testfetch-text-input test-fetch-param-key hidden" value="is-test-fetch" disabled>
+                            <input type="text" class="modalv3-api-testfetch-text-input test-fetch-param-value hidden" value="true" disabled>
+                            <p>?is-test-fetch=true</p>
+                        </div>
+                    </div>
+
+                    <button class="modalv3-content-card-button" onclick="fetchAPITestFetch()">${getTextString("MODAL_V3_TAB_API_TESTING_TEST_FETCH_FETCH")}</button>
+
+                    <textarea readonly class="modalv3-api-testfetch-textarea-input" id="modalv3-test-fetch-output" placeholder="Output..."></textarea>
+
+                </div>
+                <hr>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_HEADER")}</h2>
+                    <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_SUMMARY")}</p>
+
+                    <div class="modalv3-content-card-2">
+                        <button class="modalv3-content-card-button" onclick="refreshAdminReviews();">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REFRESH_BUTTON")}</button>
+                        <div id="modalv3-api-testing-reviews-output">
+                        
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            refreshAdminReviews();
+
+            fetch(api + APISTATUS, {
+                method: "GET",
+                headers: {
+                    "Password": api_password,
+                    "Authorization": discord_token,
+                    "Token": api_token
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.message && data.message === "Missing Access") {
+                    document.getElementById("modalv3-api-status-container").innerHTML = `
+                        <div class="modalv3-api-status-card">
+                            <p class="modalv3-api-status-card-title">Shop</p>
+                            <svg class="modalv3-status-card-img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36"  height="36" ><path fill="#b25555" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#FFF" d="M21.529 18.006l8.238-8.238c.977-.976.977-2.559 0-3.535-.977-.977-2.559-.977-3.535 0l-8.238 8.238-8.238-8.238c-.976-.977-2.56-.977-3.535 0-.977.976-.977 2.559 0 3.535l8.238 8.238-8.258 8.258c-.977.977-.977 2.559 0 3.535.488.488 1.128.732 1.768.732s1.28-.244 1.768-.732l8.258-8.259 8.238 8.238c.488.488 1.128.732 1.768.732s1.279-.244 1.768-.732c.977-.977.977-2.559 0-3.535l-8.24-8.237z"/><link xmlns=""/></svg>
+                            <p class="modalv3-api-status-card-status">Missing Access</p>
+                        </div>
+                        <div class="modalv3-api-status-card">
+                            <p class="modalv3-api-status-card-title">Discord Auth</p>
+                            <svg class="modalv3-status-card-img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36"  height="36" ><path fill="#b25555" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#FFF" d="M21.529 18.006l8.238-8.238c.977-.976.977-2.559 0-3.535-.977-.977-2.559-.977-3.535 0l-8.238 8.238-8.238-8.238c-.976-.977-2.56-.977-3.535 0-.977.976-.977 2.559 0 3.535l8.238 8.238-8.258 8.258c-.977.977-.977 2.559 0 3.535.488.488 1.128.732 1.768.732s1.28-.244 1.768-.732l8.258-8.259 8.238 8.238c.488.488 1.128.732 1.768.732s1.279-.244 1.768-.732c.977-.977.977-2.559 0-3.535l-8.24-8.237z"/><link xmlns=""/></svg>
+                            <p class="modalv3-api-status-card-status">Missing Access</p>
+                        </div>
+                        <div class="modalv3-api-status-card">
+                            <p class="modalv3-api-status-card-title">Database</p>
+                            <svg class="modalv3-status-card-img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36"  height="36" ><path fill="#b25555" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#FFF" d="M21.529 18.006l8.238-8.238c.977-.976.977-2.559 0-3.535-.977-.977-2.559-.977-3.535 0l-8.238 8.238-8.238-8.238c-.976-.977-2.56-.977-3.535 0-.977.976-.977 2.559 0 3.535l8.238 8.238-8.258 8.258c-.977.977-.977 2.559 0 3.535.488.488 1.128.732 1.768.732s1.28-.244 1.768-.732l8.258-8.259 8.238 8.238c.488.488 1.128.732 1.768.732s1.279-.244 1.768-.732c.977-.977.977-2.559 0-3.535l-8.24-8.237z"/><link xmlns=""/></svg>
+                            <p class="modalv3-api-status-card-status">Missing Access</p>
+                        </div>
+                    `;
+                } else {
+                    data.forEach(apistatus => {
+                        let statuscard = document.createElement("div");
+    
+                        statuscard.classList.add("modalv3-api-status-card");
+    
+                        if (apistatus.status === "Operational") {
+                            statuscard.innerHTML = `
+                                <p class="modalv3-api-status-card-title">${apistatus.name}</p>
+                                <svg class="modalv3-status-card-img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36"  height="36" ><path fill="#77B255" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#FFF" d="M29.28 6.362c-1.156-.751-2.704-.422-3.458.736L14.936 23.877l-5.029-4.65c-1.014-.938-2.596-.875-3.533.138-.937 1.014-.875 2.596.139 3.533l7.209 6.666c.48.445 1.09.665 1.696.665.673 0 1.534-.282 2.099-1.139.332-.506 12.5-19.27 12.5-19.27.751-1.159.421-2.707-.737-3.458z"/><link xmlns=""/></svg>
+                                <p class="modalv3-api-status-card-status">${apistatus.status}</p>
+                            `;
+                        } else if (apistatus.status === "Down") {
+                            statuscard.innerHTML = `
+                                <p class="modalv3-api-status-card-title">${apistatus.name}</p>
+                                <svg class="modalv3-status-card-img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36"  height="36" ><path fill="#b25555" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#FFF" d="M21.529 18.006l8.238-8.238c.977-.976.977-2.559 0-3.535-.977-.977-2.559-.977-3.535 0l-8.238 8.238-8.238-8.238c-.976-.977-2.56-.977-3.535 0-.977.976-.977 2.559 0 3.535l8.238 8.238-8.258 8.258c-.977.977-.977 2.559 0 3.535.488.488 1.128.732 1.768.732s1.28-.244 1.768-.732l8.258-8.259 8.238 8.238c.488.488 1.128.732 1.768.732s1.279-.244 1.768-.732c.977-.977.977-2.559 0-3.535l-8.24-8.237z"/><link xmlns=""/></svg>
+                                <p class="modalv3-api-status-card-status">${apistatus.status}</p>
+                            `;
+                        }
+    
+                        document.getElementById("modalv3-api-status-container").appendChild(statuscard);
+    
+                    });
+                }
+            })
+            .catch(error => {
+                document.getElementById("modalv3-api-status-container").innerHTML = `
+                    <div class="modalv3-api-status-card">
+                        <p class="modalv3-api-status-card-title">Shop</p>
+                        <svg class="modalv3-status-card-img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36"  height="36" ><path fill="#b25555" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#FFF" d="M21.529 18.006l8.238-8.238c.977-.976.977-2.559 0-3.535-.977-.977-2.559-.977-3.535 0l-8.238 8.238-8.238-8.238c-.976-.977-2.56-.977-3.535 0-.977.976-.977 2.559 0 3.535l8.238 8.238-8.258 8.258c-.977.977-.977 2.559 0 3.535.488.488 1.128.732 1.768.732s1.28-.244 1.768-.732l8.258-8.259 8.238 8.238c.488.488 1.128.732 1.768.732s1.279-.244 1.768-.732c.977-.977.977-2.559 0-3.535l-8.24-8.237z"/><link xmlns=""/></svg>
+                        <p class="modalv3-api-status-card-status">Down</p>
+                    </div>
+                    <div class="modalv3-api-status-card">
+                        <p class="modalv3-api-status-card-title">Discord Auth</p>
+                        <svg class="modalv3-status-card-img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36"  height="36" ><path fill="#b25555" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#FFF" d="M21.529 18.006l8.238-8.238c.977-.976.977-2.559 0-3.535-.977-.977-2.559-.977-3.535 0l-8.238 8.238-8.238-8.238c-.976-.977-2.56-.977-3.535 0-.977.976-.977 2.559 0 3.535l8.238 8.238-8.258 8.258c-.977.977-.977 2.559 0 3.535.488.488 1.128.732 1.768.732s1.28-.244 1.768-.732l8.258-8.259 8.238 8.238c.488.488 1.128.732 1.768.732s1.279-.244 1.768-.732c.977-.977.977-2.559 0-3.535l-8.24-8.237z"/><link xmlns=""/></svg>
+                        <p class="modalv3-api-status-card-status">Down</p>
+                    </div>
+                    <div class="modalv3-api-status-card">
+                        <p class="modalv3-api-status-card-title">Database</p>
+                        <svg class="modalv3-status-card-img" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 36 36" width="36"  height="36" ><path fill="#b25555" d="M36 32c0 2.209-1.791 4-4 4H4c-2.209 0-4-1.791-4-4V4c0-2.209 1.791-4 4-4h28c2.209 0 4 1.791 4 4v28z"/><path fill="#FFF" d="M21.529 18.006l8.238-8.238c.977-.976.977-2.559 0-3.535-.977-.977-2.559-.977-3.535 0l-8.238 8.238-8.238-8.238c-.976-.977-2.56-.977-3.535 0-.977.976-.977 2.559 0 3.535l8.238 8.238-8.258 8.258c-.977.977-.977 2.559 0 3.535.488.488 1.128.732 1.768.732s1.28-.244 1.768-.732l8.258-8.259 8.238 8.238c.488.488 1.128.732 1.768.732s1.279-.244 1.768-.732c.977-.977.977-2.559 0-3.535l-8.24-8.237z"/><link xmlns=""/></svg>
+                        <p class="modalv3-api-status-card-status">Down</p>
+                    </div>
+                `;
+            });
+        } else if (tab === "local_storage") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            tabPageOutput.innerHTML = `
+                <h2>${getTextString("MODAL_V3_TAB_LOCAL_STORAGE_HEADER")}</h2>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_SUMMARY")}</p>
+
+                    <div class="modalv3-localstorage-item-card">
+                        <input type="text" class="modalv3-api-testfetch-text-input" id="modalv3-localstorage-add-input-key" placeholder="${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_KEY_PLACEHOLDER")}">
+                        <input type="text" class="modalv3-api-testfetch-text-input" id="modalv3-localstorage-add-input-value" placeholder="${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_VALUE_PLACEHOLDER")}">
+                        <button onclick="modalv3AddLocalStorage()">${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_ADD")}</button>
+                    </div>
+                    <div id="modalv3-localstorage-output"></div>
+                </div>
+                <hr>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_STORAGE_SESSION_STORAGE_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_STORAGE_SESSION_STORAGE_SUMMARY")}</p>
+
+                    <div class="modalv3-localstorage-item-card">
+                        <input type="text" class="modalv3-api-testfetch-text-input" id="modalv3-sessionstorage-add-input-key" placeholder="${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_KEY_PLACEHOLDER")}">
+                        <input type="text" class="modalv3-api-testfetch-text-input" id="modalv3-sessionstorage-add-input-value" placeholder="${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_VALUE_PLACEHOLDER")}">
+                        <button onclick="modalv3AddSessionStorage()">${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_ADD")}</button>
+                    </div>
+                    <div id="modalv3-sessionstorage-output"></div>
+                </div>
+            `;
+
+            modalv3RefreshLocalStorageList()
+            modalv3RefreshSessionStorageList()
+        } else if (tab === "misc") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            tabPageOutput.innerHTML = `
+                <h2>${getTextString("MODAL_V3_TAB_MISC_HEADER")}</h2>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_MISC_H_HEADER")}</h2>
+                </div>
+            `;
+        } else {
+            console.error(tab + ' is not a valid tab');
+        }
+    }
+
+    function updateReviewsFilterStore(setFilter) {
+        const el3 = document.getElementById("modalv3-ratio-card-reviews-filter-3");
+        const el2 = document.getElementById("modalv3-ratio-card-reviews-filter-2");
+        const el1 = document.getElementById("modalv3-ratio-card-reviews-filter-1");
+
+        if (el3 && el3.classList.contains('modalv3-content-ratio-card-selected')) {
+            el3.classList.remove('modalv3-content-ratio-card-selected');
+        } else if (el2 && el2.classList.contains('modalv3-content-ratio-card-selected')) {
+            el2.classList.remove('modalv3-content-ratio-card-selected');
+        } else if (el1 && el1.classList.contains('modalv3-content-ratio-card-selected')) {
+            el1.classList.remove('modalv3-content-ratio-card-selected');
+        }
+
+        if (setFilter) {
+            localStorage.reviews_filter_type = setFilter;
+            document.getElementById("modalv3-ratio-card-reviews-filter-" + setFilter).classList.add('modalv3-content-ratio-card-selected');
+        } else {
+            document.getElementById("modalv3-ratio-card-reviews-filter-" + localStorage.reviews_filter_type).classList.add('modalv3-content-ratio-card-selected');
+        }
+    }
+
+    function updateReviewsTimeFormatStore(setTimeFormat) {
+        const el2 = document.getElementById("modalv3-ratio-card-reviews-time-us");
+        const el1 = document.getElementById("modalv3-ratio-card-reviews-time-uk");
+
+        if (el2 && el2.classList.contains('modalv3-content-ratio-card-selected')) {
+            el2.classList.remove('modalv3-content-ratio-card-selected');
+        } else if (el1 && el1.classList.contains('modalv3-content-ratio-card-selected')) {
+            el1.classList.remove('modalv3-content-ratio-card-selected');
+        }
+
+        if (setTimeFormat) {
+            localStorage.reviews_time_type = setTimeFormat;
+            document.getElementById("modalv3-ratio-card-reviews-time-" + setTimeFormat).classList.add('modalv3-content-ratio-card-selected');
+        } else {
+            document.getElementById("modalv3-ratio-card-reviews-time-" + localStorage.reviews_time_type).classList.add('modalv3-content-ratio-card-selected');
+        }
+    }
+
+    function updateReviewsPrivacyStore(setPrivacy) {
+        const el3 = document.getElementById("modalv3-ratio-card-reviews-privacy-3");
+        const el2 = document.getElementById("modalv3-ratio-card-reviews-privacy-2");
+        const el1 = document.getElementById("modalv3-ratio-card-reviews-privacy-1");
+
+        if (el3 && el3.classList.contains('modalv3-content-ratio-card-selected')) {
+            el3.classList.remove('modalv3-content-ratio-card-selected');
+        } else if (el2 && el2.classList.contains('modalv3-content-ratio-card-selected')) {
+            el2.classList.remove('modalv3-content-ratio-card-selected');
+        } else if (el1 && el1.classList.contains('modalv3-content-ratio-card-selected')) {
+            el1.classList.remove('modalv3-content-ratio-card-selected');
+        }
+
+        if (setPrivacy) {
+            localStorage.reviews_privacy_type = setPrivacy;
+            document.getElementById("modalv3-ratio-card-reviews-privacy-" + setPrivacy).classList.add('modalv3-content-ratio-card-selected');
+        } else {
+            document.getElementById("modalv3-ratio-card-reviews-privacy-" + localStorage.reviews_privacy_type).classList.add('modalv3-content-ratio-card-selected');
+        }
+    }
+
+
+    function modalv3RefreshLocalStorageList() {
+        const container = document.getElementById('modalv3-localstorage-output');
+        container.innerHTML = '';
+  
+        const keys = Object.keys(localStorage).sort();
+  
+        if (keys.length === 0) {
+            container.innerHTML = '<p>No items in localStorage.</p>';
+            return;
+        }
+  
+        keys.forEach(key => {
+            const value = localStorage.getItem(key);
+  
+            const div = document.createElement('div');
+            div.className = 'modalv3-localstorage-item-card';
+  
+            div.innerHTML = `
+                <input type="text" class="modalv3-api-testfetch-text-input" value="${key}" disabled>
+                <input type="text" class="modalv3-api-testfetch-text-input" id="value-local-${key}" value="${value}">
+                <button onclick="modalv3UpdateLocalStorage('${key}')">${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_UPDATE")}</button>
+                <button onclick="modalv3DeleteLocalStorage('${key}')">${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_DELETE")}</button>
+            `;
+  
+            container.appendChild(div);
+        });
+    }
+
+    function modalv3AddLocalStorage() {
+        const key = document.getElementById('modalv3-localstorage-add-input-key').value.trim();
+        const value = document.getElementById('modalv3-localstorage-add-input-value').value;
+  
+        if (!key) {
+            alert("Key cannot be empty.");
+            return;
+        }
+  
+        localStorage.setItem(key, value);
+        document.getElementById('modalv3-localstorage-add-input-key').value = '';
+        document.getElementById('modalv3-localstorage-add-input-value').value = '';
+        modalv3RefreshLocalStorageList();
+    }
+
+    function modalv3UpdateLocalStorage(key) {
+        const newValue = document.getElementById(`value-local-${key}`).value;
+        localStorage.setItem(key, newValue);
+        modalv3RefreshLocalStorageList();
+    }
+
+    function modalv3DeleteLocalStorage(key) {
+        if (confirm(`Delete key "${key}"?`)) {
+            localStorage.removeItem(key);
+            modalv3RefreshLocalStorageList();
+        }
+    }
+
+
+    function modalv3RefreshSessionStorageList() {
+        const container = document.getElementById('modalv3-sessionstorage-output');
+        container.innerHTML = '';
+  
+        const keys = Object.keys(sessionStorage).sort();
+  
+        if (keys.length === 0) {
+            container.innerHTML = '<p>No items in sessionStorage.</p>';
+            return;
+        }
+  
+        keys.forEach(key => {
+            const value = sessionStorage.getItem(key);
+  
+            const div = document.createElement('div');
+            div.className = 'modalv3-localstorage-item-card';
+  
+            div.innerHTML = `
+                <input type="text" class="modalv3-api-testfetch-text-input" value="${key}" disabled>
+                <input type="text" class="modalv3-api-testfetch-text-input" id="value-session-${key}" value="${value}">
+                <button onclick="modalv3UpdateSessionStorage('${key}')">${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_UPDATE")}</button>
+                <button onclick="modalv3DeleteSessionStorage('${key}')">${getTextString("MODAL_V3_TAB_STORAGE_LOCAL_STORAGE_DELETE")}</button>
+            `;
+  
+            container.appendChild(div);
+        });
+    }
+
+    function modalv3AddSessionStorage() {
+        const key = document.getElementById('modalv3-sessionstorage-add-input-key').value.trim();
+        const value = document.getElementById('modalv3-sessionstorage-add-input-value').value;
+  
+        if (!key) {
+            alert("Key cannot be empty.");
+            return;
+        }
+  
+        sessionStorage.setItem(key, value);
+        document.getElementById('modalv3-sessionstorage-add-input-key').value = '';
+        document.getElementById('modalv3-sessionstorage-add-input-value').value = '';
+        modalv3RefreshSessionStorageList();
+    }
+
+    function modalv3UpdateSessionStorage(key) {
+        const newValue = document.getElementById(`value-session-${key}`).value;
+        sessionStorage.setItem(key, newValue);
+        modalv3RefreshSessionStorageList();
+    }
+
+    function modalv3DeleteSessionStorage(key) {
+        if (confirm(`Delete key "${key}"?`)) {
+            sessionStorage.removeItem(key);
+            modalv3RefreshSessionStorageList();
+        }
+    }
+
+
+    function refreshAdminReviews() {
+        document.getElementById("modalv3-api-testing-reviews-output").innerHTML = ``;
+        fetch(api + REVIEWSAPI, {
+            method: "GET",
+            headers: {
+                "Password": api_password,
+                "Authorization": discord_token,
+                "Token": api_token
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            data.forEach(review => {
+                const div = document.createElement('div');
+                div.className = 'modalv3-review-item-card';
+      
+                div.innerHTML = `
+                    <p class="modalv3-review-card-title">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO")}</p>
+                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO_ID")}${review.id}</p>
+                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO_RATING")}${review.rating}</p>
+                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO_REVIEW")}${review.review_text}</p>
+                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO_FLAG")}${review.review_flag_type}</p>
+                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO_DATE")}${review.created_at}</p>
+                    <hr>
+                    <p class="modalv3-review-card-title">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ITEM_INFO")}</p>
+                    <p>${review.items.name} (${review.items.id})</p>
+                    <hr>
+                    <p class="modalv3-review-card-title">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_USER_INFO")}</p>
+                    <p>${review.users.username} (${review.users.id})</p>
+                    <hr>
+                    <p class="modalv3-review-card-title">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_INFO")}</p>
+                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_INFO_SUMMARY")}</p>
+                    <button class="modalv3-content-card-button" onclick="adminDeleteReview('${review.id}')">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_DELETE_REVIEW")}</button>
+                    <button class="modalv3-content-card-button">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_BAN_USER")}</button>
+                `;
+      
+                document.getElementById("modalv3-api-testing-reviews-output").appendChild(div);
+            });
+        })
+        .catch(error => {
+            console.error(error);
+        });
+    }
+
+    function adminDeleteReview(reviewId) {
+
+        const accessToken = discord_token;
+      
+        fetch(api + REVIEWSAPI, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                "Password": api_password,
+                "Authorization": discord_token,
+                "Token": api_token
+            },
+            body: JSON.stringify({
+                accessToken,
+                reviewId
+            })
+        })
+        .catch(error => {
+            console.error(error)
+        });
+    }
+
+    function modalv3AddTestFetchParam() {
+        const key = document.getElementById("modalv3-test-fetch-search-params-key").value;
+        const value = document.getElementById('modalv3-test-fetch-search-params-value').value;
+  
+        const container = document.getElementById('modalv3-test-fetch-params-output');
+        const div = document.createElement('div');
+        div.className = 'modalv3-api-testfetch-param-card';
+        div.innerHTML = `
+            <input type="text" class="modalv3-api-testfetch-text-input test-fetch-param-key hidden" value="${key}" disabled>
+            <input type="text" class="modalv3-api-testfetch-text-input test-fetch-param-value hidden" value="${value}" disabled>
+            <p>&${key}=${value}</p>
+            <button class="modalv3-testfetch-button-1" onclick="this.parentElement.remove()">Delete</button>
+        `;
+        container.appendChild(div);
+
+        document.getElementById('modalv3-test-fetch-search-params-value').value = '';
+    }
+
+    function fetchAPITestFetch() {
+        const baseurl = document.getElementById("modalv3-test-fetch-base-url").value;
+        const versionid = document.getElementById("modalv3-test-fetch-version").value;
+        const endpoint = document.getElementById("modalv3-test-fetch-endpoint").value;
+        const output = document.getElementById("modalv3-test-fetch-output");
+
+        url = baseurl + "/" + versionid + endpoint;
+        testFetchURL = new URL(url);
+
+        const keyInputs = document.querySelectorAll('.test-fetch-param-key');
+        const valueInputs = document.querySelectorAll('.test-fetch-param-value');
+
+        const params = new URLSearchParams();
+        for (let i = 0; i < keyInputs.length; i++) {
+            const key = keyInputs[i].value.trim();
+            const value = valueInputs[i].value.trim();
+            if (key) params.append(key, value);
+        }
+
+        const finalUrl = `${testFetchURL}?${params.toString()}`;
+
+        fetch(finalUrl, {
+            method: "GET",
+            headers: {
+                "Password": api_password,
+                "Authorization": discord_token,
+                "Token": api_token
+            }
+        })
+        .then(response => response.json())
+        .then((data) => {
+            console.log(data);
+            output.textContent = JSON.stringify(data, undefined, 4);
+        })
+        .catch(error => {
+            console.log(`Failed to test fetch: `, error);
+        });
+    }
+
+    function disabledExperimentForceRolloutV2() {
+        if (localStorage.experiment_force_rollout === "false") {
+            localStorage.experiment_force_rollout = "true"
+        } else {
+            localStorage.experiment_force_rollout = "false"
+        }
+    }
+
+    function updateThemeStore(theme, hasButtons, raw) {
+        localStorage.sa_theme = theme;
+        localStorage.removeItem('community_theme_raw');
+        if (hasButtons === "true") {
+            try {
+                if (document.querySelector(".theme-selection-box-selected")) {
+                    document.querySelectorAll('.theme-selection-box-selected').forEach((el) => {
+                        el.classList.remove("theme-selection-box-selected");
+                    });
+                }
+                document.body.removeAttribute("class");
+            } catch (error) {
+            }
+            if (document.getElementById("theme-" + theme + "-button")) {
+                document.getElementById("theme-" + theme + "-button").classList.add('theme-selection-box-selected');
+            }
+        }
+        document.body.classList.add('theme-' + theme);
+        if (raw != null) {
+            localStorage.community_theme_raw = raw;
+            fetch(raw, {
+                method: "GET"
+            })
+            .then(response => response.text())
+            .then((data) => {
+
+                document.getElementById("community-theme-import").innerHTML = `${data}`;
+
+            })
+            .catch(error => {
+                console.error(error)
+            });
+
+            if (document.getElementById("theme-" + theme + "-button")) {
+                document.getElementById("theme-" + theme + "-button").classList.add('theme-selection-box-selected');
+            }
+        } else {
+            document.getElementById("community-theme-import").innerHTML = ``;
+        }
+    }
+
+    function updateThemeToCommunity() {
+        if (localStorage.community_theme_raw) {
+            fetch(localStorage.community_theme_raw, {
+                method: "GET"
+            })
+            .then(response => response.text())
+            .then((data) => {
+                document.getElementById("community-theme-import").innerHTML = `${data}`;
+            })
+            .catch(error => {
+                console.error(error)
+            });
+        }
+    }
+
+    updateThemeToCommunity();
 
     function optionsSidebarToggle() {
         if (document.getElementById('options-sidebar-container').classList.contains('options-sidebar-container-expanded')) {
@@ -15724,7 +17393,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 </div>
                 <p class="center-text" style="font-size: 30px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_SIDEBAR_YAPPER_HELP")}</p>
                 <div class="experiment-card-holder" id="yapper-article-container" style="width: 300px; margin-left: auto; margin-right: auto;">
-                    <button class="card-button" onclick="window.open('https://discord.gg/Mcwh7hGcWb');">${getTextString("OPTIONS_SIDEBAR_YAPPER_DISCORD_SERVER")}</button>
+                    <button class="card-button" onclick="window.open('https://discord.gg/SVKQEYeTsN');">${getTextString("OPTIONS_SIDEBAR_YAPPER_DISCORD_SERVER")}</button>
                     <button class="card-button" onclick="window.open('https://github.com/Yappering/');">${getTextString("OPTIONS_SIDEBAR_YAPPER_GITHUB")}</button>
                 </div>
                 ${getTextString("APP_VERSION")}${tcbx926n29}
@@ -16285,15 +17954,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 modal_back.remove();
             }, 300);
         });
-
-        modal.querySelector("[data-go-back-button]").addEventListener('click', () => {
-            modal.classList.remove('show');
-            modal_back.classList.remove('show');
-            setTimeout(() => {
-                modal.remove();
-                modal_back.remove();
-            }, 300);
-        });
     }
 
     function actuallyLogOutOfDiscord() {
@@ -16302,11 +17962,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         sessionStorage.removeItem('discord_profile');
         localStorage.removeItem('discord_avatar');
         localStorage.removeItem('discord_username');
+        localStorage.removeItem('discord_user_id');
         localStorage.removeItem('discord_displayname');
         localStorage.removeItem('discord_banner_color');
         localStorage.removeItem('discord_banner');
         localStorage.removeItem('discord_premium_type');
         localStorage.dev = "false";
+        localStorage.reviews_filter_type = "2";
         location.reload();
     }
 
@@ -16327,6 +17989,16 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     }
 
     window.updateDiscordProfilePlaceholder = updateDiscordProfilePlaceholder;
+
+    async function updateDiscordProfileModalv3() {
+        await updateDiscordProfile(localStorage.discord_token);
+        setModalv3InnerContent('account');
+        if (apiUrl) {
+            fetchData(pageCheck());
+        }
+    }
+
+    window.updateDiscordProfileModalv3 = updateDiscordProfileModalv3;
 
     async function updateDiscordProfile(token) {
         try {

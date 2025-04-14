@@ -18,6 +18,68 @@ EXPERIMENT_ID_6 = 1
 
 const experimentsList = [
     {
+        title: "Reviews V2",
+        id: "2025-04_reviews_v2",
+        name: "experiment_2025_04_reviews_v2",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment -1: Disabled"
+    },
+    {
+        title: "Accessibility V2",
+        id: "2025-04_accessibility_v2",
+        name: "experiment_2025_04_accessibility_v2",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment -1: Disabled"
+    },
+    {
+        title: "Profile Tab V2",
+        id: "2025-04_profile_tab_v2",
+        name: "experiment_2025_04_profile_tab_v2",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment -1: Disabled"
+    },
+    {
+        title: "Theme Picker V2 Color",
+        id: "2025-04_theme_picker_v2_color",
+        name: "experiment_2025_04_theme_picker_v2_color",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment -1: Disabled"
+    },
+    {
+        title: "Theme Picker V2 Custom",
+        id: "2025-04_theme_picker_v2_custom",
+        name: "experiment_2025_04_theme_picker_v2_custom",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment -1: Disabled"
+    },
+    {
+        title: "Theme Picker V2 Community",
+        id: "2025-04_theme_picker_v2_community",
+        name: "experiment_2025_04_theme_picker_v2_community",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled",
+            "Treatment 2: As banners"
+        ],
+        rollout: "Treatment -1: Disabled",
+        needs_api_token: "true"
+    },
+    {
         title: "Use api.yapper.shop for api",
         id: "2025-04_use_api_dot_yapper_dot_shop",
         name: "experiment_2025_04_use_api_dot_yapper_dot_shop",
@@ -26,7 +88,8 @@ const experimentsList = [
             "Treatment 1: Enabled"
         ],
         rollout: "Treatment 1: Enabled",
-        needs_api_token: "true"
+        needs_api_token: "true",
+        not_needed: "true"
     },
     {
         title: "Collectibles Marketing Page",
@@ -179,7 +242,7 @@ const experimentsList = [
             "Treatment 4: Enabled",
             "Treatment 6: Settings like discord"
         ],
-        rollout: "Treatment 4: Enabled"
+        rollout: "Treatment 6: Settings like discord"
     },
     {
         title: "Profiles Plus Home",
