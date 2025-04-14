@@ -6,8 +6,10 @@
     --background-tertiary: #1E1F22;
     --input-background: #1E1F22;
     --shop-card-background: #111214;
+    --shop-banner-background: #313338;
     --interactive-active: #404249;
     --button-danger-background: #DD383F;
+    --button-danger-hover: #c5323a;
     --button-outline-danger-border: #DD383F;
     --status-danger: #F64046;
     --brand-500: #615DED;
@@ -111,7 +113,9 @@
     --background-primary: #2d2d50;
     --background-secondary: #191936;
     --background-tertiary: #0d0d1f;
+    --input-background: #0d0d1f;
     --shop-card-background: #070918;
+    --shop-banner-background: #2d2d50;
     --interactive-active: #211e49;
     --2: #454579;
     --4: #0b1227;
@@ -121,13 +125,17 @@
     --modalv3-hr-color: #2a378a;
     --modalv3-hr-color2: #283264;
     --modalv3-text-input-background: #22223d;
+    --category-modal-tab-bg: #262642;
+    --category-modal-tab-selected-bg: #3f3f70;
 }
 
 .theme-color_red {
     --background-primary: #502d2d;
     --background-secondary: #361919;
     --background-tertiary: #1f0d0d;
+    --input-background: #1f0d0d;
     --shop-card-background: #180707;
+    --shop-banner-background: #502d2d;
     --interactive-active: #491e1e;
     --2: #774343;
     --4: #270b0b;
@@ -137,13 +145,17 @@
     --modalv3-hr-color: #8a2a2a;
     --modalv3-hr-color2: #642828;
     --modalv3-text-input-background: #3d2222;
+    --category-modal-tab-bg: #422626;
+    --category-modal-tab-selected-bg: #703f3f;
 }
 
 .theme-color_green {
     --background-primary: #35502d;
     --background-secondary: #203619;
     --background-tertiary: #0e1f0d;
+    --input-background: #0e1f0d;
     --shop-card-background: #0a1807;
+    --shop-banner-background: #35502d;
     --interactive-active: #27491e;
     --2: #4d7241;
     --4: #0c270b;
@@ -153,6 +165,8 @@
     --modalv3-hr-color: #4d8a2a;
     --modalv3-hr-color2: #346428;
     --modalv3-text-input-background: #253d22;
+    --category-modal-tab-bg: #2d4226;
+    --category-modal-tab-selected-bg: #4d703f;
 }
 
 body {
@@ -409,6 +423,7 @@ body {
 }
 
 .change-category-modal-content-button {
+    display: flex;
     background-color: var(--category-modal-tab-bg);
     width: auto;
     cursor: pointer;
@@ -423,6 +438,21 @@ body {
     margin: 0;
     padding: 10px;
     pointer-events: none;
+}
+
+.category-reviews-beta-tag {
+    display: flex;
+    padding: 2px !important;
+    padding-left: 5px !important;
+    padding-right: 3px !important;
+    margin: 0;
+    margin-top: 8px !important;
+    margin-right: 10px !important;
+    background-color: var(--brand-500);
+    color: white !important;
+    border-radius: 5px;
+    width: 40px;
+    height: 20px;
 }
 
 
@@ -2022,7 +2052,7 @@ body {
     margin-right: auto;
     width: 1280px;
     height: 289px;
-    background-color: #313338;
+    background-color: var(--shop-banner-background);
     scale: 0.9;
     object-fit: cover;
     border-radius: 32px;
@@ -4379,6 +4409,24 @@ data-share-product-card-button {
     background-color: var(--brand-500-hover);
 }
 
+.modalv3-content-card-button-bad {
+    display: block;
+    margin: 5px 0;
+    padding: 10px 20px;
+    background-color: var(--button-danger-background);
+    color: #fff;
+    border: 2px var(--6) solid;
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto;
+    transition: background-color 0.2s ease;
+    z-index: 5;
+}
+
+.modalv3-content-card-button-bad:hover {
+    background-color: var(--button-danger-hover);
+}
+
 
 .modalv3-content-ratio-card {
     margin-top: 10px;
@@ -4664,6 +4712,32 @@ data-share-product-card-button {
 
 .modalv3-review-card-title {
     font-size: 20px;
+}
+
+
+.modalv3-review-card-types-container {
+    position: relative;
+    display: flex;
+    gap: 10px;
+}
+
+.modalv3-review-card-types-container div {
+    text-align: center;
+    padding: 10px;
+    background-color: var(--background-tertiary);
+    border-radius: 5px;
+}
+
+.modalv3-review-card-types-container .review-review-text {
+    max-width: 300px;
+}
+
+.modalv3-review-card-types-container .review-flag-type-0 {
+    background-color: var(--ratio-green);
+}
+
+.modalv3-review-card-types-container .review-flag-type-2 {
+    background-color: var(--ratio-red);
 }
 
 

@@ -25,7 +25,7 @@ const experimentsList = [
             "Treatment -1: Disabled",
             "Treatment 1: Enabled"
         ],
-        rollout: "Treatment -1: Disabled"
+        rollout: "Treatment 1: Enabled"
     },
     {
         title: "Accessibility V2",

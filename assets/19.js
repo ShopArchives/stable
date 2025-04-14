@@ -1,6 +1,6 @@
 
 
-app_version1 = "356"
+app_version1 = "361"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -7521,14 +7521,15 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     <p style="font-size: large; font-weight: 900;" data-product-modal-name></p>
                                                     <p style="color: var(--8)" data-product-modal-summary></p>
                                                     <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ITEM_COUNT")}${apiCategory.products.length}</p>
-                                                    <details style="display: none;">
-                                                        <summary class="clickable" style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS")}</summary>
-                                                        
-                                                    </details>
-                                                    <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SHOW")}</p>
-                                                    <div class="shop-category-modal-assets-container" data-shop-category-modal-assets-container></div>
-                                                    <div class="shop-modal-review-container" data-shop-modal-review-container>
-                                                        <p style="font-size: large; font-weight: 900;" data-shop-modal-review-title></p>
+                                                    <div class="category-modal-content-container" data-category-modal-content-container>
+                                                        <div class="change-category-modal-content-button selected" data-shop-category-modal-tabs-tab-button-1>
+                                                            <p>${getTextString("SHOP_CATEGORY_MODAL_ASSETS_TAB")}</p>
+                                                        </div>
+                                                        <div class="change-category-modal-content-button" style="display: none;" data-shop-category-modal-tabs-tab-button-2>
+                                                            <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_TAB")}</p>
+                                                        </div>
+                                                        <div class="category-modal-inner-content-container" data-category-modal-inner-content-container>
+                                                        </div>
                                                     </div>
                                                 </div>
                                                 <div class="shop-modal-tag-container" data-shop-card-tag-container></div>
@@ -7541,323 +7542,229 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         `;
 
                                         if (localStorage.experiment_2025_04_reviews_v2 === "Treatment 1: Enabled") {
-                                            modal.querySelector("[data-shop-modal-review-title]").textContent = `${getTextString("SHOP_REVIEWS_TITLE")}`;
+                                            modal.querySelector("[data-shop-category-modal-tabs-tab-button-2]").style.display = 'unset';
+                                        }
 
-                                            let reviewLoadingElement = document.createElement("div");
-                                            reviewLoadingElement.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_REVIEWS_LOADING")}</p>
-                                            `;
-                                            reviewLoadingElement.classList.add("review-element");
-                                            modal.querySelector("[data-shop-modal-review-container]").appendChild(reviewLoadingElement);
-                                            fetch(`${localStorage.api_database_base_url}/reviews/${apiCategory.sku_id}`, {
-                                                method: "GET",
-                                                headers: {
-                                                    "Password": api_password,
-                                                    "Authorization": discord_token,
-                                                    "Token": api_token
-                                                }
-                                            }) // Replace with your API URL
-                                            .then(response => response.json())
-                                            .then(data => {
-                                                if (data.message) {
-                                                    const reviewContainer = modal.querySelector("[data-shop-modal-review-container]");
-                                                    let reviewElement = document.createElement("div");
-    
-                                                    reviewElement.classList.add("review-element");
-                                                    if (data.message === "Unknown SKU") {
-            
-                                                        reviewElement.innerHTML = `
-                                                            <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_REVIEWS_NONE_TITLE")}</p>
-                                                            <p style="color: var(--8)">${getTextString("SHOP_REVIEWS_NONE_DESC")}</p>
-                                                        `;
-                                                    } else if (data.message === "Missing Access") {
-                                                        
-                                                        reviewElement.innerHTML = `
-                                                            <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_REVIEWS_NO_ACCESS_TITLE")}</p>
-                                                            <p style="color: var(--8)">${getTextString("SHOP_REVIEWS_NO_ACCESS_DESC")}</p>
-                                                        `;
-                                                    } else {
-                                                        
-                                                        reviewElement.innerHTML = `
-                                                            <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_REVIEWS_ERROR_TITLE")}</p>
-                                                            <p style="color: var(--8)">${getTextString("SHOP_REVIEWS_ERROR_DESC")}</p>
-                                                        `;
-                                                    }
-                                                    reviewContainer.appendChild(reviewElement);
-                                                } else {
-                                                    renderReviews(data)
-                                                }
+                                        fillCategoryModalContentContainer('assets');
 
-                                                reviewLoadingElement.remove();
-                                                
-                                            })
-                                            .catch(error => console.error('Error fetching data:', error));
-    
-                                            function renderReviews(datareview) {
-                                                const reviewContainer = modal.querySelector("[data-shop-modal-review-container]");
-                                                datareview.forEach(review => {
-                                                    let reviewElement = document.createElement("div");
-    
-                                                    reviewElement.classList.add("review-element");
-        
-                                                    reviewElement.innerHTML = `
-                                                        <div class="shop-modal-review-name-container" data-shop-modal-review-name-container>
-                                                            <p class="shop-modal-review-name" style="font-size: large; font-weight: 900;">${review.reviewer.name}</p>
-                                                        </div>
-                                                        <div class="shop-modal-review-star-container" data-shop-modal-review-star-container></div>
-                                                        <p style="color: var(--8)">${review.review}</p>
+                                        const tab_button_1 = modal.querySelector("[data-shop-category-modal-tabs-tab-button-1]");
+                                        const tab_button_2 = modal.querySelector("[data-shop-category-modal-tabs-tab-button-2]");
+
+                                        tab_button_1.addEventListener('click', () => {
+                                            if (tab_button_2.classList.contains("selected")) {
+                                                tab_button_2.classList.remove("selected");
+                                            }
+                                            tab_button_1.classList.add("selected");
+                                            fillCategoryModalContentContainer('assets');
+                                        });
+
+                                        tab_button_2.addEventListener('click', () => {
+                                            if (tab_button_1.classList.contains("selected")) {
+                                                tab_button_1.classList.remove("selected");
+                                            }
+                                            tab_button_2.classList.add("selected");
+                                            fillCategoryModalContentContainer('reviews');
+                                        });
+
+                                        function fillCategoryModalContentContainer(tab) {
+                                            if (document.getElementById("shop-category-modal-write-review-container")) {
+                                                document.getElementById("shop-category-modal-write-review-container").remove();
+                                            }
+                                            if (tab === "assets") {
+
+                                                modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = ``;
+
+                                                const asset_container = modal.querySelector("[data-category-modal-inner-content-container]");
+
+                                                if (apiCategory.banner != null) {
+                                                    let banner_asset = document.createElement("div");
+
+                                                    banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.banner}</p>
+                                                        <img class="category-modalv2-inner-img-banner" src="https://cdn.yapper.shop/assets/${apiCategory.banner}.png"></img> 
                                                     `;
 
-                                                    if (review.reviewer.moderator === "true") {
-                                                        let moderatorNametag = document.createElement("p");
-    
-                                                        moderatorNametag.classList.add("shop-modal-review-nametag-moderator");
-                                                        moderatorNametag.textContent = `${getTextString("SHOP_REVIEWS_NAMETAG_MODERATOR")}`;
-                                                        
-                                                        reviewElement.querySelector("[data-shop-modal-review-name-container]").appendChild(moderatorNametag);
-                                                    } else if (review.reviewer.special === "true") {
-                                                        let moderatorNametag = document.createElement("p");
-    
-                                                        moderatorNametag.classList.add("shop-modal-review-nametag-special");
-                                                        moderatorNametag.textContent = `${getTextString("SHOP_REVIEWS_NAMETAG_SPECIAL")}`;
-                                                        
-                                                        reviewElement.querySelector("[data-shop-modal-review-name-container]").appendChild(moderatorNametag);
-                                                    }
-        
-                                                    if (review.stars === "5") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzIxKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iI0ZGRUMzRSIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzIxIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
-                                                        `;
-                                                    } else if (review.stars === "4") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzMyKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iI0ZGRUMzRSIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzMyIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
-                                                        `;
-                                                    } else if (review.stars === "3") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzM5KSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iI0ZGRUMzRSIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzM5Ij4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
-                                                        `;
-                                                    } else if (review.stars === "2") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzQ2KSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjRkZFQzNFIi8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iIzU3NTc1NyIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzQ2Ij4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
-                                                        `;
-                                                    } else if (review.stars === "1") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMxXzUzKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiNGRkVDM0UiLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iIzU3NTc1NyIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMxXzUzIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
-                                                        `;
-                                                    } else if (review.stars === "0") {
-                                                        reviewElement.querySelector("[data-shop-modal-review-star-container]").innerHTML = `
-                                                            <img class="shop-modal-review-stars-img" src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTIwIiBoZWlnaHQ9IjI0IiB2aWV3Qm94PSIwIDAgMTIwIDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDBfMTMyXzYwKSI+CjxwYXRoIGQ9Ik0xMiAwTDE0LjY5NDIgOC4yOTE4SDIzLjQxMjdMMTYuMzU5MyAxMy40MTY0TDE5LjA1MzQgMjEuNzA4MkwxMiAxNi41ODM2TDQuOTQ2NTggMjEuNzA4Mkw3LjY0MDc0IDEzLjQxNjRMMC41ODczMjIgOC4yOTE4SDkuMzA1ODNMMTIgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTM2IDBMMzguNjk0MiA4LjI5MThINDcuNDEyN0w0MC4zNTkzIDEzLjQxNjRMNDMuMDUzNCAyMS43MDgyTDM2IDE2LjU4MzZMMjguOTQ2NiAyMS43MDgyTDMxLjY0MDcgMTMuNDE2NEwyNC41ODczIDguMjkxOEgzMy4zMDU4TDM2IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjxwYXRoIGQ9Ik02MCAwTDYyLjY5NDIgOC4yOTE4SDcxLjQxMjdMNjQuMzU5MyAxMy40MTY0TDY3LjA1MzQgMjEuNzA4Mkw2MCAxNi41ODM2TDUyLjk0NjYgMjEuNzA4Mkw1NS42NDA3IDEzLjQxNjRMNDguNTg3MyA4LjI5MThINTcuMzA1OEw2MCAwWiIgZmlsbD0iIzU3NTc1NyIvPgo8cGF0aCBkPSJNODQgMEw4Ni42OTQyIDguMjkxOEg5NS40MTI3TDg4LjM1OTMgMTMuNDE2NEw5MS4wNTM0IDIxLjcwODJMODQgMTYuNTgzNkw3Ni45NDY2IDIxLjcwODJMNzkuNjQwNyAxMy40MTY0TDcyLjU4NzMgOC4yOTE4SDgxLjMwNThMODQgMFoiIGZpbGw9IiM1NzU3NTciLz4KPHBhdGggZD0iTTEwOCAwTDExMC42OTQgOC4yOTE4SDExOS40MTNMMTEyLjM1OSAxMy40MTY0TDExNS4wNTMgMjEuNzA4MkwxMDggMTYuNTgzNkwxMDAuOTQ3IDIxLjcwODJMMTAzLjY0MSAxMy40MTY0TDk2LjU4NzMgOC4yOTE4SDEwNS4zMDZMMTA4IDBaIiBmaWxsPSIjNTc1NzU3Ii8+CjwvZz4KPGRlZnM+CjxjbGlwUGF0aCBpZD0iY2xpcDBfMTMyXzYwIj4KPHJlY3Qgd2lkdGg9IjEyMCIgaGVpZ2h0PSIyNCIgZmlsbD0id2hpdGUiLz4KPC9jbGlwUGF0aD4KPC9kZWZzPgo8L3N2Zz4K"></img>
-                                                        `;
-                                                    }
-        
-                                                    reviewContainer.appendChild(reviewElement);
-                                                });
+                                                    asset_container.appendChild(banner_asset);
+                                                }
+
+                                                if (apiCategory.banner_asset && apiCategory.banner_asset.static != null) {
+                                                    let banner_asset = document.createElement("div");
+
+                                                    banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_1")}</p>
+                                                        <img class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.static}"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(banner_asset);
+                                                }
+
+                                                if (apiCategory.banner_asset && apiCategory.banner_asset.animated != null) {
+                                                    let banner_asset = document.createElement("div");
+
+                                                    banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_2")}</p>
+                                                        <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.animated}" loop></video> 
+                                                    `;
+
+                                                    asset_container.appendChild(banner_asset);
+                                                }
+
+                                                if (apiCategory.logo != null) {
+                                                    let logo_asset = document.createElement("div");
+
+                                                    logo_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_LOGO")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.logo}</p>
+                                                        <img class="category-modalv2-inner-img-logo" src="https://cdn.yapper.shop/assets/${apiCategory.logo}.png"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(logo_asset);
+                                                }
+
+                                                if (apiCategory.mobile_bg != null) {
+                                                    let mobile_bg_asset = document.createElement("div");
+
+                                                    mobile_bg_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BG")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_bg}</p>
+                                                        <img class="category-modalv2-inner-img-mobile_bg" src="https://cdn.yapper.shop/assets/${apiCategory.mobile_bg}.png"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(mobile_bg_asset);
+                                                }
+
+                                                if (apiCategory.pdp_bg != null) {
+                                                    let pdp_bg_asset = document.createElement("div");
+
+                                                    pdp_bg_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_PDP_BG")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.pdp_bg}</p>
+                                                        <img class="category-modalv2-inner-img-pdp_bg" src="https://cdn.yapper.shop/assets/${apiCategory.pdp_bg}.png"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(pdp_bg_asset);
+                                                }
+
+                                                if (apiCategory.success_modal_bg != null) {
+                                                    let success_modal_bg_asset = document.createElement("div");
+
+                                                    success_modal_bg_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SUCCESS_MODAL_BG")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.success_modal_bg}</p>
+                                                        <img class="category-modalv2-inner-img-success_modal_bg" src="https://cdn.yapper.shop/assets/${apiCategory.success_modal_bg}.png"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(success_modal_bg_asset);
+                                                }
+
+                                                if (apiCategory.mobile_banner != null) {
+                                                    let mobile_banner_asset = document.createElement("div");
+
+                                                    mobile_banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BANNER")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_banner}</p>
+                                                        <img class="category-modalv2-inner-img-mobile_banner" src="https://cdn.yapper.shop/assets/${apiCategory.mobile_banner}.png"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(mobile_banner_asset);
+                                                }
+
+                                                if (apiCategory.featured_block != null) {
+                                                    let featured_block_asset = document.createElement("div");
+
+                                                    featured_block_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_FEATURED_BLOCK")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.featured_block}</p>
+                                                        <img class="category-modalv2-inner-img-featured_block" src="https://cdn.yapper.shop/assets/${apiCategory.featured_block}.png"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(featured_block_asset);
+                                                }
+
+                                                if (apiCategory.hero_banner != null) {
+                                                    let hero_banner_asset = document.createElement("div");
+
+                                                    hero_banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_banner}</p>
+                                                        <img class="category-modalv2-inner-img-hero_banner" src="https://cdn.yapper.shop/assets/${apiCategory.hero_banner}.png"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(hero_banner_asset);
+                                                }
+
+                                                if (apiCategory.hero_banner_asset && apiCategory.hero_banner_asset.static != null) {
+                                                    let hero_banner_asset = document.createElement("div");
+
+                                                    hero_banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_1")}</p>
+                                                        <img class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.static}"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(hero_banner_asset);
+                                                }
+
+                                                if (apiCategory.hero_banner_asset && apiCategory.hero_banner_asset.animated != null) {
+                                                    let hero_banner_asset = document.createElement("div");
+
+                                                    hero_banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_2")}</p>
+                                                        <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.animated}" loop></video> 
+                                                    `;
+
+                                                    asset_container.appendChild(hero_banner_asset);
+                                                }
+
+                                                if (apiCategory.wide_banner != null) {
+                                                    let wide_banner_asset = document.createElement("div");
+
+                                                    wide_banner_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_WIDE_BANNER")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.wide_banner}</p>
+                                                        <img class="category-modalv2-inner-img-wide_banner" src="https://cdn.yapper.shop/assets/${apiCategory.wide_banner}.png"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(wide_banner_asset);
+                                                }
+
+                                                if (apiCategory.hero_logo != null) {
+                                                    let hero_logo_asset = document.createElement("div");
+
+                                                    hero_logo_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_LOGO")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_logo}</p>
+                                                        <img class="category-modalv2-inner-img-hero_logo" src="https://cdn.yapper.shop/assets/${apiCategory.hero_logo}.png"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(hero_logo_asset);
+                                                }
+
+                                                if (apiCategory.category_bg != null) {
+                                                    let category_bg_asset = document.createElement("div");
+
+                                                    category_bg_asset.innerHTML = `
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_CATEGORY_BG")}</p>
+                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.category_bg}</p>
+                                                        <img class="category-modalv2-inner-img-category_bg" src="https://cdn.yapper.shop/assets/${apiCategory.category_bg}.png"></img> 
+                                                    `;
+
+                                                    asset_container.appendChild(category_bg_asset);
+                                                }
+                                            } else if (tab === "reviews") {
+
+                                                modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
+                                                    <div class="review-element" id="loading-category-reviews">
+                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_PPLUS_WARNING")}</p>
+                                                    </div>
+                                                `;
                                             }
                                         }
 
-                                        const asset_container = modal.querySelector("[data-shop-category-modal-assets-container]");
+                                        window.fillCategoryModalContentContainer = fillCategoryModalContentContainer;
 
-                                        if (apiCategory.banner != null) {
-                                            let banner_asset = document.createElement("div");
 
-                                            banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.banner}</p>
-                                                <img class="category-modalv2-inner-img-banner" src="https://cdn.yapper.shop/assets/${apiCategory.banner}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(banner_asset);
-                                        }
-
-                                        if (apiCategory.banner_asset && apiCategory.banner_asset.static != null) {
-                                            let banner_asset = document.createElement("div");
-
-                                            banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_1")}</p>
-                                                <img class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.static}"></img> 
-                                            `;
-
-                                            asset_container.appendChild(banner_asset);
-                                        }
-
-                                        if (apiCategory.banner_asset && apiCategory.banner_asset.animated != null) {
-                                            let banner_asset = document.createElement("div");
-
-                                            banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_2")}</p>
-                                                <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.animated}" loop></video> 
-                                            `;
-
-                                            asset_container.appendChild(banner_asset);
-                                        }
-
-                                        if (apiCategory.logo != null) {
-                                            let logo_asset = document.createElement("div");
-
-                                            logo_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_LOGO")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.logo}</p>
-                                                <img class="category-modalv2-inner-img-logo" src="https://cdn.yapper.shop/assets/${apiCategory.logo}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(logo_asset);
-                                        }
-
-                                        if (apiCategory.mobile_bg != null) {
-                                            let mobile_bg_asset = document.createElement("div");
-
-                                            mobile_bg_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BG")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_bg}</p>
-                                                <img class="category-modalv2-inner-img-mobile_bg" src="https://cdn.yapper.shop/assets/${apiCategory.mobile_bg}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(mobile_bg_asset);
-                                        }
-
-                                        if (apiCategory.pdp_bg != null) {
-                                            let pdp_bg_asset = document.createElement("div");
-
-                                            pdp_bg_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_PDP_BG")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.pdp_bg}</p>
-                                                <img class="category-modalv2-inner-img-pdp_bg" src="https://cdn.yapper.shop/assets/${apiCategory.pdp_bg}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(pdp_bg_asset);
-                                        }
-
-                                        if (apiCategory.success_modal_bg != null) {
-                                            let success_modal_bg_asset = document.createElement("div");
-
-                                            success_modal_bg_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SUCCESS_MODAL_BG")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.success_modal_bg}</p>
-                                                <img class="category-modalv2-inner-img-success_modal_bg" src="https://cdn.yapper.shop/assets/${apiCategory.success_modal_bg}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(success_modal_bg_asset);
-                                        }
-
-                                        if (apiCategory.mobile_banner != null) {
-                                            let mobile_banner_asset = document.createElement("div");
-
-                                            mobile_banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BANNER")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_banner}</p>
-                                                <img class="category-modalv2-inner-img-mobile_banner" src="https://cdn.yapper.shop/assets/${apiCategory.mobile_banner}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(mobile_banner_asset);
-                                        }
-
-                                        if (apiCategory.featured_block != null) {
-                                            let featured_block_asset = document.createElement("div");
-
-                                            featured_block_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_FEATURED_BLOCK")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.featured_block}</p>
-                                                <img class="category-modalv2-inner-img-featured_block" src="https://cdn.yapper.shop/assets/${apiCategory.featured_block}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(featured_block_asset);
-                                        }
-
-                                        if (apiCategory.hero_banner != null) {
-                                            let hero_banner_asset = document.createElement("div");
-
-                                            hero_banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_banner}</p>
-                                                <img class="category-modalv2-inner-img-hero_banner" src="https://cdn.yapper.shop/assets/${apiCategory.hero_banner}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(hero_banner_asset);
-                                        }
-
-                                        if (apiCategory.hero_banner_asset && apiCategory.hero_banner_asset.static != null) {
-                                            let hero_banner_asset = document.createElement("div");
-
-                                            hero_banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_1")}</p>
-                                                <img class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.static}"></img> 
-                                            `;
-
-                                            asset_container.appendChild(hero_banner_asset);
-                                        }
-
-                                        if (apiCategory.hero_banner_asset && apiCategory.hero_banner_asset.animated != null) {
-                                            let hero_banner_asset = document.createElement("div");
-
-                                            hero_banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_2")}</p>
-                                                <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.animated}" loop></video> 
-                                            `;
-
-                                            asset_container.appendChild(hero_banner_asset);
-                                        }
-
-                                        if (apiCategory.wide_banner != null) {
-                                            let wide_banner_asset = document.createElement("div");
-
-                                            wide_banner_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_WIDE_BANNER")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.wide_banner}</p>
-                                                <img class="category-modalv2-inner-img-wide_banner" src="https://cdn.yapper.shop/assets/${apiCategory.wide_banner}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(wide_banner_asset);
-                                        }
-
-                                        if (apiCategory.hero_logo != null) {
-                                            let hero_logo_asset = document.createElement("div");
-
-                                            hero_logo_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_LOGO")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_logo}</p>
-                                                <img class="category-modalv2-inner-img-hero_logo" src="https://cdn.yapper.shop/assets/${apiCategory.hero_logo}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(hero_logo_asset);
-                                        }
-
-                                        if (apiCategory.category_bg != null) {
-                                            let category_bg_asset = document.createElement("div");
-
-                                            category_bg_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_CATEGORY_BG")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.category_bg}</p>
-                                                <img class="category-modalv2-inner-img-category_bg" src="https://cdn.yapper.shop/assets/${apiCategory.category_bg}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(category_bg_asset);
-                                        }
-
-                                        if (apiCategory.condensed_banner_left != null) {
-                                            let condensed_banner_left_asset = document.createElement("div");
-
-                                            condensed_banner_left_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_CONDENSED_BANNER_LEFT")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.condensed_banner_left}</p>
-                                                <img class="category-modalv2-inner-img-condensed_banner_left" src="https://cdn.yapper.shop/assets/${apiCategory.condensed_banner_left}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(condensed_banner_left_asset);
-                                        }
-
-                                        if (apiCategory.condensed_banner_right != null) {
-                                            let condensed_banner_right_asset = document.createElement("div");
-
-                                            condensed_banner_right_asset.innerHTML = `
-                                                <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_CONDENSED_BANNER_RIGHT")}</p>
-                                                <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.condensed_banner_right}</p>
-                                                <img class="category-modalv2-inner-img-condensed_banner_right" src="https://cdn.yapper.shop/assets/${apiCategory.condensed_banner_right}.png"></img> 
-                                            `;
-
-                                            asset_container.appendChild(condensed_banner_right_asset);
-                                        }
-
-                                        modal.querySelector("[data-product-modal-sku-id]").textContent = `SKU ID: ${apiCategory.sku_id}`;
+                                        modal.querySelector("[data-product-modal-sku-id]").textContent = `${getTextString("SHOP_CATEGORY_MODAL_SKU_ID")}${apiCategory.sku_id}`;
                                         modal.querySelector("[data-product-modal-name]").textContent = apiCategory.name;
                                         modal.querySelector("[data-product-modal-summary]").textContent = apiCategory.summary;
 
@@ -7947,6 +7854,40 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 });
                                             }
                                         }
+
+
+                                        const unpublishedAt = new Date(apiCategory.unpublished_at);
+                    
+                                        if (apiCategory.unpublished_at && !isNaN(unpublishedAt.getTime())) {
+                    
+                                            function updateTimer() {
+                                                const now = new Date();
+                                                const timeDiff = unpublishedAt - now;
+                    
+                                                if (timeDiff <= 0) {
+                                                    modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                        <div class="unplublished-tag">
+                                                            <p class="unplublished-tag-text">${getTextString("SHOP_CATEGORY_NOT_IN_STORE")}</p>
+                                                        </div>
+                                                    `;
+                                                    clearInterval(timerInterval);
+                                                } else {
+                                                    const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                                                    const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                                    const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / 1000);
+                    
+                                                    modal.querySelector("[data-shop-card-tag-container]").innerHTML = `
+                                                        <div class="unplublished-tag">
+                                                            <p class="unplublished-tag-text">${days}${getTextString("SHOP_CATEGORY_DAYS_LEFT_IN_STORE")}</p>
+                                                        </div>
+                                                    `;
+                                                }
+                                            }
+                    
+                                            const timerInterval = setInterval(updateTimer, 1000);
+                                            updateTimer();
+                                        }
+                                        
 
 
                                         let modal_back = document.createElement("div");
@@ -10635,6 +10576,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         </div>
                                                         <div class="change-category-modal-content-button" style="display: none;" data-shop-category-modal-tabs-tab-button-2>
                                                             <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_TAB")}</p>
+                                                            <p class="category-reviews-beta-tag">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_BETA_TAB")}</p>
                                                         </div>
                                                         <div class="category-modal-inner-content-container" data-category-modal-inner-content-container>
                                                         </div>
@@ -10649,8 +10591,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             </div>
                                         `;
 
-                                        if (localStorage.experiment_2025_04_reviews_v2 === "Treatment 1: Enabled") {
-                                            modal.querySelector("[data-shop-category-modal-tabs-tab-button-2]").style.display = 'unset';
+                                        if (localStorage.experiment_2025_04_reviews_v2 === "Treatment 1: Enabled" && localStorage.reviews_filter_type != "3") {
+                                            modal.querySelector("[data-shop-category-modal-tabs-tab-button-2]").style.display = 'flex';
                                         }
 
                                         fillCategoryModalContentContainer('assets');
@@ -10954,6 +10896,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                                             <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="Edit your review for ${apiCategory.name}...">
                                                             <button data-post-review-button>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_EDIT_REVIEW")}</button>
+                                                            <div class="shop-category-modal-write-review-disclaimer-container">
+                                                                <p class="shop-category-modal-write-review-disclaimer">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER")}</p>
+                                                                <a class="shop-category-modal-write-review-disclaimer-link" href="https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY")}</a>
+                                                            </div>
                                                         `;
 
                                                         writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
@@ -10990,7 +10936,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         writeReviewContainer.classList.add("shop-category-modal-write-review-container");
                                                         writeReviewContainer.id = 'shop-category-modal-write-review-container';
                                                         writeReviewContainer.innerHTML = `
-                                                            <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="Log In with Discord to write reviews..." disabled>
                                                             <button onclick="loginToDiscord();">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_LOG_IN_REVIEW")}</button>
                                                         `;
     
@@ -11046,7 +10991,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         }
 
                                                         datareview.forEach(review => {
-                                                            if (localStorage.reviews_filter_type === "1"|| localStorage.reviews_filter_type === "2" && review.review_flag_type != 2) {
+                                                            if (localStorage.reviews_filter_type === "1" || localStorage.discord_user_id === review.users.id || localStorage.reviews_filter_type === "2" && review.review_flag_type != 2) {
                                                                 let reviewElement = document.createElement("div");
     
                                                                 reviewElement.classList.add("review-element");
@@ -16208,6 +16153,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 <button class="side-tabs-button" id="modal-v3-tab-api_test_fetch" onclick="setModalv3InnerContent('api_test_fetch')">
                     <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_API_TEST_FETCH")}</p>
                 </button>
+                <button class="side-tabs-button" id="modal-v3-tab-reviews_database" onclick="setModalv3InnerContent('reviews_database')">
+                    <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_REVIEWS_DATABASE")}</p>
+                </button>
                 <button class="side-tabs-button" id="modal-v3-tab-local_storage" onclick="setModalv3InnerContent('local_storage')">
                     <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_LOCAL_STORAGE")}</p>
                 </button>
@@ -16848,22 +16796,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     <textarea readonly class="modalv3-api-testfetch-textarea-input" id="modalv3-test-fetch-output" placeholder="Output..."></textarea>
 
                 </div>
-                <hr>
-                <div class="modalv3-content-card-1">
-                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_HEADER")}</h2>
-                    <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_HEADER")}</h2>
-                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_SUMMARY")}</p>
-
-                    <div class="modalv3-content-card-2">
-                        <button class="modalv3-content-card-button" onclick="refreshAdminReviews();">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REFRESH_BUTTON")}</button>
-                        <div id="modalv3-api-testing-reviews-output">
-                        
-                        </div>
-                    </div>
-                </div>
             `;
-
-            refreshAdminReviews();
 
             fetch(api + APISTATUS, {
                 method: "GET",
@@ -16937,6 +16870,25 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     </div>
                 `;
             });
+        } else if (tab === "reviews_database") {
+            document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
+            tabPageOutput.innerHTML = `
+                <h2>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_HEADER")}</h2>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_SUMMARY")}</p>
+
+                    <div class="modalv3-content-card-2">
+                        <button class="modalv3-content-card-button" onclick="refreshAdminReviews();">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REFRESH_BUTTON")}</button>
+                        <div id="modalv3-api-testing-reviews-output">
+                        
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            refreshAdminReviews();
+
         } else if (tab === "local_storage") {
             document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
             tabPageOutput.innerHTML = `
@@ -17171,26 +17123,75 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             data.forEach(review => {
                 const div = document.createElement('div');
                 div.className = 'modalv3-review-item-card';
+
+                const date = new Date(review.created_at);
+
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth is 0-indexed
+                const year = date.getFullYear();
+
+                const formatted = `${day}/${month}/${year}`;
+
+                div.id = review.id + '-review-admin-card';
       
                 div.innerHTML = `
                     <p class="modalv3-review-card-title">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO")}</p>
-                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO_ID")}${review.id}</p>
-                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO_RATING")}${review.rating}</p>
-                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO_REVIEW")}${review.review_text}</p>
-                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO_FLAG")}${review.review_flag_type}</p>
-                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_REVIEW_INFO_DATE")}${review.created_at}</p>
+                    <div class="modalv3-review-card-types-container">
+                        <div>
+                            <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_ID")}</p>
+                            <p>${review.id}</p>
+                        </div>
+                        <div>
+                            <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_RATING")}</p>
+                            <p>${review.rating}</p>
+                        </div>
+                        <div class="review-flag-type-0" data-review-flag-type>
+                            <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_FLAG")}</p>
+                            <p>${review.review_flag_type}</p>
+                        </div>
+                        <div>
+                            <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_DATE")}</p>
+                            <p>${formatted}</p>
+                        </div>
+                        <div class="review-review-text">
+                            <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_REVIEW")}</p>
+                            <p>${review.review_text}</p>
+                        </div>
+                    </div>
                     <hr>
                     <p class="modalv3-review-card-title">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ITEM_INFO")}</p>
-                    <p>${review.items.name} (${review.items.id})</p>
+                    <div class="modalv3-review-card-types-container">
+                        <div>
+                            <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_ITEM_INFO_NAME")}</p>
+                            <p>${review.items.name}</p>
+                        </div>
+                        <div>
+                            <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_ITEM_INFO_ID")}</p>
+                            <p>${review.items.id}</p>
+                        </div>
+                    </div>
                     <hr>
                     <p class="modalv3-review-card-title">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_USER_INFO")}</p>
-                    <p>${review.users.username} (${review.users.id})</p>
+                    <div class="modalv3-review-card-types-container">
+                        <div>
+                            <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_USER_INFO_NAME")}</p>
+                            <p>${review.users.username}</p>
+                        </div>
+                        <div>
+                            <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_USER_INFO_ID")}</p>
+                            <p>${review.users.id}</p>
+                        </div>
+                    </div>
                     <hr>
-                    <p class="modalv3-review-card-title">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_INFO")}</p>
-                    <p>${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_INFO_SUMMARY")}</p>
-                    <button class="modalv3-content-card-button" onclick="adminDeleteReview('${review.id}')">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_DELETE_REVIEW")}</button>
-                    <button class="modalv3-content-card-button">${getTextString("MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_BAN_USER")}</button>
+                    <p class="modalv3-review-card-title">${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_INFO")}</p>
+                    <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_INFO_SUMMARY")}</p>
+                    <button class="modalv3-content-card-button-bad" onclick="adminDeleteReview('${review.id}')">${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_DELETE_REVIEW")}</button>
                 `;
+
+                if (review.review_flag_type === 2) {
+                    div.querySelector("[data-review-flag-type]").classList.remove("review-flag-type-0");
+                    div.querySelector("[data-review-flag-type]").classList.add("review-flag-type-2");
+                }
       
                 document.getElementById("modalv3-api-testing-reviews-output").appendChild(div);
             });
@@ -17220,6 +17221,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         .catch(error => {
             console.error(error)
         });
+
+        if (document.getElementById(reviewId + "-review-admin-card")) {
+            document.getElementById(reviewId + "-review-admin-card").remove();
+        }
     }
 
     function modalv3AddTestFetchParam() {
