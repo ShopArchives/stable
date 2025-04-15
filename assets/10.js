@@ -18,6 +18,16 @@ EXPERIMENT_ID_6 = 1
 
 const experimentsList = [
     {
+        title: "Reviews V2 Report",
+        id: "2025-04_reviews_v2_report",
+        name: "experiment_2025_04_reviews_v2_report",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment -1: Disabled"
+    },
+    {
         title: "Reviews V2",
         id: "2025-04_reviews_v2",
         name: "experiment_2025_04_reviews_v2",
@@ -242,7 +252,8 @@ const experimentsList = [
             "Treatment 4: Enabled",
             "Treatment 6: Settings like discord"
         ],
-        rollout: "Treatment 6: Settings like discord"
+        rollout: "Treatment 6: Settings like discord",
+        not_needed: "true"
     },
     {
         title: "Profiles Plus Home",

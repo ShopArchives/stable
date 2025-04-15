@@ -274,17 +274,26 @@ SHOP_CATEGORY_MODAL_REVIEWS_BE_THE_FIRST = "Be the first to Review this item!";
 
 SHOP_CATEGORY_MODAL_REVIEWS_ERROR = "There was an error loading reviews";
 
+SHOP_CATEGORY_MODAL_REVIEWS_WRITE = "Write a review for ";
+SHOP_CATEGORY_MODAL_REVIEWS_EDIT = "Edit your review for ";
+SHOP_CATEGORY_MODAL_REVIEWS_LOGIN = "You must be logged in with Discord to write reviews...";
+
 SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER = "By making a review, you agree to the Shop Archives ";
 SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY = "Privacy Policy.";
 
-SHOP_CATEGORY_MODAL_REVIEWS_POST_REVIEW = "Post Review";
-SHOP_CATEGORY_MODAL_REVIEWS_EDIT_REVIEW = "Edit Review";
-SHOP_CATEGORY_MODAL_REVIEWS_LOG_IN_REVIEW = "Log In with Discord to review this category";
-
 SHOP_CATEGORY_MODAL_NAMETAG_MODERATOR = "ADMIN";
 
-SHOP_CATEGORY_MODAL_REVIEWS_WARNING = "Warning!";
-SHOP_CATEGORY_MODAL_REVIEWS_WARNING_1 = "Do NOT ask questions about nameplates in your review, your review will be deleted and you will be banned from posting reviews!";
+SHOP_CATEGORY_MODAL_REVIEWS_WARNING = "Do NOT ask questions about nameplates in your review, your review will be deleted and you will be banned from posting reviews!";
+
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HEADER = "Report Review";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_SUMMARY = "Please select the option(s) that best describes the problem.";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_PREVIEW = "You are reporting the following review:";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_1 = "Inappropriate or Sexual content";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_2 = "Abuse or Harassment";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_3 = "Bypassing Language Filter";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_4 = "Spam";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_DISCLAIMER = "By submitting this report you agree that it is truthful and not a duplicate report.";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_DISCLAIMER1 = "False reports can get you banned from making future reviews.";
 
 
 SHOP_CATEGORY_MODAL_REVIEWS_PPLUS_WARNING = "You cannot review Profiles Plus categories";
@@ -488,10 +497,11 @@ MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_SUMMARY = "Add your user id to the 'MODERATOR_
 
 MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO = "Review Info";
 MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_ID = "ID";
-MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_RATING = "Star Rating";
+MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_RATING = "Rating";
 MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_REVIEW = "Review";
 MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_FLAG = "Flag";
-MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_DATE = "Date Created";
+MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_REPORT = "Report";
+MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_DATE = "Created";
 
 MODAL_V3_TAB_REVIEWS_PANEL_ITEM_INFO = "Item Info";
 MODAL_V3_TAB_REVIEWS_PANEL_ITEM_INFO_NAME = "Name";

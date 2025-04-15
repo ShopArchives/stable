@@ -1,6 +1,6 @@
 
 
-app_version1 = "361"
+app_version1 = "366"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -2717,9 +2717,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     setCommunityThemesCache()
     
     async function checkIfValidDiscordToken() {
-        if (localStorage.discord_token && !sessionStorage.discord_profile) {
+        if (localStorage.discord_token && !localStorage.discord_profile) {
             try {
-                if (localStorage.discord_token && !sessionStorage.discord_profile) {
+                if (localStorage.discord_token && !localStorage.discord_profile) {
                     const userInfo = await fetch('https://discord.com/api/users/@me', {
                         headers: { Authorization: `Bearer ${localStorage.discord_token}` }
                     });
@@ -2732,7 +2732,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     }
           
                     const user = await userInfo.json();
-                    sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
+                    localStorage.discord_profile = JSON.stringify(user, undefined, 4);
                     localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=4096`;
                     localStorage.discord_username = user.username;
                     if (user.global_name != null) {
@@ -2759,8 +2759,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     location.reload();
                 }
           
-                // Optional: additional check (but `sessionStorage.discord_profile` is a string, so this check won't work unless parsed)
-                const parsedProfile = JSON.parse(sessionStorage.discord_profile);
+                // Optional: additional check (but `localStorage.discord_profile` is a string, so this check won't work unless parsed)
+                const parsedProfile = JSON.parse(localStorage.discord_profile);
                 if (parsedProfile.code === 0) {
                     setParams({ page: 'home', login: 'false' });
                     actuallyLogOutOfDiscord();
@@ -7542,7 +7542,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         `;
 
                                         if (localStorage.experiment_2025_04_reviews_v2 === "Treatment 1: Enabled") {
-                                            modal.querySelector("[data-shop-category-modal-tabs-tab-button-2]").style.display = 'unset';
+                                            modal.querySelector("[data-shop-category-modal-tabs-tab-button-2]").style.display = 'flex';
                                         }
 
                                         fillCategoryModalContentContainer('assets');
@@ -7754,7 +7754,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             } else if (tab === "reviews") {
 
                                                 modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
-                                                    <div class="review-element" id="loading-category-reviews">
+                                                    <div class="review-element-warning" id="loading-category-reviews">
                                                         <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_PPLUS_WARNING")}</p>
                                                     </div>
                                                 `;
@@ -10804,7 +10804,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             } else if (tab === "reviews") {
 
                                                 modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
-                                                    <div class="review-element" id="loading-category-reviews">
+                                                    <div class="review-element-notice" id="loading-category-reviews">
                                                         <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_LOADING")}</p>
                                                     </div>
                                                 `;
@@ -10836,16 +10836,18 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         writeReviewContainer.id = 'shop-category-modal-write-review-container';
                                                         writeReviewContainer.innerHTML = `
                                                             <p class="shop-category-modal-write-review-disclaimer-error" id="shop-category-modal-write-review-error-output"></p>
-                                                            <div id="star-rating" class="stars">
-                                                                <svg data-value="1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                <svg data-value="2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                <svg data-value="3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                <svg data-value="4" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                <svg data-value="5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                            </div>
+                                                            <div class="shop-category-modal-write-review-input-container">
+                                                                <div id="star-rating" class="stars">
+                                                                    <svg data-value="1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                    <svg data-value="2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                    <svg data-value="3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                    <svg data-value="4" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                    <svg data-value="5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                </div>
 
-                                                            <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="Write a review for ${apiCategory.name}...">
-                                                            <button data-post-review-button>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_POST_REVIEW")}</button>
+                                                                <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WRITE")}${apiCategory.name}...">
+                                                                <svg data-post-review-button class="review-send-icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.02 14 11.4a.6.6 0 0 1 0 1.18L6.6 14l-2.94 5.87a1.48 1.48 0 0 0 1.99 1.98l17.03-8.52a1.48 1.48 0 0 0 0-2.64L5.65 2.16a1.48 1.48 0 0 0-1.99 1.98l2.94 5.88Z" class=""></path></svg>
+                                                            </div>
                                                             <div class="shop-category-modal-write-review-disclaimer-container">
                                                                 <p class="shop-category-modal-write-review-disclaimer">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER")}</p>
                                                                 <a class="shop-category-modal-write-review-disclaimer-link" href="https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY")}</a>
@@ -10872,7 +10874,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 const value = parseInt(star.getAttribute('data-value'));
                                                                 star.classList.toggle('filled', value <= rating);
                                                             });
-                                                            console.error(writeReviewContainer.querySelector("[data-post-review-button]"))
                                                             writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
                                                                 postReview(`${apiCategory.sku_id}`, selectedRating);
                                                             };
@@ -10886,16 +10887,18 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         writeReviewContainer.id = 'shop-category-modal-write-review-container';
                                                         writeReviewContainer.innerHTML = `
                                                             <p class="shop-category-modal-write-review-disclaimer-error" id="shop-category-modal-write-review-error-output"></p>
-                                                            <div id="star-rating" class="stars">
-                                                                <svg data-value="1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                <svg data-value="2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                <svg data-value="3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                <svg data-value="4" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                <svg data-value="5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                            </div>
+                                                            <div class="shop-category-modal-write-review-input-container">
+                                                                <div id="star-rating" class="stars">
+                                                                    <svg data-value="1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                    <svg data-value="2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                    <svg data-value="3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                    <svg data-value="4" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                    <svg data-value="5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                </div>
 
-                                                            <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="Edit your review for ${apiCategory.name}...">
-                                                            <button data-post-review-button>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_EDIT_REVIEW")}</button>
+                                                                <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_EDIT")}${apiCategory.name}...">
+                                                                <svg data-post-review-button class="review-send-icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.02 14 11.4a.6.6 0 0 1 0 1.18L6.6 14l-2.94 5.87a1.48 1.48 0 0 0 1.99 1.98l17.03-8.52a1.48 1.48 0 0 0 0-2.64L5.65 2.16a1.48 1.48 0 0 0-1.99 1.98l2.94 5.88Z" class=""></path></svg>
+                                                            </div>
                                                             <div class="shop-category-modal-write-review-disclaimer-container">
                                                                 <p class="shop-category-modal-write-review-disclaimer">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER")}</p>
                                                                 <a class="shop-category-modal-write-review-disclaimer-link" href="https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY")}</a>
@@ -10922,7 +10925,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 const value = parseInt(star.getAttribute('data-value'));
                                                                 star.classList.toggle('filled', value <= rating);
                                                             });
-                                                            console.error(writeReviewContainer.querySelector("[data-post-review-button]"))
                                                             writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
                                                                 postReview(`${apiCategory.sku_id}`, selectedRating);
                                                             };
@@ -10936,7 +10938,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         writeReviewContainer.classList.add("shop-category-modal-write-review-container");
                                                         writeReviewContainer.id = 'shop-category-modal-write-review-container';
                                                         writeReviewContainer.innerHTML = `
-                                                            <button onclick="loginToDiscord();">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_LOG_IN_REVIEW")}</button>
+                                                            <div onclick="loginToDiscord();" class="shop-category-modal-write-review-input-container">
+                                                                <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_LOGIN")}" disabled>
+                                                            </div>
                                                         `;
     
                                                         modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
@@ -10945,7 +10949,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 })
                                                 .catch(error => {
                                                     modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
-                                                        <div class="review-element" id="loading-category-reviews">
+                                                        <div class="review-element-warning" id="loading-category-reviews">
                                                             <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_ERROR")}</p>
                                                             <p style="font-size: medium; font-weight: 200;">${error}</p>
                                                         </div>
@@ -10956,20 +10960,18 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 function renderReviews(datareview) {
                                                     if (Array.isArray(datareview) && datareview.length === 0) {
                                                         modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
-                                                            <div class="review-element" id="loading-category-reviews">
+                                                            <div class="review-element-notice" id="loading-category-reviews">
                                                                 <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_NONE")}</p>
-                                                                <p style="font-size: medium; font-weight: 200;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_BE_THE_FIRST")}</p>
                                                             </div>
                                                         `;
 
                                                         if (apiCategory.sku_id === discord_categories.NAMEPLATE || apiCategory.sku_id === discord_categories.NAMEPLATE_TEST) {
                                                             let reviewWarningElement = document.createElement("div");
 
-                                                            reviewWarningElement.classList.add("review-element");
+                                                            reviewWarningElement.classList.add("review-element-warning");
         
                                                             reviewWarningElement.innerHTML = `
                                                                 <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WARNING")}</p>
-                                                                <p style="font-size: medium; font-weight: 200; width: 95%;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WARNING_1")}</p>
                                                             `;
 
                                                             modal.querySelector("[data-category-modal-inner-content-container]").appendChild(reviewWarningElement);
@@ -10980,11 +10982,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         if (apiCategory.sku_id === discord_categories.NAMEPLATE || apiCategory.sku_id === discord_categories.NAMEPLATE_TEST) {
                                                             let reviewWarningElement = document.createElement("div");
 
-                                                            reviewWarningElement.classList.add("review-element");
+                                                            reviewWarningElement.classList.add("review-element-warning");
         
                                                             reviewWarningElement.innerHTML = `
                                                                 <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WARNING")}</p>
-                                                                <p style="font-size: medium; font-weight: 200; width: 95%;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WARNING_1")}</p>
                                                             `;
 
                                                             reviewContainer.appendChild(reviewWarningElement);
@@ -10997,10 +10998,12 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 reviewElement.classList.add("review-element");
         
                                                                 reviewElement.innerHTML = `
-                                                                    <div class="shop-modal-review-name-container" data-shop-modal-review-name-container>
-                                                                        <p class="shop-modal-review-name" style="font-size: large; font-weight: 900;">${review.users.username}</p>
+                                                                    <div class="review-content-inner">
+                                                                        <div class="shop-modal-review-name-container" data-shop-modal-review-name-container>
+                                                                            <p class="shop-modal-review-name" style="font-size: large; font-weight: 900;">${review.users.username}</p>
+                                                                        </div>
+                                                                        <p class="shop-modal-review-review-text">${review.review_text}</p>
                                                                     </div>
-                                                                    <p style="color: var(--8)">${review.review_text}</p>
                                                                     <div class="shop-modal-review-moderation-buttons" data-shop-modal-review-moderation-buttons></div>
                                                                 `;
 
@@ -11008,7 +11011,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     let deleteReviewIcon = document.createElement("div");
 
                                                                     deleteReviewIcon.innerHTML = `
-                                                                        <svg class="closeIcon_modal" onclick="adminDeleteReview('${review.id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M14.25 1c.41 0 .75.34.75.75V3h5.25c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H3.75A.75.75 0 0 1 3 4.25v-.5c0-.41.34-.75.75-.75H9V1.75c0-.41.34-.75.75-.75h4.5Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M5.06 7a1 1 0 0 0-1 1.06l.76 12.13a3 3 0 0 0 3 2.81h8.36a3 3 0 0 0 3-2.81l.75-12.13a1 1 0 0 0-1-1.06H5.07ZM11 12a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm3-1a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
+                                                                        <svg class="closeIcon_modal delete-review-icon" onclick="adminDeleteReview('${review.id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M14.25 1c.41 0 .75.34.75.75V3h5.25c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H3.75A.75.75 0 0 1 3 4.25v-.5c0-.41.34-.75.75-.75H9V1.75c0-.41.34-.75.75-.75h4.5Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M5.06 7a1 1 0 0 0-1 1.06l.76 12.13a3 3 0 0 0 3 2.81h8.36a3 3 0 0 0 3-2.81l.75-12.13a1 1 0 0 0-1-1.06H5.07ZM11 12a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm3-1a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
                                                                     `;
 
                                                                     reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(deleteReviewIcon);
@@ -11016,10 +11019,24 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     let deleteReviewIcon = document.createElement("div");
 
                                                                     deleteReviewIcon.innerHTML = `
-                                                                        <svg class="closeIcon_modal" onclick="deleteReview('${apiCategory.sku_id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M14.25 1c.41 0 .75.34.75.75V3h5.25c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H3.75A.75.75 0 0 1 3 4.25v-.5c0-.41.34-.75.75-.75H9V1.75c0-.41.34-.75.75-.75h4.5Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M5.06 7a1 1 0 0 0-1 1.06l.76 12.13a3 3 0 0 0 3 2.81h8.36a3 3 0 0 0 3-2.81l.75-12.13a1 1 0 0 0-1-1.06H5.07ZM11 12a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm3-1a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
+                                                                        <svg class="closeIcon_modal delete-review-icon" onclick="deleteReview('${apiCategory.sku_id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M14.25 1c.41 0 .75.34.75.75V3h5.25c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H3.75A.75.75 0 0 1 3 4.25v-.5c0-.41.34-.75.75-.75H9V1.75c0-.41.34-.75.75-.75h4.5Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M5.06 7a1 1 0 0 0-1 1.06l.76 12.13a3 3 0 0 0 3 2.81h8.36a3 3 0 0 0 3-2.81l.75-12.13a1 1 0 0 0-1-1.06H5.07ZM11 12a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm3-1a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
                                                                     `;
 
                                                                     reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(deleteReviewIcon);
+                                                                }
+
+                                                                if (localStorage.experiment_2025_04_reviews_v2_report === "Treatment 1: Enabled" && review.report_type === 0) {
+                                                                    let reportReviewIcon = document.createElement("div");
+
+                                                                    reportReviewIcon.innerHTML = `
+                                                                        <svg data-report-review-button class="closeIcon_modal delete-review-icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M3 1a1 1 0 0 1 1 1v.82l8.67-1.45A2 2 0 0 1 15 3.35v1.47l5.67-.95A2 2 0 0 1 23 5.85v7.3a2 2 0 0 1-1.67 1.98l-9 1.5a2 2 0 0 1-1.78-.6c-.2-.21-.08-.54.18-.68a5.01 5.01 0 0 0 1.94-1.94c.18-.32-.1-.66-.46-.6L4 14.18V21a1 1 0 1 1-2 0V2a1 1 0 0 1 1-1Z" class=""></path></svg>
+                                                                    `;
+
+                                                                    reportReviewIcon.querySelector("[data-report-review-button]").onclick = function(){
+                                                                        openReviewReportModal(review.id, review.review_text, review.users.username);
+                                                                    };
+
+                                                                    reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(reportReviewIcon);
                                                                 }
 
                                                                 if (review_mod_ids.includes(review.users.id)) {
@@ -11098,6 +11115,59 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 reviewContainer.appendChild(reviewElement);
                                                             }
                                                         });
+
+                                                        function openReviewReportModal(reviewID, reviewText, reviewUser) {
+                                                            let modal = document.createElement("div");
+                    
+                                                            modal.classList.add('modalv2');
+                    
+                                                            modal.innerHTML = `
+                                                                <div class="report-review-modalv2-inner">
+                                                                    <p class="report-review-modal-header">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HEADER")}</p>
+                                                                    <p class="report-review-modal-summary">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_SUMMARY")}</p>
+                                                                    <p class="report-review-modal-summary" style="color: var(--8);">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_PREVIEW")}</p>
+                                                                    <div class="report-review-content-preview">
+                                                                        <div class="review-content-inner">
+                                                                            <div class="shop-modal-review-name-container" data-shop-modal-review-name-container>
+                                                                                <p class="shop-modal-review-name" style="font-size: large; font-weight: 900;">${reviewUser}</p>
+                                                                            </div>
+                                                                            <p class="shop-modal-review-review-text">${reviewText}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            `;
+                    
+                                                            document.body.appendChild(modal);
+                    
+                                                            setTimeout(() => {
+                                                                modal.classList.add('show');
+                                                            }, 1);
+                                                            
+                    
+                                                            let modal_back = document.createElement("div");
+                    
+                                                            modal_back.classList.add('modalv2-back');
+                                                            modal_back.classList.add('modalv2-back-review-report');
+                                                            modal_back.id = 'modalv2-back';
+                    
+                                                            document.body.appendChild(modal_back);
+                    
+                                                            setTimeout(() => {
+                                                                modal_back.classList.add('show');
+                                                            }, 1);
+                    
+                    
+                                                            modal.addEventListener('click', (event) => {
+                                                                if (event.target === modal) {
+                                                                    modal.classList.remove('show');
+                                                                    modal_back.classList.remove('show');
+                                                                    setTimeout(() => {
+                                                                        modal.remove();
+                                                                        modal_back.remove();
+                                                                    }, 300);
+                                                                }
+                                                            });
+                                                        }
                                                     }
                                                     
                                                 }
@@ -14279,7 +14349,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                 window.location.hash = '';
                                 localStorage.dismissible_newLogInWithDiscord = "Treatment 1: Seen";
                           
-                                if (!sessionStorage.discord_profile) {
+                                if (!localStorage.discord_profile) {
                                     const userInfo = await fetch('https://discord.com/api/users/@me', {
                                         headers: { Authorization: `Bearer ${token}` }
                                     });
@@ -14292,7 +14362,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                     }
                           
                                     const user = await userInfo.json();
-                                    sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
+                                    localStorage.discord_profile = JSON.stringify(user, undefined, 4);
                                     localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=4096`;
                                     localStorage.discord_username = user.username;
                                     localStorage.discord_user_id = user.id;
@@ -14320,8 +14390,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                     location.reload();
                                 }
                           
-                                // Optional: additional check (but `sessionStorage.discord_profile` is a string, so this check won't work unless parsed)
-                                const parsedProfile = JSON.parse(sessionStorage.discord_profile);
+                                // Optional: additional check (but `localStorage.discord_profile` is a string, so this check won't work unless parsed)
+                                const parsedProfile = JSON.parse(localStorage.discord_profile);
                                 if (parsedProfile.code === 0) {
                                     setParams({ page: 'home', login: 'false' });
                                     actuallyLogOutOfDiscord();
@@ -16236,7 +16306,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             const accountDetails = document.getElementById("modalv3-account-account-details-container");
             
             if (localStorage.discord_token) {
-                const discordProfile = JSON.parse(sessionStorage.discord_profile);
+                const discordProfile = JSON.parse(localStorage.discord_profile);
                 accountDetails.innerHTML = `
                     <div class="modalv3-account-account-details">
                         <div class="modalv3-account-banner-color" style="background-color: ${localStorage.discord_banner_color};"></div>
@@ -17149,6 +17219,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                             <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_FLAG")}</p>
                             <p>${review.review_flag_type}</p>
                         </div>
+                        <div class="review-flag-type-0" data-review-report-type>
+                            <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_REPORT")}</p>
+                            <p>${review.report_type}</p>
+                        </div>
                         <div>
                             <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_DATE")}</p>
                             <p>${formatted}</p>
@@ -17191,6 +17265,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 if (review.review_flag_type === 2) {
                     div.querySelector("[data-review-flag-type]").classList.remove("review-flag-type-0");
                     div.querySelector("[data-review-flag-type]").classList.add("review-flag-type-2");
+                }
+
+                if (review.report_type != 0) {
+                    div.querySelector("[data-review-report-type]").classList.remove("review-flag-type-0");
+                    div.querySelector("[data-review-report-type]").classList.add("review-flag-type-2");
                 }
       
                 document.getElementById("modalv3-api-testing-reviews-output").appendChild(div);
@@ -18019,7 +18098,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             }
   
             const user = await userInfo.json();
-            sessionStorage.discord_profile = JSON.stringify(user, undefined, 4);
+            localStorage.discord_profile = JSON.stringify(user, undefined, 4);
             localStorage.discord_avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.webp?size=4096`;
             localStorage.discord_username = user.username;
             if (user.global_name != null) {
@@ -18043,8 +18122,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
   
             console.log('success');
       
-            // Optional: additional check (but `sessionStorage.discord_profile` is a string, so this check won't work unless parsed)
-            const parsedProfile = JSON.parse(sessionStorage.discord_profile);
+            // Optional: additional check (but `localStorage.discord_profile` is a string, so this check won't work unless parsed)
+            const parsedProfile = JSON.parse(localStorage.discord_profile);
             if (parsedProfile.code === 0) {
                 setParams({ page: 'home', login: 'false' });
                 actuallyLogOutOfDiscord();
