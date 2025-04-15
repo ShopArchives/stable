@@ -1,6 +1,6 @@
 
 
-app_version1 = "366"
+app_version1 = "368"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -10563,6 +10563,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                         modal.classList.add('modalv2');
 
+                                        let categoryModalTabCache = null;
+
                                         modal.innerHTML = `
                                             <div class="category-modalv2-inner">
                                                 <div class="category-modalv2-inner-left">
@@ -10606,6 +10608,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             }
                                             tab_button_1.classList.add("selected");
                                             fillCategoryModalContentContainer('assets');
+                                            categoryModalTabCache = "assets";
                                         });
 
                                         tab_button_2.addEventListener('click', () => {
@@ -10614,13 +10617,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             }
                                             tab_button_2.classList.add("selected");
                                             fillCategoryModalContentContainer('reviews');
+                                            categoryModalTabCache = "reviews";
                                         });
 
-                                        function fillCategoryModalContentContainer(tab) {
-                                            if (document.getElementById("shop-category-modal-write-review-container")) {
+                                        function fillCategoryModalContentContainer(tab, bypassCache) {
+                                            if (document.getElementById("shop-category-modal-write-review-container") && categoryModalTabCache != "reviews" || document.getElementById("shop-category-modal-write-review-container") && bypassCache === true) {
                                                 document.getElementById("shop-category-modal-write-review-container").remove();
                                             }
-                                            if (tab === "assets") {
+                                            if (tab === "assets" && categoryModalTabCache != "assets") {
 
                                                 modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = ``;
 
@@ -10801,7 +10805,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                                     asset_container.appendChild(category_bg_asset);
                                                 }
-                                            } else if (tab === "reviews") {
+                                            } else if (tab === "reviews" && categoryModalTabCache != "reviews" || bypassCache === true) {
 
                                                 modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
                                                     <div class="review-element-notice" id="loading-category-reviews">
@@ -11025,7 +11029,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(deleteReviewIcon);
                                                                 }
 
-                                                                if (localStorage.experiment_2025_04_reviews_v2_report === "Treatment 1: Enabled" && review.report_type === 0) {
+                                                                if (localStorage.experiment_2025_04_reviews_v2_report === "Treatment 1: Enabled" && review.report_type === 0 && review.users.id != localStorage.discord_user_id) {
                                                                     let reportReviewIcon = document.createElement("div");
 
                                                                     reportReviewIcon.innerHTML = `
@@ -11124,7 +11128,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             modal.innerHTML = `
                                                                 <div class="report-review-modalv2-inner">
                                                                     <p class="report-review-modal-header">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HEADER")}</p>
-                                                                    <p class="report-review-modal-summary">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_SUMMARY")}</p>
                                                                     <p class="report-review-modal-summary" style="color: var(--8);">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_PREVIEW")}</p>
                                                                     <div class="report-review-content-preview">
                                                                         <div class="review-content-inner">
@@ -11134,8 +11137,37 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <p class="shop-modal-review-review-text">${reviewText}</p>
                                                                         </div>
                                                                     </div>
+                                                                    <input class="hidden" id="report-review-report-card-inv-imput" value="5" disabled>
+                                                                    <input class="hidden" id="report-review-report-card-inv-imput-review-id" value="${reviewID}" disabled>
+                                                                    <p class="report-review-modal-summary">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_SUMMARY")}</p>
+                                                                    <div>
+                                                                        <div class="report-review-report-card-option" onclick="selectReviewRepoerType('1')" id="report-review-report-card-option-1">
+                                                                            <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_1")}</p>
+                                                                        </div>
+                                                                        <div class="report-review-report-card-option" onclick="selectReviewRepoerType('2')" id="report-review-report-card-option-2">
+                                                                            <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_2")}</p>
+                                                                        </div>
+                                                                        <div class="report-review-report-card-option" onclick="selectReviewRepoerType('3')" id="report-review-report-card-option-3">
+                                                                            <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_3")}</p>
+                                                                        </div>
+                                                                        <div class="report-review-report-card-option other" onclick="selectReviewRepoerType('4')" id="report-review-report-card-option-4">
+                                                                            <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_4")}</p>
+                                                                        </div>
+                                                                        <div class="report-review-report-card-option other report-card-option-selected" onclick="selectReviewRepoerType('5')" id="report-review-report-card-option-5">
+                                                                            <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_5")}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="report-review-bottom">
+                                                                        <p class="shop-category-modal-write-review-disclaimer-error" id="shop-category-modal-report-review-error-output"></p>
+                                                                        <button class="modalv3-content-card-button cancel-button">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_CANCEL")}</button>
+                                                                        <button class="modalv3-content-card-button report-button" data-reviews-send-report-button>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_REPORT")}</button>
+                                                                    </div>
                                                                 </div>
                                                             `;
+
+                                                            modal.querySelector("[data-reviews-send-report-button]").addEventListener('click', () => {
+                                                                reportReview(document.getElementById("report-review-report-card-inv-imput-review-id").value, document.getElementById("report-review-report-card-inv-imput").value);
+                                                            });
                     
                                                             document.body.appendChild(modal);
                     
@@ -11167,10 +11199,22 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     }, 300);
                                                                 }
                                                             });
+
+                                                            modal.querySelector(".cancel-button").addEventListener('click', () => {
+                                                                modal.classList.remove('show');
+                                                                modal_back.classList.remove('show');
+                                                                setTimeout(() => {
+                                                                    modal.remove();
+                                                                    modal_back.remove();
+                                                                }, 300);
+                                                            });
                                                         }
+
                                                     }
                                                     
                                                 }
+                                            } else {
+                                                console.log("already on that tab")
                                             }
                                         }
 
@@ -13884,6 +13928,53 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     }
 
 
+    function selectReviewRepoerType(type) {
+        if (document.querySelector(".report-card-option-selected")) {
+            document.querySelectorAll('.report-card-option-selected').forEach((el) => {
+                el.classList.remove("report-card-option-selected");
+            });
+        }
+
+        if (type === "1" || type === "2" || type === "3" || type === "4" || type === "5") {
+            document.getElementById("report-review-report-card-option-" + type).classList.add("report-card-option-selected");
+            document.getElementById("report-review-report-card-inv-imput").value = type;
+        } else {
+            console.error(type + " is not a valid review report type")
+        }
+    }
+
+    function reportReview(reviewID, reportType) {
+        const accessToken = discord_token;
+      
+        fetch(api + REVIEWSAPI + '/report', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Password": api_password,
+                "Authorization": discord_token,
+                "Token": api_token
+            },
+            body: JSON.stringify({
+                accessToken,
+                reviewID,
+                reportType
+            })
+        })
+        .then(response => response.json())
+        .then((data) => {
+            if (document.getElementById("shop-category-modal-report-review-error-output")) {
+                document.getElementById("shop-category-modal-report-review-error-output").textContent = data.message;
+            }
+        })
+        .catch(error => {
+            console.error(error);
+            if (document.getElementById("shop-category-modal-report-review-error-output")) {
+                document.getElementById("shop-category-modal-report-review-error-output").textContent = error;
+            }
+        });
+    }
+
+
     const postReview = async (itemId, rating) => {
 
         // By running this function you agreen to the Shop Archives Privacy Policy: https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md
@@ -13919,7 +14010,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
         const result = await response.json();
         if (response.ok) {
-            fillCategoryModalContentContainer('reviews');
+            fillCategoryModalContentContainer('reviews', true);
         } else {
             if (document.getElementById("shop-category-modal-write-review-error-output")) {
                 document.getElementById("shop-category-modal-write-review-error-output").textContent = `${result.message}`;
@@ -13956,7 +14047,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         })
         .then(response => response.json())
         .then((data) => {
-            fillCategoryModalContentContainer('reviews');
+            fillCategoryModalContentContainer('reviews', true);
         })
         .catch(error => {
             console.error(error)

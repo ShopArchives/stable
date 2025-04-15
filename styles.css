@@ -11,6 +11,8 @@
     --interactive-active: #404249;
     --button-danger-background: #DD383F;
     --button-danger-hover: #c5323a;
+    --button-unimportant-bg: #44454C;
+    --button-unimportant-bg-hover: #4B4C53;
     --button-outline-danger-border: #DD383F;
     --status-danger: #F64046;
     --brand-500: #615DED;
@@ -5106,8 +5108,8 @@ data-share-product-card-button {
 }
 
 .report-review-content-preview {
-    border: 2px solid var(--8);
-    border-radius: 10px;
+    border-radius: 5px;
+    background-color: var(--review-card-bg);
     padding: 10px;
 }
 
@@ -5116,7 +5118,55 @@ data-share-product-card-button {
 }
 
 .report-review-content-preview .shop-modal-review-name-container {
-    height: 40px;
+    height: 30px;
+}
+
+.report-review-bottom {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    display: flex;
+    gap: 15px;
+}
+
+.report-review-report-card-option {
+    border-radius: 10px;
+    border-left: 5px solid var(--ratio-red);
+    padding: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.report-review-report-card-option:hover {
+    background-color: #464e5560;
+}
+
+.report-card-option-selected {
+    background-color: #464e5560;
+}
+
+.report-review-report-card-option.other {
+    border-left: 5px solid var(--ratio-orange);
+}
+
+
+
+.report-review-bottom .report-button {
+    background-color: var(--button-danger-background);
+}
+
+.report-review-bottom .report-button:hover {
+    background-color: var(--button-danger-hover);
+}
+
+.report-review-bottom .cancel-button {
+    background-color: var(--button-unimportant-bg);
+}
+
+.report-review-bottom .cancel-button:hover {
+    background-color: var(--button-unimportant-bg-hover);
 }
 
 .modalv2 {

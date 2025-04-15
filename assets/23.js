@@ -286,14 +286,17 @@ SHOP_CATEGORY_MODAL_NAMETAG_MODERATOR = "ADMIN";
 SHOP_CATEGORY_MODAL_REVIEWS_WARNING = "Do NOT ask questions about nameplates in your review, your review will be deleted and you will be banned from posting reviews!";
 
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HEADER = "Report Review";
-SHOP_CATEGORY_MODAL_REVIEWS_REPORT_SUMMARY = "Please select the option(s) that best describes the problem.";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_SUMMARY = "Please select the option that best describes the problem.";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_PREVIEW = "You are reporting the following review:";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_1 = "Inappropriate or Sexual content";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_2 = "Abuse or Harassment";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_3 = "Bypassing Language Filter";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_4 = "Spam";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_5 = "Other";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_DISCLAIMER = "By submitting this report you agree that it is truthful and not a duplicate report.";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_DISCLAIMER1 = "False reports can get you banned from making future reviews.";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_REPORT = "Report";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_CANCEL = "Cancel";
 
 
 SHOP_CATEGORY_MODAL_REVIEWS_PPLUS_WARNING = "You cannot review Profiles Plus categories";
