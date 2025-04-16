@@ -470,6 +470,14 @@ body {
     color: var(--button-danger-hover) !important;
 }
 
+.delete-review-icon-good {
+    color: var(--brand-green) !important;
+}
+
+.delete-review-icon-good:hover {
+    color: var(--brand-green-hover) !important;
+}
+
 
 .shop-modal-review-container {
     position: absolute;
@@ -576,6 +584,15 @@ body {
 .shop-category-modal-write-review-disclaimer-error {
     margin: 0;
     font-size: 13px;
+    color: var(--button-danger-background) !important;
+}
+
+.shop-category-modal-report-review-error-output {
+    position: absolute;
+    margin: 0;
+    font-size: 13px;
+    top: -15px;
+    right: 0;
     color: var(--button-danger-background) !important;
 }
 
@@ -5043,7 +5060,13 @@ data-share-product-card-button {
     display: grid;
     direction: rtl;
     gap: 10px;
+    opacity: 0.1;
     grid-template-columns: repeat(auto-fill, minmax(29px, 1fr));
+    transition: opacity 0.2s ease;
+}
+
+.review-element:hover [data-shop-modal-review-moderation-buttons] {
+    opacity: 1;
 }
 
 [data-shop-modal-review-moderation-buttons] div {
@@ -5133,14 +5156,32 @@ data-share-product-card-button {
     border-radius: 10px;
     border-left: 5px solid var(--ratio-red);
     padding: 10px;
-    padding-top: 5px;
-    padding-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     margin-top: 10px;
     cursor: pointer;
 }
 
 .report-review-report-card-option:hover {
     background-color: #464e5560;
+}
+
+.report-review-report-card-option p {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.report-review-report-card-option-summary {
+    color: var(--8);
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.report-review-report-disclaimer {
+    color: var(--8);
+    margin-top: 3px;
+    margin-bottom: 3px;
+    font-size: 13px;
 }
 
 .report-card-option-selected {

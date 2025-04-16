@@ -283,7 +283,7 @@ SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY = "Privacy Policy.";
 
 SHOP_CATEGORY_MODAL_NAMETAG_MODERATOR = "ADMIN";
 
-SHOP_CATEGORY_MODAL_REVIEWS_WARNING = "Do NOT ask questions about nameplates in your review, your review will be deleted and you will be banned from posting reviews!";
+SHOP_CATEGORY_MODAL_REVIEWS_WARNING = "Do NOT ask questions about nameplates in your review, your review will be deleted and you will be banned from posting reviews! Please report any reviews that break this rule.";
 
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HEADER = "Report Review";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_SUMMARY = "Please select the option that best describes the problem.";
@@ -291,12 +291,17 @@ SHOP_CATEGORY_MODAL_REVIEWS_REPORT_PREVIEW = "You are reporting the following re
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_1 = "Inappropriate or Sexual content";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_2 = "Abuse or Harassment";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_3 = "Bypassing Language Filter";
-SHOP_CATEGORY_MODAL_REVIEWS_REPORT_4 = "Spam";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_4 = "Spam, Advertisements or Begging";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_4_SUMMARY = "If multiple reviews contain the same or similar content, please do not report all of them.";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_5 = "Other";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_DISCLAIMER = "By submitting this report you agree that it is truthful and not a duplicate report.";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_DISCLAIMER1 = "False reports can get you banned from making future reviews.";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_REPORT = "Report";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_REMOVE_REPORT = "Remove Report";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_CANCEL = "Cancel";
+
+SHOP_CATEGORY_MODAL_REVIEWS_DELETE_HOVER = "Delete Review";
+SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HOVER = "Report Review";
 
 
 SHOP_CATEGORY_MODAL_REVIEWS_PPLUS_WARNING = "You cannot review Profiles Plus categories";
@@ -517,6 +522,7 @@ MODAL_V3_TAB_REVIEWS_PANEL_USER_INFO_ID = "User ID";
 MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_INFO = "Admin";
 MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_INFO_SUMMARY = "To blacklist a user, add their user id in the 'blockedUserIds' value in the backend";
 MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_DELETE_REVIEW = "Delete Review";
+MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_RESET_REPORT_TYPE = "Reset Report Type";
 
 // Local Storage
 

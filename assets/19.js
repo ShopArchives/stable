@@ -1,6 +1,6 @@
 
 
-app_version1 = "368"
+app_version1 = "372"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -10624,6 +10624,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             if (document.getElementById("shop-category-modal-write-review-container") && categoryModalTabCache != "reviews" || document.getElementById("shop-category-modal-write-review-container") && bypassCache === true) {
                                                 document.getElementById("shop-category-modal-write-review-container").remove();
                                             }
+                                            if (document.getElementById("shop-category-modal-write-review-container") && tab === "assets") {
+                                                document.getElementById("shop-category-modal-write-review-container").remove();
+                                            }
                                             if (tab === "assets" && categoryModalTabCache != "assets") {
 
                                                 modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = ``;
@@ -11014,6 +11017,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 if (review_mod_ids.includes(localStorage.discord_user_id)) {
                                                                     let deleteReviewIcon = document.createElement("div");
 
+                                                                    deleteReviewIcon.title = getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DELETE_HOVER");
+
                                                                     deleteReviewIcon.innerHTML = `
                                                                         <svg class="closeIcon_modal delete-review-icon" onclick="adminDeleteReview('${review.id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M14.25 1c.41 0 .75.34.75.75V3h5.25c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H3.75A.75.75 0 0 1 3 4.25v-.5c0-.41.34-.75.75-.75H9V1.75c0-.41.34-.75.75-.75h4.5Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M5.06 7a1 1 0 0 0-1 1.06l.76 12.13a3 3 0 0 0 3 2.81h8.36a3 3 0 0 0 3-2.81l.75-12.13a1 1 0 0 0-1-1.06H5.07ZM11 12a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm3-1a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
                                                                     `;
@@ -11021,6 +11026,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(deleteReviewIcon);
                                                                 } else if (review.users.id === localStorage.discord_user_id) {
                                                                     let deleteReviewIcon = document.createElement("div");
+
+                                                                    deleteReviewIcon.title = getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DELETE_HOVER");
 
                                                                     deleteReviewIcon.innerHTML = `
                                                                         <svg class="closeIcon_modal delete-review-icon" onclick="deleteReview('${apiCategory.sku_id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M14.25 1c.41 0 .75.34.75.75V3h5.25c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H3.75A.75.75 0 0 1 3 4.25v-.5c0-.41.34-.75.75-.75H9V1.75c0-.41.34-.75.75-.75h4.5Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M5.06 7a1 1 0 0 0-1 1.06l.76 12.13a3 3 0 0 0 3 2.81h8.36a3 3 0 0 0 3-2.81l.75-12.13a1 1 0 0 0-1-1.06H5.07ZM11 12a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm3-1a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
@@ -11032,8 +11039,24 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 if (localStorage.experiment_2025_04_reviews_v2_report === "Treatment 1: Enabled" && review.report_type === 0 && review.users.id != localStorage.discord_user_id) {
                                                                     let reportReviewIcon = document.createElement("div");
 
+                                                                    reportReviewIcon.title = getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HOVER");
+
                                                                     reportReviewIcon.innerHTML = `
                                                                         <svg data-report-review-button class="closeIcon_modal delete-review-icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M3 1a1 1 0 0 1 1 1v.82l8.67-1.45A2 2 0 0 1 15 3.35v1.47l5.67-.95A2 2 0 0 1 23 5.85v7.3a2 2 0 0 1-1.67 1.98l-9 1.5a2 2 0 0 1-1.78-.6c-.2-.21-.08-.54.18-.68a5.01 5.01 0 0 0 1.94-1.94c.18-.32-.1-.66-.46-.6L4 14.18V21a1 1 0 1 1-2 0V2a1 1 0 0 1 1-1Z" class=""></path></svg>
+                                                                    `;
+
+                                                                    reportReviewIcon.querySelector("[data-report-review-button]").onclick = function(){
+                                                                        openReviewReportModal(review.id, review.review_text, review.users.username);
+                                                                    };
+
+                                                                    reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(reportReviewIcon);
+                                                                } else if (localStorage.experiment_2025_04_reviews_v2_report === "Treatment 1: Enabled" && review.report_type != 0 && review_mod_ids.includes(localStorage.discord_user_id)) {
+                                                                    let reportReviewIcon = document.createElement("div");
+
+                                                                    reportReviewIcon.title = getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HOVER");
+
+                                                                    reportReviewIcon.innerHTML = `
+                                                                        <svg data-report-review-button class="closeIcon_modal delete-review-icon-good" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M3 1a1 1 0 0 1 1 1v.82l8.67-1.45A2 2 0 0 1 15 3.35v1.47l5.67-.95A2 2 0 0 1 23 5.85v7.3a2 2 0 0 1-1.67 1.98l-9 1.5a2 2 0 0 1-1.78-.6c-.2-.21-.08-.54.18-.68a5.01 5.01 0 0 0 1.94-1.94c.18-.32-.1-.66-.46-.6L4 14.18V21a1 1 0 1 1-2 0V2a1 1 0 0 1 1-1Z" class=""></path></svg>
                                                                     `;
 
                                                                     reportReviewIcon.querySelector("[data-report-review-button]").onclick = function(){
@@ -11124,6 +11147,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             let modal = document.createElement("div");
                     
                                                             modal.classList.add('modalv2');
+                                                            modal.id = 'modalv2-report-review';
                     
                                                             modal.innerHTML = `
                                                                 <div class="report-review-modalv2-inner">
@@ -11141,25 +11165,29 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     <input class="hidden" id="report-review-report-card-inv-imput-review-id" value="${reviewID}" disabled>
                                                                     <p class="report-review-modal-summary">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_SUMMARY")}</p>
                                                                     <div>
-                                                                        <div class="report-review-report-card-option" onclick="selectReviewRepoerType('1')" id="report-review-report-card-option-1">
+                                                                        <div class="report-review-report-card-option" onclick="selectReviewReportType(1)" id="report-review-report-card-option-1">
                                                                             <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_1")}</p>
                                                                         </div>
-                                                                        <div class="report-review-report-card-option" onclick="selectReviewRepoerType('2')" id="report-review-report-card-option-2">
+                                                                        <div class="report-review-report-card-option" onclick="selectReviewReportType(2)" id="report-review-report-card-option-2">
                                                                             <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_2")}</p>
                                                                         </div>
-                                                                        <div class="report-review-report-card-option" onclick="selectReviewRepoerType('3')" id="report-review-report-card-option-3">
+                                                                        <div class="report-review-report-card-option" onclick="selectReviewReportType(3)" id="report-review-report-card-option-3">
                                                                             <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_3")}</p>
                                                                         </div>
-                                                                        <div class="report-review-report-card-option other" onclick="selectReviewRepoerType('4')" id="report-review-report-card-option-4">
+                                                                        <div class="report-review-report-card-option other" onclick="selectReviewReportType(4)" id="report-review-report-card-option-4">
                                                                             <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_4")}</p>
+                                                                            <p class="report-review-report-card-option-summary">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_4_SUMMARY")}</p>
                                                                         </div>
-                                                                        <div class="report-review-report-card-option other report-card-option-selected" onclick="selectReviewRepoerType('5')" id="report-review-report-card-option-5">
+                                                                        <div class="report-review-report-card-option other report-card-option-selected" onclick="selectReviewReportType(5)" id="report-review-report-card-option-5">
                                                                             <p>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_5")}</p>
                                                                         </div>
                                                                     </div>
+                                                                    <p class="report-review-report-disclaimer">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_DISCLAIMER")}</p>
+                                                                    <p class="report-review-report-disclaimer">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_DISCLAIMER1")}</p>
                                                                     <div class="report-review-bottom">
-                                                                        <p class="shop-category-modal-write-review-disclaimer-error" id="shop-category-modal-report-review-error-output"></p>
+                                                                        <p class="shop-category-modal-report-review-error-output" id="shop-category-modal-report-review-error-output"></p>
                                                                         <button class="modalv3-content-card-button cancel-button">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_CANCEL")}</button>
+                                                                        <div data-dev-only-remove-report-button-container></div>
                                                                         <button class="modalv3-content-card-button report-button" data-reviews-send-report-button>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_REPORT")}</button>
                                                                     </div>
                                                                 </div>
@@ -11168,6 +11196,15 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             modal.querySelector("[data-reviews-send-report-button]").addEventListener('click', () => {
                                                                 reportReview(document.getElementById("report-review-report-card-inv-imput-review-id").value, document.getElementById("report-review-report-card-inv-imput").value);
                                                             });
+
+                                                            if (localStorage.dev === "true") {
+                                                                modal.querySelector("[data-dev-only-remove-report-button-container]").innerHTML = `
+                                                                    <button class="modalv3-content-card-button report-button" data-reviews-remove-report-button>${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_REMOVE_REPORT")}</button>
+                                                                `;
+                                                                modal.querySelector("[data-reviews-remove-report-button]").addEventListener('click', () => {
+                                                                    reportReview(document.getElementById("report-review-report-card-inv-imput-review-id").value, 0);
+                                                                });
+                                                            }
                     
                                                             document.body.appendChild(modal);
                     
@@ -11180,7 +11217,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     
                                                             modal_back.classList.add('modalv2-back');
                                                             modal_back.classList.add('modalv2-back-review-report');
-                                                            modal_back.id = 'modalv2-back';
+                                                            modal_back.id = 'modalv2-report-review-back';
                     
                                                             document.body.appendChild(modal_back);
                     
@@ -13928,14 +13965,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     }
 
 
-    function selectReviewRepoerType(type) {
+    function selectReviewReportType(type) {
         if (document.querySelector(".report-card-option-selected")) {
             document.querySelectorAll('.report-card-option-selected').forEach((el) => {
                 el.classList.remove("report-card-option-selected");
             });
         }
 
-        if (type === "1" || type === "2" || type === "3" || type === "4" || type === "5") {
+        if (type === 1 || type === 2 || type === 3 || type === 4 || type === 5) {
             document.getElementById("report-review-report-card-option-" + type).classList.add("report-card-option-selected");
             document.getElementById("report-review-report-card-inv-imput").value = type;
         } else {
@@ -13943,7 +13980,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         }
     }
 
-    function reportReview(reviewID, reportType) {
+    function reportReview(reviewId, reportType) {
         const accessToken = discord_token;
       
         fetch(api + REVIEWSAPI + '/report', {
@@ -13956,14 +13993,34 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             },
             body: JSON.stringify({
                 accessToken,
-                reviewID,
-                reportType
+                reviewId,
+                reportType: Number(reportType)
             })
         })
         .then(response => response.json())
         .then((data) => {
-            if (document.getElementById("shop-category-modal-report-review-error-output")) {
-                document.getElementById("shop-category-modal-report-review-error-output").textContent = data.message;
+            if (data.success && data.success === true) {
+                const modal = document.getElementById("modalv2-report-review");
+                const modal_back = document.getElementById("modalv2-report-review-back");
+
+                if (modal && modal_back) {
+                    modal.classList.remove('show');
+                    modal_back.classList.remove('show');
+                    setTimeout(() => {
+                        modal.remove();
+                        modal_back.remove();
+                    }, 300);
+                    fillCategoryModalContentContainer('reviews', true);
+                }
+                if (document.getElementById("review-panel-report-type-id-" + reviewId) && document.getElementById("review-panel-report-type-id-" + reviewId + "-text")) {
+                    document.getElementById("review-panel-report-type-id-" + reviewId).classList.remove("review-flag-type-2");
+                    document.getElementById("review-panel-report-type-id-" + reviewId).classList.add("review-flag-type-0");
+                    document.getElementById("review-panel-report-type-id-" + reviewId + "-text").textContent = "0";
+                }
+            } else {
+                if (document.getElementById("shop-category-modal-report-review-error-output")) {
+                    document.getElementById("shop-category-modal-report-review-error-output").textContent = data.message;
+                }
             }
         })
         .catch(error => {
@@ -17310,9 +17367,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                             <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_FLAG")}</p>
                             <p>${review.review_flag_type}</p>
                         </div>
-                        <div class="review-flag-type-0" data-review-report-type>
+                        <div class="review-flag-type-0" id="review-panel-report-type-id-${review.id}" data-review-report-type>
                             <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_REPORT")}</p>
-                            <p>${review.report_type}</p>
+                            <p id="review-panel-report-type-id-${review.id}-text">${review.report_type}</p>
                         </div>
                         <div>
                             <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_REVIEW_INFO_DATE")}</p>
@@ -17351,6 +17408,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     <p class="modalv3-review-card-title">${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_INFO")}</p>
                     <p>${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_INFO_SUMMARY")}</p>
                     <button class="modalv3-content-card-button-bad" onclick="adminDeleteReview('${review.id}')">${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_DELETE_REVIEW")}</button>
+                    <button class="modalv3-content-card-button-bad" onclick="reportReview('${review.id}', 0)">${getTextString("MODAL_V3_TAB_REVIEWS_PANEL_ADMIN_RESET_REPORT_TYPE")}</button>
                 `;
 
                 if (review.review_flag_type === 2) {
