@@ -1,6 +1,6 @@
 
 
-app_version1 = "377"
+app_version1 = "379"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -2498,6 +2498,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     staff_ids = ["1169899815983915121", "1049207768785100880", "194749476269719552"]
 
     review_mod_ids = ["1169899815983915121", "1049207768785100880"]
+
+    const BADGE_CONFIG = {
+        staff: { name: "Shop Archives Staff", class: "badge-staff", support: "https://github.com/ShopArchives/support/blob/main/article/1-badges.md#staff" },
+        bug_hunter_gold: { name: "Shop Archives Bug Hunter", class: "badge-bug_hunter_gold" },
+        bug_hunter: { name: "Shop Archives Bug Hunter", class: "badge-bug_hunter", support: "https://github.com/ShopArchives/support/blob/main/article/1-badges.md#bug-hunter" },
+        contributor: { name: "Github Contributor", class: "badge-contributor" },
+    };
 
     yapper_categories = [
         WINDOWKILL = "1",
@@ -11092,22 +11099,25 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     let reviewBadgesContainer = document.createElement("div");
                                                                     reviewBadgesContainer.classList.add("shop-modal-review-badges-container");
                                                                 
-                                                                    // Loop through each badge
-                                                                    for (const [badgeName, hasBadge] of Object.entries(review.users.badges)) {
-                                                                        if (hasBadge) {
+                                                                    for (const [badgeKey, config] of Object.entries(BADGE_CONFIG)) {
+                                                                        if (review.users.badges[badgeKey]) {
                                                                             let badgeElement = document.createElement("div");
-                                                                            badgeElement.classList.add("shop-modal-review-badge", `badge-${badgeName}`);
-                                                                            badgeElement.title = badgeName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                                                                            badgeElement.classList.add("shop-modal-review-badge", config.class);
+                                                                            badgeElement.title = config.name;
+
+                                                                            badgeElement.addEventListener('click', () => {
+                                                                                window.open(config.support);
+                                                                            });
                                                                 
                                                                             reviewBadgesContainer.appendChild(badgeElement);
                                                                         }
                                                                     }
                                                                 
-                                                                    // Append to review
                                                                     reviewElement
                                                                         .querySelector("[data-shop-modal-review-name-container]")
                                                                         .appendChild(reviewBadgesContainer);
                                                                 }
+                                                                
 
                                                                 let starRating = document.createElement("div");
     
