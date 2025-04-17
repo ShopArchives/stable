@@ -1,6 +1,6 @@
 
 
-app_version1 = "376"
+app_version1 = "377"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -11088,13 +11088,25 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(reportReviewIcon);
                                                                 }
 
-                                                                if (review_mod_ids.includes(review.users.id)) {
-                                                                    let moderatorNametag = document.createElement("p");
-    
-                                                                    moderatorNametag.classList.add("shop-modal-review-nametag-moderator");
-                                                                    moderatorNametag.textContent = `${getTextString("SHOP_CATEGORY_MODAL_NAMETAG_MODERATOR")}`;
-
-                                                                    reviewElement.querySelector("[data-shop-modal-review-name-container]").appendChild(moderatorNametag);
+                                                                if (review.users.badges != null) {
+                                                                    let reviewBadgesContainer = document.createElement("div");
+                                                                    reviewBadgesContainer.classList.add("shop-modal-review-badges-container");
+                                                                
+                                                                    // Loop through each badge
+                                                                    for (const [badgeName, hasBadge] of Object.entries(review.users.badges)) {
+                                                                        if (hasBadge) {
+                                                                            let badgeElement = document.createElement("div");
+                                                                            badgeElement.classList.add("shop-modal-review-badge", `badge-${badgeName}`);
+                                                                            badgeElement.title = badgeName.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+                                                                
+                                                                            reviewBadgesContainer.appendChild(badgeElement);
+                                                                        }
+                                                                    }
+                                                                
+                                                                    // Append to review
+                                                                    reviewElement
+                                                                        .querySelector("[data-shop-modal-review-name-container]")
+                                                                        .appendChild(reviewBadgesContainer);
                                                                 }
 
                                                                 let starRating = document.createElement("div");
