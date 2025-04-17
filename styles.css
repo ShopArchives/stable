@@ -497,7 +497,8 @@ body {
 }
 
 .review-element .review-content-inner {
-    padding-left: 20px;
+    padding-left: 15px;
+    padding-top: 10px;
     padding-bottom: 10px;
 }
 
@@ -646,36 +647,44 @@ body {
 
 .shop-modal-review-name-container {
     display: flex;
-    height: 50px;
+    height: 40px;
+    gap: 5px;
+}
+
+.shop-modal-review-avatar-img {
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+}
+
+.shop-modal-review-name-container .shop-modal-review-name {
+    margin-top: 2px;
+    margin-bottom: auto;
 }
 
 .shop-modal-review-name-container .shop-modal-review-star-container {
-    margin-top: 13px;
+    margin-top: 2px;
     margin-bottom: auto;
-    margin-left: 10px;
-    border-radius: 10px;
-    padding: 5px;
 }
 
 .shop-modal-review-name-container .shop-modal-review-time-container {
+    margin-top: 0px;
     font-size: 17px;
     color: var(--8);
 }
 
 .shop-modal-review-name-container .shop-modal-review-nametag-moderator {
-    margin-top: 15px;
+    margin-top: 0px;
     margin-bottom: auto;
-    margin-left: 10px;
     background-color: #615DED;
-    border-radius: 10px;
+    border-radius: 5px;
     padding: 5px;
     font-size: 15px !important;
 }
 
 .shop-modal-review-name-container .shop-modal-review-nametag-special {
-    margin-top: 15px;
+    margin-top: 0px;
     margin-bottom: auto;
-    margin-left: 10px;
     background-color: #05814B;
     border-radius: 10px;
     padding: 5px;

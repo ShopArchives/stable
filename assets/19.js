@@ -1,6 +1,6 @@
 
 
-app_version1 = "372"
+app_version1 = "376"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -11003,13 +11003,35 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                 let reviewElement = document.createElement("div");
     
                                                                 reviewElement.classList.add("review-element");
+
+                                                                let reviewTextOutput = review.review_text;
+
+
+                                                                if (review.id === 2) {
+                                                                    const randomNumber = Math.floor(Math.random() * (6 - 1 + 1)) + 1;
+
+                                                                    if (randomNumber === 1) {
+                                                                        reviewTextOutput = "I think you're crazy.";
+                                                                    } else if (randomNumber === 2) {
+                                                                        reviewTextOutput = "Fun review.";
+                                                                    } else if (randomNumber === 3) {
+                                                                        reviewTextOutput = "Boo.";
+                                                                    } else if (randomNumber === 4) {
+                                                                        reviewTextOutput = "h";
+                                                                    } else if (randomNumber === 5) {
+                                                                        reviewTextOutput = "Yes you read that right";
+                                                                    } else if (randomNumber === 6) {
+                                                                        reviewTextOutput = "No, this review isn't random";
+                                                                    }
+                                                                }
         
                                                                 reviewElement.innerHTML = `
                                                                     <div class="review-content-inner">
                                                                         <div class="shop-modal-review-name-container" data-shop-modal-review-name-container>
+                                                                            <img class="shop-modal-review-avatar-img" src="https://cdn.discordapp.com/avatars/${review.users.id}/${review.users.avatar}.webp?size=128"></img>
                                                                             <p class="shop-modal-review-name" style="font-size: large; font-weight: 900;">${review.users.username}</p>
                                                                         </div>
-                                                                        <p class="shop-modal-review-review-text">${review.review_text}</p>
+                                                                        <p class="shop-modal-review-review-text">${reviewTextOutput}</p>
                                                                     </div>
                                                                     <div class="shop-modal-review-moderation-buttons" data-shop-modal-review-moderation-buttons></div>
                                                                 `;
@@ -11036,7 +11058,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(deleteReviewIcon);
                                                                 }
 
-                                                                if (localStorage.experiment_2025_04_reviews_v2_report === "Treatment 1: Enabled" && review.report_type === 0 && review.users.id != localStorage.discord_user_id) {
+                                                                if (localStorage.experiment_2025_04_reviews_v2_report === "Treatment 1: Enabled" && review.report_type === 0 && review.users.id != localStorage.discord_user_id && localStorage.discord_token) {
                                                                     let reportReviewIcon = document.createElement("div");
 
                                                                     reportReviewIcon.title = getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HOVER");
@@ -11050,7 +11072,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     };
 
                                                                     reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(reportReviewIcon);
-                                                                } else if (localStorage.experiment_2025_04_reviews_v2_report === "Treatment 1: Enabled" && review.report_type != 0 && review_mod_ids.includes(localStorage.discord_user_id)) {
+                                                                } else if (localStorage.experiment_2025_04_reviews_v2_report === "Treatment 1: Enabled" && review.report_type != 0 && review_mod_ids.includes(localStorage.discord_user_id) && localStorage.discord_token) {
                                                                     let reportReviewIcon = document.createElement("div");
 
                                                                     reportReviewIcon.title = getTextString("SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HOVER");
@@ -14039,6 +14061,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         // By running this function you agreen to the Shop Archives Privacy Policy: https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md
 
         // By running this function you agreen to the Shop Archives Privacy Policy: https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md
+
+        if (document.getElementById("shop-category-modal-write-review-error-output")) {
+            document.getElementById("shop-category-modal-write-review-error-output").textContent = ``;
+        }
 
         const accessToken = localStorage.discord_token;
 
