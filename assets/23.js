@@ -284,6 +284,7 @@ SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY = "Privacy Policy.";
 SHOP_CATEGORY_MODAL_NAMETAG_MODERATOR = "ADMIN";
 
 SHOP_CATEGORY_MODAL_REVIEWS_WARNING = "Do NOT ask questions about nameplates in your review, your review will be deleted and you will be banned from posting reviews! Please report any reviews that break this rule.";
+SHOP_CATEGORY_MODAL_REVIEWS_OVERRIDE_WARNING = "All review text has been overridden locally";
 
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_HEADER = "Report Review";
 SHOP_CATEGORY_MODAL_REVIEWS_REPORT_SUMMARY = "Please select the option that best describes the problem.";
@@ -545,4 +546,5 @@ MODAL_V3_TAB_STORAGE_SESSION_STORAGE_SUMMARY = "Edit the websites session storag
 
 MODAL_V3_TAB_MISC_HEADER = "Miscellaneous";
 
-MODAL_V3_TAB_MISC_H_HEADER = "h";
+MODAL_V3_TAB_MISC_REVIEW_CONTENT_OVERRIDE_HEADER = "Override Review Content";
+MODAL_V3_TAB_MISC_REVIEW_CONTENT_OVERRIDE_SUMMARY = "Override the review text for all review";

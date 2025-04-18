@@ -18,6 +18,16 @@ EXPERIMENT_ID_6 = 1
 
 const experimentsList = [
     {
+        title: "Reviews V2 Custom Emojis Render",
+        id: "2025-04_reviews_v2_custom_emojis_render",
+        name: "experiment_2025_04_reviews_v2_custom_emojis_render",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment -1: Disabled"
+    },
+    {
         title: "Reviews V2 Report",
         id: "2025-04_reviews_v2_report",
         name: "experiment_2025_04_reviews_v2_report",
