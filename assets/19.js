@@ -1,6 +1,6 @@
 
 
-app_version1 = "383"
+app_version1 = "386"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -2500,9 +2500,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     review_mod_ids = ["1169899815983915121", "1049207768785100880"]
 
     const BADGE_CONFIG = {
+        custom_1: { name: "Flower Girl", class: "badge-custom_1" },
         staff: { name: "Shop Archives Staff", class: "badge-staff", support: "https://github.com/ShopArchives/support/blob/main/article/1-badges.md#staff" },
         collectible_dataminer: { name: "Collectibles Dataminer", class: "badge-collectible_dataminer", support: "https://github.com/ShopArchives/support/blob/main/article/1-badges.md#collectibles-dataminer" },
-        bug_hunter_gold: { name: "Shop Archives Bug Hunter", class: "badge-bug_hunter_gold" },
+        bug_hunter_gold: { name: "Shop Archives Bug Hunter", class: "badge-bug_hunter_gold", support: "https://github.com/ShopArchives/support/blob/main/article/1-badges.md#bug-hunter" },
         bug_hunter: { name: "Shop Archives Bug Hunter", class: "badge-bug_hunter", support: "https://github.com/ShopArchives/support/blob/main/article/1-badges.md#bug-hunter" },
         contributor: { name: "Github Contributor", class: "badge-contributor" },
     };
@@ -11106,31 +11107,32 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     reviewElement.querySelector("[data-shop-modal-review-moderation-buttons]").appendChild(reportReviewIcon);
                                                                 }
 
-                                                                if (review.users.badges != null) {
+                                                                if (Array.isArray(review.users.badges)) {
                                                                     let reviewBadgesContainer = document.createElement("div");
                                                                     reviewBadgesContainer.classList.add("shop-modal-review-badges-container");
-                                                                
-                                                                    for (const [badgeKey, config] of Object.entries(BADGE_CONFIG)) {
-                                                                        if (review.users.badges[badgeKey]) {
-                                                                            let badgeElement = document.createElement("div");
-                                                                            badgeElement.classList.add("shop-modal-review-badge", config.class);
-                                                                            badgeElement.title = config.name;
-
-                                                                            if (config.support) {
-                                                                                badgeElement.addEventListener('click', () => {
-                                                                                    window.open(config.support);
-                                                                                });
-                                                                                badgeElement.classList.add("clickable");
-                                                                            }
-                                                                
-                                                                            reviewBadgesContainer.appendChild(badgeElement);
+                                                                  
+                                                                    review.users.badges.forEach(badge => {
+                                                                        const badgeImg = document.createElement("img");
+                                                                        badgeImg.src = badge.src;
+                                                                        badgeImg.alt = badge.name;
+                                                                        badgeImg.title = badge.name;
+                                                                        badgeImg.classList.add("review-badge");
+                                                                        
+                                                                        if (badge.support) {
+                                                                            const badgeLink = document.createElement("a");
+                                                                            badgeLink.href = badge.support;
+                                                                            badgeLink.target = "_blank";
+                                                                            badgeLink.rel = "noopener noreferrer";
+                                                                            badgeLink.appendChild(badgeImg);
+                                                                            reviewBadgesContainer.appendChild(badgeLink);
+                                                                        } else {
+                                                                            reviewBadgesContainer.appendChild(badgeImg);
                                                                         }
-                                                                    }
-                                                                
-                                                                    reviewElement
-                                                                        .querySelector("[data-shop-modal-review-name-container]")
-                                                                        .appendChild(reviewBadgesContainer);
+                                                                    });
+                                                                  
+                                                                    reviewElement.querySelector("[data-shop-modal-review-name-container]").appendChild(reviewBadgesContainer);
                                                                 }
+                                                                  
                                                                 
 
                                                                 let starRating = document.createElement("div");
@@ -11216,7 +11218,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                             <div class="shop-modal-review-name-container" data-shop-modal-review-name-container>
                                                                                 <p class="shop-modal-review-name" style="font-size: large; font-weight: 900;">${reviewUser}</p>
                                                                             </div>
-                                                                            <p class="shop-modal-review-review-text">${reviewText}</p>
+                                                                            <p class="shop-modal-review-review-text" data-review-report-text-output></p>
                                                                         </div>
                                                                     </div>
                                                                     <input class="hidden" id="report-review-report-card-inv-imput" value="5" disabled>
@@ -11250,6 +11252,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     </div>
                                                                 </div>
                                                             `;
+
+                                                            modal.querySelector("[data-review-report-text-output]").textContent = reviewText;
 
                                                             modal.querySelector("[data-reviews-send-report-button]").addEventListener('click', () => {
                                                                 reportReview(document.getElementById("report-review-report-card-inv-imput-review-id").value, document.getElementById("report-review-report-card-inv-imput").value);
