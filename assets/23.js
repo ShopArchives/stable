@@ -456,6 +456,9 @@ MODAL_V3_TAB_EXPERIMENTS_HEADER = "Experiments";
 MODAL_V3_TAB_EXPERIMENTS_DISABLE_FORCE_ROLLOUT_HEADER = "Disable Force Rollouts";
 MODAL_V3_TAB_EXPERIMENTS_DISABLE_FORCE_ROLLOUT_SUMMARY = "Disables the client from forcing the default experiment treatment.";
 
+MODAL_V3_TAB_EXPERIMENTS_ROLLOUT = "Rollout: ";
+MODAL_V3_TAB_EXPERIMENTS_API_WARNING = "You may need to add your user password or discord auth token to the bypass list in the api backend.";
+
 // Dismissible Content
 
 MODAL_V3_TAB_DISMISSIBLE_CONTENT_HEADER = "Dismissible Content";

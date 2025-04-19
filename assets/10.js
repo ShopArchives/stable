@@ -35,7 +35,8 @@ const experimentsList = [
             "Treatment -1: Disabled",
             "Treatment 1: Enabled"
         ],
-        rollout: "Treatment 1: Enabled"
+        rollout: "Treatment 1: Enabled",
+        needs_api_token: "true"
     },
     {
         title: "Reviews V2",
@@ -45,7 +46,8 @@ const experimentsList = [
             "Treatment -1: Disabled",
             "Treatment 1: Enabled"
         ],
-        rollout: "Treatment 1: Enabled"
+        rollout: "Treatment 1: Enabled",
+        needs_api_token: "true"
     },
     {
         title: "Accessibility V2",
@@ -65,7 +67,8 @@ const experimentsList = [
             "Treatment -1: Disabled",
             "Treatment 1: Enabled"
         ],
-        rollout: "Treatment -1: Disabled"
+        rollout: "Treatment -1: Disabled",
+        not_needed: "true"
     },
     {
         title: "Theme Picker V2 Color",
@@ -146,7 +149,8 @@ const experimentsList = [
             "Treatment 6: Force Logged In v2"
         ],
         rollout: "Treatment 4: Dynamic v2",
-        needs_api_token: "true"
+        needs_api_token: "true",
+        not_needed: "true"
     },
     {
         title: "Show items with no skus in misc tab",
@@ -167,7 +171,8 @@ const experimentsList = [
             "Treatment -1: Disabled",
             "Treatment 1: Enabled"
         ],
-        rollout: "Treatment 1: Enabled"
+        rollout: "Treatment 1: Enabled",
+        not_needed: "true"
     },
     {
         title: "Copy SKU Card",
@@ -251,7 +256,8 @@ const experimentsList = [
             "Treatment -1: Disabled",
             "Treatment 1: Enabled"
         ],
-        rollout: "Treatment 1: Enabled"
+        rollout: "Treatment 1: Enabled",
+        not_needed: "true"
     },
     {
         title: "Extra Options",
@@ -286,7 +292,8 @@ const experimentsList = [
             "Treatment 1: Enable category modals",
             "Treatment 2: Enable category modals w/ data downloads"
         ],
-        rollout: "Treatment 1: Enable category modals"
+        rollout: "Treatment 1: Enable category modals",
+        not_needed: "true"
     },
     {
         title: "Shop Card Modals",
@@ -301,7 +308,8 @@ const experimentsList = [
             "Treatment 5: Enable modals w/ data downloads and p+",
             "Treatment 6: Enable modals w/ data downloads and p+ on p+ page"
         ],
-        rollout: "Treatment 4: Enable modals w/ p+ on p+ page"
+        rollout: "Treatment 4: Enable modals w/ p+ on p+ page",
+        not_needed: "true"
     },
     {
         title: "Mobile Render",
@@ -324,7 +332,8 @@ const experimentsList = [
             "Treatment 3: Default + New tag"
         ],
         rollout: "Treatment 2: Orb Shop done like default",
-        needs_api_token: "true"
+        needs_api_token: "true",
+        not_needed: "true"
     },
     {
         title: "Orb Testing",
@@ -334,7 +343,8 @@ const experimentsList = [
             "Treatment -1: Disabled",
             "Treatment 4: Orb Converter"
         ],
-        rollout: "Treatment -1: Disabled"
+        rollout: "Treatment -1: Disabled",
+        needs_api_token: "true"
     },
     {
         title: "Show Leaks On Home Page",
@@ -356,7 +366,8 @@ const experimentsList = [
             "Treatment 1: Enabled",
             "Treatment 2: Enabled with custom css"
         ],
-        rollout: "Treatment 1: Enabled"
+        rollout: "Treatment 1: Enabled",
+        not_needed: "true"
     },
     {
         title: "Profiles Plus Marketing Variants",
@@ -429,7 +440,8 @@ const dismissibleContentList = [
         treatments: [
             "Treatment -1: Unseen",
             "Treatment 1: Seen"
-        ]
+        ],
+        not_needed: "true"
     },
     {
         title: "Roblox Doors Marketing",
@@ -438,7 +450,8 @@ const dismissibleContentList = [
         treatments: [
             "Treatment -1: Unseen",
             "Treatment 1: Seen"
-        ]
+        ],
+        not_needed: "true"
     },
     {
         title: "Paper Beach V2 Marketing",
@@ -447,7 +460,8 @@ const dismissibleContentList = [
         treatments: [
             "Treatment -1: Unseen",
             "Treatment 1: Seen"
-        ]
+        ],
+        not_needed: "true"
     },
     {
         title: "Recap 2024",

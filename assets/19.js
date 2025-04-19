@@ -1,6 +1,6 @@
 
 
-app_version1 = "386"
+app_version1 = "388"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -343,7 +343,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             //     createHomePageElement()
             //     document.getElementById("home-tab").classList.add('dm-button-selected');
             //     document.getElementById("top-bar-container").innerHTML = `
-            //         <h2 style="margin-left: 260px; margin-top: 10px;">Featured</h2>
+            //         <h2 class="shop-tab-page-title">Featured</h2>
             //         <div id="open-help-modals-buttons-holder-new"></div>
             //     `;
             // } else if (params.get("page") === "year_recap") {
@@ -351,7 +351,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             //     document.getElementById("recap-2024-tab").classList.add('dm-button-selected');
             //     localStorage.dismissible_recap_2024 = "Treatment 1: Seen";
             //     document.getElementById("top-bar-container").innerHTML = `
-            //         <h2 style="margin-left: 260px; margin-top: 10px;">2025 Recap</h2>
+            //         <h2 class="shop-tab-page-title">2025 Recap</h2>
             //         <div id="open-help-modals-buttons-holder-new"></div>
             //     `;
             // } else 
@@ -386,7 +386,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             //     }
             //     createMainPotionsElement()
             //     document.getElementById("top-bar-container").innerHTML = `
-            //         <h2 style="margin-left: 260px; margin-top: 10px;">Shop > Orb Rewards</h2>
+            //         <h2 class="shop-tab-page-title">Shop > Orb Rewards</h2>
             //         <div id="open-help-modals-buttons-holder-new"></div>
             //     `;
             // }
@@ -405,7 +405,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             //     }
             //     createMainShopElement()
             //     document.getElementById("top-bar-container").innerHTML = `
-            //         <h2 style="margin-left: 260px; margin-top: 10px;">Shop > Leaks</h2>
+            //         <h2 class="shop-tab-page-title">Shop > Leaks</h2>
             //         <div id="open-help-modals-buttons-holder-new"></div>
             //     `;
             // } 
@@ -464,7 +464,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             //     createHomePageElement()
             //     document.getElementById("pplus-home-tab").classList.add('dm-button-selected');
             //     document.getElementById("top-bar-container").innerHTML = `
-            //         <h2 style="margin-left: 260px; margin-top: 10px;">Profiles Plus > Featured</h2>
+            //         <h2 class="shop-tab-page-title">Profiles Plus > Featured</h2>
             //         <div id="open-help-modals-buttons-holder-new"></div>
             //     `;
             // }
@@ -498,7 +498,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 createPublishedListingsPageElement()
                 document.getElementById("published-listings-tab").classList.add('dm-button-selected');
                 document.getElementById("top-bar-container").innerHTML = `
-                    <h2 style="margin-left: 260px; margin-top: 10px;">Published Listings</h2>
+                    <h2 class="shop-tab-page-title">Published Listings</h2>
                     <div id="open-help-modals-buttons-holder-new"></div>
                 `;
             } else if (params.get("page") === "orb_converter") {
@@ -506,7 +506,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 createOrbConverterPageElement()
                 document.getElementById("orb-converter-tab").classList.add('dm-button-selected');
                 document.getElementById("top-bar-container").innerHTML = `
-                    <h2 style="margin-left: 260px; margin-top: 10px;">Orb Converter</h2>
+                    <h2 class="shop-tab-page-title">Orb Converter</h2>
                     <div id="open-help-modals-buttons-holder-new"></div>
                 `;
             } else if (params.get("page") === "item_tool") {
@@ -514,7 +514,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 createItemToolPageElement()
                 document.getElementById("avatar-decorations-debug-tab").classList.add('dm-button-selected');
                 document.getElementById("top-bar-container").innerHTML = `
-                    <h2 style="margin-left: 260px; margin-top: 10px;">Item Tool | Staff Only</h2>
+                    <h2 class="shop-tab-page-title">Item Tool | Staff Only</h2>
                     <div id="open-help-modals-buttons-holder-new"></div>
                 `;
             } else {
@@ -7533,10 +7533,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         modal.innerHTML = `
                                             <div class="category-modalv2-inner">
                                                 <div class="category-modalv2-inner-left">
-                                                    <p data-product-modal-sku-id></p>
-                                                    <p style="font-size: large; font-weight: 900;" data-product-modal-name></p>
-                                                    <p style="color: var(--8)" data-product-modal-summary></p>
-                                                    <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ITEM_COUNT")}${apiCategory.products.length}</p>
+                                                    <p class="category-modal-text-sku-id" data-product-modal-sku-id></p>
+                                                    <p class="category-modal-text-name" data-product-modal-name></p>
+                                                    <p class="category-modal-text-summary" data-product-modal-summary></p>
+                                                    <p class="category-modal-text-item-count">${getTextString("SHOP_CATEGORY_MODAL_ITEM_COUNT")}${apiCategory.products.length}</p>
                                                     <div class="category-modal-content-container" data-category-modal-content-container>
                                                         <div class="change-category-modal-content-button selected" data-shop-category-modal-tabs-tab-button-1>
                                                             <p>${getTextString("SHOP_CATEGORY_MODAL_ASSETS_TAB")}</p>
@@ -7596,8 +7596,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let banner_asset = document.createElement("div");
 
                                                     banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.banner}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.banner}</p>
                                                         <img class="category-modalv2-inner-img-banner" src="https://cdn.yapper.shop/assets/${apiCategory.banner}.png"></img> 
                                                     `;
 
@@ -7608,7 +7608,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let banner_asset = document.createElement("div");
 
                                                     banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_1")}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_1")}</p>
                                                         <img class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.static}"></img> 
                                                     `;
 
@@ -7619,7 +7619,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let banner_asset = document.createElement("div");
 
                                                     banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_2")}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_2")}</p>
                                                         <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.animated}" loop></video> 
                                                     `;
 
@@ -7630,8 +7630,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let logo_asset = document.createElement("div");
 
                                                     logo_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_LOGO")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.logo}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_LOGO")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.logo}</p>
                                                         <img class="category-modalv2-inner-img-logo" src="https://cdn.yapper.shop/assets/${apiCategory.logo}.png"></img> 
                                                     `;
 
@@ -7642,8 +7642,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let mobile_bg_asset = document.createElement("div");
 
                                                     mobile_bg_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BG")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_bg}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BG")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_bg}</p>
                                                         <img class="category-modalv2-inner-img-mobile_bg" src="https://cdn.yapper.shop/assets/${apiCategory.mobile_bg}.png"></img> 
                                                     `;
 
@@ -7654,8 +7654,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let pdp_bg_asset = document.createElement("div");
 
                                                     pdp_bg_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_PDP_BG")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.pdp_bg}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_PDP_BG")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.pdp_bg}</p>
                                                         <img class="category-modalv2-inner-img-pdp_bg" src="https://cdn.yapper.shop/assets/${apiCategory.pdp_bg}.png"></img> 
                                                     `;
 
@@ -7666,8 +7666,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let success_modal_bg_asset = document.createElement("div");
 
                                                     success_modal_bg_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SUCCESS_MODAL_BG")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.success_modal_bg}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SUCCESS_MODAL_BG")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.success_modal_bg}</p>
                                                         <img class="category-modalv2-inner-img-success_modal_bg" src="https://cdn.yapper.shop/assets/${apiCategory.success_modal_bg}.png"></img> 
                                                     `;
 
@@ -7678,8 +7678,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let mobile_banner_asset = document.createElement("div");
 
                                                     mobile_banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BANNER")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_banner}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BANNER")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_banner}</p>
                                                         <img class="category-modalv2-inner-img-mobile_banner" src="https://cdn.yapper.shop/assets/${apiCategory.mobile_banner}.png"></img> 
                                                     `;
 
@@ -7690,8 +7690,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let featured_block_asset = document.createElement("div");
 
                                                     featured_block_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_FEATURED_BLOCK")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.featured_block}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_FEATURED_BLOCK")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.featured_block}</p>
                                                         <img class="category-modalv2-inner-img-featured_block" src="https://cdn.yapper.shop/assets/${apiCategory.featured_block}.png"></img> 
                                                     `;
 
@@ -7702,8 +7702,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let hero_banner_asset = document.createElement("div");
 
                                                     hero_banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_banner}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_banner}</p>
                                                         <img class="category-modalv2-inner-img-hero_banner" src="https://cdn.yapper.shop/assets/${apiCategory.hero_banner}.png"></img> 
                                                     `;
 
@@ -7714,7 +7714,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let hero_banner_asset = document.createElement("div");
 
                                                     hero_banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_1")}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_1")}</p>
                                                         <img class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.static}"></img> 
                                                     `;
 
@@ -7725,7 +7725,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let hero_banner_asset = document.createElement("div");
 
                                                     hero_banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_2")}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_2")}</p>
                                                         <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.animated}" loop></video> 
                                                     `;
 
@@ -7736,8 +7736,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let wide_banner_asset = document.createElement("div");
 
                                                     wide_banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_WIDE_BANNER")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.wide_banner}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_WIDE_BANNER")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.wide_banner}</p>
                                                         <img class="category-modalv2-inner-img-wide_banner" src="https://cdn.yapper.shop/assets/${apiCategory.wide_banner}.png"></img> 
                                                     `;
 
@@ -7748,8 +7748,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let hero_logo_asset = document.createElement("div");
 
                                                     hero_logo_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_LOGO")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_logo}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_LOGO")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_logo}</p>
                                                         <img class="category-modalv2-inner-img-hero_logo" src="https://cdn.yapper.shop/assets/${apiCategory.hero_logo}.png"></img> 
                                                     `;
 
@@ -7760,8 +7760,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let category_bg_asset = document.createElement("div");
 
                                                     category_bg_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_CATEGORY_BG")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.category_bg}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_CATEGORY_BG")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.category_bg}</p>
                                                         <img class="category-modalv2-inner-img-category_bg" src="https://cdn.yapper.shop/assets/${apiCategory.category_bg}.png"></img> 
                                                     `;
 
@@ -7771,7 +7771,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                                 modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
                                                     <div class="review-element-warning" id="loading-category-reviews">
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_PPLUS_WARNING")}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_PPLUS_WARNING")}</p>
                                                     </div>
                                                 `;
                                             }
@@ -10584,10 +10584,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         modal.innerHTML = `
                                             <div class="category-modalv2-inner">
                                                 <div class="category-modalv2-inner-left">
-                                                    <p data-product-modal-sku-id></p>
-                                                    <p style="font-size: large; font-weight: 900;" data-product-modal-name></p>
-                                                    <p style="color: var(--8)" data-product-modal-summary></p>
-                                                    <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ITEM_COUNT")}${apiCategory.products.length}</p>
+                                                    <p class="category-modal-text-sku-id" data-product-modal-sku-id></p>
+                                                    <p class="category-modal-text-name" data-product-modal-name></p>
+                                                    <p class="category-modal-text-summary" data-product-modal-summary></p>
+                                                    <p class="category-modal-text-item-count">${getTextString("SHOP_CATEGORY_MODAL_ITEM_COUNT")}${apiCategory.products.length}</p>
                                                     <div class="category-modal-content-container" data-category-modal-content-container>
                                                         <div class="change-category-modal-content-button selected" data-shop-category-modal-tabs-tab-button-1>
                                                             <p>${getTextString("SHOP_CATEGORY_MODAL_ASSETS_TAB")}</p>
@@ -10653,8 +10653,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let banner_asset = document.createElement("div");
 
                                                     banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.banner}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.banner}</p>
                                                         <img class="category-modalv2-inner-img-banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.banner}.png?size=4096"></img> 
                                                     `;
 
@@ -10665,7 +10665,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let banner_asset = document.createElement("div");
 
                                                     banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_1")}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_1")}</p>
                                                         <img class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.static}"></img> 
                                                     `;
 
@@ -10676,7 +10676,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let banner_asset = document.createElement("div");
 
                                                     banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_2")}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_BANNER_ASSET_2")}</p>
                                                         <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.banner_asset.animated}" loop></video> 
                                                     `;
 
@@ -10687,8 +10687,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let logo_asset = document.createElement("div");
 
                                                     logo_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_LOGO")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.logo}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_LOGO")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.logo}</p>
                                                         <img class="category-modalv2-inner-img-logo" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.logo}.png?size=4096"></img> 
                                                     `;
 
@@ -10699,8 +10699,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let mobile_bg_asset = document.createElement("div");
 
                                                     mobile_bg_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BG")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_bg}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BG")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_bg}</p>
                                                         <img class="category-modalv2-inner-img-mobile_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.mobile_bg}.png?size=4096"></img> 
                                                     `;
 
@@ -10711,8 +10711,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let pdp_bg_asset = document.createElement("div");
 
                                                     pdp_bg_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_PDP_BG")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.pdp_bg}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_PDP_BG")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.pdp_bg}</p>
                                                         <img class="category-modalv2-inner-img-pdp_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.pdp_bg}.png?size=4096"></img> 
                                                     `;
 
@@ -10723,8 +10723,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let success_modal_bg_asset = document.createElement("div");
 
                                                     success_modal_bg_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SUCCESS_MODAL_BG")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.success_modal_bg}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_SUCCESS_MODAL_BG")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.success_modal_bg}</p>
                                                         <img class="category-modalv2-inner-img-success_modal_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.success_modal_bg}.png?size=4096"></img> 
                                                     `;
 
@@ -10735,8 +10735,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let mobile_banner_asset = document.createElement("div");
 
                                                     mobile_banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BANNER")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_banner}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_MOBILE_BANNER")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.mobile_banner}</p>
                                                         <img class="category-modalv2-inner-img-mobile_banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.mobile_banner}.png?size=4096"></img> 
                                                     `;
 
@@ -10747,8 +10747,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let featured_block_asset = document.createElement("div");
 
                                                     featured_block_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_FEATURED_BLOCK")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.featured_block}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_FEATURED_BLOCK")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.featured_block}</p>
                                                         <img class="category-modalv2-inner-img-featured_block" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.featured_block}.png?size=4096"></img> 
                                                     `;
 
@@ -10759,8 +10759,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let hero_banner_asset = document.createElement("div");
 
                                                     hero_banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_banner}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_banner}</p>
                                                         <img class="category-modalv2-inner-img-hero_banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.hero_banner}.png?size=4096"></img> 
                                                     `;
 
@@ -10771,7 +10771,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let hero_banner_asset = document.createElement("div");
 
                                                     hero_banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_1")}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_1")}</p>
                                                         <img class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.static}"></img> 
                                                     `;
 
@@ -10782,7 +10782,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let hero_banner_asset = document.createElement("div");
 
                                                     hero_banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_2")}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_BANNER_ASSET_2")}</p>
                                                         <video disablepictureinpicture autoplay muted class="category-modalv2-inner-img-banner" src="${apiCategory.hero_banner_asset.animated}" loop></video> 
                                                     `;
 
@@ -10793,8 +10793,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let wide_banner_asset = document.createElement("div");
 
                                                     wide_banner_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_WIDE_BANNER")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.wide_banner}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_WIDE_BANNER")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.wide_banner}</p>
                                                         <img class="category-modalv2-inner-img-wide_banner" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.wide_banner}.png?size=4096"></img> 
                                                     `;
 
@@ -10805,8 +10805,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let hero_logo_asset = document.createElement("div");
 
                                                     hero_logo_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_LOGO")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_logo}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_HERO_LOGO")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.hero_logo}</p>
                                                         <img class="category-modalv2-inner-img-hero_logo" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.hero_logo}.png?size=4096"></img> 
                                                     `;
 
@@ -10817,8 +10817,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                     let category_bg_asset = document.createElement("div");
 
                                                     category_bg_asset.innerHTML = `
-                                                        <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_CATEGORY_BG")}</p>
-                                                        <p style="color: var(--8)">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.category_bg}</p>
+                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_CATEGORY_BG")}</p>
+                                                        <p class="shop-category-modal-assets-summary">${getTextString("SHOP_CATEGORY_MODAL_ASSETS_ID")}${apiCategory.category_bg}</p>
                                                         <img class="category-modalv2-inner-img-category_bg" src="https://cdn.discordapp.com/app-assets/1096190356233670716/${apiCategory.category_bg}.png?size=4096"></img> 
                                                     `;
 
@@ -11038,7 +11038,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     <div class="review-content-inner">
                                                                         <div class="shop-modal-review-name-container" data-shop-modal-review-name-container>
                                                                             <img class="shop-modal-review-avatar-img" src="https://cdn.discordapp.com/avatars/${review.users.id}/${review.users.avatar}.webp?size=128"></img>
-                                                                            <p class="shop-modal-review-name" style="font-size: large; font-weight: 900;">${review.users.username}</p>
+                                                                            <p class="shop-modal-review-name">${review.users.username}</p>
                                                                         </div>
                                                                         <p class="shop-modal-review-review-text" data-review-content-text-output></p>
                                                                     </div>
@@ -11216,7 +11216,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     <div class="report-review-content-preview">
                                                                         <div class="review-content-inner">
                                                                             <div class="shop-modal-review-name-container" data-shop-modal-review-name-container>
-                                                                                <p class="shop-modal-review-name" style="font-size: large; font-weight: 900;">${reviewUser}</p>
+                                                                                <p class="shop-modal-review-name">${reviewUser}</p>
                                                                             </div>
                                                                             <p class="shop-modal-review-review-text" data-review-report-text-output></p>
                                                                         </div>
@@ -14238,7 +14238,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     if (clickable_side_tabs_container) {  // Check if element exists
         document.getElementById('clickable-side-tabs-container').innerHTML = `
             <p class="center-text" style="font-size: 10px; display: flex; color: var(--white); opacity: 0;">${getTextString("DISCORD_DISCLAIMER")}</p>
-            <p class="center-text" style="font-size: 12px; display: flex; color: var(--white);">${getTextString("DISCORD_DISCLAIMER")}</p>
+            <p class="center-text" style="padding-left: 10px; padding-right: 10px; font-size: 12px; display: flex; color: var(--white);">${getTextString("DISCORD_DISCLAIMER")}</p>
             <div id="home-section">
                 <button class="dm-button" id="home-tab" onclick="setParams({page: 'home'}); location.reload();">
                     <p class="dm-button-text">${getTextString("FEATURED_TAB_TITLE")}</p>
@@ -14366,7 +14366,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createHomePageElement()
             document.getElementById("home-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("FEATURED_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("FEATURED_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "year-recap") {
@@ -14375,7 +14375,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("recap-2024-tab").classList.add('dm-button-selected');
             localStorage.dismissible_recap_2024 = "Treatment 1: Seen";
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("RECAP_2024_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("RECAP_2024_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "shop") {
@@ -14393,7 +14393,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createMainShopElement()
             document.getElementById("shop-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("SHOP_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("SHOP_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "orbs") {
@@ -14413,7 +14413,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             }
             createMainPotionsElement()
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("ORB_SHOP_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("ORB_SHOP_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "leaks") {
@@ -14430,7 +14430,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             }
             createMainShopElement()
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("LEAKS_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("LEAKS_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "nameplates") {
@@ -14445,7 +14445,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             }
             createMainShopElement()
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("NAMEPLATES_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("NAMEPLATES_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "consumables") {
@@ -14463,7 +14463,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createMainPotionsElement()
             document.getElementById("potions-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("POTIONS_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("POTIONS_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "miscellaneous") {
@@ -14484,7 +14484,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createMainShopElement()
             document.getElementById("miscellaneous-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("MISCELLANEOUS_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("MISCELLANEOUS_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "marketing") {
@@ -14500,7 +14500,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createMainShopElement()
             document.getElementById("shop-marketing-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("MARKETING_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("MARKETING_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "pplus-home") {
@@ -14518,7 +14518,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createHomePageElement()
             document.getElementById("pplus-home-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("PROFILES_PLUS_FEATURED_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("PROFILES_PLUS_FEATURED_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "pplus") {
@@ -14541,7 +14541,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createMainShopElement()
             document.getElementById("pplus-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("PROFILES_PLUS_BROWSE_ALL_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("PROFILES_PLUS_BROWSE_ALL_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "published_listings") {
@@ -14549,7 +14549,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createPublishedListingsPageElement()
             document.getElementById("published-listings-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("PUBLISHED_LISTINGS_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("PUBLISHED_LISTINGS_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "orb_converter") {
@@ -14557,7 +14557,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createOrbConverterPageElement()
             document.getElementById("orb-converter-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("ORB_CONVERTER_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("ORB_CONVERTER_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "item_tool") {
@@ -14565,7 +14565,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             createItemToolPageElement()
             document.getElementById("avatar-decorations-debug-tab").classList.add('dm-button-selected');
             document.getElementById("top-bar-container").innerHTML = `
-                <h2 style="margin-left: 260px; margin-top: 10px;">${getTextString("ITEM_DEBUG_TAB_PAGE_TITLE")}</h2>
+                <h2 class="shop-tab-page-title">${getTextString("ITEM_DEBUG_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
         } else if (params.get("page") === "login") {
@@ -16916,7 +16916,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById("experiments-force-rollout-checkbox").checked = true;
             }
 
-            experimentsList.forEach(({ title, id, name, treatments, needs_api_token, not_needed }) => {
+            experimentsList.forEach(({ title, id, name, treatments, rollout, needs_api_token, not_needed }) => {
                 if (not_needed != "true") {
                     try {
 
@@ -16930,6 +16930,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                         experimentCard.innerHTML = `
                             <p class="modalv3-experiment-title">${title}</p>
                             <p class="modalv3-experiment-id">${id}</p>
+                            <p class="modalv3-experiment-id">${getTextString("MODAL_V3_TAB_EXPERIMENTS_ROLLOUT")}${rollout}</p>
                             <div class="modalv3-experiment-treatment-info-container">
                                 <select id="${name}_treatment_container" class="modalv3-experiment-treatment-container">
                                 </select>
@@ -16941,7 +16942,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                             let apiNotice = document.createElement("p");
     
                             apiNotice.classList.add('modalv3-experiment-api-notice');
-                            apiNotice.textContent = getTextString("OPTIONS_SIDEBAR_EXPERIMENTS_API_PASSWORD")
+                            apiNotice.textContent = getTextString("MODAL_V3_TAB_EXPERIMENTS_API_WARNING");
     
                             experimentCard.appendChild(apiNotice);
                         }
