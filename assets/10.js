@@ -18,6 +18,37 @@ EXPERIMENT_ID_6 = 1
 
 const experimentsList = [
     {
+        title: "Reviews V2 Warning System",
+        id: "2025-04_reviews_v2_warning_system",
+        name: "experiment_2025_04_reviews_v2_warning_system",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment -1: Disabled"
+    },
+    {
+        title: "Shop Category Modal Tabs Styles",
+        id: "2025-04_shop_category_modal_tabs_styles",
+        name: "experiment_2025_04_shop_category_modal_tabs_styles",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Clear Background"
+        ],
+        rollout: "Treatment -1: Disabled",
+        not_needed: "true"
+    },
+    {
+        title: "Reviews V2 Hide Beta Tag",
+        id: "2025-04_reviews_v2_hide_beta_tag",
+        name: "experiment_2025_04_reviews_v2_hide_beta_tag",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment -1: Disabled"
+    },
+    {
         title: "Reviews V2 Custom Emojis Render",
         id: "2025-04_reviews_v2_custom_emojis_render",
         name: "experiment_2025_04_reviews_v2_custom_emojis_render",
