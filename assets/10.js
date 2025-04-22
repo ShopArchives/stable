@@ -249,7 +249,7 @@ const experimentsList = [
             "Treatment 1: Nameplate Test Warning",
             "Treatment 2: Nameplate & Nameplate Test Warning"
         ],
-        rollout: "Treatment 2: Nameplate & Nameplate Test Warning"
+        rollout: "Treatment -1: Disabled"
     },
     {
         //21
