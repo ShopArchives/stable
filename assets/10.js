@@ -18,6 +18,26 @@ EXPERIMENT_ID_6 = 1
 
 const experimentsList = [
     {
+        title: "Purchasable Items",
+        id: "2025-04_purchasable_items",
+        name: "experiment_2025_04_purchasable_items",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment 1: Enabled"
+    },
+    {
+        title: "See You Next Year",
+        id: "2025-04_see_you_next_year",
+        name: "experiment_2025_04_see_you_next_year",
+        treatments: [
+            "Treatment -1: Disabled",
+            "Treatment 1: Enabled"
+        ],
+        rollout: "Treatment -1: Disabled"
+    },
+    {
         title: "Reviews V2 Warning System",
         id: "2025-04_reviews_v2_warning_system",
         name: "experiment_2025_04_reviews_v2_warning_system",
@@ -127,7 +147,6 @@ const experimentsList = [
         name: "experiment_2025_04_theme_picker_v2_community",
         treatments: [
             "Treatment -1: Disabled",
-            "Treatment 1: Enabled",
             "Treatment 2: As banners"
         ],
         rollout: "Treatment -1: Disabled",
@@ -151,7 +170,6 @@ const experimentsList = [
         name: "experiment_2025_04_collectibles_marketing_page",
         treatments: [
             "Treatment -1: Disabled",
-            "Treatment 1: Enabled",
             "Treatment 2: Enable v2"
         ],
         rollout: "Treatment 2: Enable v2",
@@ -192,7 +210,8 @@ const experimentsList = [
             "Treatment 1: Enabled"
         ],
         rollout: "Treatment -1: Disabled",
-        needs_api_token: "true"
+        needs_api_token: "true",
+        not_needed: "true"
     },
     {
         title: "View Raw Modal",

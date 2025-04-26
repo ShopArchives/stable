@@ -66,9 +66,8 @@ OPTIONS_EXTRA_PROFILE_ERROR_2 = "Your profile is synced with your Discord profil
 OPTIONS_EXTRA_PROFILE_ERROR_3 = "Preview:";
 OPTIONS_EXTRA_PROFILE_ERROR_BUTTON = "Log Out";
 OPTIONS_EXTRA_PROFILE_RESYNC = "Resync Profiles";
-OPTIONS_DEV_TITLE = "Dev Options";
+OPTIONS_DEV_TITLE = "Dev Tools";
 OPTIONS_DEV_DESC = "Greetings Shop Archives Staff and/or Dataminer! This model has everything only available for developers, only use this if you know what you're doing. Don't break anything :)";
-OPTIONS_DEV_OPTIONS_DISCLAIMER = "Close dev popout to view options popout";
 OPTIONS_DEV_CLOSE = "Close";
 OPTIONS_DEV_SAFE_MODE = "Safe Mode";
 OPTIONS_DEV_UNPUBLISHED_COLLECTIBLES = "Shop: Include Unpublished Collectibles";
@@ -81,8 +80,6 @@ OPTIONS_DEV_HIGHLIGHT_SKU_CARD = "Higlight Card";
 OPTIONS_DEV_HIGHLIGHT_SKU_ID = "Higlight SKU ID";
 OPTIONS_DEV_HIGHLIGHT_SKU_CAT = "Higlight Category";
 OPTIONS_DEV_HIGHLIGHT_CAT_SKU_ID = "Higlight SKU ID";
-OPTIONS_DEV_TEST_FETCH_NOSKUS = "Include No SKU Items";
-OPTIONS_DEV_TEST_FETCH_UNPUBLISHED = "Include Unpublished";
 HOME_PAGE_404_ERROR = "Error: 404 Not Found";
 HOME_PAGE_403_ERROR = "Error: 404 Not Found";
 FEATURED_TAB_TITLE = "Featured";
@@ -270,6 +267,7 @@ SHOP_CATEGORY_MODAL_REVIEWS_BETA_TAB = "BETA";
 
 SHOP_CATEGORY_MODAL_REVIEWS_LOADING = "Loading Reviews...";
 SHOP_CATEGORY_MODAL_REVIEWS_NONE = "No Reviews yet.";
+SHOP_CATEGORY_MODAL_REVIEWS_DISABLED = "Reviews have been disabled for this category.";
 SHOP_CATEGORY_MODAL_REVIEWS_BE_THE_FIRST = "Be the first to Review this item!";
 
 SHOP_CATEGORY_MODAL_REVIEWS_ERROR = "There was an error loading reviews";
@@ -452,6 +450,7 @@ MODAL_V3_TAB_EXPERIMENTS_DISABLE_FORCE_ROLLOUT_SUMMARY = "Disables the client fr
 
 MODAL_V3_TAB_EXPERIMENTS_ROLLOUT = "Rollout: ";
 MODAL_V3_TAB_EXPERIMENTS_API_WARNING = "You may need to add your user password or discord auth token to the bypass list in the api backend.";
+MODAL_V3_TAB_EXPERIMENTS_API_WARNING2 = "You are not logged in as staff, some experiments may not work as intended.";
 
 // Dismissible Content
 

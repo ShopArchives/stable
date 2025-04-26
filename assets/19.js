@@ -1,6 +1,6 @@
 
 
-app_version1 = "393"
+app_version1 = "395"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -2525,7 +2525,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         GEOMETRY_DASH = "68",
         PAPER_BEACH_V2 = "77",
         RBXDOORS = "82",
-        DATA_EXTRACTION_PROCESS = "85"
+        DATA_EXTRACTION_PROCESS = "85",
+        HOAX = "86"
     ]
 
 
@@ -7442,7 +7443,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                         const page = params.get("page");
             
                         for (const apiCategory of data) {
-                            if (page === "pplus") {
+                            if (page === "pplus" || page === "leaks_") {
                                 // Existing code for 'pplus' page
                                 const category = categoryTemplate.content.cloneNode(true).children[0];
                                 category.querySelector("[data-shop-category-banner]").id = apiCategory.sku_id;
@@ -7506,6 +7507,11 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                 }
                                 if (apiCategory.sku_id === PAPER_BEACH_V2) {
                                     category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
+                                }
+                                if (apiCategory.sku_id === HOAX) {
+                                    category.querySelector("[data-shop-discord-watermark-container]").style.display = 'unset';
+                                    category.querySelector("[data-shop-category-logo-holder]").style.display = 'unset';
+                                    category.querySelector("[data-shop-category-desc]").style.color = 'black';
                                 }
 
                                 if (localStorage.experiment_2025_02_shop_category_modals === "Treatment 1: Enable category modals" || localStorage.experiment_2025_02_shop_category_modals === "Treatment 2: Enable category modals w/ data downloads") {
@@ -7772,7 +7778,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                                 modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
                                                     <div class="review-element-warning" id="loading-category-reviews">
-                                                        <p class="shop-category-modal-assets-title">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_PPLUS_WARNING")}</p>
+                                                        <p class="review-warning-notice-text">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_PPLUS_WARNING")}</p>
                                                     </div>
                                                 `;
                                             }
@@ -8357,6 +8363,78 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 });
                                                 card.addEventListener("mouseleave", () => {
                                                     plusMoreQuestionMark.src = `https://cdn.discordapp.com/assets/server_products/storefront/question-mark.png`;
+                                                });
+                                            }
+                                        } else if (product.items[0] && product.items[0].item_type === 'deco') {
+                                            card.querySelector("[data-product-card-open-in-shop]").style.display = 'none';
+
+                                            product.items.forEach(item => {
+                                                
+                                                card.classList.add("type_0");
+                                                // Set the innerHTML for the preview holder
+                                                const previewHolder = card.querySelector("[data-shop-card-preview-holder]");
+                                                previewHolder.classList.add('avatar-decoration-image');
+                                                
+                                                // Set the initial image for the deco card
+                                                const imgElement = document.createElement("img");
+                                                imgElement.id = "shop-card-deco-image";
+                                                imgElement.src = imgElement.src = item.static;
+                                                
+                                                previewHolder.appendChild(imgElement);
+
+                                                const bgimg = document.createElement("div");
+                                                bgimg.id = "shop-card-deco-bg-image";
+                                                
+                                                previewHolder.appendChild(bgimg);
+                                        
+                                                // Set the product details
+                                                card.querySelector("[data-product-card-sku-id]").textContent = ``;
+                                                card.querySelector("[data-product-card-name]").textContent = product.name;
+                                                card.querySelector("[data-product-card-summary]").textContent = product.summary;
+                                        
+                                                // Hover effect: Change the image src on mouse enter and leave
+                                                if (localStorage.reduced_motion != "true") {
+                                                    card.addEventListener("mouseenter", () => {
+                                                        imgElement.src = item.animated;
+                                                        if (localStorage.discord_avatar != defaultAvatar1 && localStorage.discord_avatar != defaultAvatar2 && localStorage.discord_avatar != defaultAvatar3 && localStorage.discord_avatar != defaultAvatar4 && localStorage.discord_avatar != defaultAvatar5 && localStorage.discord_avatar != defaultAvatar6) {
+                                                            bgimg.style.backgroundImage = `url(${localStorage.discord_avatar})`
+                                                        }
+                                                    });
+                                            
+                                                    card.addEventListener("mouseleave", () => {
+                                                        imgElement.src = item.static;
+                                                        bgimg.style.backgroundImage = `url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIQAAACECAYAAABRRIOnAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAy4SURBVHgB7Z3bbxTJFYePCZfYAgMh4m7CJVwSELeIyy5ICFagICHgkQeeeeMf4oUHeAEJCRASQShcHqIlXA0RCgYcBN5wyeIAZmUDhmXn65nytsczPd3V1VXdM/VJzYzxeKan69enTp06p6pNmpuO0tFZeWyvPE6oPFe/r8Vg5XGodAxXfh4KPb6TJqVNmgcad3bpmFo6plQeswRRDJSO/spjU4ikyILgTkcAvy8dsyo/uwTrgTBeSlkkg1JAiiYIGr1LykKYIfkGUfRJwcRRFEFgBZZJ/kVQD6xGX+Ux1+RZEFiDxaVjkbjvDkyBpXgoObYaeRREMwqhGkYuWAvEkSth5EkQrSCEWtCV5EYYeRHEcmk9IYRBDD+Ujh5xjGtB4CyukfoBolZD+Rh94ghXgsASrJXy8NEzFmfdiAtBIALE0KrdQ1ycWIvfiD0QwJ9Lx0rLn1tUVCSWxzel42exgC0LgY/wjXhfQResxfdioQuxcacSat5QOn4rHl1UyP6jlOdLMiNrQRBuXiW+izAB15AuBKveLxmRZUPhOC4Wj2mYz8Fi/CgZkIUgONnN4oeUWTJdyvke/xPDzqZpQSAGnMfp4smayaVjZun4rxgUhUlBKDFknank+RUcdaOiMCUILwZ3GBWFKUH8RcrzEh43IIrfiYGopglBMKzsEo9rOipHqqystIIgzvBH8eQFuuxUcYo0gsAqrBJP3iBOQe2IVkRznOiBaVopnrxC22jNG+lYCEYUW8XPTeQZFebGyUw08tARBFPYM8WTd7hxad9EIe6kgsBv+JN4igIRY3yJn+L+QRIfgj5pmXiKBpOM4+O+OIkgEINPcCkedB3r4r44riC6xAefiowqim5IXEH4rqL4rInzojhOJWKYI56iQ9fRMIrZyELgM/iuonmgOi7SwWxkIYh4FW4Wc/r06TJnzhx5+/atZMGiRYukra1NPnz4IAWD9v4qEVYiSi2FsQ400KxZs2TBggXB80mTJgX/f+zYMXny5ImYZP369bJnz57g+cePH4P3f/bsmbx69cr4Z2UEVqK3dHyu9csoQeTWkaTBV65cGQhg+fLlIwKoZuvWrcYbacuWLaPOY8WKFcEBSiAPHjyQnp6e4Occgi+xROoUFtcThFrAKzdw8bn7N2/eHFiDeiIIw+s5TIkC60B3FHWOYYEgDI579+5JzqhrJepVbtFVrJUcMHfuXFm1apWsW7culgiqQQznzp0LRNTR0SFTpkwJ3ofnEydODB7DDA4OyqdPn4JH7vD379/Lmzdvgue7du0KrFJS+Pu+vj65evVq8DwnUDc6xkrUE8R34jgqiRB0GyDP4G+cOXMmD8JgFZu/Vf9nrVEGXcVCcQhm+cCBAzJ7dvOVdkydOlXWrl0rN2/elC9fvohDaPv/S1W9aK04hPORxbZt2yL76qJDl7Vv3z7JAWMGDtWCcO5M4ritXr1amh0cTxxex5BuN2pgMa7GC5wSHtY1O8QzdBxlw4xy0qoF4bS7aPauohq+K8Nox4zqEcKCoLtwZiG4OK3QVVSDIBxbiVHdxriqXzij1ayDAjHs2LFDHDMymx0WhDNnslWtg2LDhg2ub4aRCcywIDrFEViHVsfxNZilnihBUALmJDLZ6tZBwTVwaCWY8AraXwnCW4cc4PjGCFwGJQgnDiV3BNPXnjKORxzB2h7hLsM64WQWT3nE4TAuwT5lbruMVopKxsVhtzFiIZxZh1aMOzSCa+JwjqMDQbSLA9asiVUm0JIsXbpUHNGJIJwMN70zWR/d7DADdDgRBFO/3pmsD9eGjDEHtDvpMlQSqqc+jrrUwEJY38jEdxeNcXSNJjDtadVCZBF7IGH1xo0bQS2ESl7F5G7cuNHoMI7M62vXrgWJsiq1n88h95MhtMlRkyo7sFz8006iJSvWW7MSmMKFCxeKKah5OHHihDx9+nRUaR3p86omYtmyZdLenk73CO3o0aPBe4ZLBPmcFy9eyN27d2X8+PEyf/58MQWfw/eyyDCCsLq04Pbt24PMYxPQ2KdPn47MXkYkjx49SiUKxHD8+PHI1HnOobe3N7izTYni69evtot8JuguS6iNqToLGofCl7ivpVhHl4sXL8auozBZjONipGFVECYjcEkvPH2xTn+Mv0A3ERf8DPwZE7gYfloVBOV0pqA0Lin379+XpNy+fVuScufOHTGF7co1q4Lo7DQzh0bpvY5Z1rEQr1+/lqRgJUx1G6auWVysCsKU+dMts6eANynPnz8XHRh9mMCkVY0DgrC2nbDtL1eNjpBch9inTZsmFhm0ZiG4sKYuLiX9OugIkiUDdDD1XQl22RQlghgSC5hUuu5FmjdvniSFlWqSwvmZtIa6otRgCEEMiwWqF+ZIi06qmU4YWyc3wXSCi46QNRm2ZiFMZ0clTUhlhlVnCKeWJYoL52Q6NdCihRi05lSa/lJc+J07d8Z6LWKM+9paUKUdV9BZlCSatq4RDFkTRBaOEWtJ7N69O/K9aZyDBw+maqQ478E5sARSFlnTFp3KQSa32HEl8z26meE0OcupoH/F8WMSi8XC1IwnZp6ZVVZqmTx5sqSFibFNmzYFohgYGBiJM/AzSwTt3bs3s1xIZjwtzXr2kg9hxUJkmWHNe+/fv19sgGNqO1XeYnb6OxWH0NrBzdNUvOOfceEfPC1NYBS8hfAoggXRlSBSbQ8cB52JJU8ZS9dulIXgEzONWOZ0IfBCYOHa0f6jfAjI3Ep4csuIyxAWhPYG4nEwlR8Aebc2ps/PwrrYI8ZgfK3/zDNcnFOnTsnQ0FAQfDJdD5EGVbfBQbg5bYRUQcAtY0aMQVgQw5VfZLKaDPmMRBRNzAQiBoTBQc6jikpGbaaSFYiAAiHqMsIpemSHmWhItVtPhtDmI15r9fYIhLCTJwAkgMkfE+tKUa9QK/NaiYN8hKwytPhMREC9Byl24S6Cz+f7pU2O5T35flibjOmW8qbxAdWCoILrr5IxJiacFKTIk/ZeK4FWJapwcMeSsJpUJDQ+ibb9/f3BI59Tq083JQSwvKfG3yXCQsC3YmkRMmYrTfkANBSbrsWBz2OySnUv6vPVLjocqluKw+HDh418B4tWQYHfOKqIpJYgEMO3YgkuJHdW2gkjLmTcSi7TmOgGEQHnb3kEhRhGDSZq7ahDBtViibfrb2qYrlZFudy1Ov0+d/LJkyfFFS9fvgwcZp3aUbqHs2fPyq1bt2zvsEM38a/q/6zX6MQnrG7gqoTBBcJqJCkIvnDhQtaeeCQ05OfPn4OC4rgoIVy5ciWzDWcbQBnbmDmseoLghX8QS1YiDBenu7s7tsVQow3XsCQADmUjXwLRnz9/3qUQgBDDA6kxXdEW8UfI3flSL2qZvlrOJ/3tkSNHcrP1Ied36NChMbGQcMAqJ1FWhpndtX4RZQGcWYkwdCXcfdevXw/MLHtuk7CL9bh06ZI8fvxY8gLnSvexZMmSoOHZee/y5cvBUgSkwDnehS/MTakzmdnW4A9zYSVqQVxBt+4ya/J8bhJhHaCRIAhUfScOFibzZAIji+8lIo+2UW0nZuU/4mkWfpAGSdVxin0fiohPdyo+tGFPoxfFrf7uFk/ReRjnRXEFwRSpz6gqLn0SmtGMIsn6EFgJK5XiHqPQVcSyDpBEEIjBdx3FI5EPmDTo9JOUh6B+55NiwAgxUeROZ0khP+ooBom6CoVOWJpqcaYWu8RxWNtTF7r3f5SOxBMnug06XPkwZ9tDeyIhz0GrrCLNHa7m0q3mTXgaQjehHV1Oa/JRIevdONnZzzMGhPBvSYEJH4CAFVbCyWZunhFoh9RhAVNOISczs3T4ndXcQKEuOQ4/S0pMCYITIQHAi8I+iIEpbSNRZJPDRi8K+xgVA5iOIyhRTK4cnuzAof+nGJ5fyiKwpEThQ9zZwcwlRTapfYZqsow0/lh59HEKsxBnSL41UEyyDj1j1qgEmyE+zJ0WugYikJmmNDZKsjUFMYpvxMcqdGmYHGsKW3ct6ibBk9lV71ckA4vATnBWKnxsmnEcIPwKuhB2FvOp/dFwEyEEFr4w7jzWw0W/zqQY0+cIws+B1IbIL12E9QVlbfkQ9SCnguow71uUwUdgPiLTFQGjcC0IBaJAHK0qDFUQlTjDyTR5EQQgBiWMVkEJ4YnkJKM9T4JQKGGQjdWsjmfuhKDIoyAUCIOAVjP5GLkVgiLPggiDteiS4uZw4iT2iENnMS5FEYRCWY0usbR0YgpU+SMTUYWpeCuaIMIocWA1OsV9t0KjE195LWUhFLLssciCqIYgF8KYEXqeJQOVgyQVBNAUxUvNJIhaIAwWj+wIPU6oPBepb1VU4xJmH678PFR5HJAmrlz7BccI+z+sD4lzAAAAAElFTkSuQmCC)`;
+                                                    });
+                                                }
+                                                
+                                            });
+                                        } else if (product.items[0] && product.items[0].item_type === 'effect') {
+                                            card.querySelector("[data-product-card-open-in-shop]").style.display = 'none';
+                                            
+                                            card.classList.add("type_1");
+
+                                            card.querySelector("[data-product-card-sku-id]").textContent = ``;
+                                            card.querySelector("[data-product-card-name]").textContent = product.name;
+                                            card.querySelector("[data-product-card-summary]").textContent = product.summary;
+                                            
+                                            const previewHolder = card.querySelector("[data-shop-card-preview-holder]");
+                                            previewHolder.classList.add('profile-effect-image');
+                                        
+                                            previewHolder.innerHTML = `
+                                                <img class="thumbnail-preview" src="${product.items[0].static}">
+                                            `;
+                                        
+                                            // Hover effect: change to the first effect URL (use 'src' from the 'effects' array)
+                                            const imgElement = card.querySelector("img");
+                                        
+                                            if (localStorage.reduced_motion != "true") {
+                                                card.addEventListener("mouseenter", () => {
+                                                    imgElement.src = product.items[0].animated;
+                                                });
+                                            
+                                                card.addEventListener("mouseleave", () => {
+                                                    // Revert back to the original thumbnailPreviewSrc when hover ends
+                                                    imgElement.src = product.items[0].static;
                                                 });
                                             }
                                         } else {
@@ -9300,10 +9378,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         <div class="modalv2-inner">
                                                             <div class="modalv2-inner-left">
                                                                 <div data-modal-left-preview-holder></div>
-                                                                <p data-product-modal-sku-id></p>
-                                                                <p data-product-modal-credits></p>
-                                                                <p style="font-size: large; font-weight: 900;" data-product-modal-name></p>
-                                                                <p style="color: var(--8)" data-product-modal-summary></p>
+                                                                <p class="shop-modal-product-sku-id" data-product-modal-sku-id></p>
+                                                                <p class="shop-modal-product-credits" data-product-modal-credits></p>
+                                                                <p class="shop-modal-product-name" style="font-size: large; font-weight: 900;" data-product-modal-name></p>
+                                                                <p class="shop-modal-product-summary" style="color: var(--8)" data-product-modal-summary></p>
                                                                 <div class="shop-modal-var-container-container" data-shop-modal-var-container-container>
                                                                     <div class="shop-modal-var-container" data-shop-modal-var-container></div>
                                                                     <a class="shop-modal-var-title" data-shop-modal-var-title></a>
@@ -10847,139 +10925,154 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 }) // Replace with your API URL
                                                 .then(response => response.json())
                                                 .then(data => {
-                                                    renderReviews(data);
+                                                    if (data.message && data.message === "Reviews disabled") {
+                                                        modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = ``;
 
-                                                    let hasReviewAlready = false;
+                                                        let reviewNoneElement = document.createElement("div");
 
-                                                    data.forEach(review => {
-                                                        if (review.users.id === localStorage.discord_user_id) {
-                                                            hasReviewAlready = true;
-                                                        }
-                                                    });
-
-                                                    if (localStorage.discord_token && hasReviewAlready === false) {
-                                                        let writeReviewContainer = document.createElement("div");
+                                                        reviewNoneElement.classList.add("review-element-warning");
         
-                                                        writeReviewContainer.classList.add("shop-category-modal-write-review-container");
-                                                        writeReviewContainer.id = 'shop-category-modal-write-review-container';
-                                                        writeReviewContainer.innerHTML = `
-                                                            <p class="shop-category-modal-write-review-disclaimer-error" id="shop-category-modal-write-review-error-output"></p>
-                                                            <div class="shop-category-modal-write-review-input-container">
-                                                                <div id="star-rating" class="stars">
-                                                                    <svg data-value="1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                    <svg data-value="2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                    <svg data-value="3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                    <svg data-value="4" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                    <svg data-value="5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                </div>
-
-                                                                <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WRITE")}${apiCategory.name}...">
-                                                                <svg data-post-review-button class="review-send-icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.02 14 11.4a.6.6 0 0 1 0 1.18L6.6 14l-2.94 5.87a1.48 1.48 0 0 0 1.99 1.98l17.03-8.52a1.48 1.48 0 0 0 0-2.64L5.65 2.16a1.48 1.48 0 0 0-1.99 1.98l2.94 5.88Z" class=""></path></svg>
-                                                            </div>
-                                                            <div class="shop-category-modal-write-review-disclaimer-container">
-                                                                <p class="shop-category-modal-write-review-disclaimer">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER")}</p>
-                                                                <a class="shop-category-modal-write-review-disclaimer-link" href="https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY")}</a>
-                                                            </div>
+                                                        reviewNoneElement.innerHTML = `
+                                                            <p class="review-warning-notice-text" style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISABLED")}</p>
                                                         `;
 
-                                                        writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
-                                                            postReview(`${apiCategory.sku_id}`, 0);
-                                                        };
+                                                        modal.querySelector("[data-category-modal-inner-content-container]").appendChild(reviewNoneElement);
 
-
-                                                        const stars = writeReviewContainer.querySelectorAll('#star-rating svg');
-                                                        let selectedRating = 0;
-
-                                                        stars.forEach(star => {
-                                                            star.addEventListener('click', () => {
-                                                                selectedRating = parseInt(star.getAttribute('data-value'));
-                                                                updateStars(selectedRating);
-                                                            });
-                                                        });
-                                                    
-                                                        function updateStars(rating) {
-                                                            stars.forEach(star => {
-                                                                const value = parseInt(star.getAttribute('data-value'));
-                                                                star.classList.toggle('filled', value <= rating);
-                                                            });
-                                                            writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
-                                                                postReview(`${apiCategory.sku_id}`, selectedRating);
-                                                            };
-                                                        }
-    
-                                                        modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
-                                                    } else if (localStorage.discord_token) {
-                                                        let writeReviewContainer = document.createElement("div");
-        
-                                                        writeReviewContainer.classList.add("shop-category-modal-write-review-container");
-                                                        writeReviewContainer.id = 'shop-category-modal-write-review-container';
-                                                        writeReviewContainer.innerHTML = `
-                                                            <p class="shop-category-modal-write-review-disclaimer-error" id="shop-category-modal-write-review-error-output"></p>
-                                                            <div class="shop-category-modal-write-review-input-container">
-                                                                <div id="star-rating" class="stars">
-                                                                    <svg data-value="1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                    <svg data-value="2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                    <svg data-value="3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                    <svg data-value="4" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                    <svg data-value="5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
-                                                                </div>
-
-                                                                <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_EDIT")}${apiCategory.name}...">
-                                                                <svg data-post-review-button class="review-send-icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.02 14 11.4a.6.6 0 0 1 0 1.18L6.6 14l-2.94 5.87a1.48 1.48 0 0 0 1.99 1.98l17.03-8.52a1.48 1.48 0 0 0 0-2.64L5.65 2.16a1.48 1.48 0 0 0-1.99 1.98l2.94 5.88Z" class=""></path></svg>
-                                                            </div>
-                                                            <div class="shop-category-modal-write-review-disclaimer-container">
-                                                                <p class="shop-category-modal-write-review-disclaimer">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER")}</p>
-                                                                <a class="shop-category-modal-write-review-disclaimer-link" href="https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY")}</a>
-                                                            </div>
-                                                        `;
-
-                                                        writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
-                                                            postReview(`${apiCategory.sku_id}`, 0);
-                                                        };
-
-
-                                                        const stars = writeReviewContainer.querySelectorAll('#star-rating svg');
-                                                        let selectedRating = 0;
-
-                                                        stars.forEach(star => {
-                                                            star.addEventListener('click', () => {
-                                                                selectedRating = parseInt(star.getAttribute('data-value'));
-                                                                updateStars(selectedRating);
-                                                            });
-                                                        });
-                                                    
-                                                        function updateStars(rating) {
-                                                            stars.forEach(star => {
-                                                                const value = parseInt(star.getAttribute('data-value'));
-                                                                star.classList.toggle('filled', value <= rating);
-                                                            });
-                                                            writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
-                                                                postReview(`${apiCategory.sku_id}`, selectedRating);
-                                                            };
-                                                        }
-
-    
-                                                        modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
                                                     } else {
-                                                        let writeReviewContainer = document.createElement("div");
+                                                        renderReviews(data);
+
+                                                        let hasReviewAlready = false;
+
+                                                        data.forEach(review => {
+                                                            if (review.users.id === localStorage.discord_user_id) {
+                                                                hasReviewAlready = true;
+                                                            }
+                                                        });
+
+                                                        if (localStorage.discord_token && hasReviewAlready === false) {
+                                                            let writeReviewContainer = document.createElement("div");
         
-                                                        writeReviewContainer.classList.add("shop-category-modal-write-review-container");
-                                                        writeReviewContainer.id = 'shop-category-modal-write-review-container';
-                                                        writeReviewContainer.innerHTML = `
-                                                            <div onclick="loginToDiscord();" class="shop-category-modal-write-review-input-container">
-                                                                <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_LOGIN")}" disabled>
-                                                            </div>
-                                                        `;
+                                                            writeReviewContainer.classList.add("shop-category-modal-write-review-container");
+                                                            writeReviewContainer.id = 'shop-category-modal-write-review-container';
+                                                            writeReviewContainer.innerHTML = `
+                                                                <p class="shop-category-modal-write-review-disclaimer-error" id="shop-category-modal-write-review-error-output"></p>
+                                                                <div class="shop-category-modal-write-review-input-container">
+                                                                    <div id="star-rating" class="stars">
+                                                                        <svg data-value="1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                        <svg data-value="2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                        <svg data-value="3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                        <svg data-value="4" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                        <svg data-value="5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                    </div>
+
+                                                                    <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_WRITE")}${apiCategory.name}...">
+                                                                    <svg data-post-review-button class="review-send-icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.02 14 11.4a.6.6 0 0 1 0 1.18L6.6 14l-2.94 5.87a1.48 1.48 0 0 0 1.99 1.98l17.03-8.52a1.48 1.48 0 0 0 0-2.64L5.65 2.16a1.48 1.48 0 0 0-1.99 1.98l2.94 5.88Z" class=""></path></svg>
+                                                                </div>
+                                                                <div class="shop-category-modal-write-review-disclaimer-container">
+                                                                    <p class="shop-category-modal-write-review-disclaimer">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER")}</p>
+                                                                    <a class="shop-category-modal-write-review-disclaimer-link" href="https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY")}</a>
+                                                                </div>
+                                                            `;
+
+                                                            writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
+                                                                postReview(`${apiCategory.sku_id}`, 0);
+                                                            };
+
+
+                                                            const stars = writeReviewContainer.querySelectorAll('#star-rating svg');
+                                                            let selectedRating = 0;
+
+                                                            stars.forEach(star => {
+                                                                star.addEventListener('click', () => {
+                                                                    selectedRating = parseInt(star.getAttribute('data-value'));
+                                                                    updateStars(selectedRating);
+                                                                });
+                                                            });
+                                                        
+                                                            function updateStars(rating) {
+                                                                stars.forEach(star => {
+                                                                    const value = parseInt(star.getAttribute('data-value'));
+                                                                    star.classList.toggle('filled', value <= rating);
+                                                                });
+                                                                writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
+                                                                    postReview(`${apiCategory.sku_id}`, selectedRating);
+                                                                };
+                                                            }
     
-                                                        modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
+                                                            modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
+                                                        } else if (localStorage.discord_token) {
+                                                            let writeReviewContainer = document.createElement("div");
+        
+                                                            writeReviewContainer.classList.add("shop-category-modal-write-review-container");
+                                                            writeReviewContainer.id = 'shop-category-modal-write-review-container';
+                                                            writeReviewContainer.innerHTML = `
+                                                                <p class="shop-category-modal-write-review-disclaimer-error" id="shop-category-modal-write-review-error-output"></p>
+                                                                <div class="shop-category-modal-write-review-input-container">
+                                                                    <div id="star-rating" class="stars">
+                                                                        <svg data-value="1" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                        <svg data-value="2" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                        <svg data-value="3" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                        <svg data-value="4" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                        <svg data-value="5" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_131_2)"><path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="currentColor"/></g><defs><clipPath id="clip0_131_2"><rect width="24" height="24" fill="currentColor"/></clipPath></defs></svg>
+                                                                    </div>
+
+                                                                    <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_EDIT")}${apiCategory.name}...">
+                                                                    <svg data-post-review-button class="review-send-icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M6.6 10.02 14 11.4a.6.6 0 0 1 0 1.18L6.6 14l-2.94 5.87a1.48 1.48 0 0 0 1.99 1.98l17.03-8.52a1.48 1.48 0 0 0 0-2.64L5.65 2.16a1.48 1.48 0 0 0-1.99 1.98l2.94 5.88Z" class=""></path></svg>
+                                                                </div>
+                                                                <div class="shop-category-modal-write-review-disclaimer-container">
+                                                                    <p class="shop-category-modal-write-review-disclaimer">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER")}</p>
+                                                                    <a class="shop-category-modal-write-review-disclaimer-link" href="https://github.com/Yappering/terms-and-privacy/blob/main/privacy-policy.md">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY")}</a>
+                                                                </div>
+                                                            `;
+
+                                                            writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
+                                                                postReview(`${apiCategory.sku_id}`, 0);
+                                                            };
+
+
+                                                            const stars = writeReviewContainer.querySelectorAll('#star-rating svg');
+                                                            let selectedRating = 0;
+
+                                                            stars.forEach(star => {
+                                                                star.addEventListener('click', () => {
+                                                                    selectedRating = parseInt(star.getAttribute('data-value'));
+                                                                    updateStars(selectedRating);
+                                                                });
+                                                            });
+                                                        
+                                                            function updateStars(rating) {
+                                                                stars.forEach(star => {
+                                                                    const value = parseInt(star.getAttribute('data-value'));
+                                                                    star.classList.toggle('filled', value <= rating);
+                                                                });
+                                                                writeReviewContainer.querySelector("[data-post-review-button]").onclick = function(){
+                                                                    postReview(`${apiCategory.sku_id}`, selectedRating);
+                                                                };
+                                                            }
+
+    
+                                                            modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
+                                                        } else {
+                                                            let writeReviewContainer = document.createElement("div");
+        
+                                                            writeReviewContainer.classList.add("shop-category-modal-write-review-container");
+                                                            writeReviewContainer.id = 'shop-category-modal-write-review-container';
+                                                            writeReviewContainer.innerHTML = `
+                                                                <div onclick="loginToDiscord();" class="shop-category-modal-write-review-input-container">
+                                                                    <input autocomplete="off" id="shop-category-modal-write-review-post-input" placeholder="${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_LOGIN")}" disabled>
+                                                                </div>
+                                                            `;
+    
+                                                            modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
+                                                        }
                                                     }
 
                                                 })
                                                 .catch(error => {
                                                     modal.querySelector("[data-category-modal-inner-content-container]").innerHTML = `
                                                         <div class="review-element-warning" id="loading-category-reviews">
-                                                            <p style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_ERROR")}</p>
-                                                            <p style="font-size: medium; font-weight: 200;">${error}</p>
+                                                            <p class="review-warning-notice-text" style="font-size: large; font-weight: 900;">${getTextString("SHOP_CATEGORY_MODAL_REVIEWS_ERROR")}</p>
+                                                            <p class="review-warning-notice-text" style="font-size: medium; font-weight: 200;">${error}</p>
                                                         </div>
                                                     `;
                                                     console.error(error);
@@ -14264,6 +14357,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 </div>
                 <div id="leaks-tab-loading">
                 </div>
+                <div id="leaks_-tab-loading">
+                </div>
                 <button class="dm-button" id="potions-tab" onclick="setParams({page: 'consumables'}); location.reload();">
                     <p class="dm-button-text">${getTextString("POTIONS_TAB_TITLE")}</p>
                 </button>
@@ -14442,6 +14537,23 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 <h2 class="shop-tab-page-title">${getTextString("LEAKS_TAB_PAGE_TITLE")}</h2>
                 <div id="open-help-modals-buttons-holder-new"></div>
             `;
+        } else if (params.get("page") === "leaks_") {
+            document.title = `${getTextString("LEAKS_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
+            if (localStorage.experiment_2025_02_fetch_from_vercel_endpoits === "Treatment 1: Enabled") {
+                url = api + COLLECTIBLES_SHOP;
+                apiUrl = new URL(url);
+                apiUrl.searchParams.append("tab", "fake-leaks");
+                if (localStorage.unreleased_discord_collectibles == "true") {
+                    apiUrl.searchParams.append("include-unpublished", "true");
+                }
+            } else {
+                apiUrl = api + LEAKS;
+            }
+            createMainShopElement()
+            document.getElementById("top-bar-container").innerHTML = `
+                <h2 class="shop-tab-page-title">${getTextString("LEAKS_TAB_PAGE_TITLE")}</h2>
+                <div id="open-help-modals-buttons-holder-new"></div>
+            `;
         } else if (params.get("page") === "nameplates") {
             document.title = `${getTextString("NAMEPLATES_TAB_DOCUMENT_TITLE")}${getTextString("DOCUMENT_TITLE_SITE_NAME")}`;
             if (localStorage.experiment_2025_02_fetch_from_vercel_endpoits === "Treatment 1: Enabled") {
@@ -14481,8 +14593,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 url = api + COLLECTIBLES_SHOP;
                 apiUrl = new URL(url);
                 apiUrl.searchParams.append("tab", "miscellaneous");
-                if (localStorage.experiment_2025_03_items_with_no_sku == "Treatment 1: Enabled") {
-                    apiUrl.searchParams.append("include-no-sku-items", "true");
+                if (localStorage.experiment_2025_04_purchasable_items == "Treatment 1: Enabled") {
+                    apiUrl.searchParams.append("include-purchasable", "true");
                 }
                 if (localStorage.unreleased_discord_collectibles == "true") {
                     apiUrl.searchParams.append("include-unpublished", "true");
@@ -14728,55 +14840,108 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
     
     function leaksCheck() {
-        if (localStorage.override_leaks_button === "true") {
-            console.log(`Valid Leaks Check: Overridden`);
-            document.getElementById('leaks-tab-loading').innerHTML = `
-                <button class="dm-button" id="leaks-tab" onclick="setParams({page: 'leaks'}); location.reload();" title="New {apiCategory.name} Leaks">
-                    <p class="dm-button-text">${getTextString("LEAKS_TAB_TITLE")}</p>
-                    <div class="dm-new-icon">${getTextString("DM_NEW")}</div>
-                </button>
-            `;
-            if (params.get("page") === "leaks") {
-                document.getElementById("leaks-tab").classList.add('dm-button-selected');
-            }
-        } else {
-            if (localStorage.experiment_2025_02_fetch_from_vercel_endpoits === "Treatment 1: Enabled") {
-                url = api + COLLECTIBLES_SHOP;
-                apiLeaks = new URL(url);
-                apiLeaks.searchParams.append("tab", "leaks");
-                if (localStorage.unreleased_discord_collectibles == "true") {
-                    apiLeaks.searchParams.append("include-unpublished", "true");
+        if (localStorage.experiment_2025_04_see_you_next_year === "Treatment 1: Enabled") {
+            if (localStorage.override_leaks_button === "true") {
+                console.log(`Valid Leaks Check: Overridden`);
+                document.getElementById('leaks_-tab-loading').innerHTML = `
+                    <button class="dm-button" id="leaks_-tab" onclick="setParams({page: 'leaks_'}); location.reload();" title="New {apiCategory.name} Leaks">
+                        <p class="dm-button-text">${getTextString("LEAKS_TAB_TITLE")}</p>
+                        <div class="dm-new-icon">${getTextString("DM_NEW")}</div>
+                    </button>
+                `;
+                if (params.get("page") === "leaks_") {
+                    document.getElementById("leaks_-tab").classList.add('dm-button-selected');
                 }
             } else {
-                apiLeaks = api + LEAKS;
-            }
-            fetch(apiLeaks, {
-                method: "GET",
-                headers: {
-                    "Password": api_password,
-                    "Authorization": discord_token,
-                    "Token": api_token
-                }
-            })
-            .then(response => response.json())
-            .then((data) => {
-                data.forEach(apiCategory => {
-                    console.log(`Valid Leaks Check: True`);
-                    document.getElementById('leaks-tab-loading').innerHTML = `
-                        <button class="dm-button" id="leaks-tab" onclick="setParams({page: 'leaks'}); location.reload();" title="New ${apiCategory.name} Leaks">
-                            <p class="dm-button-text">${getTextString("LEAKS_TAB_TITLE")}</p>
-                            <div class="dm-new-icon">${getTextString("DM_NEW")}</div>
-                        </button>
-                    `;
-                    if (params.get("page") === "leaks") {
-                        document.getElementById("leaks-tab").classList.add('dm-button-selected');
+                if (localStorage.experiment_2025_02_fetch_from_vercel_endpoits === "Treatment 1: Enabled") {
+                    url = api + COLLECTIBLES_SHOP;
+                    apiLeaks = new URL(url);
+                    apiLeaks.searchParams.append("tab", "fake-leaks");
+                    if (localStorage.unreleased_discord_collectibles == "true") {
+                        apiLeaks.searchParams.append("include-unpublished", "true");
                     }
+                } else {
+                    apiLeaks = api + LEAKS;
+                }
+                fetch(apiLeaks, {
+                    method: "GET",
+                    headers: {
+                        "Password": api_password,
+                        "Authorization": discord_token,
+                        "Token": api_token
+                    }
+                })
+                .then(response => response.json())
+                .then((data) => {
+                    data.forEach(apiCategory => {
+                        console.log(`Valid Leaks Check: True`);
+                        document.getElementById('leaks_-tab-loading').innerHTML = `
+                            <button class="dm-button" id="leaks_-tab" onclick="setParams({page: 'leaks_'}); location.reload();" title="New ${apiCategory.name} Leaks">
+                                <p class="dm-button-text">${getTextString("LEAKS_TAB_TITLE")}</p>
+                                <div class="dm-new-icon">${getTextString("DM_NEW")}</div>
+                            </button>
+                        `;
+                        if (params.get("page") === "leaks_") {
+                            document.getElementById("leaks_-tab").classList.add('dm-button-selected');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.log(`Valid Leaks Check: False`);
+                    document.getElementById('leaks-tab-loading').innerHTML = ``;
                 });
-            })
-            .catch(error => {
-                console.log(`Valid Leaks Check: False`);
-                document.getElementById('leaks-tab-loading').innerHTML = ``;
-            });
+            }
+        } else {
+            if (localStorage.override_leaks_button === "true") {
+                console.log(`Valid Leaks Check: Overridden`);
+                document.getElementById('leaks-tab-loading').innerHTML = `
+                    <button class="dm-button" id="leaks-tab" onclick="setParams({page: 'leaks'}); location.reload();" title="New {apiCategory.name} Leaks">
+                        <p class="dm-button-text">${getTextString("LEAKS_TAB_TITLE")}</p>
+                        <div class="dm-new-icon">${getTextString("DM_NEW")}</div>
+                    </button>
+                `;
+                if (params.get("page") === "leaks") {
+                    document.getElementById("leaks-tab").classList.add('dm-button-selected');
+                }
+            } else {
+                if (localStorage.experiment_2025_02_fetch_from_vercel_endpoits === "Treatment 1: Enabled") {
+                    url = api + COLLECTIBLES_SHOP;
+                    apiLeaks = new URL(url);
+                    apiLeaks.searchParams.append("tab", "leaks");
+                    if (localStorage.unreleased_discord_collectibles == "true") {
+                        apiLeaks.searchParams.append("include-unpublished", "true");
+                    }
+                } else {
+                    apiLeaks = api + LEAKS;
+                }
+                fetch(apiLeaks, {
+                    method: "GET",
+                    headers: {
+                        "Password": api_password,
+                        "Authorization": discord_token,
+                        "Token": api_token
+                    }
+                })
+                .then(response => response.json())
+                .then((data) => {
+                    data.forEach(apiCategory => {
+                        console.log(`Valid Leaks Check: True`);
+                        document.getElementById('leaks-tab-loading').innerHTML = `
+                            <button class="dm-button" id="leaks-tab" onclick="setParams({page: 'leaks'}); location.reload();" title="New ${apiCategory.name} Leaks">
+                                <p class="dm-button-text">${getTextString("LEAKS_TAB_TITLE")}</p>
+                                <div class="dm-new-icon">${getTextString("DM_NEW")}</div>
+                            </button>
+                        `;
+                        if (params.get("page") === "leaks") {
+                            document.getElementById("leaks-tab").classList.add('dm-button-selected');
+                        }
+                    });
+                })
+                .catch(error => {
+                    console.log(`Valid Leaks Check: False`);
+                    document.getElementById('leaks-tab-loading').innerHTML = ``;
+                });
+            }
         }
     }
 
@@ -18760,7 +18925,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 document.getElementById('dev-topbar-container').classList.add("dev-topbar-container-expanded");
                 document.getElementById('dev-topbar-container').innerHTML = `
                     <h1 class="center-text" style="font-size: 30px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_DEV_TITLE")}</h1>
-                    <p class="center-text" style="font-size: 15px; margin-top: 0px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_DEV_OPTIONS_DISCLAIMER")}</p>
 
                     <div id="staff-notes">
                         <p class="center-text" style="font-size: 20px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_EXTRA_STAFF_NOTES")}</p>
@@ -18816,212 +18980,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     <div class="experiment-card-holder" style="width: 300px; margin-left: auto; margin-right: auto;">
                         <button class="card-button" id="scroll-to-category-sku-id-override-button" onclick="scrollToSKUOverrride('category');">${getTextString("OPTIONS_DEV_HIGHLIGHT_SKU_CAT")}</button>
                     </div>
-
-                    <p class="center-text" style="font-size: 30px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">Test Fetch API</p>
-
-                    <div class="options-option-card-holder">
-                        <div class="options-option-card"">
-                            <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_DEV_TEST_FETCH_NOSKUS")}</p>
-                            <input class="options-toggle-box" style="cursor: pointer; scale: 2; posision: center;" id="test-fetch-include-no-sku-items-box" type="checkbox">
-                        </div>
-                        <div class="options-option-card"">
-                            <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_DEV_TEST_FETCH_UNPUBLISHED")}</p>
-                            <input class="options-toggle-box" style="cursor: pointer; scale: 2; posision: center;" id="test-fetch-unpublished-collectibles-box" type="checkbox">
-                        </div>
-                    </div>
-
-                    <div id="test-fetch-apis-container"></div>
-
-                    <div id="new-options-experiments-container"></div>
-                    <div id="new-options-dismissible-content-container"></div>
                     ${getTextString("APP_VERSION")}${tcbx926n29}
                 `;
-
-                document.getElementById("new-options-experiments-container").innerHTML = `
-    
-                    <p class="center-text" style="font-size: 30px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">Experiments</p>
-    
-                    <div class="options-option-card">
-                        <p class="option-card-title" style="color: var(--white);">${getTextString("OPTIONS_SIDEBAR_NO_FORCE_ROLLOUT")}</p>
-                        <input class="options-toggle-box" onclick="disabledExperimentForceRollout();" style="cursor: pointer; scale: 2; posision: center;" id="experiment-force-rollout" type="checkbox">
-                    </div>
-    
-                    <div id="experiments-container-output"></div>
-    
-                `;
-    
-                if (localStorage.experiment_force_rollout == "false") {
-                    document.getElementById("experiment-force-rollout").checked = true;
-                }
-    
-                experimentsList.forEach(({ title, id, name, treatments, needs_api_token, not_needed }) => {
-                    if (not_needed != "true") {
-                        try {
-    
-                            let experimentCard = document.createElement("div");
-        
-                            experimentCard.classList.add('options-option-card');
-                            experimentCard.innerHTML = `
-                                <p class="option-card-title">${title}</p>
-                                <p class="new-experiment-subtext">${id}</p>
-                                <select id="${name}_treatment_container" class="experiment-treatment-picker">
-                                </select>
-                                <button class="new-experiment-clear-button" onclick="clearSetExperiment('${name}')">Clear</button>
-                            `;
-        
-                            if (needs_api_token === "true") {
-                                let apiNotice = document.createElement("p");
-        
-                                apiNotice.classList.add('new-experiment-subtext-api-notice');
-                                apiNotice.textContent = getTextString("OPTIONS_SIDEBAR_EXPERIMENTS_API_PASSWORD")
-        
-                                experimentCard.appendChild(apiNotice);
-                            }
-        
-        
-                            document.getElementById("experiments-container-output").appendChild(experimentCard);
-        
-                            const treatmentPicker = document.getElementById(`${name}_treatment_container`);
-                    
-                            if (!treatmentPicker) return; // Skip if element doesn't exist
-                    
-                            populateExperimentOptions(treatmentPicker, treatments);
-                    
-                            const storedTreatment = localStorage.getItem(name);
-                            if (storedTreatment) {
-                                treatmentPicker.value = storedTreatment;
-                            }
-                    
-                            treatmentPicker.addEventListener("change", () => {
-                                localStorage.setItem(name, treatmentPicker.value);
-                            });
-                    
-                        } catch (error) {
-                            console.error(`Error setting up experiment: ${name}`, error);
-                        }
-                    }
-                });
-                
-                function populateExperimentOptions(selectElement, treatments) {
-                    treatments.forEach((treatment) => {
-                        const optElement = document.createElement("option");
-                        optElement.value = treatment;
-                        optElement.textContent = treatment;
-                        selectElement.appendChild(optElement);
-                    });
-                }
-
-
-                testFetchAPIList.forEach(({ title, id, name, treatments, needs_api_token, not_needed }) => {
-                    if (not_needed != "true") {
-                        try {
-    
-                            let experimentCard = document.createElement("div");
-        
-                            experimentCard.classList.add('options-option-card');
-                            experimentCard.innerHTML = `
-                                <p class="option-card-title">${title}</p>
-                                <p class="new-experiment-subtext">${id}</p>
-                                <select id="${name}_treatment_container" class="experiment-treatment-picker">
-                                </select>
-                                <button class="new-experiment-clear-button" onclick="testFetchAPI('${name}')">Fetch</button>
-                            `;
-        
-                            if (needs_api_token === "true") {
-                                let apiNotice = document.createElement("p");
-        
-                                apiNotice.classList.add('new-experiment-subtext-api-notice');
-                                apiNotice.textContent = getTextString("OPTIONS_SIDEBAR_EXPERIMENTS_TEST_FETCH_API")
-        
-                                experimentCard.appendChild(apiNotice);
-                            }
-        
-        
-                            document.getElementById("test-fetch-apis-container").appendChild(experimentCard);
-        
-                            const treatmentPicker = document.getElementById(`${name}_treatment_container`);
-                    
-                            if (!treatmentPicker) return; // Skip if element doesn't exist
-                    
-                            populateTestFetchOptions(treatmentPicker, treatments);
-                    
-                            const storedTreatment = localStorage.getItem(name);
-                            if (storedTreatment) {
-                                treatmentPicker.value = storedTreatment;
-                            }
-                    
-                            treatmentPicker.addEventListener("change", () => {
-                                localStorage.setItem(name, treatmentPicker.value);
-                            });
-                    
-                        } catch (error) {
-                            console.error(`Error setting up experiment: ${name}`, error);
-                        }
-                    }
-                });
-                
-                function populateTestFetchOptions(selectElement, treatments) {
-                    treatments.forEach((treatment) => {
-                        const optElement = document.createElement("option");
-                        optElement.value = treatment;
-                        optElement.textContent = treatment;
-                        selectElement.appendChild(optElement);
-                    });
-                }
-    
-    
-                document.getElementById("new-options-dismissible-content-container").innerHTML = `
-    
-                    <p class="center-text" style="font-size: 30px; margin-top: 20px; margin-bottom: 0px; color: var(--white);">${getTextString("OPTIONS_SIDEBAR_DISMISSIBLE_CONTENT")}</p>
-    
-                    <div id="dismissible-content-container-output"></div>
-    
-                `;
-    
-                dismissibleContentList.forEach(({ title, id, name, treatments, needs_api_token }) => {
-                    try {
-    
-                        let experimentCard = document.createElement("div");
-    
-                        experimentCard.classList.add('options-option-card');
-                        experimentCard.innerHTML = `
-                            <p class="option-card-title">${title}</p>
-                            <p class="new-experiment-subtext">${id}</p>
-                            <select id="${name}_treatment_container" class="experiment-treatment-picker">
-                            </select>
-                        `;
-    
-    
-                        document.getElementById("dismissible-content-container-output").appendChild(experimentCard);
-    
-                        const treatmentPicker = document.getElementById(`${name}_treatment_container`);
-                
-                        if (!treatmentPicker) return; // Skip if element doesn't exist
-                
-                        populateDismissibleContentOptions(treatmentPicker, treatments);
-                
-                        const storedTreatment = localStorage.getItem(name);
-                        if (storedTreatment) {
-                            treatmentPicker.value = storedTreatment;
-                        }
-                
-                        treatmentPicker.addEventListener("change", () => {
-                            localStorage.setItem(name, treatmentPicker.value);
-                        });
-                
-                    } catch (error) {
-                        console.error(`Error setting up experiment: ${name}`, error);
-                    }
-                });
-                
-                function populateDismissibleContentOptions(selectElement, treatments) {
-                    treatments.forEach((treatment) => {
-                        const optElement = document.createElement("option");
-                        optElement.value = treatment;
-                        optElement.textContent = treatment;
-                        selectElement.appendChild(optElement);
-                    });
-                }
     
                 if (localStorage.unreleased_discord_collectibles == "true") {
                     document.getElementById("unpublished-collectibles-box").checked = true;
