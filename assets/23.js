@@ -61,6 +61,7 @@ OPTIONS_EXTRA_PROFILE_REMOVE_AVATAR = "Remove Avatar";
 OPTIONS_EXTRA_PROFILE_CHANGE_BANNER = "Upload Banner";
 OPTIONS_EXTRA_PROFILE_REMOVE_BANNER = "Remove Banner";
 OPTIONS_EXTRA_PROFILE_FILE_TOO_BIG = "File too large!";
+OPTIONS_EXTRA_PROFILE_FILE_TOO_BIG_SUMMARY = "The file you uploaded is too large.";
 OPTIONS_EXTRA_PROFILE_ERROR_1 = "Cannot edit profile when logged in.";
 OPTIONS_EXTRA_PROFILE_ERROR_2 = "Your profile is synced with your Discord profile.";
 OPTIONS_EXTRA_PROFILE_ERROR_3 = "Preview:";
@@ -126,6 +127,12 @@ ORB_CONVERTER_TAB_DOCUMENT_TITLE = "Orb Converter";
 ITEM_DEBUG_TAB_TITLE = "api v1 Item Tool";
 ITEM_DEBUG_TAB_PAGE_TITLE = "Tools > api v1 Item Tool";
 ITEM_DEBUG_TAB_DOCUMENT_TITLE = "api v1 Item Tool";
+
+ITEM_SEARCH_INPUT_PLACEHOLDER = "Search Name or SKU ID";
+
+
+
+
 QUICK_INFO_PAGE_TITLE = "Quick Info";
 SHOP_NOT_LOAD_ERROR_1 = "Well, this is awkward.";
 SHOP_NOT_LOAD_ERROR_2 = "Hmmm, we weren&#8217;t able to load the shop. Check back later.";
@@ -259,22 +266,48 @@ LOREM_IPSUM = "Lorem ipsum";
 APP_VERSION = "App Version: ";
 
 
+
+
+// Account Creator
+
+ACCOUNT_CREATOR_BASIC_HEADER = "Basic";
+ACCOUNT_CREATOR_STANDARD_HEADER = "Standard";
+
+ACCOUNT_CREATOR_BASIC_LOG_IN_TITLE = "Basic Log In";
+ACCOUNT_CREATOR_BASIC_LOG_IN_DESC = "Keep things simple.";
+
+ACCOUNT_CREATOR_STANDARD_LOG_IN_TITLE = "Standard Log In";
+ACCOUNT_CREATOR_STANDARD_LOG_IN_DESC = "Full time Shop Archives user.";
+
+ACCOUNT_CREATOR_PERKS_1 = "Preview your Discord profile across the website.";
+ACCOUNT_CREATOR_PERKS_2 = "Write reviews for categories.";
+ACCOUNT_CREATOR_PERKS_3 = "More user settings.";
+ACCOUNT_CREATOR_PERKS_4 = "Beta Program (Early access to new features).";
+
+ACCOUNT_CREATOR_LOGIN_DISCLAIMER1 = "Discord will log you out automatically.";
+ACCOUNT_CREATOR_LOGIN_DISCLAIMER2 = "Log me out after";
+
+ACCOUNT_CREATOR_DISCLAIMER = "By clicking 'Log In', you agree to the Shop Archives ";
+ACCOUNT_CREATOR_DISCLAIMER_PRIVACY_POLICY = "Privacy Policy.";
+
+
 // Cateogry Modal
 
 SHOP_CATEGORY_MODAL_ASSETS_TAB = "Assets";
 SHOP_CATEGORY_MODAL_REVIEWS_TAB = "Reviews";
 SHOP_CATEGORY_MODAL_REVIEWS_BETA_TAB = "BETA";
+SHOP_CATEGORY_MODAL_ADMIN_TAB = "Admin";
 
 SHOP_CATEGORY_MODAL_REVIEWS_LOADING = "Loading Reviews...";
 SHOP_CATEGORY_MODAL_REVIEWS_NONE = "No Reviews yet.";
 SHOP_CATEGORY_MODAL_REVIEWS_DISABLED = "Reviews have been disabled for this category.";
-SHOP_CATEGORY_MODAL_REVIEWS_BE_THE_FIRST = "Be the first to Review this item!";
+SHOP_CATEGORY_MODAL_REVIEWS_UNAVAILABLE = "Reviews have been temporarily disabled (Down for maintenance).";
 
 SHOP_CATEGORY_MODAL_REVIEWS_ERROR = "There was an error loading reviews";
 
 SHOP_CATEGORY_MODAL_REVIEWS_WRITE = "Write a review for ";
 SHOP_CATEGORY_MODAL_REVIEWS_EDIT = "Edit your review for ";
-SHOP_CATEGORY_MODAL_REVIEWS_LOGIN = "You must be logged in with Discord to write reviews...";
+SHOP_CATEGORY_MODAL_REVIEWS_LOGIN = "You must have a Standard account to write reviews...";
 
 SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER = "By making a review, you agree to the Shop Archives ";
 SHOP_CATEGORY_MODAL_REVIEWS_DISCLAIMER_PRIVACY_POLICY = "Privacy Policy.";
@@ -332,8 +365,9 @@ MODAL_V3_TAB_HEADER_STAFF_ONLY = "DEVELOPER ONLY";
 // Tabs
 
 MODAL_V3_TAB_TEXT_ACCOUNT = "Account";
-MODAL_V3_TAB_TEXT_WARNINGS = "Warnings";
+MODAL_V3_TAB_TEXT_PROFILE = "Profile";
 MODAL_V3_TAB_TEXT_REVIEWS = "Reviews";
+MODAL_V3_TAB_TEXT_WARNINGS = "Warnings";
 
 MODAL_V3_TAB_TEXT_APPEARANCE = "Appearance";
 MODAL_V3_TAB_TEXT_ACCESSIBILITY = "Accessibility";
@@ -360,10 +394,32 @@ MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_SUMMARY = "The Discord account linked to Sh
 MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_NOT_LOGGED_IN_HEADER = "You are curently not logged in.";
 MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_NOT_LOGGED_IN_SUMMARY = "Log in with Discord to view your account details.";
 
+MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_UNAVAILABLE_HEADER = "Account Settings Temporarily Unavailable";
+MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_UNAVAILABLE_SUMMARY = "We are currently updating the account system, please use the new Profile tab if you want to change your profile.";
+
 MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_DISPLAY_NAME = "Display Name";
 MODAL_V3_TAB_ACCOUNT_DISCORD_ACCOUNT_USERNAME = "Username";
 
 MODAL_V3_TAB_ACCOUNT_LOGIN_WITH_DISCORD_BUTTON = "Log In with Discord";
+
+// Profile
+
+MODAL_V3_TAB_PROFILE_HEADER = "Profile";
+
+MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_HEADER = "Edit Profile";
+MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_SUMMARY = "Your Profile will be seen around the website (only visible to you).";
+
+MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_LOGGED_IN_TITLE = "You are logged in!";
+MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_LOGGED_IN_SUMMARY = "You will need to resync profiles if you want to revert back to your Discord profile.";
+
+MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_CHANGE_DISPLAY_NAME_HEADER = "Display Name / Username";
+MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_CHANGE_DISPLAY_NAME_PLACEHOLDER = "Please Enter A Display Name";
+
+MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_CHANGE_AVATAR_HEADER = "Change Avatar";
+
+MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_CHANGE_BANNER_HEADER = "Change Banner";
+
+MODAL_V3_TAB_PROFILE_DISCORD_PROFILE_CHANGE_BANNER_COLOR_HEADER = "Banner Color";
 
 // Warning
 
@@ -378,6 +434,9 @@ MODAL_V3_TAB_REVIEWS_HEADER = "Reviews";
 
 MODAL_V3_TAB_REVIEWS_DISCORD_ACCOUNT_NOT_LOGGED_IN_HEADER = "You are curently not logged in.";
 MODAL_V3_TAB_REVIEWS_DISCORD_ACCOUNT_NOT_LOGGED_IN_SUMMARY = "Log in with Discord to change your review settings.";
+
+MODAL_V3_TAB_REVIEWS_UNAVAILABLE_HEADER = "Reviews Settings Temporarily Unavailable";
+MODAL_V3_TAB_REVIEWS_UNAVAILABLE_SUMMARY = "We are currently updating the reviews system.";
 
 MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_HEADER = "Filter";
 MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SUMMARY = "Filters what reviews are shown.";
@@ -432,6 +491,23 @@ MODAL_V3_TAB_APPEARANCE_THEME_CUSTOM_SUMMARY = "Your very own custom CSS.";
 
 MODAL_V3_TAB_APPEARANCE_THEME_COMMUNITY_HEADER = "Community Made Themes";
 MODAL_V3_TAB_APPEARANCE_THEME_COMMUNITY_SUMMARY = "Theme custom made by the community.";
+
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_CATEGORY_TABS_HEADER = "Category Tab Style";
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_CATEGORY_TABS_SUMMARY = "Style the tabs on category modals.";
+
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_CATEGORY_TABS_DARK = "Connected";
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_CATEGORY_TABS_TRANSPARENT = "Transparent";
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_CATEGORY_TABS_LEGACY = "Legacy";
+
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_CATEGORY_TABS_SELECTED = "Selected Tab";
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_CATEGORY_TABS_OTHER = "Other Tab";
+
+
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_SHOP_CARDS_HEADER = "Shop Card Style";
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_SHOP_CARDS_SUMMARY = "Style the cards in the shop.";
+
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_SHOP_CARDS_TALL = "Tall";
+MODAL_V3_TAB_APPEARANCE_EXTENDED_STYLES_SHOP_CARDS_STANDARD = "Standard";
 
 // Accessibility
 
