@@ -244,11 +244,6 @@ SHOP_ROLLING_OUT_WARNING = "This item is part of a rollout and will not show up 
 SHOP_MODAL_UNPUBLISHED_WARNING_CONTINUE = "Continue";
 SHOP_MODAL_UNPUBLISHED_WARNING_CONTINUE2 = "Continue and don't show again";
 SHOP_MODAL_UNPUBLISHED_WARNING_GO_BACK = "Go Back";
-DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_TITLE = "NEW! Log in with Discord";
-DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_1 = "Want this to be your Discord profile?";
-DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_2 = "Log in with Discord to keep your profile up to date on Shop Archives!";
-DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_LOG_IN = "Log in with Discord";
-DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_NO_THANKS = "No Thanks";
 CRASH_UH_OH = "Uh Oh! Looks like the app has crashed.";
 CRASH_REFRESH = "We have no idea what you did but you did something bad, refresh and don't do it again.";
 CRASH_SUPPORT = "If this keeps happening, contact support.";
@@ -530,8 +525,8 @@ MODAL_V3_TAB_XP_EVENTS_HEADER = "Events";
 
 MODAL_V3_TAB_XP_EVENTS_ERROR_1 = "There was an error loading XP Events!";
 
-MODAL_V3_TAB_XP_EVENTS_EVENTS_HEADER = "Running events";
-MODAL_V3_TAB_XP_EVENTS_EVENTS_SUMMARY = "Events happening right now.";
+MODAL_V3_TAB_XP_EVENTS_EVENTS_HEADER = "Active Events";
+MODAL_V3_TAB_XP_EVENTS_EVENTS_SUMMARY = "Events can let you earn free XP, keep an eye out for new events!";
 
 // XP Shop
 
@@ -666,3 +661,23 @@ MODAL_V3_TAB_MISC_HEADER = "Miscellaneous";
 
 MODAL_V3_TAB_MISC_REVIEW_CONTENT_OVERRIDE_HEADER = "Override Review Content";
 MODAL_V3_TAB_MISC_REVIEW_CONTENT_OVERRIDE_SUMMARY = "Override the review text for all review";
+
+MODAL_V3_TAB_MISC_UNPUBLISHED_XP_EVENTS_HEADER = "Unpublished XP Events";
+MODAL_V3_TAB_MISC_UNPUBLISHED_XP_EVENTS_SUMMARY = "If you have already loaded XP events you must reload for this to take effect";
+
+MODAL_V3_TAB_MISC_UNPUBLISHED_XP_SHOP_HEADER = "Unpublished XP Shop";
+MODAL_V3_TAB_MISC_UNPUBLISHED_XP_SHOP_SUMMARY = "If you have already loaded the XP shop you must reload for this to take effect";
+
+
+// Dismissible Content
+
+DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_TITLE = "NEW! Log in with Discord";
+DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_1 = "Want this to be your Discord profile?";
+DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_SUMMARY_2 = "Log in with Discord to keep your profile up to date on Shop Archives!";
+DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_LOG_IN = "Log in with Discord";
+DISMISSIBLE_CONTENT_NEW_DISCORD_SIGN_IN_MODAL_NO_THANKS = "No Thanks";
+
+DISMISSIBLE_CONTENT_NEW_CLAIM_100_XP_MODAL_TITLE = "NEW! Claim 100 XP for free";
+DISMISSIBLE_CONTENT_NEW_CLAIM_100_XP_MODAL_SUMMARY_1 = "New users get to claim 100 XP for free, don't forget to claim yours.";
+DISMISSIBLE_CONTENT_NEW_CLAIM_100_XP_MODAL_TAKE_ME_THERE = "Take me there";
+DISMISSIBLE_CONTENT_NEW_CLAIM_100_XP_MODAL_LATER = "Later";

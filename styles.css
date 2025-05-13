@@ -6321,6 +6321,56 @@ data-share-product-card-button {
 
 
 
+.new100FreeXPDismissible {
+    position: absolute;
+    left: 100px;
+    bottom: 70px;
+    width: 300px;
+    height: 240px;
+    z-index: 102;
+    transition: transform 0.5s;
+    animation: home-page-dismissible-content-2024-recap-anim 10s;
+}
+
+.new100FreeXPDismissible-pointer {
+    position: absolute;
+    right: 93px;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+    background-color: var(--new-discord-sign-in-bg);
+    transform: rotate(45deg);
+}
+
+.new100FreeXPDismissible-inner {
+    position: absolute;
+    right: 0;
+    width: 300px;
+    height: 230px;
+    background-image: var(--xp-reward-claim-bg);
+    border-radius: 15px;
+    text-align: center;
+    z-index: 1;
+}
+
+.new100FreeXPDismissible-inner img {
+    width: 210px;
+}
+
+.new100FreeXPDismissible-inner p {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.new100FreeXPDismissible-inner .card-button {
+    width: 200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+
+
 /* Special Reviews */
 
 .review-color-preview {

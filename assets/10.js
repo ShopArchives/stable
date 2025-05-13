@@ -513,6 +513,15 @@ const experimentsList = [
 
 const dismissibleContentList = [
     {
+        title: "Claim 100 XP for free",
+        id: "dismissible_content_new100FreeXP",
+        name: "dismissible_new100FreeXP",
+        treatments: [
+            "Treatment -1: Unseen",
+            "Treatment 1: Seen"
+        ]
+    },
+    {
         title: "Discord Sign In",
         id: "dismissible_content_newLogInWithDiscord",
         name: "dismissible_newLogInWithDiscord",
