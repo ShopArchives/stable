@@ -296,7 +296,8 @@ ACCOUNT_CREATOR_DISCLAIMER_PRIVACY_POLICY = "Privacy Policy.";
 SHOP_CATEGORY_MODAL_ASSETS_TAB = "Assets";
 SHOP_CATEGORY_MODAL_REVIEWS_TAB = "Reviews";
 SHOP_CATEGORY_MODAL_REVIEWS_BETA_TAB = "BETA";
-SHOP_CATEGORY_MODAL_ADMIN_TAB = "Admin";
+SHOP_CATEGORY_MODAL_REWARDS_TAB = "XP Rewards";
+SHOP_CATEGORY_MODAL_REWARDS_NEW_TAB = "NEW";
 
 SHOP_CATEGORY_MODAL_REVIEWS_LOADING = "Loading Reviews...";
 SHOP_CATEGORY_MODAL_REVIEWS_NONE = "No Reviews yet.";
@@ -360,6 +361,7 @@ THEME_PICKER_V2_CUSTOM = "Edit Custon CSS";
 
 MODAL_V3_TAB_HEADER_USER_SETTINGS = "USER SETTINGS";
 MODAL_V3_TAB_HEADER_SITE_SETTINGS = "APP SETTINGS";
+MODAL_V3_TAB_HEADER_XP_PERKS = "XP PERKS";
 MODAL_V3_TAB_HEADER_STAFF_ONLY = "DEVELOPER ONLY";
 
 // Tabs
@@ -372,9 +374,14 @@ MODAL_V3_TAB_TEXT_WARNINGS = "Warnings";
 MODAL_V3_TAB_TEXT_APPEARANCE = "Appearance";
 MODAL_V3_TAB_TEXT_ACCESSIBILITY = "Accessibility";
 
+MODAL_V3_TAB_TEXT_XP_EVENTS = "Events";
+MODAL_V3_TAB_TEXT_XP_GENERAL = "Shop";
+MODAL_V3_TAB_TEXT_XP_INVENTORY = "Inventory";
+
 MODAL_V3_TAB_TEXT_EXPERIMENTS = "Experiments";
 MODAL_V3_TAB_TEXT_DISMISSIBLE_CONTENT = "Dismissible Content";
 MODAL_V3_TAB_TEXT_API_TEST_FETCH = "API Testing";
+MODAL_V3_TAB_TEXT_CLAIMABLES_PURCHASE = "Claimables Purchase Test";
 MODAL_V3_TAB_TEXT_REVIEWS_DATABASE = "Reviews Panel";
 MODAL_V3_TAB_TEXT_LOCAL_STORAGE = "Local Storage";
 MODAL_V3_TAB_TEXT_MISC = "Miscellaneous";
@@ -517,6 +524,56 @@ MODAL_V3_TAB_ACCESSIBILITY_REDUCED_MOTION_HEADER = "Reduced Motion";
 MODAL_V3_TAB_ACCESSIBILITY_REDUCED_MOTION_SUMMARY = "Reduce the amount and intensity of animations,";
 MODAL_V3_TAB_ACCESSIBILITY_REDUCED_MOTION_SUMMARY2 = " hover effects and other moving effects across Shop Archives.";
 
+// XP Events
+
+MODAL_V3_TAB_XP_EVENTS_HEADER = "Events";
+
+MODAL_V3_TAB_XP_EVENTS_ERROR_1 = "There was an error loading XP Events!";
+
+MODAL_V3_TAB_XP_EVENTS_EVENTS_HEADER = "Running events";
+MODAL_V3_TAB_XP_EVENTS_EVENTS_SUMMARY = "Events happening right now.";
+
+// XP Shop
+
+MODAL_V3_TAB_XP_SHOP_HEADER = "XP Shop";
+
+MODAL_V3_TAB_XP_SHOP_XP_LEVEL_HEADER = "Your XP";
+
+MODAL_V3_TAB_XP_SHOP_CLAIMABLES_FEATURED = "Featured Perks";
+MODAL_V3_TAB_XP_SHOP_CLAIMABLES_FEATURED_SUMMARY = "Top picks from us we think you might like.";
+
+MODAL_V3_TAB_XP_SHOP_CLAIMABLES_ADDITIONAL = "Additional Perks";
+
+MODAL_V3_TAB_XP_SHOP_ERROR_1 = "There was an error!";
+MODAL_V3_TAB_XP_SHOP_ERROR_2 = "There was an error loading XP Perks!";
+MODAL_V3_TAB_XP_SHOP_ERROR_3 = "There was an error loading your XP balance!";
+
+MODAL_V3_TAB_XP_SHOP_CLAIM_MODAL_HEADER = "Claim Perk";
+
+MODAL_V3_TAB_XP_SHOP_CLAIM_REWARD_MODAL_HEADER = "Congratulations!";
+MODAL_V3_TAB_XP_SHOP_CLAIM_REWARD_MODAL_SUMMARY = "You can claim your ";
+
+MODAL_V3_TAB_XP_SHOP_CLAIM_MODAL_NOT_ENOUGH_ERROR = "You don't have enough XP to claim this item.";
+
+MODAL_V3_TAB_XP_SHOP_CANT_CLAIM_1 = "Cannot Claim Perk.";
+MODAL_V3_TAB_XP_SHOP_CANT_CLAIM_2 = "You do not meet the requirements to claim this perk.";
+
+MODAL_V3_TAB_XP_SHOP_CLAIM_MODAL_1 = "Claiming this item means you have a limited licence to use this item on Shop Archives. This item is non-refundable.";
+MODAL_V3_TAB_XP_SHOP_CLAIM_MODAL_2 = "Once you've claimed this item, your Discord server tag will be applied to all your existing and future reviews. Note that if you don't have a Discord server tag applied on your profile, this item is useless.";
+MODAL_V3_TAB_XP_SHOP_CLAIM_MODAL_3 = "Review colors will not actually be animated. Once you've claimed this item, you'll be able to pick a color before sending your review.";
+MODAL_V3_TAB_XP_SHOP_CLAIM_MODAL_4 = "Once you've claimed this item, you'll be able to write reviews with up to 200 characters.";
+MODAL_V3_TAB_XP_SHOP_CLAIM_MODAL_5 = "Once you've claimed this item, your Discord avatar decoration will be applied to all your existing and future reviews. Note that if you don't have a Discord avatar decoration applied on your profile, this item is useless.";
+
+// XP Inventory
+
+MODAL_V3_TAB_XP_INVENTORY_HEADER = "Inventory";
+
+MODAL_V3_TAB_XP_INVENTORY_ERROR_1 = "There was an error loading your XP Inventory!";
+
+MODAL_V3_TAB_XP_INVENTORY_CLAIMS_HEADER = "Claimed Items";
+
+MODAL_V3_TAB_XP_INVENTORY_REWARDS_HEADER = "Claimed Rewards";
+
 // Experiments
 
 MODAL_V3_TAB_EXPERIMENTS_HEADER = "Experiments";
@@ -525,7 +582,7 @@ MODAL_V3_TAB_EXPERIMENTS_DISABLE_FORCE_ROLLOUT_HEADER = "Disable Force Rollouts"
 MODAL_V3_TAB_EXPERIMENTS_DISABLE_FORCE_ROLLOUT_SUMMARY = "Disables the client from forcing the default experiment treatment.";
 
 MODAL_V3_TAB_EXPERIMENTS_ROLLOUT = "Rollout: ";
-MODAL_V3_TAB_EXPERIMENTS_API_WARNING = "You may need to add your user password or discord auth token to the bypass list in the api backend.";
+MODAL_V3_TAB_EXPERIMENTS_API_WARNING = "This experiment requires api/database changes, without them it may not work as intended.";
 MODAL_V3_TAB_EXPERIMENTS_API_WARNING2 = "You are not logged in as staff, some experiments may not work as intended.";
 
 // Dismissible Content
@@ -568,6 +625,23 @@ MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_INFO = "Admin";
 MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_INFO_SUMMARY = "You will need to add your user id to the admin list in the api backend (refresh list after deleting a review).";
 MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_DELETE_REVIEW = "Delete Review";
 MODAL_V3_TAB_API_TESTING_DATABASE_REVIEWS_ADMIN_BAN_USER = "Ban User";
+
+// Claimables Test
+
+MODAL_V3_TAB_CLAIMABLES_PURCHASE_HEADER = "Claimables Purchase Test";
+
+MODAL_V3_TAB_CLAIMABLES_PURCHASE_TITLE_HEADER = "Open Claimables Modal Test";
+MODAL_V3_TAB_CLAIMABLES_PURCHASE_TITLE_SUMMARY = "Open Claim Claimable Modal";
+
+MODAL_V3_TAB_CLAIMABLES_PURCHASE_OPEN_MODAL_TITLE = "Claimable ID";
+MODAL_V3_TAB_CLAIMABLES_PURCHASE_OPEN_MODAL_OPEN = "Open";
+
+MODAL_V3_TAB_CLAIMABLES_REWARD_CLAIM_TITLE_HEADER = "Open Rewards Modal Test";
+MODAL_V3_TAB_CLAIMABLES_REWARD_CLAIM_TITLE_SUMMARY = "Open Claim Reward Modal";
+
+MODAL_V3_TAB_CLAIMABLES_REWARD_CLAIM_OPEN_MODAL_TITLE = "Claimable ID";
+MODAL_V3_TAB_CLAIMABLES_REWARD_CLAIM_OPEN_MODAL_OPEN = "Open";
+
 
 // Local Storage
 

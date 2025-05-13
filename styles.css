@@ -47,6 +47,7 @@
     --modalv3-text-input-background: #25272b;
     --category-modal-tab-bg: #2B2D31;
     --category-modal-tab-selected-bg: #4f5155;
+    --xp-reward-claim-bg: linear-gradient(45deg, #292C64 ,#835ABA);
 }
 
 .theme-midnight {
@@ -3122,7 +3123,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1001;
+    z-index: 501;
     opacity: 0;
     transform: scale(1.1);
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -4099,7 +4100,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1001;
+    z-index: 501;
     opacity: 0;
     transform: scale(0);
     transition: opacity 0.3s ease, transform 0.3s ease;
@@ -4112,7 +4113,6 @@ body {
 
 .modalv2-inner {
     position: relative;
-    z-index: 1001;
     background-color: var(--background-tertiary);
     padding: 20px;
     border-radius: 10px;
@@ -4377,7 +4377,7 @@ body {
 
 
 .modalv2-back {
-    z-index: 1000;
+    z-index: 500;
     position: fixed;
     width: 200%;
     height: 200%;
@@ -5434,7 +5434,7 @@ data-share-product-card-button {
 
 .category-modalv2-inner {
     position: relative;
-    z-index: 1001;
+    z-index: 501;
     background-color: var(--background-primary);
     padding: 20px;
     border-radius: 10px;
@@ -5491,7 +5491,7 @@ data-share-product-card-button {
 .category-modal-inner-content-container {
     position: absolute;
     margin-top: 44px;
-    height: 540px;
+    height: 550px;
     width: 98%;
     border-radius: 5px;
     overflow-x: hidden;
@@ -5501,14 +5501,14 @@ data-share-product-card-button {
 }
 
 .category-modal-inner-content-container:has(.review-element, .review-element-notice, .review-element-warning) {
-    height: 470px;
+    height: 500px;
 }
 
 .category-modal-content-container {
     display: flex;
     margin-top: 10px;
     gap: 10px;
-    width: 300px;
+    width: 600px;
 }
 
 .change-category-modal-content-button {
@@ -5622,20 +5622,39 @@ data-share-product-card-button {
 }
 
 
+
+
+.category-rewards-new-tag {
+    display: flex;
+    padding: 2px !important;
+    padding-left: 5px !important;
+    padding-right: 5px !important;
+    margin: 0;
+    margin-top: 8px !important;
+    margin-right: 10px !important;
+    background-color: #9a38f6;
+    color: white !important;
+    border-radius: 5px;
+    width: auto;
+    height: 20px;
+    font-family: gg sans seven;
+}
+
+
 /* Reviews */
 
 .category-reviews-beta-tag {
     display: flex;
     padding: 2px !important;
     padding-left: 5px !important;
-    padding-right: 3px !important;
+    padding-right: 5px !important;
     margin: 0;
     margin-top: 8px !important;
     margin-right: 10px !important;
     background-color: var(--brand-500);
     color: white !important;
     border-radius: 5px;
-    width: 40px;
+    width: auto;
     height: 20px;
     font-family: gg sans seven;
 }
@@ -5840,9 +5859,11 @@ data-share-product-card-button {
     font-size: large;
     font-weight: 600;
     color: var(--white);
+    margin-left: 5px;
 }
 
 .shop-modal-review-name-container {
+    position: relative;
     display: flex;
     height: 40px;
     gap: 5px;
@@ -5852,6 +5873,13 @@ data-share-product-card-button {
     height: 30px;
     width: 30px;
     border-radius: 50%;
+}
+
+.shop-modal-review-avatar-deco-img {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    scale: 1.26;
 }
 
 .shop-modal-review-name-container .shop-modal-review-name {
@@ -5889,6 +5917,31 @@ data-share-product-card-button {
 .review-badge {
     width: 24px;
     height: 24px;
+}
+
+.shop-modal-review-name-container .shop-modal-review-server-tag-container {
+    display: flex;
+    margin-top: 0px;
+    margin-bottom: auto;
+    background-color: var(--background-secondary);
+    border-radius: 5px;
+    padding: 2px;
+    height: 25px;
+    gap: 2px;
+    user-select: none;
+}
+
+.shop-modal-review-name-container .shop-modal-review-server-tag-container img {
+    display: flex;
+    margin: 0;
+    scale: 0.8;
+}
+
+.shop-modal-review-name-container .shop-modal-review-server-tag-container p {
+    display: flex;
+    margin: 0;
+    margin-top: 2px;
+    margin-right: 2px;
 }
 
 .shop-modal-review-name-container .shop-modal-review-nametag-moderator {
@@ -5961,7 +6014,7 @@ data-share-product-card-button {
     bottom: 15px;
     right: 20px;
     display: flex;
-    gap: 15px;
+    gap: 10px;
 }
 
 .report-review-report-card-option {
@@ -6014,6 +6067,26 @@ data-share-product-card-button {
     background-color: var(--button-danger-hover);
 }
 
+.report-review-bottom .select-button {
+    background-color: var(--brand-500);
+}
+
+.report-review-bottom .select-button:hover {
+    background-color: var(--brand-500-hover);
+}
+
+.report-review-bottom .purchase-button {
+    background-color: var(--brand-green);
+}
+
+.report-review-bottom .purchase-button:hover {
+    background-color: var(--brand-green-hover);
+}
+
+.report-review-bottom .purchase-button:disabled {
+    background-color: var(--brand-green-hover);
+}
+
 .report-review-bottom .cancel-button {
     background-color: var(--button-unimportant-bg);
 }
@@ -6023,10 +6096,370 @@ data-share-product-card-button {
 }
 
 
+/* XP Rewards Category Modal */
+
+.xp-reward-promo-card {
+    position: relative;
+    background-image: var(--xp-reward-claim-bg);
+    border-radius: 5px;
+    margin-bottom: 14px;
+    width: 100%;
+}
+
+.xp-reward-promo-card .inner {
+    padding: 20px;
+}
+
+.xp-reward-promo-card .inner .title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.xp-reward-promo-card .inner .sub {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.xp-reward-promo-card .inner .link {
+    margin: 0;
+    font-size: 15px;
+    text-decoration: underline !important;
+    color: var(--white);
+}
+
+.xp-reward-promo-card .inner .button {
+    position: absolute;
+    display: block;
+    margin: 5px 0;
+    padding: 10px 20px;
+    background-color: var(--brand-500);
+    color: #fff;
+    border: 2px var(--6) solid;
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto;
+    top: 30px;
+    right: 20px;
+    transition: background-color 0.2s ease;
+    z-index: 5;
+}
+
+.xp-reward-promo-card .inner .button:hover {
+    background-color: var(--brand-500-hover);
+}
 
 
 
 
+
+
+
+/* XP Shop */
+
+.my-xp-balance-container {
+    background-color: var(--background-secondary);
+    border-radius: 7px;
+    height: 25px;
+    min-width: 200px;
+    width: fit-content;
+    padding: 5px;
+}
+
+.my-xp-balance-container-inner {
+    background-color: var(--background-tertiary);
+    border-radius: 5px;
+    width: 100%;
+    height: 100%;
+}
+
+.my-xp-balance {
+    margin: 0;
+    font-size: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+.xp-card-shop-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    background-color: var(--background-secondary);
+    padding: 10px;
+    border-radius: 10px;
+    gap: 10px;
+}
+
+.xp-card-shop {
+    position: relative;
+    background-color: var(--background-primary);
+    padding: 10px;
+    padding-bottom: 50px;
+    border-radius: 10px;
+    overflow: hidden;
+    user-select: none;
+}
+
+
+.xp-card-featured-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background-color: var(--background-secondary);
+    padding: 10px;
+    border-radius: 10px;
+    gap: 10px;
+}
+
+.xp-card-featured {
+    position: relative;
+    background-color: var(--background-primary);
+    padding: 10px;
+    padding-bottom: 50px;
+    border-radius: 10px;
+    overflow: hidden;
+    user-select: none;
+}
+
+.xp-card-featured-block {
+    position: absolute;
+    background-color: #000000bd;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-no-text-container .link {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    align-items: center;
+    justify-content: center;
+    text-decoration: underline !important;
+}
+
+.modalv3-xp-card-featured-title {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 20px;
+    font-family: ABC Ginto Nord;
+}
+
+.modalv3-xp-card-featured-summary {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.modalv3-xp-card-featured-price {
+    position: absolute;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+    left: 10px;
+    bottom: 5px;
+}
+
+.xp-card-featured-container .review-element {
+    position: absolute;
+    width: 2000px;
+    bottom: 40px;
+}
+
+.xp-card-featured-container:has(.review-element) .review-element-padding {
+    height: 100px;
+}
+
+
+
+.xp-inventory-card {
+    position: relative;
+    background-color: var(--background-tertiary);
+    border-radius: 5px;
+    margin-bottom: 14px;
+    width: 100%;
+}
+
+.xp-inventory-card .inner {
+    padding: 20px;
+}
+
+.xp-inventory-card .inner .title {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.xp-inventory-card .inner .sub {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 900;
+}
+
+.xp-inventory-card .inner .add {
+    margin: 0;
+    font-size: 25px;
+    position: absolute;
+    color: var(--ratio-green);
+    top: 30px;
+    right: 20px;
+}
+
+.xp-inventory-card .inner .remove {
+    margin: 0;
+    font-size: 25px;
+    position: absolute;
+    color: var(--button-danger-background);
+    top: 30px;
+    right: 20px;
+}
+
+
+
+
+/* Special Reviews */
+
+.review-color-preview {
+    animation: w3dt86bd4t8654 20s infinite;
+}
+
+@keyframes w3dt86bd4t8654 {
+    0% {background-color: darkred;}
+    50% {background-color: darkblue;}
+    100% {background-color: darkred;}
+}
+
+
+
+
+/* Claimables Purchase */
+
+
+.modalv2-inner.claimables-purchase {
+    position: relative;
+    width: 400px;
+    height: 500px;
+    background-color: var(--background-primary);
+    display: block;
+}
+
+.modalv2-inner.claimables-purchase [data-modal-top-product-buttons] {
+    top: 15px;
+    z-index: 1002;
+}
+
+.modalv2-inner.claimables-purchase .title {
+    margin: 0;
+    font-size: 20px;
+}
+
+.claimable-modal-preview {
+    position: relative;
+    background-color: var(--background-tertiary);
+    border-radius: 5px;
+    padding: 15px;
+    margin-top: 15px;
+}
+
+.modalv2-inner.claimables-purchase .sub-header {
+    margin: 0;
+    font-size: 16px;
+}
+
+.modalv2-inner.claimables-purchase .sub-text {
+    margin: 0;
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--8);
+}
+
+.modalv2-inner.claimables-purchase .sub-text-bold {
+    margin: 0;
+    margin-top: 5px;
+    font-size: 14px;
+    color: var(--white);
+}
+
+.modalv2-inner.claimables-purchase img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.claimable-modal-img-block {
+    height: 140px;
+}
+
+.claimables-purchase .report-review-bottom {
+    width: 100%;
+    justify-content: right;
+}
+
+
+/* Claimables Reward Claim */
+
+
+.modalv2-inner.claimables-reward {
+    position: relative;
+    width: 400px;
+    height: 300px;
+    background-image: var(--xp-reward-claim-bg);
+    display: block;
+    text-align: center;
+}
+
+.modalv2-inner.claimables-reward [data-modal-top-product-buttons] {
+    top: 15px;
+    z-index: 1002;
+}
+
+.modalv2-inner.claimables-reward .title {
+    margin: 0;
+    font-size: 22px;
+}
+
+.modalv2-inner.claimables-reward .sub-header {
+    margin: 0;
+    font-size: 18px;
+}
+
+.modalv2-inner.claimables-reward .link {
+    margin: 0;
+    font-size: 15px;
+    text-decoration: underline !important;
+    color: var(--white);
+}
+
+.modalv2-inner.claimables-reward .big-text {
+    position: absolute;
+    font-family: ABC Ginto Nord;
+    top: 15px;
+    left: 0px;
+    width: 100%;
+    font-size: 35px;
+    color: var(--white);
+}
+
+.modalv2-inner.claimables-reward img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.claimable-reward-modal-img-block {
+    height: 140px;
+}
+
+.claimables-reward .report-review-bottom {
+    width: 100%;
+    justify-content: right;
+}
 
 
 
