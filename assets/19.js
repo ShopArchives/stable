@@ -1,6 +1,6 @@
 
 
-app_version1 = "418"
+app_version1 = "420"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -17986,12 +17986,21 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 <div class="modalv3-content-card-1">
                     <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_XP_EVENTS_EVENTS_HEADER")}</h2>
                     <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_XP_EVENTS_EVENTS_SUMMARY")}</p>
-
-                    <p class="modalv3-xp-card-featured-title" id="modalv3-xp-events-loading">Loading Events...</p>
+                    <a class="xp-reward-event-link" href="https://github.com/ShopArchives/support/blob/main/article/3-xp-and-perks.md">Learn More about XP</a>
 
                     <hr style="opacity: 0;">
 
+                    <div class="xp-inventory-card" id="modalv3-xp-events-loading">
+                        <div class="inner">
+                            <p class="title">Loading Events...</p>
+                            <p class="sub">Events are currently being loaded, please wait...</p>
+                        </div>
+                    </div>
+
                     <div style="display: none;" id="modalv3-xp-events-output">
+                    </div>
+
+                    <div style="display: none;" id="modalv3-xp-events-output2">
                     </div>
                 </div>
             `;
@@ -18039,55 +18048,112 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
             function fetchXpEvents() {
                 document.getElementById("modalv3-xp-events-output").innerHTML = ``;
+                document.getElementById("modalv3-xp-events-output2").innerHTML = ``;
                 if (Array.isArray(claimablesPromotionsCache) && claimablesPromotionsCache.length != 0) {
                     claimablesPromotionsCache.forEach(promo => {
+
+                        let promoBanner = document.createElement("div");
+    
+                        promoBanner.classList.add("xp-reward-event-card");
                         
                         if (promo.already_claimed === false) {
-    
-                            let promoBanner = document.createElement("div");
-    
-                            promoBanner.classList.add("xp-reward-promo-card");
-    
+
                             if (promo.category_sku_id) {
                                 promoBanner.innerHTML = `
                                     <div class="inner">
+                                        <div data-xp-event-expires-at></div>
                                         <p class="title">${promo.name}</p>
                                         <p class="sub">You have ${promo.xp_reward.toLocaleString()} XP waiting for you!</p>
-                                        <a class="link" href="https://github.com/ShopArchives/support/blob/main/article/3-xp-and-perks.md">Learn More about XP</a>
                                         <button class="button" onclick="setParams({page: 'leaks', scrollTo: '${promo.category_sku_id}'}); location.reload();">Take me there</button>
                                     </div>
                                 `;
                             } else {
                                 promoBanner.innerHTML = `
                                     <div class="inner">
+                                        <div data-xp-event-expires-at></div>
                                         <p class="title">${promo.name}</p>
                                         <p class="sub">You have ${promo.xp_reward.toLocaleString()} XP waiting for you!</p>
-                                        <a class="link" href="https://github.com/ShopArchives/support/blob/main/article/3-xp-and-perks.md">Learn More about XP</a>
                                         <button class="button" onclick="openClaimablesRewardClaimModal('${promo.claimable_id}')">Claim ${promo.xp_reward.toLocaleString()} XP</button>
                                     </div>
                                 `;
                             }
+
+                            const expiresAt = new Date(promo.expires_at);
+                            
+                            if (promo.expires_at && !isNaN(expiresAt.getTime())) {
+                    
+                                function updateTimer() {
+                                    const now = new Date();
+                                    const timeDiff = expiresAt - now;
+                    
+                                    if (timeDiff <= 0) {
+                                        promoBanner.classList.add("hidden");
+                                        clearInterval(timerInterval);
+                                    } else {
+                                        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                                        const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                                        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                    
+                                        promoBanner.querySelector("[data-xp-event-expires-at]").innerHTML = `
+                                            <p class="xp-event-expires-at-text">ENDS IN ${days}d ${hours}h ${minutes}m ${seconds}s</p>
+                                        `;
+                                    }
+                                }
+                    
+                                const timerInterval = setInterval(updateTimer, 1000);
+                                updateTimer();
+                            }
     
                             document.getElementById("modalv3-xp-events-output").appendChild(promoBanner);
                         } else {
-    
-                            let promoBanner = document.createElement("div");
-    
-                            promoBanner.classList.add("xp-reward-promo-card");
+
+                            promoBanner.classList.add("claimed");
     
                             promoBanner.innerHTML = `
                                 <div class="inner">
+                                    <div data-xp-event-expires-at></div>
                                     <p class="title">${promo.name}</p>
                                     <p class="sub">You already claimed this reward for ${promo.xp_reward.toLocaleString()} XP.</p>
-                                    <a class="link" href="https://github.com/ShopArchives/support/blob/main/article/3-xp-and-perks.md">Learn More about XP</a>
+                                    <button class="button" disabled>Claimed</button>
                                 </div>
                             `;
+
+                            const expiresAt = new Date(promo.expires_at);
+                            
+                            if (promo.expires_at && !isNaN(expiresAt.getTime())) {
+                    
+                                function updateTimer() {
+                                    const now = new Date();
+                                    const timeDiff = expiresAt - now;
+                    
+                                    if (timeDiff <= 0) {
+                                        promoBanner.classList.add("hidden");
+                                        clearInterval(timerInterval);
+                                    } else {
+                                        const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                                        const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                        const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                                        const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                    
+                                        promoBanner.querySelector("[data-xp-event-expires-at]").innerHTML = `
+                                            <p class="xp-event-expires-at-text">ENDS IN ${days}d ${hours}h ${minutes}m ${seconds}s</p>
+                                        `;
+                                    }
+                                }
+                    
+                                const timerInterval = setInterval(updateTimer, 1000);
+                                updateTimer();
+                            }
     
-                            document.getElementById("modalv3-xp-events-output").appendChild(promoBanner);
+                            document.getElementById("modalv3-xp-events-output2").appendChild(promoBanner);
                         }
                     });
     
                     document.getElementById("modalv3-xp-events-output").style.display = 'unset';
+                    document.getElementById("modalv3-xp-events-output2").style.display = 'unset';
                     document.getElementById("modalv3-xp-events-loading").style.display = 'none';
                 } else {
                     document.getElementById("modalv3-xp-events-output").style.display = 'unset';
@@ -18127,13 +18193,21 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                             <h2 class="my-xp-balance" id="modalv3-xp-balance-text"> ... </h2>
                         </div>
                     </div>
+                    <a class="xp-reward-event-link" onclick="setModalv3InnerContent('xp_events')">Get More XP</a>
                 </div>
                 <hr>
                 <div class="modalv3-content-card-1">
                     <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_XP_SHOP_CLAIMABLES_FEATURED")}</h2>
                     <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_XP_SHOP_CLAIMABLES_FEATURED_SUMMARY")}</p>
 
-                    <p class="modalv3-xp-card-featured-title" id="modalv3-xp-perks-loading">Loading Perks...</p>
+                    <div style="display: grid;" id="modalv3-xp-perks-loading" class="xp-card-featured-container">
+                        <div class="xp-card-featured">
+                            <p class="modalv3-xp-card-featured-title">Loading Perks...</p>
+                        </div>
+                        <div class="xp-card-featured">
+                            <p class="modalv3-xp-card-featured-title">Loading Perks...</p>
+                        </div>
+                    </div>
 
                     <div style="display: none;" id="modalv3-xp-perks-featured-output" class="xp-card-featured-container">
                     </div>
@@ -18506,9 +18580,14 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 <div class="modalv3-content-card-1">
                     <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_XP_INVENTORY_CLAIMS_HEADER")}</h2>
 
-                    <p class="modalv3-xp-card-featured-title" id="modalv3-xp-inventory-loading">Loading Inventory...</p>
-
                     <hr style="opacity: 0;">
+
+                    <div class="xp-inventory-card" id="modalv3-xp-inventory-loading">
+                        <div class="inner">
+                            <p class="title">Loading Inventory...</p>
+                            <p class="sub">Your inventory is currently being loaded, please wait...</p>
+                        </div>
+                    </div>
 
                     <div style="display: none;" id="modalv3-xp-inventory-output">
                     </div>
