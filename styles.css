@@ -3526,6 +3526,8 @@ body {
 
 
 .modalv3-content-ratio-card {
+    position: relative;
+    display: flex;
     margin-top: 10px;
     margin-bottom: 10px;
     width: 100%;
@@ -3553,6 +3555,20 @@ body {
 
 .modalv3-content-ratio-card-selected {
     background-color: #464e5560;
+}
+
+.modalv3-content-ratio-card .lock-icon {
+    position: absolute;
+    height: 30px;
+    width: 30px;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+}
+
+.modalv3-content-ratio-card .lock-icon-block {
+    height: 30px;
+    width: 30px;
 }
 
 .modalv3-content-ratio-card-inner {
@@ -6307,7 +6323,8 @@ data-share-product-card-button {
     font-size: 25px;
     position: absolute;
     color: var(--ratio-green);
-    top: 30px;
+    top: 50%;
+    transform: translateY(-50%);
     right: 20px;
 }
 
@@ -6316,8 +6333,48 @@ data-share-product-card-button {
     font-size: 25px;
     position: absolute;
     color: var(--button-danger-background);
-    top: 30px;
+    top: 50%;
+    transform: translateY(-50%);
     right: 20px;
+}
+
+.xp-inventory-card .inner .normal {
+    margin: 0;
+    font-size: 25px;
+    position: absolute;
+    color: var(--white);
+    top: 50%;
+    transform: translateY(-50%);
+    right: 20px;
+}
+
+
+.xp-inventory-tag-refund-text {
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0;
+    margin-bottom: 5px;
+    background-color: var(--brand-green);
+    color: white;
+    border-radius: 5px;
+    width: fit-content;
+    height: 20px;
+    font-family: gg sans seven;
+}
+
+.xp-inventory-tag-revoke-text {
+    padding: 2px;
+    padding-left: 5px;
+    padding-right: 5px;
+    margin: 0;
+    margin-bottom: 5px;
+    background-color: var(--ratio-red);
+    color: white;
+    border-radius: 5px;
+    width: fit-content;
+    height: 20px;
+    font-family: gg sans seven;
 }
 
 
@@ -6401,6 +6458,7 @@ data-share-product-card-button {
     background-color: var(--brand-green-hover);
     cursor: unset;
 }
+
 
 
 

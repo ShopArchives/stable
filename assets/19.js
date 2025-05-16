@@ -1,6 +1,6 @@
 
 
-app_version1 = "420"
+app_version1 = "423"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -11110,7 +11110,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                                                         if (localStorage.experiment_2025_05_m === "Treatment 1: Enabled") {
 
-                                                        } else if (localStorage.discord_token && hasReviewAlready === false && localStorage.account_type === "2") {
+                                                        } else if (shop_archives_token && hasReviewAlready === false) {
                                                             let writeReviewContainer = document.createElement("div");
         
                                                             writeReviewContainer.classList.add("shop-category-modal-write-review-container");
@@ -11157,7 +11157,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             }
     
                                                             modal.querySelector(".category-modalv2-inner-left").appendChild(writeReviewContainer);
-                                                        } else if (localStorage.discord_token && localStorage.account_type === "2") {
+                                                        } else if (shop_archives_token) {
                                                             let writeReviewContainer = document.createElement("div");
         
                                                             writeReviewContainer.classList.add("shop-category-modal-write-review-container");
@@ -11327,7 +11327,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                                     }
                                                                 }
 
-                                                                if (review.users.id === localStorage.discord_user_id || localStorage.admin_level != "0") {
+                                                                if (review.users.id === localStorage.discord_user_id || localStorage.admin_level && localStorage.admin_level != "0") {
                                                                     let deleteReviewIcon = document.createElement("div");
 
                                                                     deleteReviewIcon.title = getTextString("SHOP_CATEGORY_MODAL_REVIEWS_DELETE_HOVER");
@@ -17674,7 +17674,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                         <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_UNAVAILABLE_SUMMARY")}</p>
                     </div>
                 `;
-            } else if (localStorage.discord_token) {
+            } else if (localStorage.discord_token && shop_archives_token) {
                 tabPageOutput.innerHTML = `
                     <h2>${getTextString("MODAL_V3_TAB_REVIEWS_HEADER")}</h2>
                     <div class="modalv3-content-card-1">
@@ -17700,62 +17700,36 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                             </div>
                         </div>
                     </div>
-                    <hr>
-                    <div class="modalv3-content-card-1">
-                        <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_HEADER")}</h2>
-                        <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_SUMMARY")}</p>
-                        <div class="modalv3-content-ratio-card green" id="modalv3-ratio-card-reviews-time-us" onclick="updateReviewsTimeFormatStore('us');">
-                            <div class="modalv3-content-ratio-card-inner">
-                                <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_SETTINGS_2")}</h2>
-                                <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_SETTINGS_2_SUMMARY")}</p>
-                            </div>
-                        </div>
-                        <div class="modalv3-content-ratio-card green" id="modalv3-ratio-card-reviews-time-uk" onclick="updateReviewsTimeFormatStore('uk');">
-                            <div class="modalv3-content-ratio-card-inner">
-                                <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_SETTINGS_1")}</h2>
-                                <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_TIME_SETTINGS_1_SUMMARY")}</p>
-                            </div>
-                        </div>
-                    </div>
                 `;
 
                 updateReviewsFilterStore();
-
-                updateReviewsTimeFormatStore();
-
-                // updateReviewsPrivacyStore();
-
-                // <hr>
-                // <div class="modalv3-content-card-1">
-                //     <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_HEADER")}</h2>
-                //     <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SUMMARY")}</p>
-
-                //     <div class="modalv3-content-ratio-card green" id="modalv3-ratio-card-reviews-privacy-3" onclick="updateReviewsPrivacyStore('3');">
-                //         <div class="modalv3-content-ratio-card-inner">
-                //             <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_3")}</h2>
-                //             <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_3_SUMMARY")}</p>
-                //         </div>
-                //     </div>
-                //     <div class="modalv3-content-ratio-card orange" id="modalv3-ratio-card-reviews-privacy-2" onclick="updateReviewsPrivacyStore('2');">
-                //         <div class="modalv3-content-ratio-card-inner">
-                //             <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_2")}</h2>
-                //             <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_2_SUMMARY")}</p>
-                //         </div>
-                //     </div>
-                //     <div class="modalv3-content-ratio-card red" id="modalv3-ratio-card-reviews-privacy-1"  onclick="updateReviewsPrivacyStore('1');">
-                //         <div class="modalv3-content-ratio-card-inner">
-                //             <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_1")}</h2>
-                //             <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_PRIVACY_SETTINGS_1_SUMMARY")}</p>
-                //         </div>
-                //     </div>
-                // </div>
             } else {
                 tabPageOutput.innerHTML = `
                     <h2>${getTextString("MODAL_V3_TAB_REVIEWS_HEADER")}</h2>
                     <div class="modalv3-content-card-1">
-                        <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_DISCORD_ACCOUNT_NOT_LOGGED_IN_HEADER")}</h2>
+                        <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_HEADER")}</h2>
                         <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_DISCORD_ACCOUNT_NOT_LOGGED_IN_SUMMARY")}</p>
-                        <button class="modalv3-content-card-button" onclick="loginToDiscord()">${getTextString("MODAL_V3_TAB_ACCOUNT_LOGIN_WITH_DISCORD_BUTTON")}</button>
+
+                        <div class="modalv3-content-ratio-card green">
+                            <div class="modalv3-content-ratio-card-inner">
+                                <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_3")}</h2>
+                                <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_3_SUMMARY")}</p>
+                            </div>
+                        </div>
+                        <div class="modalv3-content-ratio-card orange modalv3-content-ratio-card-selected">
+                            <svg class="lock-icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24"><path fill="currentColor" fill-rule="evenodd" d="M6 9h1V6a5 5 0 0 1 10 0v3h1a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H6a3 3 0 0 1-3-3v-8a3 3 0 0 1 3-3Zm9-3v3H9V6a3 3 0 1 1 6 0Zm-1 8a2 2 0 0 1-1 1.73V18a1 1 0 1 1-2 0v-2.27A2 2 0 1 1 14 14Z" clip-rule="evenodd" class=""></path></svg>
+                            <div class="lock-icon-block"></div>
+                            <div class="modalv3-content-ratio-card-inner">
+                                <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_2")}</h2>
+                                <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_2_SUMMARY")}</p>
+                            </div>
+                        </div>
+                        <div class="modalv3-content-ratio-card red">
+                            <div class="modalv3-content-ratio-card-inner">
+                                <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_1")}</h2>
+                                <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_REVIEWS_REVIEWS_FILTER_SETTINGS_1_SUMMARY")}</p>
+                            </div>
+                        </div>
                     </div>
                 `;
             }
@@ -17774,9 +17748,28 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 <div id="modal-v3-color-themes-experiment-output"></div>
                 <div id="modal-v3-custom-themes-experiment-output"></div>
                 <div id="modal-v3-community-themes-experiment-output"></div>
+                <hr>
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_APPEARANCE_TIME_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_APPEARANCE_TIME_SUMMARY")}</p>
+                    <div class="modalv3-content-ratio-card green" id="modalv3-ratio-card-reviews-time-us" onclick="updateReviewsTimeFormatStore('us');">
+                        <div class="modalv3-content-ratio-card-inner">
+                            <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_APPEARANCE_TIME_SETTINGS_2")}</h2>
+                            <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_APPEARANCE_TIME_SETTINGS_2_SUMMARY")}</p>
+                        </div>
+                    </div>
+                    <div class="modalv3-content-ratio-card green" id="modalv3-ratio-card-reviews-time-uk" onclick="updateReviewsTimeFormatStore('uk');">
+                        <div class="modalv3-content-ratio-card-inner">
+                            <h2 class="modalv3-content-card-sub-header">${getTextString("MODAL_V3_TAB_APPEARANCE_TIME_SETTINGS_1")}</h2>
+                            <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_APPEARANCE_TIME_SETTINGS_1_SUMMARY")}</p>
+                        </div>
+                    </div>
+                </div>
                 <div id="modal-v3-extended-styles-experiment-output"></div>
                 <div id="modal-v3-extended-styles-cards-experiment-output"></div>
             `;
+
+            updateReviewsTimeFormatStore();
 
             document.getElementById("modalv3-theme-selection-container").innerHTML = `
                 <div class="theme-selection-box" title="${getTextString("THEME_PICKER_V2_LIGHT")}" id="theme-light-button" onclick="updateThemeStore('light', 'true', null);"></div>
@@ -17975,6 +17968,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     <input class="modalv3-toggle" onclick="reducedMotionChecked();" id="reduced-motion-box" type="checkbox">
                 </div>
             `;
+
         } else if (tab === "xp_events") {
             document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
             tabPageOutput.innerHTML = `
@@ -18058,13 +18052,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                         
                         if (promo.already_claimed === false) {
 
-                            if (promo.category_sku_id) {
+                            if (promo.category_data) {
                                 promoBanner.innerHTML = `
                                     <div class="inner">
                                         <div data-xp-event-expires-at></div>
                                         <p class="title">${promo.name}</p>
                                         <p class="sub">You have ${promo.xp_reward.toLocaleString()} XP waiting for you!</p>
-                                        <button class="button" onclick="setParams({page: 'leaks', scrollTo: '${promo.category_sku_id}'}); location.reload();">Take me there</button>
+                                        <button class="button" onclick="setParams({page: '${promo.category_data.page}', scrollTo: '${promo.category_data.sku_id}'}); location.reload();">Take me there</button>
                                     </div>
                                 `;
                             } else {
@@ -18095,9 +18089,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
                                         const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
+                                        const date = `ENDS IN ${days}d ${hours}h ${minutes}m ${seconds}s`;
                     
                                         promoBanner.querySelector("[data-xp-event-expires-at]").innerHTML = `
-                                            <p class="xp-event-expires-at-text">ENDS IN ${days}d ${hours}h ${minutes}m ${seconds}s</p>
+                                            <p class="xp-event-expires-at-text">${date.replace("0d 0h 0m", "").replace("0d 0h", "").replace("0d", "")}</p>
                                         `;
                                     }
                                 }
@@ -18137,9 +18132,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                         const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
                                         const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
+                                        const date = `ENDS IN ${days}d ${hours}h ${minutes}m ${seconds}s`;
                     
                                         promoBanner.querySelector("[data-xp-event-expires-at]").innerHTML = `
-                                            <p class="xp-event-expires-at-text">ENDS IN ${days}d ${hours}h ${minutes}m ${seconds}s</p>
+                                            <p class="xp-event-expires-at-text">${date.replace("0d 0h 0m", "").replace("0d 0h", "").replace("0d", "")}</p>
                                         `;
                                     }
                                 }
@@ -18674,11 +18670,20 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                             promoBanner.innerHTML = `
                                 <div class="inner">
+                                    <div data-xp-inventory-tag-refund-text></div>
                                     <p class="title">${claimable.name}</p>
                                     <p class="sub">You claimed this item on ${formatted}.</p>
-                                    <p class="remove">-${claimable.price.toLocaleString()} XP</p>
+                                    <p class="remove" data-xp-inventory-price>-${claimable.price.toLocaleString()} XP</p>
                                 </div>
                             `;
+
+                            if (claimable.refunded === true) {
+                                promoBanner.querySelector("[data-xp-inventory-tag-refund-text]").innerHTML = `
+                                    <p class="xp-inventory-tag-refund-text" title="${getTextString("MODAL_V3_TAB_XP_INVENTORY_TAG_REFUNDED_TITLE")}">${getTextString("MODAL_V3_TAB_XP_INVENTORY_TAG_REFUNDED")}</p>
+                                `;
+                                promoBanner.querySelector("[data-xp-inventory-price]").classList.remove("remove");
+                                promoBanner.querySelector("[data-xp-inventory-price]").classList.add("normal");
+                            }
     
                             document.getElementById("modalv3-xp-inventory-output").appendChild(promoBanner);
                         } else if (claimable.type === 0) {
@@ -18689,11 +18694,20 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
     
                             promoBanner.innerHTML = `
                                 <div class="inner">
+                                    <div data-xp-inventory-tag-revoke-text></div>
                                     <p class="title">${claimable.name}</p>
                                     <p class="sub">You claimed this reward on ${formatted}.</p>
-                                    <p class="add">+${claimable.price.toLocaleString()} XP</p>
+                                    <p class="add" data-xp-inventory-price>+${claimable.price.toLocaleString()} XP</p>
                                 </div>
                             `;
+
+                            if (claimable.refunded === true) {
+                                promoBanner.querySelector("[data-xp-inventory-tag-revoke-text]").innerHTML = `
+                                    <p class="xp-inventory-tag-revoke-text" title="${getTextString("MODAL_V3_TAB_XP_INVENTORY_TAG_REVOKED_TITLE")}">${getTextString("MODAL_V3_TAB_XP_INVENTORY_TAG_REVOKED")}</p>
+                                `;
+                                promoBanner.querySelector("[data-xp-inventory-price]").classList.remove("add");
+                                promoBanner.querySelector("[data-xp-inventory-price]").classList.add("normal");
+                            }
     
                             document.getElementById("modalv3-xp-inventory-output2").appendChild(promoBanner);
                         }
@@ -19675,27 +19689,6 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             document.getElementById("modalv3-ratio-card-reviews-time-" + setTimeFormat).classList.add('modalv3-content-ratio-card-selected');
         } else {
             document.getElementById("modalv3-ratio-card-reviews-time-" + localStorage.reviews_time_type).classList.add('modalv3-content-ratio-card-selected');
-        }
-    }
-
-    function updateReviewsPrivacyStore(setPrivacy) {
-        const el3 = document.getElementById("modalv3-ratio-card-reviews-privacy-3");
-        const el2 = document.getElementById("modalv3-ratio-card-reviews-privacy-2");
-        const el1 = document.getElementById("modalv3-ratio-card-reviews-privacy-1");
-
-        if (el3 && el3.classList.contains('modalv3-content-ratio-card-selected')) {
-            el3.classList.remove('modalv3-content-ratio-card-selected');
-        } else if (el2 && el2.classList.contains('modalv3-content-ratio-card-selected')) {
-            el2.classList.remove('modalv3-content-ratio-card-selected');
-        } else if (el1 && el1.classList.contains('modalv3-content-ratio-card-selected')) {
-            el1.classList.remove('modalv3-content-ratio-card-selected');
-        }
-
-        if (setPrivacy) {
-            localStorage.reviews_privacy_type = setPrivacy;
-            document.getElementById("modalv3-ratio-card-reviews-privacy-" + setPrivacy).classList.add('modalv3-content-ratio-card-selected');
-        } else {
-            document.getElementById("modalv3-ratio-card-reviews-privacy-" + localStorage.reviews_privacy_type).classList.add('modalv3-content-ratio-card-selected');
         }
     }
 
