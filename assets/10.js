@@ -513,6 +513,15 @@ const experimentsList = [
 
 const dismissibleContentList = [
     {
+        title: "XP notice",
+        id: "dismissible_content_XPnotice",
+        name: "dismissible_XPnotice",
+        treatments: [
+            "Treatment -1: Unseen",
+            "Treatment 1: Seen"
+        ]
+    },
+    {
         title: "Claim 100 XP for free",
         id: "dismissible_content_new100FreeXP",
         name: "dismissible_new100FreeXP",

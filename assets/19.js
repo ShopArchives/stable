@@ -1,6 +1,6 @@
 
 
-app_version1 = "423"
+app_version1 = "424"
 app_version2 = "Stable"
 tcbx926n29 = app_version2 + " " + app_version1;
 
@@ -10796,7 +10796,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                         claimablesPromotionsCache = data;
                                                         if (Array.isArray(data) && modal.querySelector("[data-shop-category-modal-tabs-tab-button-3]")) {
                                                             data.forEach(promo => {
-                                                                if (promo.category_sku_id === apiCategory.sku_id) {
+                                                                if (promo.category_data?.sku_id === apiCategory.sku_id) {
                                                                     modal.querySelector("[data-shop-category-modal-tabs-tab-button-3]").style.display = 'flex';
                                                                 }
                                                             });
@@ -10810,7 +10810,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                             } else {
                                                 if (Array.isArray(claimablesPromotionsCache) && modal.querySelector("[data-shop-category-modal-tabs-tab-button-3]")) {
                                                     claimablesPromotionsCache.forEach(promo => {
-                                                        if (promo.category_sku_id === apiCategory.sku_id) {
+                                                        if (promo.category_data?.sku_id === apiCategory.sku_id) {
                                                             modal.querySelector("[data-shop-category-modal-tabs-tab-button-3]").style.display = 'flex';
                                                         }
                                                     });
@@ -11602,7 +11602,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                 if (Array.isArray(claimablesPromotionsCache)) {
                                                     claimablesPromotionsCache.forEach(promo => {
                                                         
-                                                        if (promo.already_claimed === false && promo.category_sku_id === apiCategory.sku_id) {
+                                                        if (promo.already_claimed === false && promo.category_data?.sku_id === apiCategory.sku_id) {
 
                                                             let promoBanner = document.createElement("div");
 
@@ -11618,7 +11618,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                                                             `;
 
                                                             modal.querySelector("[data-category-modal-inner-content-container]").appendChild(promoBanner);
-                                                        } else if (promo.category_sku_id === apiCategory.sku_id) {
+                                                        } else if (promo.category_data?.sku_id === apiCategory.sku_id) {
 
                                                             let promoBanner = document.createElement("div");
 
@@ -17167,7 +17167,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         document.body.appendChild(modal);
 
         document.getElementById("modalv3-side-tabs-container").innerHTML = `
-            <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_USER_SETTINGS")}</p>
+            <div class="side-tabs-category-text-container">
+                <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_USER_SETTINGS")}</p>
+            </div>
             <button class="side-tabs-button" id="modal-v3-tab-account" onclick="setModalv3InnerContent('account')">
                 <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_ACCOUNT")}</p>
             </button>
@@ -17179,7 +17181,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             <div id="modalv3-side-tabs-warnings-container"></div>
 
             <hr>
-            <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_SITE_SETTINGS")}</p>
+            <div class="side-tabs-category-text-container">
+                <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_SITE_SETTINGS")}</p>
+            </div>
             <button class="side-tabs-button" id="modal-v3-tab-appearance" onclick="setModalv3InnerContent('appearance')">
                 <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_APPEARANCE")}</p>
             </button>
@@ -17235,7 +17239,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         if (localStorage.experiment_2025_05_xp_system === "Treatment 1: Enabled") {
             document.getElementById("xp-perks-options-modalv3-container").innerHTML = `
                 <hr>
-                <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_XP_PERKS")}</p>
+                <div class="side-tabs-category-text-container">
+                    <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_XP_PERKS")}</p>
+                    <p class="side-tabs-category-beta-text">BETA</p>
+                </div>
                 <button class="side-tabs-button" id="modal-v3-tab-xp_events" onclick="setModalv3InnerContent('xp_events')">
                     <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_XP_EVENTS")}</p>
                 </button>
@@ -17251,7 +17258,9 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         if (localStorage.dev === "true") {
             document.getElementById("staff-options-modalv3-container").innerHTML = `
                 <hr>
-                <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_STAFF_ONLY")}</p>
+                <div class="side-tabs-category-text-container">
+                    <p class="side-tabs-category-text">${getTextString("MODAL_V3_TAB_HEADER_STAFF_ONLY")}</p>
+                </div>
                 <button class="side-tabs-button" id="modal-v3-tab-experiments" onclick="setModalv3InnerContent('experiments')">
                     <p class="side-tabs-button-text">${getTextString("MODAL_V3_TAB_TEXT_EXPERIMENTS")}</p>
                 </button>
@@ -17972,6 +17981,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         } else if (tab === "xp_events") {
             document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
             tabPageOutput.innerHTML = `
+
+                <div id="modalv3-xp-notice-container">
+                </div>
+                
                 <h2>${getTextString("MODAL_V3_TAB_XP_EVENTS_HEADER")}</h2>
 
                 <div id="modalv3-failed-to-load-xp-events-balance">
@@ -17998,6 +18011,16 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     </div>
                 </div>
             `;
+
+            if (localStorage.dismissible_XPnotice != "Treatment 1: Seen") {
+                document.getElementById("modalv3-xp-notice-container").innerHTML = `
+                    <div class="modalv3-profile-tab-sign-in-notice" id="XPnotice">
+                        <svg class="closeIcon_modal_discord_login" onclick="closeXPnoticeDismissibleCoachtip()" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                        <p class="modalv3-profile-tab-sign-in-notice-title">${getTextString("MODAL_V3_XP_NOTICE_1")}</p>
+                        <p class="modalv3-profile-tab-sign-in-notice-summary">${getTextString("MODAL_V3_XP_NOTICE_2")}</p>
+                    </div>
+                `;
+            }
 
             if (!claimablesPromotionsCache) {
                 try {
@@ -18173,6 +18196,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         } else if (tab === "xp_general") {
             document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
             tabPageOutput.innerHTML = `
+
+                <div id="modalv3-xp-notice-container">
+                </div>
+
                 <h2>${getTextString("MODAL_V3_TAB_XP_SHOP_HEADER")}</h2>
 
                 <div id="modalv3-failed-to-load-xp-shop">
@@ -18185,11 +18212,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_XP_SHOP_XP_LEVEL_HEADER")}</h2>
 
                     <div class="my-xp-balance-container">
+                        <div class="my-xp-balance-get-more" onclick="setModalv3InnerContent('xp_events')">
+                            <svg class="circleIcon_my-xp-balance-get-more" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M13 5a1 1 0 1 0-2 0v6H5a1 1 0 1 0 0 2h6v6a1 1 0 1 0 2 0v-6h6a1 1 0 1 0 0-2h-6V5Z" class=""></path></svg>
+                        </div>
                         <div class="my-xp-balance-container-inner">
                             <h2 class="my-xp-balance" id="modalv3-xp-balance-text"> ... </h2>
                         </div>
                     </div>
-                    <a class="xp-reward-event-link" onclick="setModalv3InnerContent('xp_events')">Get More XP</a>
                 </div>
                 <hr>
                 <div class="modalv3-content-card-1">
@@ -18216,6 +18245,16 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     </div>
                 </div>
             `;
+
+            if (localStorage.dismissible_XPnotice != "Treatment 1: Seen") {
+                document.getElementById("modalv3-xp-notice-container").innerHTML = `
+                    <div class="modalv3-profile-tab-sign-in-notice" id="XPnotice">
+                        <svg class="closeIcon_modal_discord_login" onclick="closeXPnoticeDismissibleCoachtip()" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                        <p class="modalv3-profile-tab-sign-in-notice-title">${getTextString("MODAL_V3_XP_NOTICE_1")}</p>
+                        <p class="modalv3-profile-tab-sign-in-notice-summary">${getTextString("MODAL_V3_XP_NOTICE_2")}</p>
+                    </div>
+                `;
+            }
 
             if (!atMeUsercache) {
                 try {
@@ -18568,6 +18607,10 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         } else if (tab === "xp_inventory") {
             document.getElementById("modal-v3-tab-" + tab).classList.add("side-tabs-button-selected");
             tabPageOutput.innerHTML = `
+
+                <div id="modalv3-xp-notice-container">
+                </div>
+
                 <h2>${getTextString("MODAL_V3_TAB_XP_INVENTORY_HEADER")}</h2>
 
                 <div id="modalv3-failed-to-load-xp-inventory-balance">
@@ -18575,6 +18618,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
 
                 <div class="modalv3-content-card-1">
                     <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_XP_INVENTORY_CLAIMS_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_XP_INVENTORY_CLAIMS_SUMMARY")}</p>
 
                     <hr style="opacity: 0;">
 
@@ -18591,6 +18635,7 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                 <hr>
                 <div class="modalv3-content-card-1">
                     <h2 class="modalv3-content-card-header">${getTextString("MODAL_V3_TAB_XP_INVENTORY_REWARDS_HEADER")}</h2>
+                    <p class="modalv3-content-card-summary">${getTextString("MODAL_V3_TAB_XP_INVENTORY_REWARDS_SUMMARY")}</p>
 
                     <hr style="opacity: 0;">
 
@@ -18598,6 +18643,16 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                     </div>
                 </div>
             `;
+
+            if (localStorage.dismissible_XPnotice != "Treatment 1: Seen") {
+                document.getElementById("modalv3-xp-notice-container").innerHTML = `
+                    <div class="modalv3-profile-tab-sign-in-notice" id="XPnotice">
+                        <svg class="closeIcon_modal_discord_login" onclick="closeXPnoticeDismissibleCoachtip()" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                        <p class="modalv3-profile-tab-sign-in-notice-title">${getTextString("MODAL_V3_XP_NOTICE_1")}</p>
+                        <p class="modalv3-profile-tab-sign-in-notice-summary">${getTextString("MODAL_V3_XP_NOTICE_2")}</p>
+                    </div>
+                `;
+            }
 
             if (!myClaimablesClaimedCache) {
                 try {
@@ -18713,8 +18768,8 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
                         }
                     });
     
-                    document.getElementById("modalv3-xp-inventory-output").style.display = 'unset';
-                    document.getElementById("modalv3-xp-inventory-output2").style.display = 'unset';
+                    document.getElementById("modalv3-xp-inventory-output").style.display = 'grid';
+                    document.getElementById("modalv3-xp-inventory-output2").style.display = 'grid';
                     document.getElementById("modalv3-xp-inventory-loading").style.display = 'none';
                 }
                 if (!myClaimablesClaimedCache.find(item => item.type === 0)) {
@@ -20667,6 +20722,13 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
         if (document.getElementById('new100FreeXPDismissible')) {
             localStorage.dismissible_new100FreeXP = "Treatment 1: Seen";
             document.getElementById('new100FreeXPDismissible').remove();
+        }
+    }
+
+    function closeXPnoticeDismissibleCoachtip() {
+        if (document.getElementById('XPnotice')) {
+            localStorage.dismissible_XPnotice = "Treatment 1: Seen";
+            document.getElementById('XPnotice').remove();
         }
     }
 

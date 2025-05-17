@@ -505,6 +505,9 @@ MODAL_V3_TAB_ACCESSIBILITY_REDUCED_MOTION_SUMMARY2 = " hover effects and other m
 
 // XP Events
 
+MODAL_V3_XP_NOTICE_1 = "Notice!";
+MODAL_V3_XP_NOTICE_2 = "XP is a Shop Archives only feature, it will not grant you perks on the Discord app.";
+
 MODAL_V3_TAB_XP_EVENTS_HEADER = "Events";
 
 MODAL_V3_TAB_XP_EVENTS_ERROR_1 = "There was an error loading XP Events!";
@@ -550,8 +553,10 @@ MODAL_V3_TAB_XP_INVENTORY_HEADER = "Inventory";
 MODAL_V3_TAB_XP_INVENTORY_ERROR_1 = "There was an error loading your XP Inventory!";
 
 MODAL_V3_TAB_XP_INVENTORY_CLAIMS_HEADER = "Claimed Items";
+MODAL_V3_TAB_XP_INVENTORY_CLAIMS_SUMMARY = "Your history of all the items you have claimed with XP.";
 
 MODAL_V3_TAB_XP_INVENTORY_REWARDS_HEADER = "Claimed Rewards";
+MODAL_V3_TAB_XP_INVENTORY_REWARDS_SUMMARY = "Your history of all the rewards you have claimed for XP.";
 
 MODAL_V3_TAB_XP_INVENTORY_TAG_REFUNDED = "REFUNDED";
 MODAL_V3_TAB_XP_INVENTORY_TAG_REFUNDED_TITLE = "This item has been refunded.";
