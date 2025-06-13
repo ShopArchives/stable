@@ -1,0 +1,500 @@
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service & Privacy Policy</title>
+    <link rel="icon" href="../favicon.ico" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #e0e0e0;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(20, 25, 40, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .header h1 {
+            color: #5865f2;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #5865f2, #7289da);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            color: #b0b8d4;
+            font-size: 1.1em;
+        }
+
+        .content {
+            background: rgba(20, 25, 40, 0.9);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            margin-bottom: 30px;
+        }
+
+        .nav-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(88, 101, 242, 0.3);
+        }
+
+        .nav-tab {
+            padding: 15px 25px;
+            background: transparent;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #b0b8d4;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-tab.active {
+            background: linear-gradient(45deg, #5865f2, #7289da);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .nav-tab:hover:not(.active) {
+            background: rgba(88, 101, 242, 0.1);
+            color: #5865f2;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        h2 {
+            color: #5865f2;
+            margin: 30px 0 15px 0;
+            font-size: 1.8em;
+            border-bottom: 3px solid #5865f2;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            color: #7289da;
+            margin: 25px 0 10px 0;
+            font-size: 1.3em;
+        }
+
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+        }
+
+        a {
+            color: white;
+            text-decoration: underline;
+        }
+
+        ul {
+            margin: 15px 0 15px 30px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(88, 101, 242, 0.2), rgba(114, 137, 218, 0.2));
+            border-left: 4px solid #5865f2;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            border: 1px solid rgba(88, 101, 242, 0.3);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 138, 0, 0.2));
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 0 10px 10px 0;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+
+        .contact-info {
+            background: rgba(88, 101, 242, 0.15);
+            border: 1px solid rgba(88, 101, 242, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #8a94b8;
+            font-style: italic;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(88, 101, 242, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header, .content {
+                padding: 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .nav-tabs {
+                flex-direction: column;
+            }
+            
+            .nav-tab {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Legal Information</h1>
+            <p>Terms of Service & Privacy Policy for Shop Archives</p>
+        </div>
+
+        <div class="content">
+            <div class="nav-tabs">
+                <button class="nav-tab active" id="tos-button" onclick="showTab('tos')">Terms of Service</button>
+                <button class="nav-tab" id="privacy-button" onclick="showTab('privacy')">Privacy Policy</button>
+            </div>
+
+            <div id="tos" class="tab-content active">
+                <h2>Terms of Service</h2>
+                
+                <div class="highlight-box">
+                    <strong>Effective Date:</strong> Friday, 13th of June 2025<br>
+                    <strong>Last Updated:</strong> Friday, 13th of June 2025
+                </div>
+
+                <h3>1. Acceptance of Terms</h3>
+                <p>By accessing and using the Shop Archives website ("Service"), you accept and agree to be bound by the terms and provisions of this agreement. This Service is operated by a small group of independent developers and is not affiliated with Discord Inc.</p>
+
+                <h3>2. Description of Service</h3>
+                <p>Our website provides a community-driven database of Discord collectibles, including:</p>
+                <ul>
+                    <li>Avatar decorations, Profile effects and other cosmetic items from the Discord Shop</li>
+                    <li>Categorization and organization of collectible items</li>
+                    <li>Historical data on past, present, and anticipated future Discord collectibles</li>
+                    <li>User review system for collectible categories</li>
+                    <li>Community features powered by Discord authentication</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>Important:</strong> This is a fan-created, informational database only. We do not sell collectibles, provide methods to obtain unreleased items, or facilitate any form of exploitation of Discord's systems.
+                </div>
+
+                <h3>3. User Accounts and Discord Integration</h3>
+                <p>To access certain features of our Service, you must authenticate using your Discord account. By doing so, you permit us to access certain information from your Discord profile as outlined in our Privacy Policy. You are responsible for maintaining the security of your Discord account.</p>
+
+                <h3>4. User Content and Reviews</h3>
+                <p>Our Service allows users to post reviews and comments about Discord collectible categories. By posting content, you grant us a non-exclusive, worldwide, royalty-free license to use, moderate, and display your content in connection with our Service.</p>
+
+                <h3>5. Review Posting Guidelines</h3>
+                <p>When posting reviews or comments, you agree to follow these guidelines:</p>
+                <ul>
+                    <li><strong>Be Respectful:</strong> No harassment, hate speech, or personal attacks against other users or Discord staff</li>
+                    <li><strong>Stay On Topic:</strong> Reviews should relate to the specific collectible category being discussed</li>
+                    <li><strong>No Spam:</strong> Avoid repetitive posts, excessive self-promotion, or irrelevant content</li>
+                    <li><strong>Accurate Information:</strong> Provide honest, factual information based on your experience</li>
+                    <li><strong>No Inappropriate Content:</strong> No NSFW content, illegal activities, or content that violates Discord's Community Guidelines</li>
+                    <li><strong>Respect Intellectual Property:</strong> Do not post copyrighted material without permission</li>
+                    <li><strong>No Personal Information:</strong> Do not share personal information of yourself or other users</li>
+                    <li><strong>Constructive Feedback:</strong> Criticism should be constructive and helpful to the community</li>
+                </ul>
+
+                <h3>6. Strictly Prohibited Activities</h3>
+                <p>The following activities are strictly forbidden on our platform:</p>
+                <ul>
+                    <li><strong>Reselling or Trading:</strong> No discussion of selling, trading, or transferring Discord collectibles</li>
+                    <li><strong>Exploitation Methods:</strong> No sharing of methods, tools, or techniques to obtain unreleased, unpublished, or free collectibles through unauthorized means</li>
+                    <li><strong>Bot/Script Sharing:</strong> No distribution of bots, scripts, or automated tools related to Discord collectibles</li>
+                    <li><strong>Account Manipulation:</strong> No discussion of account sharing, selling, or other forms of account manipulation</li>
+                    <li><strong>Discord API Abuse:</strong> No encouragement or instruction on abusing Discord's API or systems</li>
+                    <li><strong>Piracy/Theft:</strong> No promotion of methods to obtain paid content without payment</li>
+                    <li><strong>Market Manipulation:</strong> No attempts to artificially influence collectible availability or pricing</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>Zero Tolerance Policy:</strong> Users found engaging in prohibited activities will be immediately banned without warning. We cooperate with Discord Inc. to report serious violations.
+                </div>
+
+                <h3>7. General Prohibited Uses</h3>
+                <p>You may not use our Service for:</p>
+                <ul>
+                    <li>Any unlawful purpose or activities that violate local or international laws</li>
+                    <li>Violating Discord's Terms of Service or Community Guidelines</li>
+                    <li>Harassing, threatening, or discriminating against other users</li>
+                    <li>Submitting false, misleading, or malicious information</li>
+                    <li>Attempting to interfere with or compromise our website's security or functionality</li>
+                    <li>Impersonating other users, moderators, or Discord staff</li>
+                </ul>
+
+                <h3>8. Intellectual Property Rights</h3>
+                <p>Discord, Discord collectibles, and related trademarks are property of Discord Inc. We do not claim ownership of Discord's intellectual property. This Service is a fan-created, community database operated by independent developers and is not officially affiliated with or endorsed by Discord Inc.</p>
+
+                <h3>9. Service Availability and Modifications</h3>
+                <p>As this Service is operated by a small group of volunteers, we cannot guarantee continuous availability. We reserve the right to modify, suspend, or discontinue the Service at any time without notice. We are not liable for any interruption of service.</p>
+
+                <h3>10. Disclaimer of Warranties</h3>
+                <p>This Service is provided "as is" without any warranties. We make no guarantees about the accuracy, completeness, or reliability of the information provided. Use of this Service is at your own risk.</p>
+
+                <h3>11. Limitation of Liability</h3>
+                <p>To the fullest extent permitted by law, we (the operators and contributors) shall not be liable for any damages arising from your use of this Service. This includes but is not limited to direct, indirect, incidental, or consequential damages.</p>
+
+                <h3>12. User Responsibility</h3>
+                <p>You acknowledge that:</p>
+                <ul>
+                    <li>You use this Service voluntarily and at your own discretion</li>
+                    <li>You are responsible for complying with Discord's Terms of Service</li>
+                    <li>You will not hold us responsible for any actions taken by Discord Inc. related to your account</li>
+                    <li>Any decisions regarding collectible purchases are entirely your own</li>
+                </ul>
+
+                <h3>13. Termination</h3>
+                <p>We may terminate or suspend your access to the Service at any time, for any reason, including violation of these terms. You may also discontinue use of the Service at any time.</p>
+
+                <h3>14. Contact and Disputes</h3>
+                <p>If you have concerns about content or user behavior, please contact us through the provided channels. As we operate internationally, any disputes will be handled according to the laws where our service is hosted.</p>
+
+                <h3>15. Changes to Terms</h3>
+                <p>We may update these Terms at any time. Continued use of the Service after changes constitutes acceptance of the new terms. We will make reasonable efforts to notify users of significant changes.</p>
+            </div>
+
+            <div id="privacy" class="tab-content">
+                <h2>Privacy Policy</h2>
+                
+                <div class="highlight-box">
+                    <strong>Effective Date:</strong> Friday, 13th of June 2025<br>
+                    <strong>Last Updated:</strong> Friday, 13th of June 2025
+                </div>
+
+                <h3>1. Information We Collect</h3>
+                <p>When you use Shop Archives, we collect the following information through Discord's OAuth system and your interactions with our Service:</p>
+
+                <h4>Information from Discord Authentication</h4>
+                <ul>
+                    <li>Discord User ID (unique identifier)</li>
+                    <li>Username</li>
+                    <li>Display name (if different from username)</li>
+                    <li>Avatar</li>
+                    <li>Banner</li>
+                    <li>Banner Color</li>
+                    <li>Premium Type (what Nitro you have)</li>
+                    <li>Your applied Guild Tag</li>
+                    <li>Your applied Avatar Decoration</li>
+                    <li>Your applied Nameplate</li>
+                </ul>
+
+                <h4>Information You Voluntarily Provide</h4>
+                <ul>
+                    <li>Reviews, Ratings and comments you post about collectible categories</li>
+                    <li>Any other content you choose to share on our platform</li>
+                </ul>
+
+                <h4>Automatically Collected Technical Information</h4>
+                <ul>
+                    <li>Technical information (browser type, device type)</li>
+                    <li>IP address (for security and geographic analytics only)</li>
+                </ul>
+
+                <div class="warning-box">
+                    <strong>Note:</strong> We are independent developers, not a company. We collect minimal data necessary for the Service to function and do not engage in extensive data collection or tracking.
+                </div>
+
+                <h3>2. How We Use Your Information</h3>
+                <p>We use the collected information solely for the following purposes:</p>
+                <ul>
+                    <li>Providing and maintaining our community database Service</li>
+                    <li>Authenticating your identity through Discord</li>
+                    <li>Displaying your username and avatar with your reviews (publicly visible)</li>
+                    <li>Moderating user-generated content to maintain community standards</li>
+                    <li>Preventing spam, abuse, and violations of our Terms of Service</li>
+                    <li>Basic analytics to understand how the Service is used (no personal tracking)</li>
+                    <li>Communicating about Service updates or critical issues</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>What We Don't Do:</strong>
+                    <ul>
+                        <li>We don't sell or monetize your data</li>
+                        <li>We don't track you across other websites</li>
+                        <li>We don't use your data for advertising</li>
+                        <li>We don't share your data with third parties for marketing</li>
+                    </ul>
+                </div>
+
+                <h3>3. Information Sharing and Disclosure</h3>
+                <p>As independent operators, we have a simple approach to data sharing:</p>
+                
+                <h4>Public Information</h4>
+                <p>When you post reviews or comments, your Discord username and avatar are displayed publicly alongside your content. This is necessary for community functionality.</p>
+
+                <h4>No Commercial Sharing</h4>
+                <p>We do not sell, rent, or trade your personal information to anyone.</p>
+
+                <h4>Legal Requirements</h4>
+                <p>We may disclose information if required by law or to protect the safety of our users and the integrity of the Service.</p>
+
+                <h4>Service Functionality</h4>
+                <p>Basic technical information may be shared with hosting providers and essential service providers, but only as necessary for website functionality.</p>
+
+                <h3>4. Data Storage and Security</h3>
+                <p>As a small group of developers, we implement reasonable security measures within our capabilities to protect your information. However, we cannot guarantee absolute security, and you use the Service understanding this limitation.</p>
+
+                <h3>5. Data Retention</h3>
+                <p>We retain your information only as long as necessary to provide the Service. You may request deletion of your account and associated data by contacting us. Note that some content (like reviews) may remain in anonymized form for community continuity.</p>
+
+                <h3>6. Your Rights and Choices</h3>
+                <p>You have the following rights regarding your information:</p>
+                <ul>
+                    <li><strong>Access:</strong> Ask us what information we have about you</li>
+                    <li><strong>Correction:</strong> Request correction of inaccurate information</li>
+                    <li><strong>Deletion:</strong> Request deletion of your account and data</li>
+                    <li><strong>Withdrawal:</strong> Stop using the Service at any time</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>Easy Data Control:</strong> Since we're a small operation, you can contact us directly for any data-related requests. We'll respond as quickly as possible.
+                </div>
+
+                <h3>7. Cookies and Tracking</h3>
+                <p>We use minimal cookies necessary for the Service to function (like keeping you logged in). We do not use tracking cookies or analytics that follow you across the internet.</p>
+
+                <h3>8. Third-Party Services</h3>
+                <p>Our Service integrates with Discord for authentication. Discord's own Privacy Policy governs your use of Discord's services. We may also link to other websites, but we're not responsible for their privacy practices.</p>
+
+                <h3>9. Age Requirements</h3>
+                <p>Our Service is intended for users who meet Discord's age requirements. We do not knowingly collect information from users under the age of 13.</p>
+
+                <h3>10. International Users</h3>
+                <p>As independent developers, we operate this Service internationally. Your information may be processed in different countries, but we maintain the same privacy standards regardless of location.</p>
+
+                <h3>11. Changes to Privacy Policy</h3>
+                <p>We may update this Privacy Policy occasionally. We'll post any changes on this page and update the "Last Updated" date. Significant changes will be communicated through the Service.</p>
+
+                <h3>12. Discord's Privacy Policy</h3>
+                <p>Your use of Discord's authentication services is also governed by Discord's Privacy Policy. We encourage you to review Discord's privacy practices as well.</p>
+            </div>
+
+            <div class="contact-info">
+                <h3>Contact Information</h3>
+                <p>If you have any questions about these Terms of Service or Privacy Policy, or need to make a data request, don't hesitate to get in touch with us at:</p>
+                <p><strong>Discord:</strong> <a href="https://discord.gg/JG5Pm8PKyJ">https://discord.gg/JG5Pm8PKyJ</a></p>
+                <p><em>As independent developers, we'll do our best to respond to inquiries within a reasonable timeframe.</em></p>
+            </div>
+
+            <div class="last-updated">
+                <p>This document was last updated on Friday, 13th of June 2025</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        const params = new URLSearchParams(window.location.search);
+
+        function setParams(params) {
+            const url = new URL(window.location);
+        
+            url.search = '';
+        
+            Object.entries(params).forEach(([key, value]) => {
+                url.searchParams.set(key, value);
+            });
+        
+            history.replaceState(null, '', url);
+        }
+
+        if (params.get("page") === "tos" || params.get("page") === "privacy") {
+            showTab(params.get("page"))
+        }
+
+        function showTab(tabName) {
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            document.getElementById(tabName).classList.add('active');
+
+            document.getElementById(tabName+'-button').classList.add('active');
+
+            setParams({page: tabName});
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
