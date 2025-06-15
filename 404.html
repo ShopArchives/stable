@@ -1,181 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <base target="_blank">
-    <title>Page Not Found | Shop Archives</title>
-    <link rel="icon" href="/favicon.ico" type="image/x-icon">
-    <meta content="Shop Archives" property="og:title" />
-    <meta content="Your one stop place for all Discord Collectibles" property="og:description" />
-    <meta content="https://yapper.shop/" property="og:url" />
-    <meta content="https://raw.githubusercontent.com/Yappering/developer/main/assets/5.png" property="og:image" />
-    <meta content="#FF007A" data-react-helmet="true" name="theme-color" />
-    <link rel="stylesheet" href="/styles.css">
+    <meta charset="UTF-8" />
+    <meta http-equiv="refresh" content="0; url=/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Page Not Found</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            background-color: #1a1a1a;
+            color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        h1 {
+            font-size: 3rem;
+        }
+        p {
+            font-size: 1.2rem;
+            margin-top: 1rem;
+        }
+    </style>
 </head>
-
 <body>
-    <div class="housing">
-        <div class="sidebar">
-            <div class="dm-list">
-                <div style="overflow: auto; height: 100%; margin-top: 50px;">
-                    <p class="center-text" style="font-size: 12px; display: flex;">Discord is a registered trademark of Discord Inc. Shop Archives is not affiliated with, endorsed or sponsored by Discord Inc.</p>
-                    <div data-mains-tabs>
-                        <button class="dm-button dm-button-selected">
-                            <p class="dm-button-text">Page Not Found</p>
-                        </button>
-                        <template data-mains-template>
-                            <button class="dm-button" data-mains-button>
-                                <p class="dm-button-text" data-mains-title></p>
-                                <div class="dm-new-icon" style="display: none;">
-                                    NEW
-                                </div>
-                            </button>
-                        </template>
-                        <div id="loading-api-dm-mains">
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-1"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-2"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-3"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-1"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-3"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                        </div>
-                        <div style="text-align: center;" class="hidden" id="mains-fetch-error">
-                            <img style="width: 100px;" src="https://raw.githubusercontent.com/DTACat/Collectibles/main/Images/shopuhoh.png">
-                            <h2>Well, this is awkward.</h2>
-                            <p>Hmmm, we weren&#8217;t able to load mains. Check back later.</p>
-                            <button class="refresh-button" onClick="window.location.reload();">Refresh Page</button>
-                        </div>
-                    </div>
-                    <div class="dm-divider">
-                        Fun
-                    </div>
-                    <div data-fun-output>
-                        <template data-fun-template>
-                            <button class="dm-button" data-fun-button>
-                                <p class="dm-button-text" data-fun-title></p>
-                                <div class="dm-new-icon" style="display: none;">
-                                    NEW
-                                </div>
-                            </button>
-                        </template>
-                        <div id="loading-api-dm-fun">
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-1"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-2"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-3"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-1"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-3"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="dm-divider">
-                        Quick Blog
-                    </div>
-                    <div data-news-tabs>
-                        <template data-news-template>
-                            <button class="dm-button" data-news-button>
-                                <p class="dm-button-text" data-news-title></p>
-                                <div class="dm-new-icon" style="display: none;">
-                                    NEW
-                                </div>
-                            </button>
-                        </template>
-                        <div id="loading-api-dm-news">
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-1"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-2"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-3"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-1"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                            <button class="dm-button dm-button-fetching" style="cursor: default;">
-                                <div class="dm-button-text-fetching dm-button-text-fetching-var-3"></div>
-                                <div class="dm-button-tag-fetching"></div>
-                            </button>
-                        </div>
-                        <div style="text-align: center;" class="hidden" id="news-fetch-error">
-                            <img style="width: 100px;" src="https://raw.githubusercontent.com/DTACat/Collectibles/main/Images/shopuhoh.png">
-                            <h2>Well, this is awkward.</h2>
-                            <p>Hmmm, we weren&#8217;t able to load news. Check back later.</p>
-                            <button class="refresh-button" onClick="window.location.reload();">Refresh Page</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="server-list">
-                <div class="server-avatar">
-                    <button class="server-icon server-icon-selected server-home" onclick="location.href='/home';">
-                    </button>
-                    <div class="server-pill">
-                    </div>
-                </div>
-                <hr style="opacity: 0;">
-                <div data-servers>
-                </div>
-                <template data-servers-template>
-                    <div class="server-avatar" data-servers-button>
-                        <img class="server-icon" src="" data-server-icon>
-                        </img>
-                    </div>
-                </template>
-            </div>
-            <div style="width: 320px;">
-            </div>
-        </div>
-        <div class="top-bar">
-            <h2 style="margin-left: 260px; margin-top: 10px;">Page Not Found</h2>
-            <div id="open-help-modals-buttons-holder"></div>
-        </div>
-        <div class="home-housing">
-            <h1 class="center-text" style="font-size: 44px; margin-top: 50px;">Page Not Found</h1>
-            <h1 class="center-text abcgintonord" style="font-size: 74px; margin-top: -10px; font-weight: 800;">404</h1>
-            <h4 class="center-text" style="font-size: 24px;">The page you&#8217;re looking for doesn&#8217;t exist.</h4>
-        </div>
-    </div>
-    <div class="modal-housing" id="modal-housing"></div>
-
-    
-    <script src="/assets/1.js"></script>
-    <script src="/assets/6.js"></script>
-    <script>
-        localStorage.not_found_found = "true"
-    </script>
+    <h1>404 - Page Not Found</h1>
+    <p>Redirecting you to the homepage...</p>
 </body>
-
 </html>
