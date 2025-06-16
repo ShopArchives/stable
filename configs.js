@@ -302,6 +302,22 @@ const nameplate_palettes = {
 
 const experiments = [
     {
+        title: `User Banner on Reviews`,
+        codename: `user_banner_on_reviews`,
+        release_config: {
+            year: `2025`,
+            month: `06`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Show users banners on reviews`
+            }
+        ]
+    },
+    {
         title: `Published Items Category`,
         codename: `published_items_category`,
         release_config: {
@@ -396,6 +412,7 @@ const settings = {
     "non_us_timezone": 0,
     "profile_effect_tweaks_fix": 0,
     "reviews_filter_setting": 0,
+    "category_page_limit": 5,
     "dev": 0,
     "staff_force_leaks_dummy": 0,
     "staff_force_viewable_reviews_tab": 0,

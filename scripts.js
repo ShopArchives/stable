@@ -1,5 +1,5 @@
 
-const appVersion = "7.1.1"
+const appVersion = "7.1.4"
 const appType = "Stable"
 
 document.getElementById('logo-container').setAttribute('data-tooltip', appType+' '+appVersion);
@@ -25,7 +25,6 @@ let discordMiscellaneousCategoriesCache;
 
 const overridesKey = 'experimentOverrides';
 const serverKey = 'serverExperiments';
-const currentExperimentOverrides = JSON.parse(localStorage.getItem(overridesKey));
 
 function loadOverrides() {
     try {
@@ -273,11 +272,6 @@ async function verifyOrigin() {
             localStorage.setItem('serverExperiments', JSON.stringify(expData));
 
             syncOverridesWithServer();
-        }
-
-        if (currentExperimentOverrides && currentExperimentOverrides.find(exp => exp.codename === 'xp_system')?.treatment === 1) {
-            await fetchAndUpdateXpEvents();
-            await fetchAndUpdateXpInventory();
         }
 
         await loadSite();
@@ -578,6 +572,9 @@ async function loadSite() {
         `;
         
         document.querySelector('.topbar-content').appendChild(xpBalance);
+
+        await fetchAndUpdateXpEvents();
+        await fetchAndUpdateXpInventory();
     }
 
     if (currentUserData) {
@@ -2238,18 +2235,19 @@ async function loadSite() {
         const searchInput = document.getElementById('searchInput');
         searchInput.classList.remove('hidden');
         const paginationContainer = document.getElementById('pagination');
-        const itemsPerPage = 5;
+        let itemsPerPage = settingsStore.category_page_limit || 5;
     
         let filteredData = data;
         let currentPage = 1;
     
         const renderPage = (page) => {
+            itemsPerPage = settingsStore.category_page_limit || 5;
             currentPage = page;
             output.innerHTML = '';
             const pageData = paginate(filteredData, page, itemsPerPage);
             output.scrollTo(0,0);
 
-            if (data.length <= 5) {
+            if (data.length <= settingsStore.category_page_limit) {
                 paginationContainer.classList.add('hidden');
             }
     
@@ -2442,13 +2440,13 @@ async function loadSite() {
                                     </svg>
                                     <p>Assets</p>
                                 </div>
-                                <div class="tab disabled has-tooltip" data-tooltip="Reviews have been disabled for this category" id="category-modal-tab-4">
+                                <div class="tab disabled" id="category-modal-tab-4">
                                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path fill="currentColor" d="M8 3C7.44771 3 7 3.44772 7 4V5C7 5.55228 7.44772 6 8 6H16C16.5523 6 17 5.55228 17 5V4C17 3.44772 16.5523 3 16 3H15.1245C14.7288 3 14.3535 2.82424 14.1002 2.52025L13.3668 1.64018C13.0288 1.23454 12.528 1 12 1C11.472 1 10.9712 1.23454 10.6332 1.64018L9.8998 2.52025C9.64647 2.82424 9.27121 3 8.8755 3H8Z"></path><path fill-rule="evenodd" clip-rule="evenodd" fill="currentColor" d="M19 4.49996V4.99996C19 6.65681 17.6569 7.99996 16 7.99996H8C6.34315 7.99996 5 6.65681 5 4.99996V4.49996C5 4.22382 4.77446 3.99559 4.50209 4.04109C3.08221 4.27826 2 5.51273 2 6.99996V19C2 20.6568 3.34315 22 5 22H19C20.6569 22 22 20.6568 22 19V6.99996C22 5.51273 20.9178 4.27826 19.4979 4.04109C19.2255 3.99559 19 4.22382 19 4.49996ZM8 12C7.44772 12 7 12.4477 7 13C7 13.5522 7.44772 14 8 14H16C16.5523 14 17 13.5522 17 13C17 12.4477 16.5523 12 16 12H8ZM7 17C7 16.4477 7.44772 16 8 16H13C13.5523 16 14 16.4477 14 17C14 17.5522 13.5523 18 13 18H8C7.44772 18 7 17.5522 7 17Z"></path>
                                     </svg>
                                     <p>Reviews</p>
                                 </div>
-                                <div class="tab hidden disabled has-tooltip" data-tooltip="There are currently no XP rewards for this category" id="category-modal-tab-5">
+                                <div class="tab hidden disabled" id="category-modal-tab-5">
                                     <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
                                     </svg>
@@ -2740,11 +2738,10 @@ async function loadSite() {
                                     sku_id.classList.remove('clicked');
                                 }, 500);
                             });
-        
+                            
+                            const reviewsTab = modal.querySelector('#category-modal-tab-4');
                             if (categoryModalInfo.reviews_disabled != true || settingsStore.staff_force_viewable_reviews_tab === 1) {
-                                const reviewsTab = modal.querySelector('#category-modal-tab-4');
                                 reviewsTab.classList.remove('disabled');
-                                reviewsTab.classList.remove('has-tooltip');
                                 reviewsTab.addEventListener("click", function () {
                                     // Reviews
                                     changeModalTab('4');
@@ -2768,6 +2765,9 @@ async function loadSite() {
                                     modalInner.querySelector('#average-rating').textContent = average;
                                 }
                                   
+                            } else {
+                                reviewsTab.classList.add('has-tooltip');
+                                reviewsTab.setAttribute('data-tooltip', 'Reviews have been disabled for this category');
                             }
         
                         } else if (tab === '2') {
@@ -3124,6 +3124,7 @@ async function loadSite() {
                                         reviewDiv.innerHTML = `
                                             <div class="shop-modal-review-moderation-buttons" data-modal-top-product-buttons></div>
                                             <div class="review-nameplate-container"></div>
+                                            <div class="review-banner-container"></div>
                                             <div class="review-user-container">
                                                 <div class="review-avatar-container">
                                                     <img class="review-avatar" src="https://cdn.yapper.shop/assets/31.png" onerror="this.parentElement.remove();">
@@ -3293,7 +3294,15 @@ async function loadSite() {
                                         } else {
                                             userBadgesElement.remove();
                                         }
+                                        
+
+                                        if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'user_banner_on_reviews')?.treatment === 1 && review.user.banner) {
+                                            let bannerPreview = document.createElement("img");
+                                            
+                                            bannerPreview.src = `https://cdn.discordapp.com/banners/${review.user.id}/${review.user.banner}.png?size=300`;
     
+                                            reviewDiv.querySelector('.review-banner-container').appendChild(bannerPreview);
+                                        }
     
                                         if (review.user.collectibles?.nameplate) {
                                             if (review.user.collectibles.nameplate.sa_override_src) {
@@ -3493,15 +3502,17 @@ async function loadSite() {
                     }
 
                     if (Array.isArray(usersXPEventsCache)) {
+                        const xpRewardsTab = modal.querySelector('#category-modal-tab-5');
                         usersXPEventsCache.forEach(promo => {
                             if (promo.category_data?.sku_id === categoryData.sku_id) {
-                                const xpRewardsTab = modal.querySelector('#category-modal-tab-5');
                                 xpRewardsTab.classList.remove('disabled');
-                                xpRewardsTab.classList.remove('has-tooltip');
                                 xpRewardsTab.addEventListener("click", function () {
                                     // Rewards
                                     changeModalTab('5');
                                 });
+                            } else {
+                                xpRewardsTab.classList.add('has-tooltip');
+                                xpRewardsTab.setAttribute('data-tooltip', 'There are currently no XP rewards for this category');
                             }
                         });
                     }
@@ -3557,6 +3568,8 @@ async function loadSite() {
     
             scrollToCategoryFromUrl();
         };
+
+        window.renderPage = renderPage;
     
         const scrollToCategoryFromUrl = () => {
             const targetSkuId = currentOpenModalId;
@@ -3973,6 +3986,18 @@ async function loadSite() {
             data = data1;
         }
 
+        let disclaimer2;
+
+        if (data.id === 2) {
+            disclaimer2 = "Once you've claimed this item, your Discord server tag will be applied to all your existing and future reviews. Note that if you don't have a Discord server tag applied on your profile, this item is useless."
+        } else if (data.id === 4) {
+            disclaimer2 = "Once you've claimed this item, you'll be able to write reviews with up to 200 characters."
+        } else if (data.id === 5) {
+            disclaimer2 = "Once you've claimed this item, your Discord avatar decoration will be applied to all your existing and future reviews. Note that if you don't have a Discord avatar decoration applied on your profile, this item is useless."
+        } else if (data.id === 19) {
+            disclaimer2 = "Once you've claimed this item, your Discord nameplate will be applied to all your existing and future reviews. Note that if you don't have a Discord nameplate applied on your profile, this item is useless."
+        }
+
         modal.innerHTML = `
             <div class="modalv2-inner xp-purchase-modal">
                 
@@ -3991,10 +4016,13 @@ async function loadSite() {
                             <p>${data.name}</p>
                         </div>
                         <div class="disclaimer">
-                            <p>By clicking 'Claim for ${data.xp_price.toLocaleString()} XP', you agree to the</p><a class="link" href="https://yapper.shop/legal-information/?page=tos">Digital Currency Terms.</a>
+                            <p>By clicking 'Claim for ${data.xp_price.toLocaleString()} XP', you agree to the <a class="link" href="https://yapper.shop/legal-information/?page=tos">Digital Currency Terms.</a></p>
                         </div>
                         <div class="disclaimer">
                             <p>Claiming this item means you have a limited licence to use this item on Shop Archives. This item is non-refundable.</p>
+                        </div>
+                        <div class="disclaimer2">
+                            <p>${disclaimer2}</p>
                         </div>
                         <p class="redeem-xp-error-output"></p>
                         <button class="claim-xp-perk-button" id="claim-xp-button">
@@ -4784,8 +4812,40 @@ async function loadSite() {
                             </div>
                         </div>
                     </div>
+                    <div class="setting">
+                        <div class="setting-info">
+                            <div class="setting-title">Category page limit</div>
+                            <div class="setting-description">How many categories are shown on a page. Large values may cause lag on low-end devices.</div>
+                        </div>
+                        <div class="toggle-container">
+                            <select id="category_page_limit_select" class="modalv3-experiment-treatment-container">
+                                <option value="1">1</option>
+                                <option value="3">3</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="999">No Limit</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             `;
+
+            const selectEl = document.querySelector('#category_page_limit_select');
+
+            for (const option of selectEl.options) {
+                if (option.value === String(settingsStore.category_page_limit)) {
+                    option.selected = true;
+                    break;
+                }
+            }
+
+            selectEl.addEventListener('change', () => {
+                const selectedValue = selectEl.value;
+                changeSetting('category_page_limit', Number(selectedValue));
+                try {
+                    loadPage(currentPageCache, true);
+                } catch {}
+            });
 
             defaultThemes.forEach((theme) => {
                 let themeCard = document.createElement("div");
@@ -5141,7 +5201,8 @@ async function loadSite() {
             function renderXpShop(data) {
                 featuredXpOutput.innerHTML = ``;
                 shopXpOutput.innerHTML = ``;
-                data.featured.forEach(xpItem => {
+
+                function renderXpItemCard(xpItem, type) {
                     let xpCard = document.createElement("div");
 
                     xpCard.classList.add('xp-featured-card')
@@ -5171,7 +5232,28 @@ async function loadSite() {
                     });
 
                     if (!alreadyClaimed) {
-                        if (xpItem.price > currentUserData.xp_balance) {
+                        if (!currentUserData.collectibles && xpItem.id === "19") {
+                            button.disabled = true;
+                            button.innerHTML = `
+                                Unavailable
+                            `;
+                            button.classList.add('has-tooltip');
+                            button.setAttribute('data-tooltip', 'You don\'t have a Nameplate on your profile');
+                        } else if (!currentUserData.primary_guild && xpItem.id === "2") {
+                            button.disabled = true;
+                            button.innerHTML = `
+                                Unavailable
+                            `;
+                            button.classList.add('has-tooltip');
+                            button.setAttribute('data-tooltip', 'You don\'t have a Server Tag on your profile');
+                        } else if (!currentUserData.avatar_decoration_data && xpItem.id === "5") {
+                            button.disabled = true;
+                            button.innerHTML = `
+                                Unavailable
+                            `;
+                            button.classList.add('has-tooltip');
+                            button.setAttribute('data-tooltip', 'You don\'t have an Avatar Decoration on your profile');
+                        } else if (xpItem.price > currentUserData.xp_balance) {
                             button.disabled = true;
                             button.classList.add('has-tooltip');
                             button.setAttribute('data-tooltip', 'Insufficient XP');
@@ -5185,53 +5267,18 @@ async function loadSite() {
                         button.classList.add('hidden');
                     }
 
-                    featuredXpOutput.appendChild(xpCard);
+                    if (type === "featured") {
+                        featuredXpOutput.appendChild(xpCard);
+                    } else if (type === "shop") {
+                        shopXpOutput.appendChild(xpCard);
+                    }
+                }
+
+                data.featured.forEach(xpItem => {
+                    renderXpItemCard(xpItem, "featured");
                 });
                 data.shop.forEach(xpItem => {
-                    let xpCard = document.createElement("div");
-
-                    xpCard.classList.add('xp-shop-card')
-
-                    xpCard.innerHTML = `
-                        <h3>${xpItem.name}</h3>
-                        <p>${xpItem.summary}</p>
-                        <div class="xp-card-button-pad"></div>
-                        <div class="xp-card-bottom">
-                            <h3 class="xp-already-claimed-text hidden">Already Claimed</h3>
-                            <button id="claim-item-for-xp-button">
-                                Claim for ${xpItem.price} XP
-                                <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
-                        </div>
-                    `;
-                    const button = xpCard.querySelector('#claim-item-for-xp-button');
-                    const alreadyClaimedText = xpCard.querySelector('.xp-already-claimed-text');
-
-                    let alreadyClaimed = null;
-                    usersXPInventoryCache.forEach(claimed => {
-                        if (claimed.id === xpItem.id) {
-                            alreadyClaimed = true;
-                        }
-                    });
-
-                    if (!alreadyClaimed) {
-                        if (xpItem.price > currentUserData.xp_balance) {
-                            button.disabled = true;
-                            button.classList.add('has-tooltip');
-                            button.setAttribute('data-tooltip', 'Insufficient XP');
-                        } else {
-                            button.addEventListener('click', () => {
-                                openClaimablePurchaseModal(xpItem.id);
-                            });
-                        }
-                    } else {
-                        alreadyClaimedText.classList.remove('hidden');
-                        button.classList.add('hidden');
-                    }
-
-                    shopXpOutput.appendChild(xpCard);
+                    renderXpItemCard(xpItem, "shop");
                 });
             }
 
