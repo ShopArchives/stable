@@ -577,6 +577,7 @@ body:has(.notice) .container {
     flex-direction: column;
     align-items: center;
     padding: 0 20px;
+    z-index: 1;
 }
 
 .banner-container {
@@ -1068,6 +1069,7 @@ body:has(.notice) .container {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    z-index: 22;
 }
 
 .nameplate-user-name {
@@ -1075,7 +1077,12 @@ body:has(.notice) .container {
     height: 20px;
     margin-top: 15px;
     margin-left: 60px;
+    max-width: 150px;
     color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    z-index: 22;
 }
 
 
@@ -1348,18 +1355,6 @@ body:has(.notice) .container {
     border: 2px solid var(--card-outer);
     z-index: 1;
     animation: shop-fetching-anim 4s infinite;
-}
-
-.shop-category-card-holder-loading {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 20px;
-    justify-content: center; /* Center the grid horizontally */
-    max-width: 1200px; /* Limit the width of the card holder */
-    margin: 0 auto; /* Center the card holder container */
-    padding: 20px 0; /* Add some space between the banner and cards */
-    padding-left: 20px;
-    padding-right: 20px;
 }
 
 @keyframes shop-fetching-anim {
@@ -3301,7 +3296,7 @@ body:has(.notice) .container {
 .modalv3-content-card-1 .modalv3-content-card-summary {
     color: var(--modalv3-card-text);
     margin: 0;
-    max-width: 650px;
+    max-width: 750px;
 }
 
 
@@ -3335,7 +3330,7 @@ body:has(.notice) .container {
 
 .modalv3-account-account-details {
     position: relative;
-    max-width: 700px;
+    max-width: 750px;
     margin-top: 10px;
     height: 350px;
     background-color: var(--background-tertiary);
@@ -3349,7 +3344,7 @@ body:has(.notice) .container {
 }
 
 .modalv3-account-account-details-inner {
-    max-width: 700px;
+    width: 100%;
     height: 150px;
     background-color: var(--background-secondary);
     border-radius: 10px;
@@ -3363,14 +3358,14 @@ body:has(.notice) .container {
 
 .modalv3-account-banner-color {
     position: absolute;
-    width: 700px;
+    width: 100%;
     height: 100px;
     border-radius: 10px 10px 0px 0px;
 }
 
 .modalv3-account-banner-image {
     position: absolute;
-    width: 700px;
+    width: 100%;
     height: 100px;
     background-position: center;
     background-size: cover;
@@ -3435,6 +3430,48 @@ body:has(.notice) .container {
 .modalv3-account-username-text {
     margin: 0;
     font-family: gg sans five;
+}
+
+.account-tab-edit-account-buttons-container {
+    position: absolute;
+    top: 125px;
+    right: 20px;
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 1fr;
+}
+
+.account-tab-edit-account-buttons-container svg {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
+.account-tab-edit-account-buttons-container svg.disabled {
+    color: var(--text-tertiary);
+    cursor: not-allowed;
+}
+
+
+.modalv3-profile-tab-file-too-large-warning {
+    position: relative;
+    background-color: #bf464659;
+    outline: 2px solid #BF4646;
+    outline-offset: -2px;
+    border-radius: 5px;
+    margin-top: 15px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.modalv3-profile-tab-file-too-large-warning .title {
+    font-size: 17px;
+}
+
+.modalv3-profile-tab-file-too-large-warning .summary {
+    font-size: 16px;
+    color: var(--text-secondary);
 }
 
 

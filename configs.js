@@ -110,7 +110,10 @@ const discord_categories = {
     LEAF: "1373015260595884082",
     NAMEPLATE_V2: "1377377712200744990",
     SPELL: "1379220459316445257",
-    NAMEPLATES_V3: "1382845914355470457"
+    ZEN_PROTOCOL: "1366494385746874428",
+    NAMEPLATES_V3: "1382845914355470457",
+    ODDS: "1385035256133849130",
+    SUMMER_BLISS: "1385050947985735701"
 };
 
 const category_client_overrides = [
@@ -230,8 +233,17 @@ const category_client_overrides = [
         showDarkBannerText: !0
     },
     {
+        sku_id: discord_categories.THE_VAULT,
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/1.jpg"
+    },
+    {
+        sku_id: discord_categories.AUTUMN_EQUINOX,
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/4.jpg"
+    },
+    {
         sku_id: discord_categories.BAND,
-        animatedBanner: "https://cdn.discordapp.com/assets/content/7e328a07e057745faad2366c9ebdf03e2bd69d22dfe8d41c81a10d29a8de7cf7.png"
+        animatedBanner: "https://cdn.discordapp.com/assets/content/7e328a07e057745faad2366c9ebdf03e2bd69d22dfe8d41c81a10d29a8de7cf7.png",
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/6.jpg"
     },
     {
         sku_id: discord_categories.WARRIOR,
@@ -254,6 +266,10 @@ const category_client_overrides = [
             animationSource: "https://cdn.discordapp.com/assets/collectibles/drops/lofi_girl/hero_banner.webm"
         },
         animatedBanner: "https://cdn.discordapp.com/assets/collectibles/drops/lofi_girl/banner_animated.webm"
+    },
+    {
+        sku_id: discord_categories.ORB,
+        modal_hero_banner: "https://cdn.discordapp.com/app-assets/1096190356233670716/1336165352392097853.png?size=4096"
     },
     {
         sku_id: discord_categories.NAMEPLATE,

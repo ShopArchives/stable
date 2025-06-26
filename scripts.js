@@ -1,5 +1,5 @@
 
-const appVersion = "7.1.4"
+const appVersion = "7.1.7"
 const appType = "Stable"
 
 document.getElementById('logo-container').setAttribute('data-tooltip', appType+' '+appVersion);
@@ -237,6 +237,10 @@ async function verifyOrigin() {
             currentUserData = JSON.parse(localStorage.getItem('currentUser'));
         }
 
+        if (currentUserData && currentUserData.admin_level >= 1) {
+            changeSetting('dev', 1);
+        }
+
         // Fetch & Sync Server experiments
 
         if (localStorage.token) {
@@ -376,6 +380,28 @@ async function fetchAndUpdateUserInfo() {
     } catch {}
 }
 
+async function fetchAndSyncUserInfo() {
+    try {
+        let success = true;
+        const userRawData = await fetch(redneredAPI + endpoints.USER, {
+            method: "POST",
+            headers: {
+                "Authorization": localStorage.token
+            }
+        });
+
+        if (!userRawData.ok) {
+            success = false;
+        } else {
+            const userData = await userRawData.json();
+
+            localStorage.setItem('currentUser', JSON.stringify(userData));
+
+            currentUserData = JSON.parse(localStorage.getItem('currentUser'));
+        }
+        return success
+    } catch {}
+}
 
 async function loadSite() {
 
@@ -2263,11 +2289,17 @@ async function loadSite() {
                 if (categoryData.sku_id === "3") {
                     categoryBanner = "https://cdn.yapper.shop/assets/43.png"
                 }
+    
+                const bannerContainer = document.createElement('div');
+                bannerContainer.classList.add('banner-container');
+                bannerContainer.style.backgroundImage = `url(${categoryBanner})`;
+
+                const categoryClientDataId = category_client_overrides.findIndex(cat => cat.sku_id === categoryData.sku_id);
 
                 let modalBanner;
 
-                if (categoryData.sku_id === discord_categories.ORB) {
-                    modalBanner = `https://cdn.discordapp.com/app-assets/1096190356233670716/1336165352392097853.png?size=4096`;
+                if (category_client_overrides[categoryClientDataId]?.modal_hero_banner) {
+                    modalBanner = category_client_overrides[categoryClientDataId].modal_hero_banner;
                 } else if (categoryData.hero_banner_asset?.static) {
                     modalBanner = categoryData.hero_banner_asset?.static;
                 } else if (categoryData.hero_banner) {
@@ -2275,12 +2307,6 @@ async function loadSite() {
                 } else if (categoryData.banner) {
                     modalBanner = `https://cdn.discordapp.com/app-assets/1096190356233670716/${categoryData.banner}.png?size=4096`;
                 }
-    
-                const bannerContainer = document.createElement('div');
-                bannerContainer.classList.add('banner-container');
-                bannerContainer.style.backgroundImage = `url(${categoryBanner})`;
-
-                const categoryClientDataId = category_client_overrides.findIndex(cat => cat.sku_id === categoryData.sku_id);
 
                 if (categoryData.logo && category_client_overrides[categoryClientDataId]?.addLogo) {
                     if (category_client_overrides[categoryClientDataId]?.banner_verification && category_client_overrides[categoryClientDataId]?.banner_verification === categoryData.banner || !category_client_overrides[categoryClientDataId].banner_verification) {
@@ -3194,6 +3220,13 @@ async function loadSite() {
                                             dateContainer.querySelector('.inv').textContent = `${formatted}`;
                                         }
 
+                                        // if (settingsStore.dev === 1) {
+                                        //     reviewDiv.querySelector('.review-user-display-name-container').classList.add('clickable');
+                                        //     reviewDiv.addEventListener("click", () => {
+                                        //         setDevSidebarTab(2);
+                                        //     });
+                                        // }
+
                                         if (currentUserData?.id === review.user.id || currentUserData?.types.admin_level >= 1) {
                                             let deleteReviewIcon = document.createElement("div");
 
@@ -3300,6 +3333,9 @@ async function loadSite() {
                                             let bannerPreview = document.createElement("img");
                                             
                                             bannerPreview.src = `https://cdn.discordapp.com/banners/${review.user.id}/${review.user.banner}.png?size=300`;
+                                            bannerPreview.addEventListener("error", function () {
+                                                this.remove();
+                                            });
     
                                             reviewDiv.querySelector('.review-banner-container').appendChild(bannerPreview);
                                         }
@@ -3503,18 +3539,21 @@ async function loadSite() {
 
                     if (Array.isArray(usersXPEventsCache)) {
                         const xpRewardsTab = modal.querySelector('#category-modal-tab-5');
-                        usersXPEventsCache.forEach(promo => {
-                            if (promo.category_data?.sku_id === categoryData.sku_id) {
-                                xpRewardsTab.classList.remove('disabled');
-                                xpRewardsTab.addEventListener("click", function () {
-                                    // Rewards
-                                    changeModalTab('5');
-                                });
-                            } else {
-                                xpRewardsTab.classList.add('has-tooltip');
-                                xpRewardsTab.setAttribute('data-tooltip', 'There are currently no XP rewards for this category');
-                            }
-                        });
+                        const hasMatchingPromo = usersXPEventsCache.some(promo =>
+                            promo.category_data?.sku_id === categoryData.sku_id
+                        );
+                    
+                        if (hasMatchingPromo) {
+                            xpRewardsTab.classList.remove('disabled');
+                            xpRewardsTab.classList.remove('has-tooltip');
+                            xpRewardsTab.removeAttribute('data-tooltip');
+                            xpRewardsTab.addEventListener("click", function () {
+                                changeModalTab('5');
+                            });
+                        } else {
+                            xpRewardsTab.classList.add('has-tooltip');
+                            xpRewardsTab.setAttribute('data-tooltip', 'There are currently no XP rewards for this category');
+                        }
                     }
         
                     modal.querySelector('#category-modal-tab-1').addEventListener("click", function () {
@@ -3677,6 +3716,11 @@ async function loadSite() {
                     videoBanner.src = categoryData.banner_asset.animated;
                     videoBanner.classList.add('banner-video');
                     bannerContainer.appendChild(videoBanner);
+                } else if (categoryData.banner_asset?.static) {
+                    const imageBanner = document.createElement("img");
+                    imageBanner.src = categoryData.banner_asset.static;
+                    imageBanner.classList.add('banner-video');
+                    bannerContainer.appendChild(imageBanner);
                 }
 
                 category.appendChild(bannerContainer);
@@ -4478,6 +4522,9 @@ async function loadSite() {
                     <h2 class="modalv3-content-card-header">Discord Account</h2>
                     <p class="modalv3-content-card-summary">The Discord account linked to Shop Archives.</p>
 
+                    <div id="modalv3-account-account-outdated-container">
+                    </div>
+
                     <div id="modalv3-account-account-details-container">
                         <div class="modalv3-account-account-details">
                             <div class="modalv3-account-banner-color" style="background-color: var(--background-secondary);"></div>
@@ -4487,6 +4534,17 @@ async function loadSite() {
                             <div class="modalv3-account-avatar-preview-bg"></div>
                             <img class="modalv3-account-avatar-preview" style="background-color: var(--background-secondary);">
                             <p class="modalv3-account-displayname">Loading...</p>
+
+                            <div class="account-tab-edit-account-buttons-container">
+                                <svg class="has-tooltip" id="resync-profiles-button" data-tooltip="Re-sync your Discord profile with Shop Archives" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M21 2a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1h-6a1 1 0 1 1 0-2h3.93A8 8 0 0 0 6.97 5.78a1 1 0 0 1-1.26-1.56A9.98 9.98 0 0 1 20 6V3a1 1 0 0 1 1-1ZM3 22a1 1 0 0 1-1-1v-6a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H5.07a8 8 0 0 0 11.96 2.22 1 1 0 1 1 1.26 1.56A9.99 9.99 0 0 1 4 18v3a1 1 0 0 1-1 1Z" class=""></path>
+                                </svg>
+                                <svg class="has-tooltip" id="logout-button" style="color: var(--text-feedback-critical)" data-tooltip="Log Out" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M9 12a1 1 0 0 1 1 1v2a1 1 0 1 1-2 0v-2a1 1 0 0 1 1-1Z" class=""></path>
+                                    <path fill="currentColor" fill-rule="evenodd" d="M2.75 3.02A3 3 0 0 1 5 2h10a3 3 0 0 1 3 3v7.64c0 .44-.55.7-.95.55a3 3 0 0 0-3.17 4.93l.02.03a.5.5 0 0 1-.35.85h-.05a.5.5 0 0 0-.5.5 2.5 2.5 0 0 1-3.68 2.2l-5.8-3.09A3 3 0 0 1 2 16V5a3 3 0 0 1 .76-1.98Zm1.3 1.95A.04.04 0 0 0 4 5v11c0 .36.2.68.49.86l5.77 3.08a.5.5 0 0 0 .74-.44V8.02a.5.5 0 0 0-.32-.46l-6.63-2.6Z" clip-rule="evenodd" class=""></path>
+                                    <path fill="currentColor" d="M15.3 16.7a1 1 0 0 1 1.4-1.4l4.3 4.29V16a1 1 0 1 1 2 0v6a1 1 0 0 1-1 1h-6a1 1 0 1 1 0-2h3.59l-4.3-4.3Z" class=""></path>
+                                </svg>
+                            </div>
 
                             <div class="modalv3-account-account-details-inners-padding">
                                 <div class="modalv3-account-account-details-inner">
@@ -4527,6 +4585,42 @@ async function loadSite() {
                 }
 
                 tabPageOutput.querySelector(".modalv3-account-username-text").textContent = currentUserData.username;
+                
+                const resyncButton = tabPageOutput.querySelector("#resync-profiles-button");
+                resyncButton.addEventListener('click', async () => {
+                    resyncButton.classList.add('disabled');
+                    const success = await fetchAndSyncUserInfo();
+                    if (success === true) {
+                        try {
+                            loadPage(currentPageCache, true);
+                            document.getElementById('ubar-displayname').textContent = currentUserData.global_name ? currentUserData.global_name : currentUserData.username;
+                            document.getElementById('ubar-username').textContent = currentUserData.username;
+                        } catch {}
+                        setModalv3InnerContent('account');
+                    } else {
+                        tabPageOutput.querySelector("#modalv3-account-account-outdated-container").innerHTML = `
+                            <div class="modalv3-profile-tab-file-too-large-warning">
+                                <p class="title">There was an error syncing your profile!</p>
+                                <p class="summary">Your Discord access token has expired, please login again to sync your profile.</p>
+
+                                <button class="log-in-with-discord-button" onclick="loginWithDiscord();">
+                                    <svg width="59" height="59" viewBox="0 0 59 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M48.7541 12.511C45.2046 10.8416 41.4614 9.66246 37.6149 9C37.0857 9.96719 36.6081 10.9609 36.1822 11.9811C32.0905 11.3451 27.9213 11.3451 23.8167 11.9811C23.3908 10.9609 22.9132 9.96719 22.384 9C18.5376 9.67571 14.7815 10.8549 11.2319 12.5243C4.18435 23.2297 2.27404 33.67 3.2292 43.9647C7.35961 47.0915 11.9805 49.4763 16.8854 51C17.9954 49.4763 18.9764 47.8467 19.8154 46.1508C18.2149 45.5413 16.6789 44.7861 15.2074 43.8984C15.5946 43.6069 15.969 43.3155 16.3433 43.024C24.9913 47.1975 35.0076 47.1975 43.6557 43.024C44.03 43.3287 44.4043 43.6334 44.7915 43.8984C43.3201 44.7861 41.7712 45.5413 40.1706 46.164C41.0096 47.8599 41.9906 49.4763 43.1006 51C48.0184 49.4763 52.6393 47.1047 56.7697 43.9647C57.8927 32.0271 54.8594 21.6927 48.7412 12.511H48.7541ZM21.0416 37.6315C18.3827 37.6315 16.1755 35.1539 16.1755 32.1066C16.1755 29.0593 18.2923 26.5552 21.0287 26.5552C23.7651 26.5552 25.9465 29.0593 25.8949 32.1066C25.8432 35.1539 23.7522 37.6315 21.0416 37.6315ZM38.9831 37.6315C36.3113 37.6315 34.1299 35.1539 34.1299 32.1066C34.1299 29.0593 36.2467 26.5552 38.9831 26.5552C41.7195 26.5552 43.888 29.0593 43.8364 32.1066C43.7847 35.1539 41.6937 37.6315 38.9831 37.6315Z" fill="white"/>
+                                    </svg>
+                                    Login with Discord
+                                </button>
+                            </div>
+                        `;
+                    }
+                });
+
+                const logoutButton = tabPageOutput.querySelector("#logout-button");
+                logoutButton.addEventListener('click', async () => {
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('currentUser');
+                    location.reload();
+                });
+
             } else {
                 tabPageOutput.querySelector('#discord-account-container').innerHTML = `
                     <h2 class="modalv3-content-card-header">You are curently not logged in.</h2>
@@ -5434,13 +5528,13 @@ async function loadSite() {
 
     window.setModalv3InnerContent = setModalv3InnerContent;
 
-    function toggleStaffDevTools() {
+    function setDevSidebarTab(tab) {
 
         const devtoolsContainer = document.querySelector('.staff-devtools-container');
 
-        if (!devtoolsOpenCache) {
+        if (devtoolsOpenCache != 1 && tab === 1) {
 
-            devtoolsOpenCache = true;
+            devtoolsOpenCache = 1;
 
             devtoolsContainer.innerHTML = `
                 <div class="staff-devtools">
@@ -5601,13 +5695,22 @@ async function loadSite() {
                     }
                 }
             }
+        } else if (devtoolsOpenCache != 2 && tab === 2) {
+
+            devtoolsOpenCache = 2;
+
+            devtoolsContainer.innerHTML = `
+                <div class="staff-devtools">
+                    <h2>Built in user editor will go here</h2>
+                </div>
+            `;
         } else {
-            devtoolsOpenCache = false;
+            devtoolsOpenCache = 0;
             devtoolsContainer.innerHTML = ``;
         }
     }
 
-    window.toggleStaffDevTools = toggleStaffDevTools;
+    window.setDevSidebarTab = setDevSidebarTab;
 
     if (settingsStore.dev === 1) {
         document.getElementById('dev-tools-icon').classList.remove('hidden');
