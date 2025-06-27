@@ -1,5 +1,5 @@
 
-const appVersion = "7.1.7"
+const appVersion = "7.1.8"
 const appType = "Stable"
 
 document.getElementById('logo-container').setAttribute('data-tooltip', appType+' '+appVersion);
@@ -237,7 +237,7 @@ async function verifyOrigin() {
             currentUserData = JSON.parse(localStorage.getItem('currentUser'));
         }
 
-        if (currentUserData && currentUserData.admin_level >= 1) {
+        if (currentUserData && currentUserData.types.admin_level >= 1) {
             changeSetting('dev', 1);
         }
 
@@ -3304,11 +3304,10 @@ async function loadSite() {
                                         const userBadgesElement = reviewDiv.querySelector('.review-badges-container-container');
                                         const userBadgesInnerElement = reviewDiv.querySelector('.review-badges-container');
     
-                                        if (Array.isArray(review.user.badges)) {
+                                        if (Array.isArray(review.user.badges) && review.user.badges.length != 0) {
                                             review.user.badges.forEach(badge => {
                                                 const badgeImg = document.createElement("img");
-                                                badgeImg.src = badge.src;
-                                                badgeImg.alt = badge.name;
+                                                badgeImg.src = `https://cdn.yapper.shop/assets/badges/${badge.id}.png`;
                                                 badgeImg.setAttribute('data-tooltip', badge.name);
                                                 badgeImg.classList.add("badge");
                                                 badgeImg.classList.add("has-tooltip");
