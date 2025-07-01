@@ -1,4 +1,7 @@
 
+const appVersion = "7.1.11";
+const appType = "Stable";
+
 const endpoints = {
     MAIN: "https://api.yapper.shop/",
     VERSION: "v3",
@@ -114,7 +117,8 @@ const discord_categories = {
     ZEN_PROTOCOL: "1366494385746874428",
     NAMEPLATES_V3: "1382845914355470457",
     ODDS: "1385035256133849130",
-    SUMMER_BLISS: "1385050947985735701"
+    SUMMER_BLISS: "1385050947985735701",
+    PAPER: "1387888352891764947"
 };
 
 const category_client_overrides = [
@@ -330,7 +334,7 @@ const experiments = [
                 title: `Not Eligible`
             },
             {
-                title: `Show users banners on reviews`
+                title: `Enabled`
             }
         ]
     },

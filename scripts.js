@@ -1,12 +1,9 @@
-
-const appVersion = "7.1.8"
-const appType = "Stable"
-
 document.getElementById('logo-container').setAttribute('data-tooltip', appType+' '+appVersion);
 
 // Cache
 let currentPageCache;
 let currentOpenModalId;
+let isMobileCache;
 let scrollToCache;
 let devtoolsOpenCache;
 let currentUserData;
@@ -25,6 +22,12 @@ let discordMiscellaneousCategoriesCache;
 
 const overridesKey = 'experimentOverrides';
 const serverKey = 'serverExperiments';
+
+const isMobile = navigator.userAgentData && navigator.userAgentData.mobile;
+if (isMobile) {
+    isMobileCache = true;
+    document.body.classList.add('mobile');
+}
 
 function loadOverrides() {
     try {
@@ -1288,7 +1291,7 @@ async function loadSite() {
                                 <circle cx="72" cy="72" r="16" stroke="currentColor" stroke-width="8"/>
                                 <rect x="81" y="85.9497" width="7" height="16" rx="3.5" transform="rotate(-45 81 85.9497)" fill="currentColor"/>
                             </svg>
-                            <p>Details</p>
+                            <p>Overview</p>
                         </div>
                         <div class="tab" id="modalv2-tab-2">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -2458,7 +2461,7 @@ async function loadSite() {
                                         <circle cx="72" cy="72" r="16" stroke="currentColor" stroke-width="8"/>
                                         <rect x="81" y="85.9497" width="7" height="16" rx="3.5" transform="rotate(-45 81 85.9497)" fill="currentColor"/>
                                     </svg>
-                                    <p>Details</p>
+                                    <p>Overview</p>
                                 </div>
                                 <div class="tab" id="category-modal-tab-3">
                                     <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -2494,10 +2497,16 @@ async function loadSite() {
                                     <p class="sku_id has-tooltip" data-tooltip="Click To Copy" onclick="copyValue('${categoryData.sku_id}')">${categoryData.sku_id}</p>
                                     <h1>${categoryData.name}</h1>
                                     <p>${categoryData.summary ? categoryData.summary : ''}</p>
-                                    <div class="category-modal-quick-info-d-container">
-                                        <p>Prices</p>
-                                        <p>Products</p>
-                                        <p>Community Rating</p>
+                                    <div class="category-modal-quick-info-container">
+                                        <div class="outer-block">
+                                            <p>Prices</p>
+                                        </div>
+                                        <div class="outer-block">
+                                            <p>Products</p>
+                                        </div>
+                                        <div class="outer-block">
+                                            <p>Community Rating</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -2525,40 +2534,43 @@ async function loadSite() {
                                     <p class="sku_id has-tooltip" data-tooltip="Click To Copy" onclick="copyValue('${categoryData.sku_id}')">${categoryData.sku_id}</p>
                                     <h1>${categoryData.name}</h1>
                                     <p>${categoryData.summary ? categoryData.summary : ''}</p>
-                                    <div class="category-modal-quick-info-d-container">
-                                        <p class="quick-info-prices-title">Prices</p>
-                                        <p>Products</p>
-                                        <p>Community Rating</p>
-                                    </div>
                                     <div class="category-modal-quick-info-container">
-                                        <div class="block">
-                                            <div class="price-titles">
-                                                <p>Standard</p>
-                                                <p>Nitro</p>
-                                            </div>
-                                            <div id="price-detail-block">
-                                                
-                                            </div>
-                                        </div>
-                                        <div class="block">
-                                            <div id="products-details-block">
-                                                
+                                        <div class="outer-block">
+                                            <p class="quick-info-prices-title">Prices</p>
+                                            <div class="block" id="price-detail-block-container">
+                                                <div class="price-titles">
+                                                    <p>Standard</p>
+                                                    <p>Nitro</p>
+                                                </div>
+                                                <div id="price-detail-block">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="block">
-                                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                <g clip-path="url(#clip0_58_258)">
-                                                <path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="#FFEC3E"/>
-                                                </g>
-                                                <defs>
-                                                <clipPath id="clip0_58_258">
-                                                <rect width="24" height="24" fill="white"/>
-                                                </clipPath>
-                                                </defs>
-                                            </svg>
-                                            <h2 id="average-rating">N/A</h2>
-                                            <h2>/</h2>
-                                            <h1>5</h1>
+                                        <div class="outer-block">
+                                            <p>Products</p>
+                                            <div class="block">
+                                                <div id="products-details-block">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="outer-block">
+                                            <p>Community Rating</p>
+                                            <div class="block">
+                                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                    <g clip-path="url(#clip0_58_258)">
+                                                    <path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="#FFEC3E"/>
+                                                    </g>
+                                                    <defs>
+                                                    <clipPath id="clip0_58_258">
+                                                    <rect width="24" height="24" fill="white"/>
+                                                    </clipPath>
+                                                    </defs>
+                                                </svg>
+                                                <h2 id="average-rating">N/A</h2>
+                                                <h2>/</h2>
+                                                <h1>5</h1>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -2652,18 +2664,54 @@ async function loadSite() {
                                     </div>
                                 `;
 
+                                let justACounter = 0;
+
                                 if (standardUS === 0) {
+                                    justACounter += 1;
                                     pricesDetailBlock.querySelector('#standardUS').classList.add('hidden');
                                 }
                                 if (nitroUS === 0) {
+                                    justACounter += 1;
                                     pricesDetailBlock.querySelector('#nitroUS').classList.add('hidden');
                                 }
 
                                 if (standardOrb === 0) {
+                                    justACounter += 1;
                                     pricesDetailBlock.querySelector('#standardOrb').classList.add('hidden');
                                 }
                                 if (nitroOrb === 0) {
+                                    justACounter += 1;
                                     pricesDetailBlock.querySelector('#nitroOrb').classList.add('hidden');
+                                }
+                                
+                                if (justACounter === 4) {
+                                    modalInner.querySelector('#price-detail-block-container').innerHTML = `
+                                        <svg class="there-are-no-prices-here-silly" style="scale: 0.8; margin-right: 0;" width="163" height="78" viewBox="0 0 163 78" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_108_43)">
+                                        <g clip-path="url(#clip1_108_43)">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M32.0048 7.99975C31.1592 7.88746 30.3043 8.11652 29.6279 8.63663L12.2261 22.0202C11.5499 22.5402 11.1078 23.3087 10.9971 24.1564L8.14938 45.9732C8.03872 46.8209 8.2685 47.6785 8.7882 48.3573L22.1628 65.8274C22.6825 66.5062 23.4496 66.9506 24.2952 67.063L46.0575 69.9525C46.9033 70.0647 47.7581 69.8356 48.4344 69.3157L65.8364 55.932C66.5126 55.4119 66.9546 54.6435 67.0654 53.7958L69.913 31.979C70.0237 31.1312 69.7939 30.2737 69.2741 29.5949L55.8997 12.1248C55.3799 11.446 54.6129 11.0015 53.7673 10.8892L32.0048 7.99975ZM32.0097 16.8906C32.4249 16.1686 33.346 15.9217 34.0666 16.3394L60.9873 31.9371C61.7081 32.3548 61.9556 33.2786 61.5402 34.0007L46.0251 60.969C45.6099 61.6911 44.6888 61.9379 43.9681 61.5202L17.0496 45.9219C16.3289 45.5042 16.0814 44.5804 16.4967 43.8583L32.0097 16.8906Z" fill="currentColor"/>
+                                        <path d="M36.8859 27.2991C38.1018 29.6301 39.9509 31.5692 42.2188 32.8916C44.4869 34.2143 47.0811 34.8663 49.701 34.7722C49.9576 34.7635 50.2094 34.8422 50.4158 34.9954C50.6222 35.1486 50.7708 35.3674 50.8374 35.6158C50.904 35.8644 50.8847 36.1282 50.7825 36.3641C50.6804 36.6 50.5016 36.7941 50.2751 36.9146C47.9584 38.1288 46.0346 39.9789 44.7286 42.2495C43.4223 44.52 42.7876 47.1171 42.8983 49.7378C42.9075 49.995 42.8295 50.2476 42.677 50.4543C42.5246 50.661 42.3066 50.8097 42.0587 50.8761C41.8109 50.9425 41.548 50.9227 41.3126 50.8199C41.0772 50.7171 40.8833 50.5374 40.7625 50.3101C39.5368 47.9888 37.682 46.0616 35.4122 44.7506C33.1423 43.4396 30.5499 42.7983 27.9343 42.9008C27.678 42.9096 27.426 42.831 27.2196 42.6778C27.0132 42.5246 26.8646 42.3058 26.798 42.0572C26.7314 41.8087 26.7507 41.5449 26.8529 41.3091C26.955 41.0732 27.1339 40.8791 27.3602 40.7584C29.6753 39.531 31.597 37.6733 32.9056 35.3989C34.2139 33.1246 34.8558 30.5253 34.7577 27.8996C34.7451 27.6425 34.8198 27.3888 34.9694 27.1801C35.1193 26.9712 35.3352 26.8196 35.5822 26.75C35.8292 26.6803 36.0926 26.6966 36.3292 26.7964C36.5661 26.8961 36.7624 27.0733 36.8859 27.2991Z" fill="currentColor"/>
+                                        </g>
+                                        <path d="M72 57L73.8906 62.1094L79 64L73.8906 65.8906L72 71L70.1094 65.8906L65 64L70.1094 62.1094L72 57Z" fill="currentColor"/>
+                                        <path d="M11 4L12.3505 7.64955L16 9L12.3505 10.3505L11 14L9.64955 10.3505L6 9L9.64955 7.64955L11 4Z" fill="currentColor"/>
+                                        <path d="M131.736 47.802C133.401 48.2481 135.175 48.0146 136.668 47.1526C138.161 46.2906 139.25 44.8709 139.696 43.2058C140.143 41.5407 139.909 39.7666 139.047 38.2735C138.185 36.7804 136.765 35.6911 135.1 35.2449C133.435 34.7988 131.661 35.0323 130.168 35.8944C128.675 36.7564 127.586 38.1761 127.139 39.8411C126.693 41.5062 126.927 43.2804 127.789 44.7734C128.651 46.2665 130.071 47.3558 131.736 47.802Z" fill="currentColor"/>
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M115.033 9.68011C114.201 9.45702 113.314 9.57382 112.567 10.0048C111.821 10.4358 111.276 11.1456 111.053 11.9782C110.83 12.8108 110.946 13.6979 111.377 14.4444C111.808 15.1908 112.518 15.7355 113.351 15.9586L122.769 18.4821C123.601 18.7052 124.311 19.2499 124.742 19.9964C125.173 20.7428 125.29 21.6299 125.067 22.4625C124.844 23.2951 124.299 24.0049 123.552 24.436C122.806 24.867 121.919 24.9837 121.086 24.7606L106.96 20.9754C106.127 20.7523 105.24 20.8691 104.494 21.3001C103.747 21.7311 103.202 22.4409 102.979 23.2735C102.756 24.1061 102.873 24.9932 103.304 25.7397C103.735 26.4861 104.445 27.0308 105.277 27.2539L113.125 29.3568C113.958 29.5799 114.668 30.1248 115.099 30.8711C115.53 31.6175 115.647 32.5047 115.424 33.3373C115.201 34.1698 114.656 34.8798 113.909 35.3107C113.163 35.7415 112.276 35.8584 111.443 35.6353L105.165 33.953C104.332 33.7299 103.445 33.8469 102.698 34.2777C101.952 34.7086 101.407 35.4186 101.184 36.2511C100.961 37.0837 101.078 37.9709 101.509 38.7173C101.94 39.4636 102.65 40.0084 103.482 40.2315L107.406 41.283C107.362 46.1451 108.682 50.9223 111.216 55.0717C113.751 59.2214 117.398 62.5771 121.744 64.758C126.089 66.9389 130.96 67.8576 135.801 67.4094C140.643 66.9615 145.262 65.1645 149.134 62.2233C153.006 59.2817 155.975 55.3137 157.705 50.7695C159.434 46.2251 159.855 41.287 158.919 36.5155C157.983 31.7442 155.728 27.3308 152.41 23.7767C149.092 20.2226 144.843 17.6702 140.147 16.4094L115.033 9.68011ZM130.053 54.0805C133.384 54.9729 136.932 54.5058 139.918 52.7817C142.904 51.058 145.083 48.2186 145.975 44.8881C146.867 41.5577 146.4 38.0094 144.676 35.0234C142.952 32.0376 140.113 29.8588 136.783 28.9664C133.452 28.0741 129.904 28.5412 126.918 30.2652C123.932 31.989 121.753 34.8284 120.861 38.1588C119.969 41.4893 120.436 45.0376 122.16 48.0234C123.883 51.0094 126.723 53.1881 130.053 54.0805Z" fill="currentColor"/>
+                                        <path d="M95.8596 24.7304C96.6922 24.9535 97.5793 24.8367 98.3257 24.4058C99.0722 23.9748 99.6169 23.2649 99.84 22.4323C100.063 21.5998 99.9463 20.7127 99.5153 19.9662C99.0843 19.2197 98.3745 18.675 97.5419 18.4519L95.9723 18.0313C95.1397 17.8083 94.2526 17.9251 93.5061 18.356C92.7596 18.787 92.2149 19.4969 91.9918 20.3294C91.7688 21.162 91.8856 22.0491 92.3165 22.7956C92.7475 23.5421 93.4573 24.0868 94.2899 24.3099L95.8596 24.7304Z" fill="currentColor"/>
+                                        <path d="M147 67L148.35 70.6495L152 72L148.35 73.3505L147 77L145.65 73.3505L142 72L145.65 70.6495L147 67Z" fill="currentColor"/>
+                                        <path d="M85 7L86.8906 12.1094L92 14L86.8906 15.8906L85 21L83.1094 15.8906L78 14L83.1094 12.1094L85 7Z" fill="currentColor"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_108_43">
+                                        <rect width="163" height="78" fill="white"/>
+                                        </clipPath>
+                                        <clipPath id="clip1_108_43">
+                                        <rect width="64" height="64" fill="white" transform="translate(-0.191895 16.3726) rotate(-15)"/>
+                                        </clipPath>
+                                        </defs>
+                                        </svg>
+
+                                        <p>This category has no prices.</p>
+                                    `;
                                 }
                             }
 
@@ -2896,7 +2944,26 @@ async function loadSite() {
                             const reviewInputContainer = modalInner.querySelector('.write-review-input-container');
 
                             function refreshReviewBar() {
-                                if (currentUserData) {
+                                if (isMobileCache) {
+                                    reviewInputContainer.classList.add('normal');
+                                    reviewInputContainer.innerHTML = `
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                        <g clip-path="url(#clip0_66_360)">
+                                        <path fill-rule="evenodd" clip-rule="evenodd" d="M18.0939 13.525C18.4939 12.825 19.5239 12.825 19.9139 13.525L23.8739 20.425C24.2539 21.085 23.7539 21.895 22.9639 21.895H15.0439C14.2539 21.895 13.7439 21.085 14.1339 20.415L18.0939 13.515V13.525ZM18.5539 15.395H19.4539C19.7539 15.395 19.9739 15.655 19.9539 15.945L19.7339 17.965C19.7239 18.125 19.5639 18.225 19.4039 18.195C19.1401 18.1391 18.8676 18.1391 18.6039 18.195C18.4439 18.225 18.2839 18.125 18.2739 17.965L18.0639 15.945C18.0569 15.8753 18.0646 15.8048 18.0866 15.7383C18.1085 15.6717 18.1443 15.6105 18.1914 15.5587C18.2386 15.5068 18.2961 15.4654 18.3603 15.4372C18.4244 15.409 18.4938 15.3946 18.5639 15.395H18.5539ZM19.0039 20.895C19.2691 20.895 19.5235 20.7896 19.711 20.6021C19.8985 20.4146 20.0039 20.1602 20.0039 19.895C20.0039 19.6298 19.8985 19.3754 19.711 19.1879C19.5235 19.0004 19.2691 18.895 19.0039 18.895C18.7387 18.895 18.4843 19.0004 18.2968 19.1879C18.1092 19.3754 18.0039 19.6298 18.0039 19.895C18.0039 20.1602 18.1092 20.4146 18.2968 20.6021C18.4843 20.7896 18.7387 20.895 19.0039 20.895Z" fill="currentColor"/>
+                                        <path d="M10.4238 2.12421C12.6154 1.77616 14.8606 2.1665 16.8057 3.23456C18.7507 4.30263 20.2856 5.98766 21.168 8.02362C22.0095 9.96556 22.2098 12.1215 21.749 14.1818L20.2764 11.7082C19.7305 10.764 18.2893 10.7639 17.7295 11.7082V11.6945L12.1875 21.0031C11.9898 21.3304 11.9593 21.6822 12.0508 21.9982C12.0339 21.9983 12.0169 22.0002 12 22.0002H2.2002C2.00802 21.9999 1.8196 21.9444 1.6582 21.84C1.49684 21.7357 1.36915 21.5864 1.29004 21.4113C1.21109 21.2364 1.18366 21.0425 1.21191 20.8527C1.2403 20.6627 1.32336 20.4844 1.4502 20.34L3.50977 17.9699C3.65977 17.7999 3.6798 17.5496 3.5498 17.3596C2.3606 15.4863 1.82794 13.2708 2.03613 11.0617C2.24434 8.85254 3.18182 6.77552 4.7002 5.15741C6.21866 3.53928 8.23227 2.47226 10.4238 2.12421Z" fill="currentColor"/>
+                                        </g>
+                                        <defs>
+                                        <clipPath id="clip0_66_360">
+                                        <rect width="24" height="24" fill="white"/>
+                                        </clipPath>
+                                        </defs>
+                                        </svg>
+                                        <div class="text-container">
+                                            <h3>Can't submit reviews on this platform.</h3>
+                                            <p>Open Shop Archives on a desktop device to submit reviews.</p>
+                                        </div>
+                                    `;
+                                } else if (currentUserData) {
 
                                     let hasReviewAlready;
 
@@ -3140,279 +3207,313 @@ async function loadSite() {
                                 if (Array.isArray(categoryModalInfo.reviews) && categoryModalInfo.reviews.length != 0) {
                                     categoryModalInfo.reviews.forEach(review => {
                                         let reviewDiv = document.createElement("div");
-                
                                         reviewDiv.classList.add('category-modal-review-container');
-                                        if (review.types.system != 0) {
-                                            const type = reviews_system_types.find(type => type.id === review.types.system).codename;
-                                            reviewDiv.style.backgroundColor = `var(--bg-feedback-${type})`;
-                                            reviewDiv.classList.add(`bg-feedback-${type}`);
+                
+                                        if (review.types.flag != 0 && review.user.id != currentUserData?.id) {
+                                            reviewDiv.innerHTML = `
+                                                <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path fill="currentColor" d="M1.3 21.3a1 1 0 1 0 1.4 1.4l20-20a1 1 0 0 0-1.4-1.4l-20 20ZM3.16 16.05c.18.24.53.26.74.05l.72-.72c.18-.18.2-.45.05-.66a15.7 15.7 0 0 1-1.43-2.52.48.48 0 0 1 0-.4c.4-.9 1.18-2.37 2.37-3.72C7.13 6.38 9.2 5 12 5c.82 0 1.58.12 2.28.33.18.05.38 0 .52-.13l.8-.8c.25-.25.18-.67-.15-.79A9.79 9.79 0 0 0 12 3C4.89 3 1.73 10.11 1.11 11.7a.83.83 0 0 0 0 .6c.25.64.9 2.15 2.05 3.75Z" class=""></path>
+                                                    <path fill="currentColor" d="M8.18 10.81c-.13.43.36.65.67.34l2.3-2.3c.31-.31.09-.8-.34-.67a4 4 0 0 0-2.63 2.63ZM12.85 15.15c-.31.31-.09.8.34.67a4.01 4.01 0 0 0 2.63-2.63c.13-.43-.36-.65-.67-.34l-2.3 2.3Z" class=""></path>
+                                                    <path fill="currentColor" d="M9.72 18.67a.52.52 0 0 0-.52.13l-.8.8c-.25.25-.18.67.15.79 1.03.38 2.18.61 3.45.61 7.11 0 10.27-7.11 10.89-8.7a.83.83 0 0 0 0-.6c-.25-.64-.9-2.15-2.05-3.75a.49.49 0 0 0-.74-.05l-.72.72a.51.51 0 0 0-.05.66 15.7 15.7 0 0 1 1.43 2.52c.06.13.06.27 0 .4-.4.9-1.18 2.37-2.37 3.72C16.87 17.62 14.8 19 12 19c-.82 0-1.58-.12-2.28-.33Z" class=""></path>
+                                                </svg>
+                                                <p class="review-text-content">This review has been censored due to inappropriate language.</p>
+                                                <div style="flex: 1;"></div>
+                                                <button class="generic-brand-button">
+                                                    Show
+                                                </button>
+                                            `;
+                                            reviewDiv.style.display = 'inline-flex';
+                                            reviewDiv.style.alignItems = 'center';
+                                            reviewDiv.querySelector('.generic-brand-button').addEventListener("click", function () {
+                                                revealReview();
+                                                reviewDiv.style.display = 'unset';
+                                                reviewDiv.style.alignItems = 'unset';
+                                            });
+                                            if (!currentUserData) reviewDiv.querySelector('.generic-brand-button').remove();
+                                        } else {
+                                            revealReview();
                                         }
-                                        reviewDiv.innerHTML = `
-                                            <div class="shop-modal-review-moderation-buttons" data-modal-top-product-buttons></div>
-                                            <div class="review-nameplate-container"></div>
-                                            <div class="review-banner-container"></div>
-                                            <div class="review-user-container">
-                                                <div class="review-avatar-container">
-                                                    <img class="review-avatar" src="https://cdn.yapper.shop/assets/31.png" onerror="this.parentElement.remove();">
-                                                    <img class="review-avatar-decoration" src="https://cdn.yapper.shop/assets/31.png">
-                                                </div>
 
-                                                <div class="review-user-display-name-container">
-                                                    <p class="inv"></p>
-                                                    <p class="review-user-display-name"></p>
-                                                </div>
+                                        function revealReview() {
+                                            if (review.types.system != 0) {
+                                                const type = reviews_system_types.find(type => type.id === review.types.system).codename;
+                                                reviewDiv.style.backgroundColor = `var(--bg-feedback-${type})`;
+                                                reviewDiv.classList.add(`bg-feedback-${type}`);
+                                            }
+                                            reviewDiv.innerHTML = `
+                                                <div class="shop-modal-review-moderation-buttons"></div>
+                                                <div class="review-nameplate-container"></div>
+                                                <div class="review-banner-container"></div>
+                                                <div class="review-user-container">
+                                                    <div class="review-avatar-container">
+                                                        <img class="review-avatar" src="https://cdn.yapper.shop/assets/31.png" onerror="this.parentElement.remove();">
+                                                        <img class="review-avatar-decoration" src="https://cdn.yapper.shop/assets/31.png">
+                                                    </div>
 
-                                                <div class="review-system-tag-container has-tooltip" data-tooltip="Official Shop Archives Message">
-                                                    <p class="inv">SYSTEM</p>
-                                                    <p class="review-system-tag">SYSTEM</p>
-                                                </div>
+                                                    <div class="review-user-display-name-container">
+                                                        <p class="inv"></p>
+                                                        <p class="review-user-display-name"></p>
+                                                    </div>
 
-                                                <div class="review-server-tag-container-container">
-                                                    <div class="review-server-tag-container">
-                                                        <img class="server-tag-img" src="https://cdn.yapper.shop/assets/31.png">
-                                                        <div class="server-tag-title-container">
-                                                            <p class="server-tag-title"></p>
-                                                            <p class="inv"></p>
+                                                    <div class="review-system-tag-container has-tooltip" data-tooltip="Official Shop Archives Message">
+                                                        <p class="inv">SYSTEM</p>
+                                                        <p class="review-system-tag">SYSTEM</p>
+                                                    </div>
+
+                                                    <div class="review-server-tag-container-container">
+                                                        <div class="review-server-tag-container">
+                                                            <img class="server-tag-img" src="https://cdn.yapper.shop/assets/31.png">
+                                                            <div class="server-tag-title-container">
+                                                                <p class="server-tag-title"></p>
+                                                                <p class="inv"></p>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="review-badges-container-container">
-                                                    <div class="review-badges-container">
+                                                    <div class="review-badges-container-container">
+                                                        <div class="review-badges-container">
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="review-rating-container">
-                                                    <div class="possible-stars">
-                                                
+                                                    <div class="review-rating-container">
+                                                        <div class="possible-stars">
+
+                                                        </div>
+                                                        <div class="star-rating">
+
+                                                        </div>
                                                     </div>
-                                                    <div class="star-rating">
-                                                        
+
+                                                    <div class="review-date-container">
+                                                        <p class="inv">today</p>
+                                                        <p class="review-date">today</p>
                                                     </div>
+
                                                 </div>
-
-                                                <div class="review-date-container">
-                                                    <p class="inv">today</p>
-                                                    <p class="review-date">today</p>
-                                                </div>
-
-                                            </div>
-                                            <p class="review-text-content"></p>
-                                        `;
-
-                                        const date = new Date(review.created_at);
-
-                                        const day = String(date.getDate()).padStart(2, '0');
-                                        const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth is 0-indexed
-                                        const year = date.getFullYear();
-
-                                        const dateContainer = reviewDiv.querySelector(".review-date-container");
-
-                                        if (settingsStore.non_us_timezone === 1) {
-                                            const formatted = `${day}/${month}/${year}`;
-
-                                            dateContainer.querySelector('.review-date').textContent = `${formatted}`;
-                                            dateContainer.querySelector('.inv').textContent = `${formatted}`;
-                                        } else {
-                                            const formatted = `${month}/${day}/${year}`;
-                                            
-                                            dateContainer.querySelector('.review-date').textContent = `${formatted}`;
-                                            dateContainer.querySelector('.inv').textContent = `${formatted}`;
-                                        }
-
-                                        // if (settingsStore.dev === 1) {
-                                        //     reviewDiv.querySelector('.review-user-display-name-container').classList.add('clickable');
-                                        //     reviewDiv.addEventListener("click", () => {
-                                        //         setDevSidebarTab(2);
-                                        //     });
-                                        // }
-
-                                        if (currentUserData?.id === review.user.id || currentUserData?.types.admin_level >= 1) {
-                                            let deleteReviewIcon = document.createElement("div");
-
-                                            deleteReviewIcon.innerHTML = `
-                                                <svg class="modalv2_top_icon has-tooltip" data-tooltip="Delete Review" style="color: var(--color-red);" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M14.25 1c.41 0 .75.34.75.75V3h5.25c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H3.75A.75.75 0 0 1 3 4.25v-.5c0-.41.34-.75.75-.75H9V1.75c0-.41.34-.75.75-.75h4.5Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M5.06 7a1 1 0 0 0-1 1.06l.76 12.13a3 3 0 0 0 3 2.81h8.36a3 3 0 0 0 3-2.81l.75-12.13a1 1 0 0 0-1-1.06H5.07ZM11 12a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm3-1a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
+                                                <p class="review-text-content"></p>
                                             `;
 
-                                            deleteReviewIcon.addEventListener("click", function () {
-                                                reviewDeleteHandle();
-                                            });
+                                            const date = new Date(review.created_at);
 
-                                            async function reviewDeleteHandle() {
-                                                const status = await deleteReviewById(review.id);
+                                            const day = String(date.getDate()).padStart(2, '0');
+                                            const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth is 0-indexed
+                                            const year = date.getFullYear();
 
-                                                if (status.error && status.message) {
-                                                } else {
-                                                    await fetchCategoryData();
-                                                    fetchAndRenderReviews();
-                                                    refreshReviewBar();
-                                                }
-                                            }
+                                            const dateContainer = reviewDiv.querySelector(".review-date-container");
 
-                                            reviewDiv.querySelector(".shop-modal-review-moderation-buttons").appendChild(deleteReviewIcon);
-                                        }
-    
-                                        if (review.user.avatar) {
-    
-                                            const avatarPreview = reviewDiv.querySelector('.review-avatar');
-    
-                                            avatarPreview.src = userAvatar = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.webp?size=128';
-    
-                                            if (review.user.avatar.includes('a_')) {
-                                                reviewDiv.addEventListener("mouseenter", () => {
-                                                    avatarPreview.src = userAvatar = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.gif?size=128';
-                                                });
-                                                reviewDiv.addEventListener("mouseleave", () => {
-                                                    avatarPreview.src = userAvatar = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.webp?size=128';
-                                                });
-                                            }
-    
-                                        }
+                                            if (settingsStore.non_us_timezone === 1) {
+                                                const formatted = `${day}/${month}/${year}`;
 
-                                        if (!review.user.types.system) {
-                                            reviewDiv.querySelector('.review-system-tag-container').remove();
-                                        }
-    
-                                        if (review.user.avatar_decoration_data?.asset) {
-    
-                                            const decoPreview = reviewDiv.querySelector('.review-avatar-decoration');
-    
-                                            decoPreview.src = `https://cdn.discordapp.com/avatar-decoration-presets/${review.user.avatar_decoration_data.asset}.png?size=4096&passthrough=false`;
-    
-                                            reviewDiv.addEventListener("mouseenter", () => {
-                                                decoPreview.src = `https://cdn.discordapp.com/avatar-decoration-presets/${review.user.avatar_decoration_data.asset}.png?size=4096&passthrough=true`;
-                                            });
-                                            reviewDiv.addEventListener("mouseleave", () => {
-                                                decoPreview.src = `https://cdn.discordapp.com/avatar-decoration-presets/${review.user.avatar_decoration_data.asset}.png?size=4096&passthrough=false`;
-                                            });
-    
-                                        }
-    
-                                        const serverTagAsset = reviewDiv.querySelector('.review-server-tag-container-container');
-    
-                                        if (review.user.primary_guild) {
-    
-                                            serverTagAsset.querySelector('.server-tag-img').src = `https://cdn.discordapp.com/clan-badges/${review.user.primary_guild.identity_guild_id}/${review.user.primary_guild.badge}.png?size=24`;
-    
-                                            serverTagAsset.querySelector('.server-tag-title').textContent = review.user.primary_guild.tag;
-                                            serverTagAsset.querySelector('.inv').textContent = review.user.primary_guild.tag;
-    
-                                        } else {
-                                            serverTagAsset.remove();
-                                        }
-    
-                                        const userBadgesElement = reviewDiv.querySelector('.review-badges-container-container');
-                                        const userBadgesInnerElement = reviewDiv.querySelector('.review-badges-container');
-    
-                                        if (Array.isArray(review.user.badges) && review.user.badges.length != 0) {
-                                            review.user.badges.forEach(badge => {
-                                                const badgeImg = document.createElement("img");
-                                                badgeImg.src = `https://cdn.yapper.shop/assets/badges/${badge.id}.png`;
-                                                badgeImg.setAttribute('data-tooltip', badge.name);
-                                                badgeImg.classList.add("badge");
-                                                badgeImg.classList.add("has-tooltip");
-                                                
-                                                if (badge.support) {
-                                                    const badgeLink = document.createElement("a");
-                                                    badgeLink.href = badge.support;
-                                                    badgeLink.target = "_blank";
-                                                    badgeLink.rel = "noopener noreferrer";
-                                                    badgeLink.appendChild(badgeImg);
-                                                    userBadgesInnerElement.appendChild(badgeLink);
-                                                } else {
-                                                    userBadgesInnerElement.appendChild(badgeImg);
-                                                }
-                                            });
-                                        } else {
-                                            userBadgesElement.remove();
-                                        }
-                                        
-
-                                        if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'user_banner_on_reviews')?.treatment === 1 && review.user.banner) {
-                                            let bannerPreview = document.createElement("img");
-                                            
-                                            bannerPreview.src = `https://cdn.discordapp.com/banners/${review.user.id}/${review.user.banner}.png?size=300`;
-                                            bannerPreview.addEventListener("error", function () {
-                                                this.remove();
-                                            });
-    
-                                            reviewDiv.querySelector('.review-banner-container').appendChild(bannerPreview);
-                                        }
-    
-                                        if (review.user.collectibles?.nameplate) {
-                                            if (review.user.collectibles.nameplate.sa_override_src) {
-                                                let nameplatePreview = document.createElement("img");
-                                                
-                                                nameplatePreview.src = review.user.collectibles.nameplate.sa_override_src;
-    
-                                                reviewDiv.querySelector('.review-nameplate-container').appendChild(nameplatePreview);
+                                                dateContainer.querySelector('.review-date').textContent = `${formatted}`;
+                                                dateContainer.querySelector('.inv').textContent = `${formatted}`;
                                             } else {
-                                                let nameplatePreview = document.createElement("video");
-                                                
-                                                nameplatePreview.src = `https://cdn.discordapp.com/assets/collectibles/${review.user.collectibles.nameplate.asset}asset.webm`;
-                                                nameplatePreview.disablePictureInPicture = true;
-                                                nameplatePreview.muted = true;
-                                                nameplatePreview.loop = true;
-                                                nameplatePreview.playsInline = true;
-    
-                                                reviewDiv.addEventListener("mouseenter", () => {
-                                                    nameplatePreview.play();
-                                                });
-                                                reviewDiv.addEventListener("mouseleave", () => {
-                                                    nameplatePreview.pause();
+                                                const formatted = `${month}/${day}/${year}`;
+
+                                                dateContainer.querySelector('.review-date').textContent = `${formatted}`;
+                                                dateContainer.querySelector('.inv').textContent = `${formatted}`;
+                                            }
+
+                                            if (currentUserData?.id === review.user.id || currentUserData?.types.admin_level >= 1) {
+                                                let deleteReviewIcon = document.createElement("div");
+
+                                                deleteReviewIcon.innerHTML = `
+                                                    <svg class="modalv2_top_icon has-tooltip" data-tooltip="Delete Review" style="color: var(--color-red);" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M14.25 1c.41 0 .75.34.75.75V3h5.25c.41 0 .75.34.75.75v.5c0 .41-.34.75-.75.75H3.75A.75.75 0 0 1 3 4.25v-.5c0-.41.34-.75.75-.75H9V1.75c0-.41.34-.75.75-.75h4.5Z" class=""></path><path fill="currentColor" fill-rule="evenodd" d="M5.06 7a1 1 0 0 0-1 1.06l.76 12.13a3 3 0 0 0 3 2.81h8.36a3 3 0 0 0 3-2.81l.75-12.13a1 1 0 0 0-1-1.06H5.07ZM11 12a1 1 0 1 0-2 0v6a1 1 0 1 0 2 0v-6Zm3-1a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Z" clip-rule="evenodd" class=""></path></svg>
+                                                `;
+
+                                                deleteReviewIcon.addEventListener("click", function () {
+                                                    reviewDeleteHandle();
                                                 });
 
-                                                const bgcolor = nameplate_palettes[review.user.collectibles.nameplate.palette].darkBackground;
-    
-                                                reviewDiv.querySelector('.review-nameplate-container').style.backgroundImage = `linear-gradient(90deg, #00000000 0%, ${bgcolor} 200%)`;
-    
-                                                reviewDiv.querySelector('.review-nameplate-container').appendChild(nameplatePreview);
+                                                async function reviewDeleteHandle() {
+                                                    const status = await deleteReviewById(review.id);
+
+                                                    if (status.error && status.message) {
+                                                    } else {
+                                                        await fetchCategoryData();
+                                                        fetchAndRenderReviews();
+                                                        refreshReviewBar();
+                                                    }
+                                                }
+
+                                                reviewDiv.querySelector(".shop-modal-review-moderation-buttons").appendChild(deleteReviewIcon);
                                             }
-                                        }
-    
-                                        if (review.rating != null) {
-                                            for (let i = 0; i < 5; i++) {
-                                                let starRate = document.createElement("div");
-        
-                                                starRate.innerHTML = `
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <g clip-path="url(#clip0_58_258)">
-                                                        <path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="#575757"></path>
-                                                        </g>
-                                                        <defs>
-                                                        <clipPath id="clip0_58_258">
-                                                        <rect width="24" height="24" fill="white"></rect>
-                                                        </clipPath>
-                                                        </defs>
+
+                                            if (review.types.flag != 0 && review.user.id === currentUserData?.id) {
+                                                let hiddenReviewIcon = document.createElement("div");
+
+                                                hiddenReviewIcon.innerHTML = `
+                                                    <svg class="modalv2_top_icon has-tooltip" data-tooltip="This review may be hidden to some users" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M1.3 21.3a1 1 0 1 0 1.4 1.4l20-20a1 1 0 0 0-1.4-1.4l-20 20ZM3.16 16.05c.18.24.53.26.74.05l.72-.72c.18-.18.2-.45.05-.66a15.7 15.7 0 0 1-1.43-2.52.48.48 0 0 1 0-.4c.4-.9 1.18-2.37 2.37-3.72C7.13 6.38 9.2 5 12 5c.82 0 1.58.12 2.28.33.18.05.38 0 .52-.13l.8-.8c.25-.25.18-.67-.15-.79A9.79 9.79 0 0 0 12 3C4.89 3 1.73 10.11 1.11 11.7a.83.83 0 0 0 0 .6c.25.64.9 2.15 2.05 3.75Z" class=""></path>
+                                                        <path fill="currentColor" d="M8.18 10.81c-.13.43.36.65.67.34l2.3-2.3c.31-.31.09-.8-.34-.67a4 4 0 0 0-2.63 2.63ZM12.85 15.15c-.31.31-.09.8.34.67a4.01 4.01 0 0 0 2.63-2.63c.13-.43-.36-.65-.67-.34l-2.3 2.3Z" class=""></path>
+                                                        <path fill="currentColor" d="M9.72 18.67a.52.52 0 0 0-.52.13l-.8.8c-.25.25-.18.67.15.79 1.03.38 2.18.61 3.45.61 7.11 0 10.27-7.11 10.89-8.7a.83.83 0 0 0 0-.6c-.25-.64-.9-2.15-2.05-3.75a.49.49 0 0 0-.74-.05l-.72.72a.51.51 0 0 0-.05.66 15.7 15.7 0 0 1 1.43 2.52c.06.13.06.27 0 .4-.4.9-1.18 2.37-2.37 3.72C16.87 17.62 14.8 19 12 19c-.82 0-1.58-.12-2.28-.33Z" class=""></path>
                                                     </svg>
                                                 `;
-        
-                                                reviewDiv.querySelector('.possible-stars').appendChild(starRate);
+
+                                                reviewDiv.querySelector(".shop-modal-review-moderation-buttons").appendChild(hiddenReviewIcon);
                                             }
-        
-                                            for (let i = 0; i < review.rating; i++) {
-                                                let starRate = document.createElement("div");
-        
-                                                starRate.innerHTML = `
-                                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                                        <g clip-path="url(#clip0_58_258)">
-                                                        <path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="#FFEC3E"></path>
-                                                        </g>
-                                                        <defs>
-                                                        <clipPath id="clip0_58_258">
-                                                        <rect width="24" height="24" fill="white"></rect>
-                                                        </clipPath>
-                                                        </defs>
-                                                    </svg>
-                                                `;
-        
-                                                reviewDiv.querySelector('.star-rating').appendChild(starRate);
-                                            }
-                                        }
     
-                                        reviewDiv.querySelector('.inv').textContent = review.user.global_name ? review.user.global_name : review.user.username;
-                                        reviewDiv.querySelector('.review-user-display-name').textContent = review.user.global_name ? review.user.global_name : review.user.username;
-                                        reviewDiv.querySelector('.review-text-content').textContent = review.text;
+                                            if (review.user.avatar) {
+    
+                                                const avatarPreview = reviewDiv.querySelector('.review-avatar');
+    
+                                                avatarPreview.src = userAvatar = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.webp?size=128';
+    
+                                                if (review.user.avatar.includes('a_')) {
+                                                    reviewDiv.addEventListener("mouseenter", () => {
+                                                        avatarPreview.src = userAvatar = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.gif?size=128';
+                                                    });
+                                                    reviewDiv.addEventListener("mouseleave", () => {
+                                                        avatarPreview.src = userAvatar = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.webp?size=128';
+                                                    });
+                                                }
+    
+                                            }
+
+                                            if (!review.user.types.system) {
+                                                reviewDiv.querySelector('.review-system-tag-container').remove();
+                                            }
+    
+                                            if (review.user.avatar_decoration_data?.asset) {
+    
+                                                const decoPreview = reviewDiv.querySelector('.review-avatar-decoration');
+    
+                                                decoPreview.src = `https://cdn.discordapp.com/avatar-decoration-presets/${review.user.avatar_decoration_data.asset}.png?size=4096&passthrough=false`;
+    
+                                                reviewDiv.addEventListener("mouseenter", () => {
+                                                    decoPreview.src = `https://cdn.discordapp.com/avatar-decoration-presets/${review.user.avatar_decoration_data.asset}.png?size=4096&passthrough=true`;
+                                                });
+                                                reviewDiv.addEventListener("mouseleave", () => {
+                                                    decoPreview.src = `https://cdn.discordapp.com/avatar-decoration-presets/${review.user.avatar_decoration_data.asset}.png?size=4096&passthrough=false`;
+                                                });
+    
+                                            }
+    
+                                            const serverTagAsset = reviewDiv.querySelector('.review-server-tag-container-container');
+    
+                                            if (review.user.primary_guild) {
+    
+                                                serverTagAsset.querySelector('.server-tag-img').src = `https://cdn.discordapp.com/clan-badges/${review.user.primary_guild.identity_guild_id}/${review.user.primary_guild.badge}.png?size=24`;
+    
+                                                serverTagAsset.querySelector('.server-tag-title').textContent = review.user.primary_guild.tag;
+                                                serverTagAsset.querySelector('.inv').textContent = review.user.primary_guild.tag;
+    
+                                            } else {
+                                                serverTagAsset.remove();
+                                            }
+    
+                                            const userBadgesElement = reviewDiv.querySelector('.review-badges-container-container');
+                                            const userBadgesInnerElement = reviewDiv.querySelector('.review-badges-container');
+    
+                                            if (Array.isArray(review.user.badges) && review.user.badges.length != 0) {
+                                                review.user.badges.forEach(badge => {
+                                                    const badgeImg = document.createElement("img");
+                                                    badgeImg.src = `https://cdn.yapper.shop/assets/badges/${badge.id}.png`;
+                                                    badgeImg.setAttribute('data-tooltip', badge.name);
+                                                    badgeImg.classList.add("badge");
+                                                    badgeImg.classList.add("has-tooltip");
+
+                                                    if (badge.support) {
+                                                        const badgeLink = document.createElement("a");
+                                                        badgeLink.href = badge.support;
+                                                        badgeLink.target = "_blank";
+                                                        badgeLink.rel = "noopener noreferrer";
+                                                        badgeLink.appendChild(badgeImg);
+                                                        userBadgesInnerElement.appendChild(badgeLink);
+                                                    } else {
+                                                        userBadgesInnerElement.appendChild(badgeImg);
+                                                    }
+                                                });
+                                            } else {
+                                                userBadgesElement.remove();
+                                            }
+
+
+                                            if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'user_banner_on_reviews')?.treatment === 1 && review.user.banner) {
+                                                let bannerPreview = document.createElement("img");
+
+                                                bannerPreview.src = `https://cdn.discordapp.com/banners/${review.user.id}/${review.user.banner}.png?size=300`;
+                                                bannerPreview.addEventListener("error", function () {
+                                                    this.remove();
+                                                });
+    
+                                                reviewDiv.querySelector('.review-banner-container').appendChild(bannerPreview);
+                                            }
+    
+                                            if (review.user.collectibles?.nameplate) {
+                                                if (review.user.collectibles.nameplate.sa_override_src) {
+                                                    let nameplatePreview = document.createElement("img");
+
+                                                    nameplatePreview.src = review.user.collectibles.nameplate.sa_override_src;
+    
+                                                    reviewDiv.querySelector('.review-nameplate-container').appendChild(nameplatePreview);
+                                                } else {
+                                                    let nameplatePreview = document.createElement("video");
+
+                                                    nameplatePreview.src = `https://cdn.discordapp.com/assets/collectibles/${review.user.collectibles.nameplate.asset}asset.webm`;
+                                                    nameplatePreview.disablePictureInPicture = true;
+                                                    nameplatePreview.muted = true;
+                                                    nameplatePreview.loop = true;
+                                                    nameplatePreview.playsInline = true;
+    
+                                                    reviewDiv.addEventListener("mouseenter", () => {
+                                                        nameplatePreview.play();
+                                                    });
+                                                    reviewDiv.addEventListener("mouseleave", () => {
+                                                        nameplatePreview.pause();
+                                                    });
+
+                                                    const bgcolor = nameplate_palettes[review.user.collectibles.nameplate.palette].darkBackground;
+    
+                                                    reviewDiv.querySelector('.review-nameplate-container').style.backgroundImage = `linear-gradient(90deg, #00000000 0%, ${bgcolor} 200%)`;
+    
+                                                    reviewDiv.querySelector('.review-nameplate-container').appendChild(nameplatePreview);
+                                                }
+                                            }
+    
+                                            if (review.rating != null) {
+                                                for (let i = 0; i < 5; i++) {
+                                                    let starRate = document.createElement("div");
+        
+                                                    starRate.innerHTML = `
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <g clip-path="url(#clip0_58_258)">
+                                                            <path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="#575757"></path>
+                                                            </g>
+                                                            <defs>
+                                                            <clipPath id="clip0_58_258">
+                                                            <rect width="24" height="24" fill="white"></rect>
+                                                            </clipPath>
+                                                            </defs>
+                                                        </svg>
+                                                    `;
+        
+                                                    reviewDiv.querySelector('.possible-stars').appendChild(starRate);
+                                                }
+        
+                                                for (let i = 0; i < review.rating; i++) {
+                                                    let starRate = document.createElement("div");
+        
+                                                    starRate.innerHTML = `
+                                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                            <g clip-path="url(#clip0_58_258)">
+                                                            <path d="M12 1L14.6942 9.2918H23.4127L16.3593 14.4164L19.0534 22.7082L12 17.5836L4.94658 22.7082L7.64074 14.4164L0.587322 9.2918H9.30583L12 1Z" fill="#FFEC3E"></path>
+                                                            </g>
+                                                            <defs>
+                                                            <clipPath id="clip0_58_258">
+                                                            <rect width="24" height="24" fill="white"></rect>
+                                                            </clipPath>
+                                                            </defs>
+                                                        </svg>
+                                                    `;
+        
+                                                    reviewDiv.querySelector('.star-rating').appendChild(starRate);
+                                                }
+                                            }
+    
+                                            reviewDiv.querySelector('.inv').textContent = review.user.global_name ? review.user.global_name : review.user.username;
+                                            reviewDiv.querySelector('.review-user-display-name').textContent = review.user.global_name ? review.user.global_name : review.user.username;
+                                            reviewDiv.querySelector('.review-text-content').textContent = review.text;
+                                        }
                 
                                         reviewsContainer.appendChild(reviewDiv);
                                     });
@@ -3429,6 +3530,8 @@ async function loadSite() {
                                     } else if (currentUserData && currentUserData.ban_config.ban_type === 0) {
                                         reviewDiv.querySelector('.review-text-content').textContent = 'This category currently has no reviews. You could be the first!';
                                     } else if (currentUserData && currentUserData.ban_config.ban_type >= 1) {
+                                    } else if (isMobileCache) {
+                                        reviewDiv.querySelector('.review-text-content').textContent = 'This category currently has no reviews. Open Shop Archives on a desktop device to submit reviews!';
                                     } else {
                                         reviewDiv.querySelector('.review-text-content').textContent = 'This category currently has no reviews. Login with Discord and you could be the first!';
                                     }
@@ -3446,13 +3549,15 @@ async function loadSite() {
                                 </div>
                             `;
                             usersXPEventsCache.forEach(promo => {
+                                let promoCard = document.createElement("div");
+
                                 if (promo.category_data?.sku_id === categoryData.sku_id && promo.already_claimed != true) {
-                                    let promoCard = document.createElement("div");
 
                                     promoCard.classList.add('category-modal-xp-reward');
                                     promoCard.classList.add('unclaimed');
 
                                     promoCard.innerHTML = `
+                                        <div id="xp-event-expires-at"></div>
                                         <h3>Claim your free ${promo.xp_reward.toLocaleString()} XP!</h3>
                                         <p class="desc">You have ${promo.xp_reward.toLocaleString()} XP waiting for you.</p>
                                         <button id="claim-xp-button">
@@ -3466,18 +3571,105 @@ async function loadSite() {
                                     promoCard.querySelector('#claim-xp-button').addEventListener('click', () => {
                                         openClaimableClaimXPModal(promo.claimable_id);
                                     });
+
+                                    const expiresAt = new Date(promo.expires_at);
+                            
+                                    if (promo.expires_at && !isNaN(expiresAt.getTime())) {
                                     
+                                        function updateTimer() {
+                                            const now = new Date();
+                                            const timeDiff = expiresAt - now;
+                                        
+                                            if (timeDiff <= 0) {
+                                                if (settingsStore.staff_show_unpublished_xp_events) {
+                                                    promoCard.querySelector('#xp-event-expires-at').innerHTML = `
+                                                        <p class="xp-event-expires-at-text">EXPIRED</p>
+                                                    `;
+                                                } else {
+                                                    promoCard.classList.remove('unclaimed');
+                                                    promoCard.innerHTML = `
+                                                        <div id="xp-event-expires-at">
+                                                            <p class="xp-event-expires-at-text">EXPIRED</p>
+                                                        </div>
+                                                        <h3>Event Expired!</h3>
+                                                        <p class="desc">You missed out on ${promo.xp_reward.toLocaleString()} XP.</p>
+                                                    `;
+                                                }
+                                                clearInterval(timerInterval);
+                                            } else {
+                                                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                                                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                                                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                                                const date = `ENDS IN ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+                                                renderedDate = date.replace(" 0d 0h 0m", "").replace(" 0d 0h", "").replace(" 0d", "")
+
+                                                promoCard.querySelector('#xp-event-expires-at').innerHTML = `
+                                                    <p class="xp-event-expires-at-text">${renderedDate}</p>
+                                                `;
+                                            }
+                                        }
+                                    
+                                        const timerInterval = setInterval(updateTimer, 1000);
+                                        updateTimer();
+                                    }
+
                                     modalInner.querySelector('.category-modal-xp-rewards-container').appendChild(promoCard)
                                 } else if (promo.category_data?.sku_id === categoryData.sku_id && promo.already_claimed === true) {
-                                    let promoCard = document.createElement("div");
 
                                     promoCard.classList.add('category-modal-xp-reward');
 
                                     promoCard.innerHTML = `
+                                        <div id="xp-event-expires-at"></div>
                                         <h3>Already Claimed.</h3>
                                         <p class="desc">You already claimed this event reward for ${promo.xp_reward.toLocaleString()} XP.</p>
                                     `;
+
+                                    const expiresAt = new Date(promo.expires_at);
+                            
+                                    if (promo.expires_at && !isNaN(expiresAt.getTime())) {
                                     
+                                        function updateTimer() {
+                                            const now = new Date();
+                                            const timeDiff = expiresAt - now;
+                                        
+                                            if (timeDiff <= 0) {
+                                                if (settingsStore.staff_show_unpublished_xp_events) {
+                                                    promoCard.querySelector('#xp-event-expires-at').innerHTML = `
+                                                        <p class="xp-event-expires-at-text">EXPIRED</p>
+                                                    `;
+                                                } else {
+                                                    promoCard.innerHTML = `
+                                                        <div id="xp-event-expires-at">
+                                                            <p class="xp-event-expires-at-text">EXPIRED</p>
+                                                        </div>
+                                                        <h3>Event Expired!</h3>
+                                                        <p class="desc">You already claimed this event reward for ${promo.xp_reward.toLocaleString()} XP.</p>
+                                                    `;
+                                                }
+                                                clearInterval(timerInterval);
+                                            } else {
+                                                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                                                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                                                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                                                const date = `ENDS IN ${days}d ${hours}h ${minutes}m ${seconds}s`;
+
+                                                renderedDate = date.replace(" 0d 0h 0m", "").replace(" 0d 0h", "").replace(" 0d", "")
+
+                                                promoCard.querySelector('#xp-event-expires-at').innerHTML = `
+                                                    <p class="xp-event-expires-at-text">${renderedDate}</p>
+                                                `;
+                                            }
+                                        }
+                                    
+                                        const timerInterval = setInterval(updateTimer, 1000);
+                                        updateTimer();
+                                    }
+
                                     modalInner.querySelector('.category-modal-xp-rewards-container').appendChild(promoCard)
                                 }
                             });
@@ -3556,7 +3748,7 @@ async function loadSite() {
                     }
         
                     modal.querySelector('#category-modal-tab-1').addEventListener("click", function () {
-                        // Details
+                        // Overview
                         changeModalTab('1');
                     });
                     modal.querySelector('#category-modal-tab-2').addEventListener("click", function () {
@@ -4392,7 +4584,7 @@ async function loadSite() {
                                     <path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path>
                                 </svg>
                             </div>
-                            <div class="keybind_c2b141" aria-hidden="true">ESC</div>
+                            <div class="keybind_c2b141 remove-on-mobile" aria-hidden="true">ESC</div>
                         </div>
                     </div>
                 </div>
@@ -4402,15 +4594,18 @@ async function loadSite() {
         document.body.appendChild(modal);
 
         document.getElementById("modalv3-side-tabs-container").innerHTML = `
-            <div class="side-tabs-category-text-container">
-                <p>USER SETTINGS</p>
+            <div class="remove-on-mobile">
+                <div class="side-tabs-category-text-container">
+                    <p>USER SETTINGS</p>
+                </div>
+
+                <div class="side-tabs-button" id="modal-v3-tab-account" onclick="setModalv3InnerContent('account')">
+                    <p>Account</p>
+                </div>
             </div>
 
-            <div class="side-tabs-button" id="modal-v3-tab-account" onclick="setModalv3InnerContent('account')">
-                <p>Account</p>
-            </div>
+            <hr class="remove-on-mobile">
 
-            <hr>
             <div class="side-tabs-category-text-container">
                 <p>APP SETTINGS</p>
             </div>
@@ -4470,7 +4665,11 @@ async function loadSite() {
             });
         });
 
-        setModalv3InnerContent('account');
+        if (isMobileCache) {
+            setModalv3InnerContent('appearance');
+        } else {
+            setModalv3InnerContent('account');
+        }
 
 
         document.addEventListener("keydown", function (event) {
@@ -5047,7 +5246,7 @@ async function loadSite() {
                 <hr class="inv">
 
                 <div class="modalv3-content-card-1">
-                    <h2 class="modalv3-content-card-header">Active Events</h2>
+                    <h2 class="modalv3-content-card-header">Events</h2>
                     <p class="modalv3-content-card-summary">Events are a sweet way to earn free XP, keep an eye out for new events!</p>
 
                     <div class="modalv3-xp-events-container" id="xp-events-unclaimed">
@@ -5085,8 +5284,8 @@ async function loadSite() {
             function refreshXPEventsList() {
                 unclaimedOutput.innerHTML = ``;
                 claimedOutput.innerHTML = ``;
-                let unclaimedCoint = 0;
-                let claimedCoint = 0;
+                let unclaimedCount = 0;
+                let claimedCount = 0;
                 usersXPEventsCache.forEach(promo => {
 
                     let renderedDate;
@@ -5095,7 +5294,7 @@ async function loadSite() {
 
                     if (promo.already_claimed != true && promo.category_data === null || promo.already_claimed != true && settingsStore.staff_allow_category_only_event_claiming_in_events_tab === 1) {
 
-                        unclaimedCoint += 1;
+                        unclaimedCount += 1;
 
                         promoCard.classList.add('modalv3-xp-reward');
                         promoCard.classList.add('unclaimed');
@@ -5119,7 +5318,7 @@ async function loadSite() {
                         unclaimedOutput.appendChild(promoCard)
                     } else if (promo.already_claimed != true && promo.category_data != null) {
 
-                        unclaimedCoint += 1;
+                        unclaimedCount += 1;
 
                         promoCard.classList.add('modalv3-xp-reward');
                         promoCard.classList.add('unclaimed');
@@ -5143,7 +5342,7 @@ async function loadSite() {
                         unclaimedOutput.appendChild(promoCard)
                     } else if (promo.already_claimed === true) {
 
-                        claimedCoint += 1;
+                        claimedCount += 1;
 
                         promoCard.classList.add('modalv3-xp-reward');
 
@@ -5165,7 +5364,17 @@ async function loadSite() {
                             const timeDiff = expiresAt - now;
                     
                             if (timeDiff <= 0) {
-                                promoCard.classList.add("hidden");
+                                if (!settingsStore.staff_show_unpublished_xp_events) {
+                                    promoCard.classList.remove('unclaimed');
+                                    if (promoCard.querySelector('#take-me-there-xp-button')) promoCard.querySelector('#take-me-there-xp-button').remove();
+                                    if (promoCard.querySelector('#claim-xp-button')) promoCard.querySelector('#claim-xp-button').remove();
+                                    if (promo.already_claimed != true) {
+                                        promoCard.querySelector('.desc').textContent = `You missed out on ${promo.xp_reward.toLocaleString()} XP.`;
+                                    }
+                                }
+                                promoCard.querySelector('#xp-event-expires-at').innerHTML = `
+                                    <p class="xp-event-expires-at-text">EXPIRED</p>
+                                `;
                                 clearInterval(timerInterval);
                             } else {
                                 const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
@@ -5188,7 +5397,7 @@ async function loadSite() {
                     }
                 });
 
-                if (claimedCoint === 0) {
+                if (claimedCount === 0) {
                     let promoCard = document.createElement("div");
 
                     promoCard.classList.add('modalv3-xp-reward');
@@ -5201,7 +5410,7 @@ async function loadSite() {
                     claimedOutput.appendChild(promoCard)
                 }
 
-                if (unclaimedCoint === 0) {
+                if (unclaimedCount === 0) {
                     let promoCard = document.createElement("div");
 
                     promoCard.classList.add('modalv3-xp-reward');
@@ -5541,7 +5750,7 @@ async function loadSite() {
                     <div class="setting">
                         <div class="setting-info">
                             <div class="setting-title">Shop: Force Leaks</div>
-                            <div class="setting-description">Overrides the leaks endpoint with client side dummy data (requires restart)</div>
+                            <div class="setting-description">Overrides the leaks endpoint with client side dummy data (requires restart).</div>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_force_leaks_dummy_toggle">
@@ -5596,7 +5805,7 @@ async function loadSite() {
                     <div class="setting">
                         <div class="setting-info">
                             <div class="setting-title">XP: Unpublished Xp Events</div>
-                            <div class="setting-description">Pretty self explanatory</div>
+                            <div class="setting-description">Allows you to see unpublished or expired XP events.</div>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_show_unpublished_xp_events_toggle">
@@ -5607,7 +5816,7 @@ async function loadSite() {
                     <div class="setting">
                         <div class="setting-info">
                             <div class="setting-title">XP: Unpublished Xp Shop</div>
-                            <div class="setting-description">same for this</div>
+                            <div class="setting-description">Allows you to see unpublished XP shop items.</div>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_show_unpublished_xp_shop_toggle">
@@ -5618,7 +5827,7 @@ async function loadSite() {
                     <div class="setting">
                         <div class="setting-info">
                             <div class="setting-title">XP: Bypass Category Requirement</div>
-                            <div class="setting-description">Allows you to claim category only events from the events tab</div>
+                            <div class="setting-description">Allows you to claim category only events from the events tab.</div>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_allow_category_only_event_claiming_in_events_tab_toggle">
@@ -5717,6 +5926,19 @@ async function loadSite() {
 
 }
 window.loadSite = loadSite;
+
+const removeonMobileObserver = new MutationObserver(() => {
+    if (isMobileCache) {
+        const elements = document.querySelectorAll('.remove-on-mobile');
+        elements.forEach(el => {
+            el.remove();
+        });
+    }
+});
+removeonMobileObserver.observe(document.body, {
+    childList: true,
+    subtree: true
+});
 
 function triggerSafetyBlock() {
     console.warn('%cWarning!', 'color: lightblue; font-weight: bold; font-size: 30px; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;');

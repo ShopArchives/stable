@@ -161,6 +161,8 @@ body {
 
 p, h1, h2, h3, h4, h5, h6, a {
     user-select: none;
+    height: fit-content;
+    width: fit-content;
 }
 
 .notice {
@@ -546,9 +548,14 @@ body:has(.notice) .container {
 .content {
     flex: 1;
     padding-top: 50px;
-    overflow: hidden;
     overflow-y: auto;
     width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.mobile .content {
+    padding-bottom: 200px;
 }
 
 .content h2 {
@@ -742,11 +749,13 @@ body:has(.notice) .container {
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
+    width: 80%;
 }
 
 .shop-category-text-holder p {
     font-size: 18px;
     font-family: gg sans five;
+    width: 100%;
 }
 
 
@@ -2070,8 +2079,13 @@ body:has(.notice) .container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 50px;
-    padding-left: 30px;
-    padding-right: 30px;
+    margin-top: 20px;
+    overflow: visible;
+}
+
+.category-modal-quick-info-container .outer-block {
+    display: flex;
+    flex-direction: column;
     overflow: visible;
 }
 
@@ -2079,11 +2093,16 @@ body:has(.notice) .container {
     background-color: var(--modal-block-bg);
     border-radius: 10px;
     display: flex;
+    flex: 1;
     justify-content: center;
     align-items: center;
     padding: 15px;
     transform: translateY(0px);
     opacity: 1;
+}
+
+.category-modal-quick-info-container .block:has(.there-are-no-prices-here-silly) {
+    flex-direction: column;
 }
 
 .category-modal-quick-info-container .animated {
@@ -2200,6 +2219,34 @@ body:has(.notice) .container {
 
 
 
+
+.shop-modal-review-moderation-buttons {
+    position: absolute;
+    width: 145px;
+    height: 30px;
+    top: 10px;
+    right: 10px;
+    display: grid;
+    direction: rtl;
+    gap: 5px;
+    grid-template-columns: repeat(auto-fill, minmax(30px, 1fr));
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+.shop-modal-review-moderation-buttons div {
+    height: 30px !important;
+    width: 30px !important;
+    border-radius: 50px;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.shop-modal-review-moderation-buttons svg {
+    height: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
 
 
 .category-modal-reviews-container {
@@ -3206,6 +3253,7 @@ body:has(.notice) .container {
 }
 
 
+
 .container_c2b141 {
     position: absolute;
     top: 20px;
@@ -3216,6 +3264,10 @@ body:has(.notice) .container {
     text-align: center;
     cursor: pointer;
     z-index: 5;
+}
+
+.mobile .container_c2b141 {
+    right: 10px;
 }
 
 .container_c2b141:hover {
@@ -3826,6 +3878,32 @@ body:has(.notice) .container {
 
 
 
+/* Generic Styles */
+
+.generic-brand-button {
+    display: flex;
+    margin: 5px 0;
+    padding: 10px 15px;
+    background-color: var(--color-brand);
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: auto;
+    box-shadow: none;
+    transition: box-shadow 0.2s ease;
+}
+
+.generic-brand-button:hover {
+    box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.3);
+}
+
+.generic-brand-button svg {
+    height: 15px;
+    width: auto;
+    scale: 1.3;
+    margin-right: 10px;
+}
 
 
 
