@@ -1,5 +1,5 @@
 
-const appVersion = "7.1.11";
+const appVersion = "7.1.12";
 const appType = "Stable";
 
 const endpoints = {
@@ -318,6 +318,14 @@ const nameplate_palettes = {
     clover: {
         "darkBackground": "#047B20",
         "lightBackground": "#63CD5A"
+    },
+    lemon: {
+        "darkBackground": "#F6CD12",
+        "lightBackground": "#FED400"
+    },
+    white: {
+        "darkBackground": "#FFFFFF",
+        "lightBackground": "#FFFFFF"
     }
 };
 
