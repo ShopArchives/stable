@@ -595,7 +595,7 @@ async function loadSite() {
 
         xpBalance.innerHTML = `
             <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="#D9D9D9"/>
+                <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"/>
             </svg>                            
             <p id="my-xp-balance">${usersXPBalance.toLocaleString()}</p>
         `;
@@ -2838,6 +2838,14 @@ async function loadSite() {
                                 } else {
                                     modalInner.querySelector('#average-rating').textContent = average;
                                 }
+
+                                if (average <= 2.5) {
+                                    console.log('nah')
+                                } else if (average >= 2.6 && average <= 3.4) {
+                                    console.log('mid')
+                                } else if (average >= 3.5) {
+                                    console.log('yea')
+                                }
                                   
                             } else {
                                 reviewsTab.classList.add('has-tooltip');
@@ -3090,7 +3098,7 @@ async function loadSite() {
                                         if (currentUserData.user_features.includes("LONGER_REVIEWS")) {
                                             maxLength = 200;
                                             counter.classList.add('has-tooltip');
-                                            counter.setAttribute('data-tooltip', 'Your review length limit is doubled');
+                                            counter.setAttribute('data-tooltip', 'Review length limit extended thanks to XP!');
                                         }
 
                                         function updateCounter() {
@@ -3209,20 +3217,21 @@ async function loadSite() {
                                         let reviewDiv = document.createElement("div");
                                         reviewDiv.classList.add('category-modal-review-container');
                 
-                                        if (review.types.flag != 0 && review.user.id != currentUserData?.id) {
+                                        if (review.types.flag != 0 && review.user.id != currentUserData?.id && settingsStore.reviews_filter_setting === 1) {
                                             reviewDiv.innerHTML = `
                                                 <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                     <path fill="currentColor" d="M1.3 21.3a1 1 0 1 0 1.4 1.4l20-20a1 1 0 0 0-1.4-1.4l-20 20ZM3.16 16.05c.18.24.53.26.74.05l.72-.72c.18-.18.2-.45.05-.66a15.7 15.7 0 0 1-1.43-2.52.48.48 0 0 1 0-.4c.4-.9 1.18-2.37 2.37-3.72C7.13 6.38 9.2 5 12 5c.82 0 1.58.12 2.28.33.18.05.38 0 .52-.13l.8-.8c.25-.25.18-.67-.15-.79A9.79 9.79 0 0 0 12 3C4.89 3 1.73 10.11 1.11 11.7a.83.83 0 0 0 0 .6c.25.64.9 2.15 2.05 3.75Z" class=""></path>
                                                     <path fill="currentColor" d="M8.18 10.81c-.13.43.36.65.67.34l2.3-2.3c.31-.31.09-.8-.34-.67a4 4 0 0 0-2.63 2.63ZM12.85 15.15c-.31.31-.09.8.34.67a4.01 4.01 0 0 0 2.63-2.63c.13-.43-.36-.65-.67-.34l-2.3 2.3Z" class=""></path>
                                                     <path fill="currentColor" d="M9.72 18.67a.52.52 0 0 0-.52.13l-.8.8c-.25.25-.18.67.15.79 1.03.38 2.18.61 3.45.61 7.11 0 10.27-7.11 10.89-8.7a.83.83 0 0 0 0-.6c-.25-.64-.9-2.15-2.05-3.75a.49.49 0 0 0-.74-.05l-.72.72a.51.51 0 0 0-.05.66 15.7 15.7 0 0 1 1.43 2.52c.06.13.06.27 0 .4-.4.9-1.18 2.37-2.37 3.72C16.87 17.62 14.8 19 12 19c-.82 0-1.58-.12-2.28-.33Z" class=""></path>
                                                 </svg>
-                                                <p class="review-text-content">This review has been censored due to inappropriate language.</p>
+                                                <p class="review-text-content">This review has been censored due to inappropriate content.</p>
                                                 <div style="flex: 1;"></div>
                                                 <button class="generic-brand-button">
                                                     Show
                                                 </button>
                                             `;
                                             reviewDiv.style.display = 'inline-flex';
+                                            reviewDiv.style.gap = '3px';
                                             reviewDiv.style.alignItems = 'center';
                                             reviewDiv.querySelector('.generic-brand-button').addEventListener("click", function () {
                                                 revealReview();
@@ -3250,24 +3259,15 @@ async function loadSite() {
                                                         <img class="review-avatar-decoration" src="https://cdn.yapper.shop/assets/31.png">
                                                     </div>
 
-                                                    <div class="review-user-display-name-container">
-                                                        <p class="inv"></p>
-                                                        <p class="review-user-display-name"></p>
-                                                    </div>
+                                                    <p class="review-user-display-name"></p>
 
                                                     <div class="review-system-tag-container has-tooltip" data-tooltip="Official Shop Archives Message">
-                                                        <p class="inv">SYSTEM</p>
                                                         <p class="review-system-tag">SYSTEM</p>
                                                     </div>
 
-                                                    <div class="review-server-tag-container-container">
-                                                        <div class="review-server-tag-container">
-                                                            <img class="server-tag-img" src="https://cdn.yapper.shop/assets/31.png">
-                                                            <div class="server-tag-title-container">
-                                                                <p class="server-tag-title"></p>
-                                                                <p class="inv"></p>
-                                                            </div>
-                                                        </div>
+                                                    <div class="review-server-tag-container">
+                                                        <img class="server-tag-img" src="https://cdn.yapper.shop/assets/31.png">
+                                                        <p class="server-tag-title"></p>
                                                     </div>
 
                                                     <div class="review-badges-container-container">
@@ -3338,35 +3338,104 @@ async function loadSite() {
                                                 reviewDiv.querySelector(".shop-modal-review-moderation-buttons").appendChild(deleteReviewIcon);
                                             }
 
+                                            if (review.text.length > 100 && JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'xp_system')?.treatment === 1) {
+                                                let xpReviewIcon = document.createElement("div");
+
+                                                xpReviewIcon.style.height = '20px';
+                                                xpReviewIcon.classList.add('rawicon');
+                                                xpReviewIcon.classList.add('clickable');
+                                                xpReviewIcon.addEventListener("click", function () {
+                                                    modal.classList.remove('show');
+                                                    modal_back.classList.remove('show');
+                                                    setTimeout(() => {
+                                                        modal.remove();
+                                                        modal_back.remove();
+                                                    }, 300);
+                                                    currentOpenModalId = null;
+                                                    removeParams('itemSkuId');
+                                                    setModalv3InnerContent('xp_shop');
+                                                });
+                                                xpReviewIcon.innerHTML = `
+                                                    <svg class="has-tooltip" data-tooltip="This user unlocked extended reviews with an XP Perk!" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
+                                                    </svg>
+                                                `;
+
+                                                reviewDiv.querySelector(".review-user-container").appendChild(xpReviewIcon);
+                                            }
+
                                             if (review.types.flag != 0 && review.user.id === currentUserData?.id) {
                                                 let hiddenReviewIcon = document.createElement("div");
 
+                                                hiddenReviewIcon.style.height = '20px';
+                                                hiddenReviewIcon.classList.add('rawicon');
                                                 hiddenReviewIcon.innerHTML = `
-                                                    <svg class="modalv2_top_icon has-tooltip" data-tooltip="This review may be hidden to some users" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <svg class="has-tooltip" data-tooltip="This review has been flagged as inappropriate and may be hidden to some users" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                         <path fill="currentColor" d="M1.3 21.3a1 1 0 1 0 1.4 1.4l20-20a1 1 0 0 0-1.4-1.4l-20 20ZM3.16 16.05c.18.24.53.26.74.05l.72-.72c.18-.18.2-.45.05-.66a15.7 15.7 0 0 1-1.43-2.52.48.48 0 0 1 0-.4c.4-.9 1.18-2.37 2.37-3.72C7.13 6.38 9.2 5 12 5c.82 0 1.58.12 2.28.33.18.05.38 0 .52-.13l.8-.8c.25-.25.18-.67-.15-.79A9.79 9.79 0 0 0 12 3C4.89 3 1.73 10.11 1.11 11.7a.83.83 0 0 0 0 .6c.25.64.9 2.15 2.05 3.75Z" class=""></path>
                                                         <path fill="currentColor" d="M8.18 10.81c-.13.43.36.65.67.34l2.3-2.3c.31-.31.09-.8-.34-.67a4 4 0 0 0-2.63 2.63ZM12.85 15.15c-.31.31-.09.8.34.67a4.01 4.01 0 0 0 2.63-2.63c.13-.43-.36-.65-.67-.34l-2.3 2.3Z" class=""></path>
                                                         <path fill="currentColor" d="M9.72 18.67a.52.52 0 0 0-.52.13l-.8.8c-.25.25-.18.67.15.79 1.03.38 2.18.61 3.45.61 7.11 0 10.27-7.11 10.89-8.7a.83.83 0 0 0 0-.6c-.25-.64-.9-2.15-2.05-3.75a.49.49 0 0 0-.74-.05l-.72.72a.51.51 0 0 0-.05.66 15.7 15.7 0 0 1 1.43 2.52c.06.13.06.27 0 .4-.4.9-1.18 2.37-2.37 3.72C16.87 17.62 14.8 19 12 19c-.82 0-1.58-.12-2.28-.33Z" class=""></path>
                                                     </svg>
                                                 `;
 
-                                                reviewDiv.querySelector(".shop-modal-review-moderation-buttons").appendChild(hiddenReviewIcon);
+                                                reviewDiv.querySelector(".review-user-container").appendChild(hiddenReviewIcon);
+                                            } else if (review.types.flag != 0) {
+                                                let hiddenReviewIcon = document.createElement("div");
+
+                                                hiddenReviewIcon.style.height = '20px';
+                                                hiddenReviewIcon.classList.add('rawicon');
+                                                hiddenReviewIcon.innerHTML = `
+                                                    <svg class="has-tooltip" data-tooltip="This review has been flagged as inappropriate" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M1.3 21.3a1 1 0 1 0 1.4 1.4l20-20a1 1 0 0 0-1.4-1.4l-20 20ZM3.16 16.05c.18.24.53.26.74.05l.72-.72c.18-.18.2-.45.05-.66a15.7 15.7 0 0 1-1.43-2.52.48.48 0 0 1 0-.4c.4-.9 1.18-2.37 2.37-3.72C7.13 6.38 9.2 5 12 5c.82 0 1.58.12 2.28.33.18.05.38 0 .52-.13l.8-.8c.25-.25.18-.67-.15-.79A9.79 9.79 0 0 0 12 3C4.89 3 1.73 10.11 1.11 11.7a.83.83 0 0 0 0 .6c.25.64.9 2.15 2.05 3.75Z" class=""></path>
+                                                        <path fill="currentColor" d="M8.18 10.81c-.13.43.36.65.67.34l2.3-2.3c.31-.31.09-.8-.34-.67a4 4 0 0 0-2.63 2.63ZM12.85 15.15c-.31.31-.09.8.34.67a4.01 4.01 0 0 0 2.63-2.63c.13-.43-.36-.65-.67-.34l-2.3 2.3Z" class=""></path>
+                                                        <path fill="currentColor" d="M9.72 18.67a.52.52 0 0 0-.52.13l-.8.8c-.25.25-.18.67.15.79 1.03.38 2.18.61 3.45.61 7.11 0 10.27-7.11 10.89-8.7a.83.83 0 0 0 0-.6c-.25-.64-.9-2.15-2.05-3.75a.49.49 0 0 0-.74-.05l-.72.72a.51.51 0 0 0-.05.66 15.7 15.7 0 0 1 1.43 2.52c.06.13.06.27 0 .4-.4.9-1.18 2.37-2.37 3.72C16.87 17.62 14.8 19 12 19c-.82 0-1.58-.12-2.28-.33Z" class=""></path>
+                                                    </svg>
+                                                `;
+
+                                                reviewDiv.querySelector(".review-user-container").appendChild(hiddenReviewIcon);
+                                            }
+
+                                            if (review.types.pinned === true) {
+                                                let pinnedReviewIcon = document.createElement("div");
+
+                                                pinnedReviewIcon.style.height = '20px';
+                                                pinnedReviewIcon.classList.add('rawicon');
+                                                pinnedReviewIcon.innerHTML = `
+                                                    <svg class="has-tooltip" data-tooltip="This review is pinned" x="0" y="0" class="icon__9293f" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24">
+                                                        <path fill="currentColor" d="M19.38 11.38a3 3 0 0 0 4.24 0l.03-.03a.5.5 0 0 0 0-.7L13.35.35a.5.5 0 0 0-.7 0l-.03.03a3 3 0 0 0 0 4.24L13 5l-2.92 2.92-3.65-.34a2 2 0 0 0-1.6.58l-.62.63a1 1 0 0 0 0 1.42l9.58 9.58a1 1 0 0 0 1.42 0l.63-.63a2 2 0 0 0 .58-1.6l-.34-3.64L19 11l.38.38ZM9.07 17.07a.5.5 0 0 1-.08.77l-5.15 3.43a.5.5 0 0 1-.63-.06l-.42-.42a.5.5 0 0 1-.06-.63L6.16 15a.5.5 0 0 1 .77-.08l2.14 2.14Z" class=""></path>
+                                                    </svg>
+                                                `;
+
+                                                reviewDiv.querySelector(".review-user-container").appendChild(pinnedReviewIcon);
                                             }
     
                                             if (review.user.avatar) {
     
                                                 const avatarPreview = reviewDiv.querySelector('.review-avatar');
+                                                const container = reviewDiv.querySelector('.review-avatar-container');
     
-                                                avatarPreview.src = userAvatar = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.webp?size=128';
+                                                avatarPreview.src = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.webp?size=128';
+
+                                                avatarPreview.addEventListener("load", () => {
+                                                    if (avatarPreview.naturalWidth === 0 || avatarPreview.naturalHeight === 0) {
+                                                        container.remove();
+                                                    }
+                                                });
+                                                
+                                                avatarPreview.addEventListener("error", () => {
+                                                    container.remove();
+                                                });
     
                                                 if (review.user.avatar.includes('a_')) {
                                                     reviewDiv.addEventListener("mouseenter", () => {
-                                                        avatarPreview.src = userAvatar = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.gif?size=128';
+                                                        avatarPreview.src = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.gif?size=128';
                                                     });
                                                     reviewDiv.addEventListener("mouseleave", () => {
-                                                        avatarPreview.src = userAvatar = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.webp?size=128';
+                                                        avatarPreview.src = 'https://cdn.discordapp.com/avatars/'+review.user.id+'/'+review.user.avatar+'.webp?size=128';
                                                     });
                                                 }
     
+                                            } else {
+                                                reviewDiv.querySelector('.review-avatar-container').remove();
                                             }
 
                                             if (!review.user.types.system) {
@@ -3388,14 +3457,13 @@ async function loadSite() {
     
                                             }
     
-                                            const serverTagAsset = reviewDiv.querySelector('.review-server-tag-container-container');
+                                            const serverTagAsset = reviewDiv.querySelector('.review-server-tag-container');
     
                                             if (review.user.primary_guild) {
     
                                                 serverTagAsset.querySelector('.server-tag-img').src = `https://cdn.discordapp.com/clan-badges/${review.user.primary_guild.identity_guild_id}/${review.user.primary_guild.badge}.png?size=24`;
     
                                                 serverTagAsset.querySelector('.server-tag-title').textContent = review.user.primary_guild.tag;
-                                                serverTagAsset.querySelector('.inv').textContent = review.user.primary_guild.tag;
     
                                             } else {
                                                 serverTagAsset.remove();
@@ -3425,18 +3493,6 @@ async function loadSite() {
                                                 });
                                             } else {
                                                 userBadgesElement.remove();
-                                            }
-
-
-                                            if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'user_banner_on_reviews')?.treatment === 1 && review.user.banner) {
-                                                let bannerPreview = document.createElement("img");
-
-                                                bannerPreview.src = `https://cdn.discordapp.com/banners/${review.user.id}/${review.user.banner}.png?size=300`;
-                                                bannerPreview.addEventListener("error", function () {
-                                                    this.remove();
-                                                });
-    
-                                                reviewDiv.querySelector('.review-banner-container').appendChild(bannerPreview);
                                             }
     
                                             if (review.user.collectibles?.nameplate) {
@@ -3510,12 +3566,15 @@ async function loadSite() {
                                                 }
                                             }
     
-                                            reviewDiv.querySelector('.inv').textContent = review.user.global_name ? review.user.global_name : review.user.username;
                                             reviewDiv.querySelector('.review-user-display-name').textContent = review.user.global_name ? review.user.global_name : review.user.username;
                                             reviewDiv.querySelector('.review-text-content').textContent = review.text;
                                         }
-                
-                                        reviewsContainer.appendChild(reviewDiv);
+                                        
+                                        if (review.types.pinned === true) {
+                                            reviewsContainer.insertBefore(reviewDiv, reviewsContainer.firstChild);
+                                        } else {
+                                            reviewsContainer.appendChild(reviewDiv);
+                                        }
                                     });
                                 } else {
                                     let reviewDiv = document.createElement("div");
@@ -3561,10 +3620,11 @@ async function loadSite() {
                                         <h3>Claim your free ${promo.xp_reward.toLocaleString()} XP!</h3>
                                         <p class="desc">You have ${promo.xp_reward.toLocaleString()} XP waiting for you.</p>
                                         <button id="claim-xp-button">
-                                            Claim ${promo.xp_reward.toLocaleString()} XP
+                                            Claim
                                             <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                                                 <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
                                             </svg>
+                                            ${promo.xp_reward.toLocaleString()}
                                         </button>
                                     `;
 
@@ -4076,10 +4136,11 @@ async function loadSite() {
                     <p>You have ${data.xp_reward.toLocaleString()} XP waiting for you.</p>
                     <p class="redeem-xp-error-output"></p>
                     <button class="claim-xp-button" id="claim-xp-button">
-                        Claim ${data.xp_reward.toLocaleString()} XP
+                        Claim
                         <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
                         </svg>
+                        ${data.xp_reward.toLocaleString()}
                     </button>
                 </div>
 
@@ -4250,21 +4311,16 @@ async function loadSite() {
                         <div class="xp-purchase-modal-details-container">
                             <p>${data.name}</p>
                         </div>
-                        <div class="disclaimer">
-                            <p>By clicking 'Claim for ${data.xp_price.toLocaleString()} XP', you agree to the <a class="link" href="https://yapper.shop/legal-information/?page=tos">Digital Currency Terms.</a></p>
-                        </div>
-                        <div class="disclaimer">
-                            <p>Claiming this item means you have a limited licence to use this item on Shop Archives. This item is non-refundable.</p>
-                        </div>
                         <div class="disclaimer2">
                             <p>${disclaimer2}</p>
                         </div>
                         <p class="redeem-xp-error-output"></p>
                         <button class="claim-xp-perk-button" id="claim-xp-button">
-                            Claim for ${data.xp_price.toLocaleString()} XP
+                            Claim for
                             <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
                             </svg>
+                            ${data.xp_price.toLocaleString()}
                         </button>
                     </div>
                 </div>
@@ -4759,6 +4815,19 @@ async function loadSite() {
                         </div>
                     </div>
                 </div>
+                <div class="modalv3-content-card-1">
+                    <div class="setting">
+                        <div class="setting-info">
+                            <p class="setting-title">Child Mode</p>
+                            <p class="setting-description">Automatically censor reviews containing inappropriate content.</p>
+                        </div>
+                        <div class="toggle-container">
+                            <div class="toggle" id="reviews_filter_setting_toggle">
+                                <div class="toggle-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             `;
 
             if (currentUserData) {
@@ -4818,6 +4887,37 @@ async function loadSite() {
                     localStorage.removeItem('currentUser');
                     location.reload();
                 });
+
+
+
+                updateToggleStates();
+
+                tabPageOutput.querySelector('#reviews_filter_setting_toggle').addEventListener("click", () => {
+                    toggleSetting('reviews_filter_setting');
+                    updateToggleStates();
+                });
+
+                // Function to toggle a setting (0 or 1)
+                function toggleSetting(key) {
+                    if (key in settingsStore) {
+                        const newValue = settingsStore[key] === 0 ? 1 : 0;
+                        changeSetting(key, newValue);
+                    }
+                }
+
+                // Update toggle visual states
+                function updateToggleStates() {
+                    for (let key in settingsStore) {
+                        const toggle = document.getElementById(key + '_toggle');
+                        if (toggle) {
+                            if (settingsStore[key] === 1) {
+                                toggle.classList.add('active');
+                            } else {
+                                toggle.classList.remove('active');
+                            }
+                        }
+                    }
+                }
 
             } else {
                 tabPageOutput.querySelector('#discord-account-container').innerHTML = `
@@ -5084,8 +5184,8 @@ async function loadSite() {
                 <div class="modalv3-content-card-1">
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">Day-Month-Year Date Format</div>
-                            <div class="setting-description">Changes date formats to DD/MM/YYYY instead of MM/DD/YY</div>
+                            <p class="setting-title">Day-Month-Year Date Format</p>
+                            <p class="setting-description">Changes date formats to DD/MM/YYYY instead of MM/DD/YY.</p>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="non_us_timezone_toggle">
@@ -5095,8 +5195,8 @@ async function loadSite() {
                     </div>
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">Profile Effects Cut Fix</div>
-                            <div class="setting-description">Fixes some profile effects being cut off at the bottom</div>
+                            <p class="setting-title">Profile Effects Cut Fix.</p>
+                            <p class="setting-description">Fixes some profile effects being cut off at the bottom</p>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="profile_effect_tweaks_fix_toggle">
@@ -5106,8 +5206,8 @@ async function loadSite() {
                     </div>
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">Category page limit</div>
-                            <div class="setting-description">How many categories are shown on a page. Large values may cause lag on low-end devices.</div>
+                            <p class="setting-title">Category page limit</p>
+                            <p class="setting-description">How many categories are shown on a page. Large values may cause lag on low-end devices.</p>
                         </div>
                         <div class="toggle-container">
                             <select id="category_page_limit_select" class="modalv3-experiment-treatment-container">
@@ -5238,7 +5338,7 @@ async function loadSite() {
 
                 <div class="xp-balance-modalv3-container">
                     <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="#D9D9D9"></path>
+                        <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
                     </svg>                            
                     <p id="my-xp-balance-modalv3">${currentUserData.xp_balance.toLocaleString()}</p>
                 </div>
@@ -5304,10 +5404,11 @@ async function loadSite() {
                             <h3>${promo.name}</h3>
                             <p class="desc">You have ${promo.xp_reward.toLocaleString()} XP waiting for you.</p>
                             <button id="claim-xp-button">
-                                Claim ${promo.xp_reward.toLocaleString()} XP
+                                Claim
                                 <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
                                 </svg>
+                                ${promo.xp_reward.toLocaleString()}
                             </button>
                         `;
 
@@ -5434,7 +5535,7 @@ async function loadSite() {
 
                 <div class="xp-balance-modalv3-container">
                     <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="#D9D9D9"></path>
+                        <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
                     </svg>                            
                     <p id="my-xp-balance-modalv3">${currentUserData.xp_balance.toLocaleString()}</p>
                 </div>
@@ -5442,31 +5543,23 @@ async function loadSite() {
                 <hr class="inv">
 
                 <div class="modalv3-content-card-1">
-                    <h2 class="modalv3-content-card-header">Featured Perks</h2>
-                    <p class="modalv3-content-card-summary">Top picks from us we think you might like.</p>
+                    <h2 class="modalv3-content-card-header">Browse XP Shop</h2>
+                    <p class="modalv3-content-card-summary">The XP shop is where you can claim perks that enhance your experience when you use Shop Archives!</p>
 
                     <div class="modalv3-xp-featured-cards-container">
-                        <div class="xp-featured-card">
+                        <div class="xp-featured-card loading">
                             <div class="xp-card-button-pad"></div>
                             <div class="xp-card-button-pad"></div>
                         </div>
-                        <div class="xp-featured-card">
+                        <div class="xp-featured-card loading">
                             <div class="xp-card-button-pad"></div>
                             <div class="xp-card-button-pad"></div>
                         </div>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="modalv3-content-card-1">
-                    <h2 class="modalv3-content-card-header">Additional Perks</h2>
-                    <div class="modalv3-xp-shop-cards-container">
-                        <div class="xp-featured-card">
+                        <div class="xp-featured-card loading">
                             <div class="xp-card-button-pad"></div>
                             <div class="xp-card-button-pad"></div>
                         </div>
-                        <div class="xp-featured-card">
+                        <div class="xp-featured-card loading">
                             <div class="xp-card-button-pad"></div>
                             <div class="xp-card-button-pad"></div>
                         </div>
@@ -5483,7 +5576,6 @@ async function loadSite() {
 
 
             const featuredXpOutput = tabPageOutput.querySelector('.modalv3-xp-featured-cards-container');
-            const shopXpOutput = tabPageOutput.querySelector('.modalv3-xp-shop-cards-container');
 
             loadXpShopData();
 
@@ -5502,29 +5594,39 @@ async function loadSite() {
 
             function renderXpShop(data) {
                 featuredXpOutput.innerHTML = ``;
-                shopXpOutput.innerHTML = ``;
 
-                function renderXpItemCard(xpItem, type) {
+                function renderXpItemCard(xpItem) {
                     let xpCard = document.createElement("div");
 
-                    xpCard.classList.add('xp-featured-card')
+                    xpCard.classList.add('xp-featured-card');
 
                     xpCard.innerHTML = `
-                        <h3>${xpItem.name}</h3>
-                        <p>${xpItem.summary}</p>
-                        <div class="xp-card-button-pad"></div>
+                        <div class="xp-card-preview">
+                            <div class="section-1">
+                                <div class="avatar-container">
+                                    <div class="avatar" style="background-image: url(https://cdn.discordapp.com/avatars/${currentUserData.id}/${currentUserData.avatar}.webp?size=128);"></div>
+                                </div>
+                                <p>${currentUserData.global_name ? currentUserData.global_name : currentUserData.username}</p>
+                            </div>
+                            <div class="section-2">
+                                <div></div>
+                                <div></div>
+                            </div>
+                        </div>
                         <div class="xp-card-bottom">
-                            <h3 class="xp-already-claimed-text hidden">Already Claimed</h3>
-                            <button id="claim-item-for-xp-button">
-                                Claim for ${xpItem.price} XP
-                                <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
-                                </svg>
-                            </button>
+                            <h3>${xpItem.name}</h3>
+                            <p>${xpItem.summary}</p>
+                        </div>
+                        <h2 class="inv">XP</h2>
+                        <div class="xp-card-price-container">
+                            <svg width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M13.5 0L17.1462 9.85378L27 13.5L17.1462 17.1462L13.5 27L9.85378 17.1462L0 13.5L9.85378 9.85378L13.5 0Z" fill="currentColor"></path>
+                            </svg>
+                            <p>${xpItem.price}</p>
                         </div>
                     `;
-                    const button = xpCard.querySelector('#claim-item-for-xp-button');
-                    const alreadyClaimedText = xpCard.querySelector('.xp-already-claimed-text');
+                    xpCard.classList.add('clickable');
+                    const alreadyClaimedText = xpCard.querySelector('.xp-card-price-container');
 
                     let alreadyClaimed = null;
                     usersXPInventoryCache.forEach(claimed => {
@@ -5533,54 +5635,165 @@ async function loadSite() {
                         }
                     });
 
+                    if (xpItem.id === "2") {
+                        xpCard.querySelector('.xp-card-preview').innerHTML = `
+                            <div class="section-1">
+                                <div class="avatar-container">
+                                    <div class="avatar" style="background-image: url(https://cdn.discordapp.com/avatars/${currentUserData.id}/${currentUserData.avatar}.webp?size=128);"></div>
+                                </div>
+                                <p>${currentUserData.global_name ? currentUserData.global_name : currentUserData.username}</p>
+                                <div class="review-server-tag-container">
+                                    <img class="server-tag-img" src="https://cdn.yapper.shop/assets/31.png">
+                                    <p class="server-tag-title"></p>
+                                </div>
+                            </div>
+                            <div class="section-2">
+                                <div></div>
+                                <div></div>
+                            </div>
+                        `;
+                        const serverTagAsset = xpCard.querySelector('.review-server-tag-container');
+    
+                        if (currentUserData.primary_guild) {
+    
+                            serverTagAsset.querySelector('.server-tag-img').src = `https://cdn.discordapp.com/clan-badges/${currentUserData.primary_guild.identity_guild_id}/${currentUserData.primary_guild.badge}.png?size=24`;
+    
+                            serverTagAsset.querySelector('.server-tag-title').textContent = currentUserData.primary_guild.tag;
+    
+                        } else {
+                            serverTagAsset.remove();
+                        }
+                    } else if (xpItem.id === "4") {
+                        xpCard.querySelector('.xp-card-preview').innerHTML = `
+                            <div class="section-1">
+                                <div class="avatar-container">
+                                    <div class="avatar" style="background-image: url(https://cdn.discordapp.com/avatars/${currentUserData.id}/${currentUserData.avatar}.webp?size=128);"></div>
+                                </div>
+                                <p>${currentUserData.global_name ? currentUserData.global_name : currentUserData.username}</p>
+                            </div>
+                            <div class="section-2">
+                                <div></div>
+                                <div></div>
+                            </div>
+                            <div class="section-3">
+                                <div></div>
+                                <div></div>
+                            </div>
+                        `;
+                    } else if (currentUserData.avatar_decoration_data && xpItem.id === "5") {
+                        xpCard.querySelector('.xp-card-preview').innerHTML = `
+                            <div class="section-1">
+                                <div class="avatar-container">
+                                    <div class="avatar" style="background-image: url(https://cdn.discordapp.com/avatars/${currentUserData.id}/${currentUserData.avatar}.webp?size=128);"></div>
+                                    <img class="avatar-decoration" src="https://cdn.discordapp.com/avatar-decoration-presets/${currentUserData.avatar_decoration_data.asset}.png?size=4096&passthrough=false">
+                                </div>
+                                <p>${currentUserData.global_name ? currentUserData.global_name : currentUserData.username}</p>
+                            </div>
+                            <div class="section-2">
+                                <div></div>
+                                <div></div>
+                            </div>
+                        `;
+                        const decorationPreview = xpCard.querySelector('.avatar-decoration')
+                        xpCard.addEventListener("mouseenter", () => {
+                            decorationPreview.src = `https://cdn.discordapp.com/avatar-decoration-presets/${currentUserData.avatar_decoration_data.asset}.png?size=4096&passthrough=true`;
+                        });
+                        xpCard.addEventListener("mouseleave", () => {
+                            decorationPreview.src = `https://cdn.discordapp.com/avatar-decoration-presets/${currentUserData.avatar_decoration_data.asset}.png?size=4096&passthrough=false`;
+                        });
+                    } else if (currentUserData.collectibles && xpItem.id === "19") {
+                        xpCard.querySelector('.xp-card-preview').innerHTML = `
+                            <div class="xp-card-nameplate-container"></div>
+                            <div class="section-1">
+                                <div class="avatar-container">
+                                    <div class="avatar" style="background-image: url(https://cdn.discordapp.com/avatars/${currentUserData.id}/${currentUserData.avatar}.webp?size=128);"></div>
+                                </div>
+                                <p>${currentUserData.global_name ? currentUserData.global_name : currentUserData.username}</p>
+                            </div>
+                            <div class="section-2">
+                                <div></div>
+                                <div></div>
+                            </div>
+                        `;
+                        if (currentUserData.collectibles.nameplate.sa_override_src) {
+                            let nameplatePreview = document.createElement("img");
+
+                            nameplatePreview.src = currentUserData.collectibles.nameplate.sa_override_src;
+    
+                            xpCard.querySelector('.xp-card-nameplate-container').appendChild(nameplatePreview);
+                        } else {
+                            let nameplatePreview = document.createElement("video");
+
+                            nameplatePreview.src = `https://cdn.discordapp.com/assets/collectibles/${currentUserData.collectibles.nameplate.asset}asset.webm`;
+                            nameplatePreview.disablePictureInPicture = true;
+                            nameplatePreview.muted = true;
+                            nameplatePreview.loop = true;
+                            nameplatePreview.playsInline = true;
+    
+                            xpCard.addEventListener("mouseenter", () => {
+                                nameplatePreview.play();
+                            });
+                            xpCard.addEventListener("mouseleave", () => {
+                                nameplatePreview.pause();
+                            });
+
+                            const bgcolor = nameplate_palettes[currentUserData.collectibles.nameplate.palette].darkBackground;
+    
+                            xpCard.querySelector('.xp-card-nameplate-container').style.backgroundImage = `linear-gradient(90deg, #00000000 0%, ${bgcolor} 200%)`;
+    
+                            xpCard.querySelector('.xp-card-nameplate-container').appendChild(nameplatePreview);
+                        }
+                    }
+
                     if (!alreadyClaimed) {
                         if (!currentUserData.collectibles && xpItem.id === "19") {
-                            button.disabled = true;
-                            button.innerHTML = `
-                                Unavailable
-                            `;
-                            button.classList.add('has-tooltip');
-                            button.setAttribute('data-tooltip', 'You don\'t have a Nameplate on your profile');
+                            xpCard.style.cursor = 'not-allowed';
+                            alreadyClaimedText.style.color = 'var(--text-tertiary)';
+                            alreadyClaimedText.classList.add('has-tooltip');
+                            alreadyClaimedText.setAttribute('data-tooltip', 'You don\'t have a Nameplate on your profile');
+                            xpCard.classList.remove('clickable');
                         } else if (!currentUserData.primary_guild && xpItem.id === "2") {
-                            button.disabled = true;
-                            button.innerHTML = `
-                                Unavailable
-                            `;
-                            button.classList.add('has-tooltip');
-                            button.setAttribute('data-tooltip', 'You don\'t have a Server Tag on your profile');
+                            xpCard.style.cursor = 'not-allowed';
+                            alreadyClaimedText.style.color = 'var(--text-tertiary)';
+                            alreadyClaimedText.classList.add('has-tooltip');
+                            alreadyClaimedText.setAttribute('data-tooltip', 'You don\'t have a Server Tag on your profile');
+                            xpCard.classList.remove('clickable');
                         } else if (!currentUserData.avatar_decoration_data && xpItem.id === "5") {
-                            button.disabled = true;
-                            button.innerHTML = `
-                                Unavailable
-                            `;
-                            button.classList.add('has-tooltip');
-                            button.setAttribute('data-tooltip', 'You don\'t have an Avatar Decoration on your profile');
+                            xpCard.style.cursor = 'not-allowed';
+                            alreadyClaimedText.style.color = 'var(--text-tertiary)';
+                            alreadyClaimedText.classList.add('has-tooltip');
+                            alreadyClaimedText.setAttribute('data-tooltip', 'You don\'t have an Avatar Decoration on your profile');
+                            xpCard.classList.remove('clickable');
                         } else if (xpItem.price > currentUserData.xp_balance) {
-                            button.disabled = true;
-                            button.classList.add('has-tooltip');
-                            button.setAttribute('data-tooltip', 'Insufficient XP');
+                            xpCard.style.cursor = 'not-allowed';
+                            alreadyClaimedText.style.color = 'var(--text-tertiary)';
+                            alreadyClaimedText.classList.add('has-tooltip');
+                            alreadyClaimedText.setAttribute('data-tooltip', 'Insufficient XP');
+                            xpCard.classList.remove('clickable');
                         } else {
-                            button.addEventListener('click', () => {
+                            xpCard.addEventListener('click', () => {
                                 openClaimablePurchaseModal(xpItem.id);
                             });
                         }
                     } else {
-                        alreadyClaimedText.classList.remove('hidden');
-                        button.classList.add('hidden');
+                        alreadyClaimedText.innerHTML = `
+                            <svg viewBox="0 0 20 20" fill="none">
+                                <path fill="currentColor" d="M7.89561 14.8538L6.30462 13.2629L14.3099 5.25755L15.9009 6.84854L7.89561 14.8538Z"></path>
+                                <path fill="currentColor" d="M4.08643 11.0903L5.67742 9.49929L9.4485 13.2704L7.85751 14.8614L4.08643 11.0903Z"></path>
+                            </svg>
+                            <p>Perk Active</p>
+                        `;
+                        xpCard.classList.remove('clickable');
                     }
 
-                    if (type === "featured") {
-                        featuredXpOutput.appendChild(xpCard);
-                    } else if (type === "shop") {
-                        shopXpOutput.appendChild(xpCard);
-                    }
+                    featuredXpOutput.appendChild(xpCard);
                 }
 
                 data.featured.forEach(xpItem => {
-                    renderXpItemCard(xpItem, "featured");
+                    renderXpItemCard(xpItem);
                 });
                 data.shop.forEach(xpItem => {
-                    renderXpItemCard(xpItem, "shop");
+                    renderXpItemCard(xpItem);
                 });
             }
 
@@ -5749,8 +5962,8 @@ async function loadSite() {
                     <h2>Devtools</h2>
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">Shop: Force Leaks</div>
-                            <div class="setting-description">Overrides the leaks endpoint with client side dummy data (requires restart).</div>
+                            <p class="setting-title">Shop: Force Leaks</p>
+                            <p class="setting-description">Overrides the leaks endpoint with client side dummy data (requires restart).</p>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_force_leaks_dummy_toggle">
@@ -5760,8 +5973,8 @@ async function loadSite() {
                     </div>
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">Shop: Force Show Reviews</div>
-                            <div class="setting-description">Allows you to view the reviews for a category even if its reviews are disabled.</div>
+                            <p class="setting-title">Shop: Force Show Reviews</p>
+                            <p class="setting-description">Allows you to view the reviews for a category even if its reviews are disabled.</p>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_force_viewable_reviews_tab_toggle">
@@ -5771,8 +5984,8 @@ async function loadSite() {
                     </div>
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">Simulate: Lite Ban</div>
-                            <div class="setting-description">Simulate the user having ban_type 1.</div>
+                            <p class="setting-title">Simulate: Lite Ban</p>
+                            <p class="setting-description">Simulate the user having ban_type 1.</p>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_simulate_ban_type_1_toggle">
@@ -5782,8 +5995,8 @@ async function loadSite() {
                     </div>
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">Simulate: Medium Ban</div>
-                            <div class="setting-description">Simulate the user having ban_type 2.</div>
+                            <p class="setting-title">Simulate: Medium Ban</p>
+                            <p class="setting-description">Simulate the user having ban_type 2.</p>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_simulate_ban_type_2_toggle">
@@ -5793,8 +6006,8 @@ async function loadSite() {
                     </div>
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">Simulate: Guidelines Block</div>
-                            <div class="setting-description">Simulate the user having a username that doesn't follow the guidelines.</div>
+                            <p class="setting-title">Simulate: Guidelines Block</p>
+                            <p class="setting-description">Simulate the user having a username that doesn't follow the guidelines.</p>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_simulate_guidelines_block_toggle">
@@ -5804,8 +6017,8 @@ async function loadSite() {
                     </div>
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">XP: Unpublished Xp Events</div>
-                            <div class="setting-description">Allows you to see unpublished or expired XP events.</div>
+                            <p class="setting-title">XP: Unpublished Xp Events</p>
+                            <p class="setting-description">Allows you to see unpublished or expired XP events.</p>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_show_unpublished_xp_events_toggle">
@@ -5815,8 +6028,8 @@ async function loadSite() {
                     </div>
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">XP: Unpublished Xp Shop</div>
-                            <div class="setting-description">Allows you to see unpublished XP shop items.</div>
+                            <p class="setting-title">XP: Unpublished Xp Shop</p>
+                            <p class="setting-description">Allows you to see unpublished XP shop items.</p>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_show_unpublished_xp_shop_toggle">
@@ -5826,8 +6039,8 @@ async function loadSite() {
                     </div>
                     <div class="setting">
                         <div class="setting-info">
-                            <div class="setting-title">XP: Bypass Category Requirement</div>
-                            <div class="setting-description">Allows you to claim category only events from the events tab.</div>
+                            <p class="setting-title">XP: Bypass Category Requirement</p>
+                            <p class="setting-description">Allows you to claim category only events from the events tab.</p>
                         </div>
                         <div class="toggle-container">
                             <div class="toggle" id="staff_allow_category_only_event_claiming_in_events_tab_toggle">

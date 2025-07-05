@@ -163,6 +163,7 @@ p, h1, h2, h3, h4, h5, h6, a {
     user-select: none;
     height: fit-content;
     width: fit-content;
+    font-weight: normal;
 }
 
 .notice {
@@ -211,7 +212,6 @@ p, h1, h2, h3, h4, h5, h6, a {
     flex: 1;
 }
 .setting-title {
-    font-weight: bold;
     font-size: 16px;
     color: var(--text-primary);
     margin-bottom: 5px;
@@ -544,6 +544,11 @@ body:has(.notice) .container {
     background-image: linear-gradient(90deg, rgba(0, 0, 0, 0) 40.75%, #E2373E 158.26%);;
 }
 
+hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 1px solid var(--modalv3-hr-color);
+}
 
 .content {
     flex: 1;
@@ -2043,11 +2048,17 @@ body:has(.notice) .container {
 }
 
 .category-modal-bottom-container {
-    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
     width: 100%;
-    padding: 20px;
-    padding-top: 70px;
-    z-index: 2;
+    height: 90%;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    margin-top: 70px;
+    overflow-y: auto;
+    box-sizing: border-box;
 }
 
 
@@ -2059,10 +2070,6 @@ body:has(.notice) .container {
 
 .category-modal-bottom-container .sku_id.clicked {
     animation: modal-sku-clicked 0.5s;
-}
-
-.category-modal-bottom-container p, .category-modal-bottom-container h1 {
-    width: fit-content;
 }
 
 
@@ -2157,7 +2164,6 @@ body:has(.notice) .container {
     background-color: var(--modal-block-bg);
     border-radius: 5px;
 }
-
 
 
 .category-modal-assets-container {
@@ -2284,7 +2290,8 @@ body:has(.notice) .container {
 
 .review-user-container {
     position: relative;
-    display: flex;
+    display: inline-flex;
+    align-items: center;
     gap: 5px;
     height: 30px;
     width: fit-content;
@@ -2300,27 +2307,14 @@ body:has(.notice) .container {
     border-radius: 50%;
 }
 
-.review-user-display-name-container {
-    position: relative;
-    height: 100%;
-}
-
-.review-user-display-name {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+.review-user-container .rawicon svg {
+    height: 20px;
+    width: 20px;
 }
 
 
-.review-system-tag-container {
-    position: relative;
-    height: 100%;
-}
 
 .review-system-tag {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     background-color: var(--color-brand);
     border-radius: 5px;
     color: var(--text-invert);
@@ -2348,7 +2342,6 @@ body:has(.notice) .container {
 .review-text-content {
     position: relative;
     font-family: gg sans five;
-    margin: 5px;
     z-index: 2;
     word-break: break-word;
     overflow-wrap: break-word;
@@ -2357,6 +2350,11 @@ body:has(.notice) .container {
 .review-rating-container {
     position: relative;
     width: 120px;
+    height: 100%;
+}
+
+.review-rating-container:not(:has(.possible-stars div)) {
+    display: none;
 }
 
 .review-rating-container .star-rating, .review-rating-container .possible-stars {
@@ -2426,54 +2424,32 @@ body:has(.notice) .container {
 
 .review-nameplate-container video {
     height: 100%;
-    display: block;
-    margin-left: auto;
+    width: 100%;
+    object-fit: cover;
+    object-position: right;
+    position: absolute;
+    right: 0;
+    top: 0;
     mask-image: linear-gradient(to left,#000 50%,rgba(0,0,0,0)100%);
 }
 
 .review-nameplate-container img {
-    position: absolute;
     height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: right;
+    position: absolute;
     right: 0;
+    top: 0;
     mask-image: linear-gradient(to left,#000 50%,rgba(0,0,0,0)100%);
 }
 
 
 
-.review-banner-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    width: 50%;
-    opacity: 0.3;
-    z-index: 1;
-    transition: opacity 0.5s ease;
-
-}
-
-.review-banner-container:has(img) {
-    mask-image: linear-gradient(to right,#000 50%,rgba(0,0,0,0)100%);
-}
-
-.review-banner-container img {
-    position: absolute;
-    height: 100%;
-    left: 0;
-    mask-image: linear-gradient(to right,#000 50%,rgba(0,0,0,0)100%);
-}
-
-
-
-
-.review-server-tag-container-container {
-    position: relative;
-    height: 100%;
-}
-
 .review-server-tag-container {
     position: relative;
-    display: flex;
+    display: inline-flex;
+    align-items: center;
     background-color: var(--server-tag-bg);
     border-radius: 5px;
     padding: 4px;
@@ -2481,8 +2457,6 @@ body:has(.notice) .container {
     height: fit-content;
     max-height: 20px;
     user-select: none;
-    top: 50%;
-    transform: translateY(-50%);
     box-sizing: border-box;
 }
 
@@ -2505,14 +2479,7 @@ body:has(.notice) .container {
     scale: 1.2;
 }
 
-.review-server-tag-container .server-tag-title-container {
-    position: relative;
-}
-
 .review-server-tag-container .server-tag-title {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
     font-family: gg sans five;
     font-size: auto;
     width: fit-content;
@@ -2711,7 +2678,9 @@ body:has(.notice) .container {
     top: 50%;
     right: 15px;
     transform: translateY(-50%);
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     padding: 10px 15px;
     background: var(--color-premium);
     color: #fff;
@@ -2729,10 +2698,8 @@ body:has(.notice) .container {
 }
 
 .category-modal-xp-reward button svg {
-    height: 15px;
+    height: 17px;
     width: auto;
-    scale: 1.3;
-    margin-left: 10px;
 }
 
 
@@ -2759,11 +2726,13 @@ body:has(.notice) .container {
     font-family: gg sans six;
     margin-top: 10px;
     margin-bottom: 5px;
+    width: auto;
 }
 
 .xp-modal-inner p {
     margin-top: 5px;
     margin-bottom: 10px;
+    width: auto;
 }
 
 .xp-modal-inner .redeem-xp-error-output {
@@ -2772,7 +2741,9 @@ body:has(.notice) .container {
 
 .claim-xp-button {
     position: relative;
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     padding: 10px 15px;
     background: var(--color-premium);
     color: #fff;
@@ -2793,10 +2764,8 @@ body:has(.notice) .container {
 }
 
 .claim-xp-button svg {
-    height: 15px;
+    height: 17px;
     width: auto;
-    scale: 1.3;
-    margin-left: 10px;
 }
 
 
@@ -2909,7 +2878,7 @@ body:has(.notice) .container {
 
 .xp-purchase-modal {
     width: 400px;
-    height: 500px;
+    height: 400px;
     overflow: hidden;
     background: var(--background-primary);
     flex-direction: column;
@@ -2922,7 +2891,7 @@ body:has(.notice) .container {
 }
 
 .xp-purchase-modal-inner-content {
-    padding: 20px;
+    padding: 15px;
     box-sizing: border-box;
 }
 
@@ -2962,12 +2931,13 @@ body:has(.notice) .container {
     font-size: 12px;
     margin-top: 5px;
     margin-bottom: 5px;
-    color: var(--text-secondary);
 }
 
 .claim-xp-perk-button {
     position: absolute;
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     padding: 10px 15px;
     background: var(--color-green);
     color: #fff;
@@ -2978,8 +2948,8 @@ body:has(.notice) .container {
     box-shadow: none;
     box-sizing: border-box;
     transition: box-shadow 0.2s ease;
-    right: 20px;
-    bottom: 20px;
+    right: 15px;
+    bottom: 15px;
 }
 
 .claim-xp-perk-button:hover {
@@ -2987,10 +2957,8 @@ body:has(.notice) .container {
 }
 
 .claim-xp-perk-button svg {
-    height: 15px;
+    height: 17px;
     width: auto;
-    scale: 1.3;
-    margin-left: 10px;
 }
 
 
@@ -3076,7 +3044,9 @@ body:has(.notice) .container {
 /* Modal V3 | User Settings */
 
 .log-in-with-discord-button {
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     margin: 5px 0;
     padding: 10px 15px;
     background-color: var(--color-brand);
@@ -3094,10 +3064,8 @@ body:has(.notice) .container {
 }
 
 .log-in-with-discord-button svg {
-    height: 15px;
+    height: 17px;
     width: auto;
-    scale: 1.3;
-    margin-right: 10px;
 }
 
 
@@ -3679,7 +3647,9 @@ body:has(.notice) .container {
     top: 50%;
     right: 15px;
     transform: translateY(-50%);
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     padding: 10px 15px;
     color: #fff;
     border: none;
@@ -3704,10 +3674,8 @@ body:has(.notice) .container {
 }
 
 .modalv3-xp-reward button svg {
-    height: 15px;
+    height: 17px;
     width: auto;
-    scale: 1.3;
-    margin-left: 10px;
 }
 
 .xp-event-expires-at-text {
@@ -3744,63 +3712,156 @@ body:has(.notice) .container {
 
 
 .modalv3-xp-featured-cards-container, .modalv3-xp-shop-cards-container {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 10px;
     margin-top: 5px;
 }
 
-.xp-featured-card, .xp-shop-card {
-    position: relative;
-    background-color: var(--background-secondary);
-    border-radius: 5px;
-    padding: 10px;
+.xp-featured-card.loading {
+    animation: shop-fetching-anim 4s infinite;
 }
 
-.xp-featured-card p, .xp-shop-card p {
+.xp-featured-card, .xp-shop-card {
+    position: relative;
+    background-color: var(--card-outer);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.xp-featured-card .xp-card-bottom p, .xp-shop-card .xp-card-bottom p {
     color: var(--text-secondary);
-    max-width: 350px;
 }
 
 .xp-card-button-pad {
     height: 40px;
 }
 
+.xp-featured-card .xp-card-preview, .xp-shop-card .xp-card-preview {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border-radius: 5px 5px 0px 0px;
+    background-color: var(--background-tertiary);
+}
+
+.xp-card-preview .section-1 {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    z-index: 2;
+}
+
+.xp-card-preview .section-2 {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 5px;
+    z-index: 2;
+}
+
+.xp-card-preview .section-3 {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 5px;
+    z-index: 2;
+}
+
+.xp-card-preview .section-2 div, .xp-card-preview .section-3 div {
+    background-color: var(--background-primary);
+    border-radius: 50px;
+    height: 20px;
+}
+
+.avatar-container {
+    position: relative;
+    height: 30px;
+    width: 30px;
+}
+
+.xp-card-preview .avatar {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    scale: 0.83;
+    top: 0;
+    left: 0;
+    background-color: var(--background-primary);
+    border-radius: 50%;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.xp-card-preview .avatar-decoration {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+}
 
 .xp-card-bottom {
-    position: absolute;
-    bottom: 10px;
-}
-
-.xp-already-claimed-text {
-    bottom: 10px;
-}
-
-.xp-featured-card button, .xp-shop-card button {
     position: relative;
-    display: flex;
-    padding: 10px 15px;
-    background: var(--color-brand);
-    color: #fff;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    width: auto;
-    box-shadow: none;
-    box-sizing: border-box;
-    transition: box-shadow 0.2s ease;
-    margin-top: 5px;
+    padding: 5px;
 }
 
-.xp-featured-card button:hover, .xp-shop-card button:hover {
-    box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.3);
+.xp-card-price-container {
+    position: absolute;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    bottom: 10px;
+    left: 10px;
 }
 
-.xp-featured-card button svg, .xp-shop-card button svg {
-    height: 15px;
-    width: auto;
-    scale: 1.3;
-    margin-left: 10px;
+.xp-card-price-container svg {
+    height: 20px;
+    width: 20px;
+}
+
+.xp-card-nameplate-container {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 80%;
+    opacity: 0.5;
+    z-index: 1;
+    transition: opacity 0.5s ease;
+}
+
+.xp-card-nameplate-container:has(img) {
+    mask-image: linear-gradient(to left,#000 50%,rgba(0,0,0,0)100%);
+}
+
+.xp-featured-card:hover .xp-card-nameplate-container, .xp-shop-card:hover .xp-card-nameplate-container {
+    opacity: 0.7;
+}
+
+.xp-card-nameplate-container video {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    mask-image: linear-gradient(to left,#000 50%,rgba(0,0,0,0)100%);
+}
+
+.xp-card-nameplate-container img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    mask-image: linear-gradient(to left,#000 50%,rgba(0,0,0,0)100%);
 }
 
 
@@ -3881,7 +3942,9 @@ body:has(.notice) .container {
 /* Generic Styles */
 
 .generic-brand-button {
-    display: flex;
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
     margin: 5px 0;
     padding: 10px 15px;
     background-color: var(--color-brand);
@@ -3899,10 +3962,8 @@ body:has(.notice) .container {
 }
 
 .generic-brand-button svg {
-    height: 15px;
+    height: 17px;
     width: auto;
-    scale: 1.3;
-    margin-right: 10px;
 }
 
 
