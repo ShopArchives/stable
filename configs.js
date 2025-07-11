@@ -1,5 +1,5 @@
 
-const appVersion = "7.2.2";
+const appVersion = "7.2.7";
 const appType = "Stable";
 
 const endpoints = {
@@ -8,6 +8,7 @@ const endpoints = {
     VERIFY_ORIGIN: "/heartbeat",
     SERVER_EXPERIMENTS: "/experiments",
     USER: "/users/@me",
+    USERS: "/users/",
     XP_EVENTS: "/xp-events",
     XP_INVENTORY: "/xp-inventory",
     XP_SHOP: "/claimables-shop",
@@ -122,6 +123,36 @@ const discord_categories = {
 };
 
 const category_client_overrides = [
+    {
+        sku_id: "1",
+        animatedBanner: "https://cdn.discordapp.com/assets/content/6f72be1e45f627e6b43894ca7dcda02c2851a3120a643a85c5132e87af6b50c4.webm",
+        animatedBanner__credits: "643945264868098049"
+    },
+    {
+        sku_id: "4",
+        addLogo: !0
+    },
+    {
+        sku_id: "1344802365307621427",
+        banner_override: "https://cdn.yapper.shop/assets/198.png",
+        modal_hero_banner: "https://cdn.yapper.shop/assets/199.png",
+        banner_override__credits: "1049207768785100880",
+        modal_hero_banner__credits: "1049207768785100880"
+    },
+    {
+        sku_id: "1217175518781243583",
+        banner_override: "https://cdn.yapper.shop/assets/200.png",
+        modal_hero_banner: "https://cdn.yapper.shop/assets/202.png",
+        banner_override__credits: "1049207768785100880",
+        modal_hero_banner__credits: "1049207768785100880"
+    },
+    {
+        sku_id: "1309309974266118144",
+        banner_override: "https://cdn.yapper.shop/assets/201.png",
+        modal_hero_banner: "https://cdn.yapper.shop/assets/202.png",
+        banner_override__credits: "1049207768785100880",
+        modal_hero_banner__credits: "1049207768785100880"
+    },
     {
         sku_id: discord_categories.FANTASY,
         addLogo: !0,
@@ -331,6 +362,22 @@ const nameplate_palettes = {
 
 const experiments = [
     {
+        title: `Open Profile Modal On Reviews`,
+        codename: `open_profile_modals_on_reviews`,
+        release_config: {
+            year: `2025`,
+            month: `07`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Enabled`
+            }
+        ]
+    },
+    {
         title: `Published Items Category`,
         codename: `published_items_category`,
         release_config: {
@@ -434,7 +481,8 @@ const settings = {
     "staff_simulate_guidelines_block": 0,
     "staff_show_unpublished_xp_events": 0,
     "staff_show_unpublished_xp_shop": 0,
-    "staff_allow_category_only_event_claiming_in_events_tab": 0
+    "staff_allow_category_only_event_claiming_in_events_tab": 0,
+    "staff_show_test_categories_on_misc_page": 0
 };
 
 const leaks_dummy_data = {
@@ -462,3 +510,14 @@ const leaks_dummy_data = {
         }
     ]
 };
+
+const user_preview_usernames = [
+    {
+        id: "643945264868098049",
+        name: "Discord"
+    },
+    {
+        id: "1049207768785100880",
+        name: "TrellTrell"
+    }
+]
