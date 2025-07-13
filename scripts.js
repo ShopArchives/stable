@@ -625,7 +625,7 @@ async function loadSite() {
         document.getElementById('ubar-avatar').remove();
     }
 
-    async function openModal(mainClass, type, data1, data2, data3) {
+    async function openModal(mainClass, type, data1, data2) {
         if (!mainClass || !type) return console.error('Sorry, you are NOT sigma!');
 
         let categoryModalInfo;
@@ -634,11 +634,13 @@ async function loadSite() {
         openModalsCache += 1;
 
         // Code to hide the not top most modal
-        // try {
-        //     const amount = openModalsCache - 1;
-        //     document.querySelector('.open-modal-' + amount).classList.remove('show');
-        //     document.querySelector('.open-back-modal-' + amount).classList.remove('show');
-        // } catch {}
+        try {
+            const amount = openModalsCache - 1;
+            if (!document.querySelector('.open-modal-' + amount).classList.contains('modalv3')) {
+                document.querySelector('.open-modal-' + amount).classList.remove('show');
+                document.querySelector('.open-back-modal-' + amount).classList.remove('show');
+            }
+        } catch {}
 
         let modal = document.createElement("div");
         modal.classList.add(mainClass);
@@ -647,10 +649,30 @@ async function loadSite() {
         modal.style.zIndex = 301 + openModalsCache;
 
 
+        let modal_back = document.createElement("div");
+        modal_back.classList.add(mainClass + '-back');
+        modal_back.classList.add('open-back-modal-' + openModalsCache);
+        modal_back.id = mainClass + '-back';
+
+        modal_back.style.zIndex = 300 + openModalsCache;
+
+
+        let modal_loading = document.createElement("div");
+        modal_loading.classList.add('modal-loading');
+        modal_loading.classList.add('open-loading-modal-' + openModalsCache);
+        modal_loading.id = 'modal-loading';
+        modal_loading.innerHTML = `
+            <div class="modal-loading-inner">
+                <div class="spinner"></div>
+            </div>
+        `;
+
+        modal_loading.style.zIndex = 301 + openModalsCache;
+
+
         if (type === "fromCollectibleCard") {
             const category = data1;
             const product = data2;
-            const card = data3;
 
             modal.setAttribute('data-clear-param', 'itemSkuId');
             modal.setAttribute('data-clear-cache', 'currentOpenModalId');
@@ -731,7 +753,7 @@ async function loadSite() {
                             <div class="modalv2-preview-container"></div>
                             <div class="modalv2-bottom-container">
                                 <p class="sku_id has-tooltip" data-tooltip="Click To Copy" onclick="copyValue('${product.sku_id}')">${product.sku_id}</p>
-                                <h3>${product.name}</h3>
+                                <h3 class="modal-item-name">${product.name}</h3>
                                 <p class="modal-summary">${product.summary}</p>
                                 <div class="modalv2-price-container"></div>
                                 <div class="modalv2-price-container-crossed"></div>
@@ -743,8 +765,8 @@ async function loadSite() {
                             </div>
                         </div>
                         <div class="modalv2-right">
-                            <img class="modalv2-right-bg-img" src="${pdpAsset}"></img>
-                            <img class="modalv2-right-logo-img" src="${logoAsset}"></img>
+                            <img class="modalv2-right-bg-img"></img>
+                            <img class="modalv2-right-logo-img"></img>
 
                             <div class="modal2-profile-preview">
                                 <div class="modal-preview-profile" style="height: 210px;">
@@ -763,6 +785,14 @@ async function loadSite() {
 
                         </div>
                     `;
+
+                    const modalBGImage = modalInner.querySelector('.modalv2-right-bg-img');
+                    if (pdpAsset) modalBGImage.src = pdpAsset;
+                    else modalBGImage.remove();
+
+                    const modalLogoImage = modalInner.querySelector('.modalv2-right-logo-img');
+                    if (logoAsset) modalLogoImage.src = logoAsset;
+                    else modalLogoImage.remove();
 
                     if (currentUserData) {
                         if (currentUserData.banner_color) modalInner.querySelector('.options-preview-profile-banner-color').style.backgroundColor = currentUserData.banner_color;
@@ -941,10 +971,8 @@ async function loadSite() {
                     });
 
                     const modalPreviewContainer = modalInner.querySelector('.modalv2-preview-container');
-
-                    const previewContainer = card.querySelector('[data-shop-card-preview-container]');
-                    const itemName = card.querySelector('[data-product-card-name]');
                     const modalSummary = modalInner.querySelector('.modal-summary');
+                    const nothingHover = document.querySelector('.something-nobody-is-gonna-hover');
 
                     if (product.type === item_types.AVATAR_DECORATION) {
 
@@ -991,12 +1019,12 @@ async function loadSite() {
                                 profileProfileEffectPreview.style.aspectRatio = '0.1';
 
                                 // Create and initialize the profile effects card with card-level hover
-                                const effectsCard = new ProfileEffectsCard(profileProfileEffectPreview, profileEffect, document.querySelector('.something-nobody-is-gonna-hover'), {
+                                const effectsCard = new ProfileEffectsCard(profileProfileEffectPreview, profileEffect, nothingHover, {
                                     startImmediately: true
                                 });
 
                                 // Store reference for cleanup if needed
-                                document.querySelector('.something-nobody-is-gonna-hover')._profileEffectsCard = effectsCard;
+                                nothingHover._profileEffectsCard = effectsCard;
                             } else {
                                 // Fallback if profile effect not found
                                 profileProfileEffectPreview.innerHTML = ``;
@@ -1220,12 +1248,12 @@ async function loadSite() {
                                     profileProfileEffectPreview.style.aspectRatio = '0.1';
 
                                     // Create and initialize the profile effects card with card-level hover
-                                    const effectsCard = new ProfileEffectsCard(profileProfileEffectPreview, profileEffect, document.querySelector('.something-nobody-is-gonna-hover'), {
+                                    const effectsCard = new ProfileEffectsCard(profileProfileEffectPreview, profileEffect, nothingHover, {
                                         startImmediately: true
                                     });
 
                                     // Store reference for cleanup if needed
-                                    card._profileEffectsCard = effectsCard;
+                                    nothingHover._profileEffectsCard = effectsCard;
                                 } else {
                                     // Fallback if profile effect not found
                                     profileProfileEffectPreview.innerHTML = ``;
@@ -1308,7 +1336,7 @@ async function loadSite() {
                                     const effectsCard = new ProfileEffectsCard(effectPreview, profileEffect, modalPreviewContainer);
 
                                     // Store reference for cleanup if needed
-                                    card._profileEffectsCard = effectsCard;
+                                    nothingHover._profileEffectsCard = effectsCard;
                                 } else {
                                     // Fallback if profile effect not found
                                     effectPreview.innerHTML = ``;
@@ -1357,7 +1385,7 @@ async function loadSite() {
                         function applyVariant(selectedVariant) {
                             modalInner.querySelector("[data-shop-card-var-title]").textContent = `(${selectedVariant.variant_label})`;
 
-                            itemName.textContent = selectedVariant.base_variant_name;
+                            modalInner.querySelector(".modal-item-name").textContent = selectedVariant.base_variant_name;
 
                             if (selectedVariant.type === 0) {
 
@@ -1413,12 +1441,12 @@ async function loadSite() {
                                         profileProfileEffectPreview.style.aspectRatio = '0.1';
 
                                         // Create and initialize the profile effects card with card-level hover
-                                        const effectsCard = new ProfileEffectsCard(profileProfileEffectPreview, profileEffect, document.querySelector('.something-nobody-is-gonna-hover'), {
+                                        const effectsCard = new ProfileEffectsCard(profileProfileEffectPreview, profileEffect, nothingHover, {
                                             startImmediately: true
                                         });
 
                                         // Store reference for cleanup if needed
-                                        document.querySelector('.something-nobody-is-gonna-hover')._profileEffectsCard = effectsCard;
+                                        nothingHover._profileEffectsCard = effectsCard;
                                     } else {
                                         // Fallback if profile effect not found
                                         profileProfileEffectPreview.innerHTML = ``;
@@ -1431,7 +1459,6 @@ async function loadSite() {
 
 
                                 modalPreviewContainer.innerHTML = "";
-                                previewContainer.classList.add('type-1-preview-container');
 
                                 let effectBG = document.createElement("div");
 
@@ -1541,11 +1568,11 @@ async function loadSite() {
                     //     raw.innerHTML = JSON.stringify(product, undefined, 4);
                     //     rawOutput.appendChild(raw);
                     // }
-                    // document.querySelectorAll('.view-raw-modal-textbox').forEach(textbox => {
-                    //     textbox.style.height = 'auto';
-                    //     textbox.style.width = '100%';
-                    //     textbox.style.height = textbox.scrollHeight + 'px';
-                    // });
+                    document.querySelectorAll('.view-raw-modal-textbox').forEach(textbox => {
+                        textbox.style.height = 'auto';
+                        textbox.style.width = '100%';
+                        textbox.style.height = textbox.scrollHeight + 'px';
+                    });
                 }
             }
 
@@ -1997,11 +2024,11 @@ async function loadSite() {
                             <textarea class="view-raw-modal-textbox" readonly>${JSON.stringify(categoryData, undefined, 4)}</textarea>
                         </div>
                     `;
-                    // document.querySelectorAll('.view-raw-modal-textbox').forEach(textbox => {
-                    //     textbox.style.height = 'auto';
-                    //     textbox.style.width = '100%';
-                    //     textbox.style.height = textbox.scrollHeight + 'px';
-                    // });
+                    document.querySelectorAll('.view-raw-modal-textbox').forEach(textbox => {
+                        textbox.style.height = 'auto';
+                        textbox.style.width = '100%';
+                        textbox.style.height = textbox.scrollHeight + 'px';
+                    });
                 } else if (tab === '3') {
                     modalInner.innerHTML = `
                         <div class="category-modal-assets-container">
@@ -2197,7 +2224,7 @@ async function loadSite() {
                                 }
                             });
 
-                            if (currentUserData.ban_config.ban_type >= 1 || settingsStore.staff_simulate_ban_type_1 === 1 || settingsStore.staff_simulate_ban_type_2 === 1 || currentUserData.username_violates_tos === true || settingsStore.staff_simulate_guidelines_block === 1) {
+                            if (currentUserData.ban_config.ban_type >= 1 || settingsStore.staff_simulate_ban_type_1 === 1 || settingsStore.staff_simulate_ban_type_2 === 1 || currentUserData.types.guidelines_block === true || settingsStore.staff_simulate_guidelines_block === 1 || currentUserData.types.suspicious_account === true || settingsStore.staff_simulate_sus_block === 1) {
 
                                 let banTitle = 'You have been suspended from submitting reviews.';
                                 let banDisclaimer = `
@@ -2218,12 +2245,20 @@ async function loadSite() {
                                     appealable = false;
                                 }
 
-                                if (currentUserData.username_violates_tos === true || settingsStore.staff_simulate_guidelines_block === 1) {
+                                if (currentUserData.types.guidelines_block === true || settingsStore.staff_simulate_guidelines_block === 1) {
                                     banTitle = 'You cannot submit reviews.';
                                     banDisclaimer = `
                                         <p>Your username violates our</p>
                                         <a class="link" href="https://yapper.shop/legal-information/?page=tos">Community Guidelines,</a>
                                         <p>all your reviews have been temporarily hidden from the public.</p>
+                                    `;
+                                    appealable = false;
+                                }
+
+                                if (currentUserData.types.suspicious_account === true || settingsStore.staff_simulate_sus_block === 1) {
+                                    banTitle = 'You cannot submit reviews.';
+                                    banDisclaimer = `
+                                        <p>Suspicious activity has been detected on your account, you cannot submit review temporarily.</p>
                                     `;
                                     appealable = false;
                                 }
@@ -2974,23 +3009,18 @@ async function loadSite() {
             
 
             document.body.appendChild(modal);
-            requestAnimationFrame(() => {
-                requestAnimationFrame(() => {
-                    modal.classList.add('show');
-                });
-            });
-
-            let modal_back = document.createElement("div");
-            modal_back.classList.add(mainClass + '-back');
-            modal_back.classList.add('open-back-modal-' + openModalsCache);
-            modal_back.id = mainClass + '-back';
-
-            modal_back.style.zIndex = 300 + openModalsCache;
 
             document.body.appendChild(modal_back);
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
                     modal_back.classList.add('show');
+                });
+            });
+
+            document.body.appendChild(modal_loading);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal_loading.classList.add('show');
                 });
             });
 
@@ -3038,6 +3068,12 @@ async function loadSite() {
 
             firstTimeOpeningModal = false;
 
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.classList.add('show');
+                });
+            });
+
 
             modal.querySelector("[data-close-product-card-button]").addEventListener('click', () => {
                 closeModal();
@@ -3049,6 +3085,7 @@ async function loadSite() {
                 }
             });
         } else if (type === "userSettings") {
+
             modal.innerHTML = `
                 <div class="modalv3-inner" style="color: var(--white);">
                     <div class="modalv3-inner-left">
@@ -3167,13 +3204,6 @@ async function loadSite() {
             const claimableId = data1;
             const changeModalTab = data2;
 
-            let modal_back = document.createElement("div");
-            modal_back.classList.add(mainClass + '-back');
-            modal_back.classList.add('open-back-modal-' + openModalsCache);
-            modal_back.id = mainClass + '-back';
-
-            modal_back.style.zIndex = 300 + openModalsCache;
-
             document.body.appendChild(modal_back);
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -3181,51 +3211,56 @@ async function loadSite() {
                 });
             });
 
+            document.body.appendChild(modal_loading);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal_loading.classList.add('show');
+                });
+            });
 
-            let data;
+
+            let methodAndHeaders = {
+                method: 'GET'
+            };
 
             if (localStorage.token) {
-                const dataClaimable = await fetch(redneredAPI + endpoints.CLAIMABLES_PUBLISHED + claimableId, {
+                methodAndHeaders = {
                     method: 'GET',
                     headers: {
                         "Authorization": localStorage.token
                     }
-                });
-
-                if (!dataClaimable.ok) {
-                    closeModal();
-                    return
-                }
-
-                const data1 = await dataClaimable.json();
-
-                if (data1.message) {
-                    console.error(data1.message);
-                    closeModal();
-                    return
-                } else {
-                    data = data1;
-                }
-            } else {
-                const dataClaimable = await fetch(redneredAPI + endpoints.CLAIMABLES_PUBLISHED + claimableId, {
-                    method: 'GET'
-                });
-
-                if (!dataClaimable.ok) {
-                    closeModal();
-                    return
-                }
-
-                const data1 = await dataClaimable.json();
-
-                if (data1.message) {
-                    console.error(data1.message);
-                    closeModal();
-                    return
-                } else {
-                    data = data1;
-                }
+                };
             }
+
+            const dataClaimable = await fetch(redneredAPI + endpoints.CLAIMABLES_PUBLISHED + claimableId,
+                methodAndHeaders
+            );
+
+            if (!dataClaimable.ok) {
+                closeModal();
+
+                if (modal_loading) modal_loading.classList.remove('show');
+                setTimeout(() => {
+                    if (modal_loading) modal_loading.remove();
+                }, 300);
+
+                return
+            }
+
+            const data = await dataClaimable.json();
+
+            if (data.message) {
+                console.error(data.message);
+                closeModal();
+
+                if (modal_loading) modal_loading.classList.remove('show');
+                setTimeout(() => {
+                    if (modal_loading) modal_loading.remove();
+                }, 300);
+                
+                return
+            }
+
 
             modal.innerHTML = `
                 <div class="modalv2-inner xp-modal">
@@ -3319,13 +3354,6 @@ async function loadSite() {
             const claimableId = data1;
             const changeModalTab = data2;
 
-            let modal_back = document.createElement("div");
-            modal_back.classList.add(mainClass + '-back');
-            modal_back.classList.add('open-back-modal-' + openModalsCache);
-            modal_back.id = mainClass + '-back';
-
-            modal_back.style.zIndex = 300 + openModalsCache;
-
             document.body.appendChild(modal_back);
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -3333,51 +3361,56 @@ async function loadSite() {
                 });
             });
 
+            document.body.appendChild(modal_loading);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal_loading.classList.add('show');
+                });
+            });
 
-            let data;
+
+            let methodAndHeaders = {
+                method: 'GET'
+            };
 
             if (localStorage.token) {
-                const dataClaimable = await fetch(redneredAPI + endpoints.CLAIMABLES_PUBLISHED + claimableId, {
+                methodAndHeaders = {
                     method: 'GET',
                     headers: {
                         "Authorization": localStorage.token
                     }
-                });
-
-                if (!dataClaimable.ok) {
-                    closeModal();
-                    return
-                }
-
-                const data1 = await dataClaimable.json();
-
-                if (data1.message) {
-                    console.error(data1.message);
-                    closeModal();
-                    return
-                } else {
-                    data = data1;
-                }
-            } else {
-                const dataClaimable = await fetch(redneredAPI + endpoints.CLAIMABLES_PUBLISHED + claimableId, {
-                    method: 'GET'
-                });
-
-                if (!dataClaimable.ok) {
-                    closeModal();
-                    return
-                }
-
-                const data1 = await dataClaimable.json();
-
-                if (data1.message) {
-                    console.error(data1.message);
-                    closeModal();
-                    return
-                } else {
-                    data = data1;
-                }
+                };
             }
+
+            const dataClaimable = await fetch(redneredAPI + endpoints.CLAIMABLES_PUBLISHED + claimableId,
+                methodAndHeaders
+            );
+
+            if (!dataClaimable.ok) {
+                closeModal();
+
+                if (modal_loading) modal_loading.classList.remove('show');
+                setTimeout(() => {
+                    if (modal_loading) modal_loading.remove();
+                }, 300);
+
+                return
+            }
+
+            const data = await dataClaimable.json();
+
+            if (data.message) {
+                console.error(data.message);
+                closeModal();
+
+                if (modal_loading) modal_loading.classList.remove('show');
+                setTimeout(() => {
+                    if (modal_loading) modal_loading.remove();
+                }, 300);
+                
+                return
+            }
+            
 
             let disclaimer2 = "";
 
@@ -3490,12 +3523,14 @@ async function loadSite() {
             const userID = data1;
             let cacheUserData;
 
-            let modal_back = document.createElement("div");
-            modal_back.classList.add(mainClass + '-back');
-            modal_back.classList.add('open-back-modal-' + openModalsCache);
-            modal_back.id = mainClass + '-back';
 
-            modal_back.style.zIndex = 300 + openModalsCache;
+            document.body.appendChild(modal_loading);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal_loading.classList.add('show');
+                });
+            });
+
 
             document.body.appendChild(modal_back);
             requestAnimationFrame(() => {
@@ -3504,33 +3539,41 @@ async function loadSite() {
                 });
             });
 
-            if (!cacheUserData) {
-                await fetchCategoryData();
+
+            const rawUserData = await fetch(redneredAPI + endpoints.USERS + userID, {
+                method: 'GET',
+                headers: {
+                    "Authorization": localStorage.token
+                }
+            });
+
+            if (!rawUserData.ok) {
+                closeModal();
+
+                if (modal_loading) modal_loading.classList.remove('show');
+                setTimeout(() => {
+                    if (modal_loading) modal_loading.remove();
+                }, 300);
+
+                return
             }
 
-            async function fetchCategoryData() {
-                const rawUserData = await fetch(redneredAPI + endpoints.USERS + userID, {
-                    method: 'GET',
-                    headers: {
-                        "Authorization": localStorage.token
-                    }
-                });
+            const data = await rawUserData.json();
 
-                if (!rawUserData.ok) {
-                    closeModal();
-                    return
-                }
+            if (data.message) {
+                console.error(data);
+                closeModal();
 
-                const data = await rawUserData.json();
+                if (modal_loading) modal_loading.classList.remove('show');
+                setTimeout(() => {
+                    if (modal_loading) modal_loading.remove();
+                }, 300);
 
-                if (data.message) {
-                    console.error(data);
-                    closeModal();
-                    return
-                } else {
-                    cacheUserData = data;
-                }
+                return
+            } else {
+                cacheUserData = data;
             }
+
         
             modal.innerHTML = `
                 <div class="user-modal-inner">
@@ -3596,6 +3639,7 @@ async function loadSite() {
                     modalInner.innerHTML = `
                         <div class="user-modal-bottom-container">
                             <div class="user-modal-part1">
+                                <div class="xp-card-nameplate-container"></div>
                                 <div class="user-modal-avatar-preview">
                                     <img class="avatar" src="https://cdn.discordapp.com/avatars/${cacheUserData.id}/${cacheUserData.avatar}.png?size=480">
                                     <img class="deco">
@@ -3614,8 +3658,97 @@ async function loadSite() {
                                     </div>
                                 </div>
                             </div>
+                            <div class="user-modal-part2 xp-exp-only">
+                                <div class="user-modal-xp-progress-left">
+                                    <div class="user-modal-xp-progress">
+                                        <div class="bar"></div>
+                                        <div class="text">
+                                            <p id="animate-level-xp">0</p>
+                                            <p>/${cacheUserData.profile_information.xp_to_level}</p>
+                                        </div>
+                                    </div>
+                                    <p id="user-level-rank">User Rank #${cacheUserData.profile_information.rank}</p>
+                                </div>
+                                <div class="user-modal-xp-level">
+                                    <p>Level</p>
+                                    <h1>${cacheUserData.profile_information.level}</h1>
+                                </div>
+                            </div>
+                            <div class="user-modal-part3">
+                                <div>
+                                    <h3>Reviews</h3>
+                                    <p>${cacheUserData.profile_information.reviews}</p>
+                                </div>
+                                <div>
+                                    <h3>Joined Shop Archives</h3>
+                                    <p class="sa-join-date">Date</p>
+                                </div>
+                            </div>
                         </div>
                     `;
+
+                    if (cacheUserData.profile_information.xp_balance === 0) {
+                        modalInner.querySelector('#user-level-rank').remove();
+                    }
+
+                    if (cacheUserData.collectibles?.nameplate.sa_override_src) {
+                        let nameplatePreview = document.createElement("img");
+
+                        nameplatePreview.src = cacheUserData.collectibles.nameplate.sa_override_src;
+    
+                        modalInner.querySelector('.xp-card-nameplate-container').appendChild(nameplatePreview);
+                    } else if (cacheUserData.collectibles?.nameplate) {
+                        let nameplatePreview = document.createElement("video");
+
+                        nameplatePreview.src = `https://cdn.discordapp.com/assets/collectibles/${cacheUserData.collectibles.nameplate.asset}asset.webm`;
+                        nameplatePreview.disablePictureInPicture = true;
+                        nameplatePreview.muted = true;
+                        nameplatePreview.loop = true;
+                        nameplatePreview.autoplay = true;
+                        nameplatePreview.playsInline = true;
+
+                        const bgcolor = nameplate_palettes[cacheUserData.collectibles.nameplate.palette].darkBackground;
+    
+                        modalInner.querySelector('.xp-card-nameplate-container').style.backgroundImage = `linear-gradient(90deg, #00000000 0%, ${bgcolor} 200%)`;
+    
+                        modalInner.querySelector('.xp-card-nameplate-container').appendChild(nameplatePreview);
+                    }
+
+
+                    const date = new Date(cacheUserData.profile_information.join_date);
+
+                    const day = String(date.getDate()).padStart(2, '0');
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const year = date.getFullYear();
+
+                    const dateContainer = modalInner.querySelector(".sa-join-date");
+
+                    if (settingsStore.non_us_timezone === 1) {
+                        const formatted = `${day}/${month}/${year}`;
+
+                        dateContainer.textContent = `${formatted}`;
+                    } else {
+                        const formatted = `${month}/${day}/${year}`;
+
+                        dateContainer.textContent = `${formatted}`;
+                    }
+
+
+                    if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'xp_system')?.treatment === 1) {
+                        animateNumber(modalInner.querySelector('#animate-level-xp'), cacheUserData.profile_information.xp_into_level, 2000, {
+                            useCommas: false
+                        });
+
+                        requestAnimationFrame(() => {
+                            requestAnimationFrame(() => {
+                                modalInner.querySelector('.bar').style.width = cacheUserData.profile_information.level_percentage+'%';
+                            });
+                        });
+                    } else {
+                        document.querySelectorAll('.xp-exp-only').forEach(el => {
+                            el.remove();
+                        });
+                    }
 
                     if (cacheUserData.global_name) modalInner.querySelector('#users-displayname').textContent = cacheUserData.global_name;
                     else modalInner.querySelector('#users-displayname').remove();
@@ -3671,6 +3804,11 @@ async function loadSite() {
                             <textarea class="view-raw-modal-textbox" readonly>${JSON.stringify(cacheUserData, undefined, 4)}</textarea>
                         </div>
                     `;
+                    document.querySelectorAll('.view-raw-modal-textbox').forEach(textbox => {
+                        textbox.style.height = 'auto';
+                        textbox.style.width = '100%';
+                        textbox.style.height = textbox.scrollHeight + 'px';
+                    });
                 } else {
                     modalInner.innerHTML = ``;
                 }
@@ -3707,9 +3845,29 @@ async function loadSite() {
                     closeModal();
                 }
             });
+        } else if (type === "openLoadingTest") {
+            document.body.appendChild(modal_loading);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal_loading.classList.add('show');
+                });
+            });
+
+            document.body.appendChild(modal_back);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal_back.classList.add('show');
+                });
+            });
+
+            modal_loading.addEventListener('click', (event) => {
+                if (event.target === modal_loading) {
+                    closeModal();
+                }
+            });
         }
 
-        if (type != "fromCategoryBanner" && type != "userSettings" && type != "openUserModal") {
+        if (type != "fromCategoryBanner" && type != "userSettings" && type != "openUserModal" && type != "openLoadingTest") {
             document.body.appendChild(modal);
             requestAnimationFrame(() => {
                 requestAnimationFrame(() => {
@@ -3718,12 +3876,6 @@ async function loadSite() {
             });
 
             if (type != "xpRedeem" && type != "xpClaim") {
-                let modal_back = document.createElement("div");
-                modal_back.classList.add(mainClass + '-back');
-                modal_back.classList.add('open-back-modal-' + openModalsCache);
-                modal_back.id = mainClass + '-back';
-
-                modal_back.style.zIndex = 300 + openModalsCache;
 
                 document.body.appendChild(modal_back);
                 requestAnimationFrame(() => {
@@ -3733,6 +3885,13 @@ async function loadSite() {
                 });
             }
         }
+
+        if (type != "openLoadingTest") {
+            if (modal_loading) modal_loading.classList.remove('show');
+            setTimeout(() => {
+                if (modal_loading) modal_loading.remove();
+            }, 300);
+        }
     }
     window.openModal = openModal;
 
@@ -3740,13 +3899,16 @@ async function loadSite() {
         if (openModalsCache != 0) {
             const modal = document.querySelector('.open-modal-' + openModalsCache);
             const modal_back = document.querySelector('.open-back-modal-' + openModalsCache);
+            const modal_loading = document.querySelector('.open-loading-modal-' + openModalsCache);
 
             // Code to hide the not top most modal
-            // try {
-            //     const amount = openModalsCache - 1;
-            //     document.querySelector('.open-modal-' + amount).classList.add('show');
-            //     document.querySelector('.open-back-modal-' + amount).classList.add('show');
-            // } catch {}
+            try {
+                const amount = openModalsCache - 1;
+                if (!document.querySelector('.open-modal-' + amount).classList.contains('modalv3')) {
+                    document.querySelector('.open-modal-' + amount).classList.add('show');
+                    document.querySelector('.open-back-modal-' + amount).classList.add('show');
+                }
+            } catch {}
 
             if (modal?.hasAttribute('data-clear-param')) {
                 removeParams(modal.getAttribute('data-clear-param'));
@@ -3757,9 +3919,11 @@ async function loadSite() {
 
             if (modal) modal.classList.remove('show');
             if (modal_back) modal_back.classList.remove('show');
+            if (modal_loading) modal_loading.classList.remove('show');
             setTimeout(() => {
                 if (modal) modal.remove();
                 if (modal_back) modal_back.remove();
+                if (modal_loading) modal_loading.remove();
             }, 300);
             openModalsCache -= 1;
         }
@@ -3782,8 +3946,8 @@ async function loadSite() {
             <div data-shop-card-preview-container>
             </div>
             <div class="card-bottom">
-                <h3 data-product-card-name data-product-card-name>${product.name}</h3>
-                <p class="shop-card-summary" data-product-card-summary>${product.summary}</p>
+                <h3 class="shop-card-name"></h3>
+                <p class="shop-card-summary"></p>
                 <div class="shop-price-container" data-shop-price-container>
                 </div>
 
@@ -3798,6 +3962,9 @@ async function loadSite() {
             <div class="shop-card-tag-container" data-shop-card-tag-container>
             </div>
         `;
+
+        if (product.name) card.querySelector('.shop-card-name').textContent = product.name;
+        if (product.summary) card.querySelector('.shop-card-summary').textContent = product.summary;
 
         const cardTag = card.querySelector("[data-shop-card-tag-container]");
 
@@ -3922,8 +4089,8 @@ async function loadSite() {
         }
 
         const previewContainer = card.querySelector('[data-shop-card-preview-container]');
-        const itemName = card.querySelector('[data-product-card-name]');
-        const itemSummary = card.querySelector('[data-product-card-summary]');
+        const itemName = card.querySelector('.shop-card-name');
+        const itemSummary = card.querySelector('.shop-card-summary');
 
         if (product.type === item_types.AVATAR_DECORATION) {
             previewContainer.classList.add('type-0-preview-container-container')
@@ -4406,14 +4573,14 @@ async function loadSite() {
         card.addEventListener("click", (event) => {
             if (event.target.matches(".shop-card-var")) {
             } else {
-                openModal('modalv2', 'fromCollectibleCard', category, product, card);
+                openModal('modalv2', 'fromCollectibleCard', category, product);
                 addParams({itemSkuId: product.sku_id})
             }
         });
 
         if (currentOpenModalId === product.sku_id) {
             setTimeout(() => {
-                openModal('modalv2', 'fromCollectibleCard', category, product, card);
+                openModal('modalv2', 'fromCollectibleCard', category, product);
             }, 500);
         }
 
@@ -4788,13 +4955,6 @@ async function loadSite() {
                 `;
                 bannerSummaryAndLogo.appendChild(bannerLogo);
 
-                const bannerButton = document.createElement("div");
-                bannerButton.id = 'home-page-preview-button-container';
-                bannerButton.innerHTML = `
-                    <button class="home-page-preview-button" onclick="scrollToCache = '${categoryData.category_store_listing_id}'; addParams({scrollTo: '${categoryData.category_store_listing_id}'}); loadPage('2');">Shop the ${categoryData.name} Collection</button>
-                `;
-                bannerSummaryAndLogo.appendChild(bannerButton);
-
                 if (categoryData.banner_asset?.animated) {
                     const videoBanner = document.createElement("video");
                     videoBanner.disablePictureInPicture = true;
@@ -4811,6 +4971,28 @@ async function loadSite() {
                     imageBanner.classList.add('banner-video');
                     bannerContainer.appendChild(imageBanner);
                 }
+
+
+                const bannerButton = document.createElement("div");
+                bannerButton.id = 'home-page-preview-button-container';
+                bannerButton.innerHTML = `
+                    <svg class="has-tooltip" data-tooltip="Open Category Modal" width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="24" r="6" fill="currentColor"></circle>
+                        <circle cx="12" cy="72" r="6" fill="currentColor"></circle>
+                        <circle cx="12" cy="48" r="6" fill="currentColor"></circle>
+                        <rect x="28" y="20" width="60" height="8" rx="4" fill="currentColor"></rect>
+                        <path d="M72.124 44.0029C64.5284 44.0668 57.6497 47.1046 52.6113 52H32C29.7909 52 28 50.2091 28 48C28 45.7909 29.7909 44 32 44H72C72.0415 44 72.0828 44.0017 72.124 44.0029Z" fill="currentColor"></path>
+                        <path d="M44.2852 68C44.0983 69.3065 44 70.6418 44 72C44 73.3582 44.0983 74.6935 44.2852 76H32C29.7909 76 28 74.2091 28 72C28 69.7909 29.7909 68 32 68H44.2852Z" fill="currentColor"></path>
+                        <circle cx="72" cy="72" r="16" stroke="currentColor" stroke-width="8"></circle>
+                        <rect x="81" y="85.9497" width="7" height="16" rx="3.5" transform="rotate(-45 81 85.9497)" fill="currentColor"></rect>
+                    </svg>
+                    <button class="home-page-preview-button" onclick="scrollToCache = '${categoryData.category_store_listing_id}'; addParams({scrollTo: '${categoryData.category_store_listing_id}'}); loadPage('2');">Shop the ${categoryData.name} Collection</button>
+                `;
+                bannerButton.querySelector('svg').addEventListener("click", () => {
+                    openModal('category-modal', 'fromCategoryBanner', data.categories[0], categoryData.banner_asset?.static);
+                });
+                bannerSummaryAndLogo.appendChild(bannerButton);
+
 
                 category.appendChild(bannerContainer);
 
@@ -6302,49 +6484,67 @@ async function loadSite() {
             renderExperiments();
 
         } else if (tab === "modal_testing") {
+            const textCategory = JSON.stringify(leaks_dummy_data.categories[0], undefined, 4);
+            const textProduct = JSON.stringify(dummy_products[0], undefined, 4);
             tabPageOutput.innerHTML = `
                 <h2>Modal Testing</h2>
 
                 <hr>
 
-                <button class="generic-brand-button" onclick="openModal('modalv3', 'userSettings');">
-                    Open User Settings Modal (Not Recommended)
-                </button>
+                <button class="generic-brand-button" onclick="openModal('modalv3', 'userSettings');">Open User Settings Modal (Not Recommended)</button>
+
+                <hr class="inv">
+
+                <button class="generic-brand-button" id="open-text-category-button">Open Category Modal</button>
+
+                <hr class="inv">
+
+                <button class="generic-brand-button" id="open-text-product-button">Open Product Modal</button>
 
                 <hr class="inv">
 
                 <input type="text" class="modalv3-input" autocomplete="off" placeholder="User ID" id="open-user-modal-input"></input>
-                <button class="generic-brand-button" id="open-user-modal">
-                    Open User Modal
-                </button>
+                <button class="generic-brand-button" id="open-user-modal">Open User Modal</button>
 
                 <hr class="inv">
 
                 <input type="text" class="modalv3-input" autocomplete="off" placeholder="Claimable ID" id="open-xp-claim-modal-input"></input>
-                <button class="generic-brand-button" id="open-xp-claim-modal">
-                    Open XP Claim Modal
-                </button>
-                <button class="generic-brand-button" id="open-xp-redeem-modal">
-                    Open XP Redeem Modal
-                </button>
+                <button class="generic-brand-button" id="open-xp-claim-modal">Open XP Claim Modal</button>
+                <button class="generic-brand-button" id="open-xp-redeem-modal">Open XP Redeem Modal</button>
+
+                <hr class="inv">
+
+                <button class="generic-brand-button" id="open-loading-animation-modal">Play Loading Animation</button>
             `;
 
+            tabPageOutput.querySelector('#open-text-category-button').addEventListener("click", () => {
+                openModal('category-modal', 'fromCategoryBanner', JSON.parse(textCategory), 'https://cdn.discordapp.com/app-assets/1096190356233670716/1336165352392097853.png?size=4096');
+            });
+
+            tabPageOutput.querySelector('#open-text-product-button').addEventListener("click", () => {
+                openModal('modalv2', 'fromCollectibleCard', JSON.parse(textCategory), JSON.parse(textProduct));
+            });
+
             tabPageOutput.querySelector('#open-user-modal').addEventListener("click", () => {
-                if (tabPageOutput.querySelector('#open-user-modal-input').value.length != 0) {
+                if (tabPageOutput.querySelector('#open-user-modal-input').value.trim().length != 0) {
                     openModal('user-modal', 'openUserModal', `${tabPageOutput.querySelector('#open-user-modal-input').value}`);
                 }
             });
 
             tabPageOutput.querySelector('#open-xp-claim-modal').addEventListener("click", () => {
-                if (tabPageOutput.querySelector('#open-xp-claim-modal-input').value.length != 0) {
+                if (tabPageOutput.querySelector('#open-xp-claim-modal-input').value.trim().length != 0) {
                     openModal('modalv2', 'xpClaim', `${tabPageOutput.querySelector('#open-xp-claim-modal-input').value}`);
                 }
             });
 
             tabPageOutput.querySelector('#open-xp-redeem-modal').addEventListener("click", () => {
-                if (tabPageOutput.querySelector('#open-xp-claim-modal-input').value.length != 0) {
+                if (tabPageOutput.querySelector('#open-xp-claim-modal-input').value.trim().length != 0) {
                     openModal('modalv2', 'xpRedeem', `${tabPageOutput.querySelector('#open-xp-claim-modal-input').value}`);
                 }
+            });
+
+            tabPageOutput.querySelector('#open-loading-animation-modal').addEventListener("click", () => {
+                openModal('modalv2', 'openLoadingTest');
             });
 
         } else {
@@ -6433,6 +6633,17 @@ async function loadSite() {
                     </div>
                     <div class="setting">
                         <div class="setting-info">
+                            <p class="setting-title">Simulate: Sus Block</p>
+                            <p class="setting-description">Simulate the user having a sus account.</p>
+                        </div>
+                        <div class="toggle-container">
+                            <div class="toggle" id="staff_simulate_sus_block_toggle">
+                                <div class="toggle-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="setting">
+                        <div class="setting-info">
                             <p class="setting-title">XP: Unpublished Xp Events</p>
                             <p class="setting-description">Allows you to see unpublished or expired XP events.</p>
                         </div>
@@ -6498,6 +6709,11 @@ async function loadSite() {
 
             devtoolsContainer.querySelector('#staff_simulate_guidelines_block_toggle').addEventListener("click", () => {
                 toggleSetting('staff_simulate_guidelines_block');
+                updateToggleStates();
+            });
+
+            devtoolsContainer.querySelector('#staff_simulate_sus_block_toggle').addEventListener("click", () => {
+                toggleSetting('staff_simulate_sus_block');
                 updateToggleStates();
             });
 

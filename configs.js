@@ -1,5 +1,5 @@
 
-const appVersion = "7.2.7";
+const appVersion = "7.2.11";
 const appType = "Stable";
 
 const endpoints = {
@@ -479,6 +479,7 @@ const settings = {
     "staff_simulate_ban_type_1": 0,
     "staff_simulate_ban_type_2": 0,
     "staff_simulate_guidelines_block": 0,
+    "staff_simulate_sus_block": 0,
     "staff_show_unpublished_xp_events": 0,
     "staff_show_unpublished_xp_shop": 0,
     "staff_allow_category_only_event_claiming_in_events_tab": 0,
@@ -489,13 +490,30 @@ const leaks_dummy_data = {
     version: 0,
     categories: [
         {
-            "sku_id": "0",
-            "name": "Leaks Dummy Category",
-            "summary": null,
+            "sku_id": "1",
+            "name": "Reviews Test Category",
+            "summary": "Reviews Test Category",
             "store_listing_id": null,
-            "banner": null,
+            "banner": "1336165352392097853",
             "unpublished_at": null,
-            "styles": null,
+            "styles": {
+                "background_colors": [
+                    1335620,
+                    137742
+                ],
+                "button_colors": [
+                    165687,
+                    26954
+                ],
+                "confetti_colors": [
+                    15706103,
+                    11945665,
+                    5682099,
+                    1737113,
+                    7430319,
+                    11454463
+                ]
+            },
             "logo": null,
             "hero_ranking": null,
             "mobile_bg": null,
@@ -511,6 +529,73 @@ const leaks_dummy_data = {
     ]
 };
 
+const dummy_products = [
+    {
+        "sku_id": "1392240398998573140",
+        "name": "Phoenix ",
+        "summary": "Jean Grey with her fiery Phoenix form",
+        "store_listing_id": "1392240399459942416",
+        "banner": "1382445856384487569",
+        "unpublished_at": null,
+        "expires_at": "2025-09-16T23:00:00+00:00",
+        "styles": {
+            "background_colors": [
+                4620287,
+                1396431
+            ],
+            "button_colors": [
+                4507647,
+                40447
+            ],
+            "confetti_colors": [
+                4047871,
+                2718463,
+                16616447,
+                16727029
+            ]
+        },
+        "prices": {
+            "0": {
+                "country_prices": {
+                    "country_code": "US",
+                    "prices": [
+                        {
+                            "amount": 0,
+                            "currency": "usd",
+                            "exponent": 2
+                        }
+                    ]
+                }
+            },
+            "4": {
+                "country_prices": {
+                    "country_code": "US",
+                    "prices": [
+                        {
+                            "amount": 0,
+                            "currency": "usd",
+                            "exponent": 2
+                        }
+                    ]
+                }
+            }
+        },
+        "items": [
+            {
+                "type": 0,
+                "id": "1392240399459942416",
+                "sku_id": "1392240398998573140",
+                "asset": "a_7adfbfb44f2aa08b4b375366bd6a96d6",
+                "label": "Jean Grey floats side-by-side with her fiery form—one in armor, one glowing bright."
+            }
+        ],
+        "type": 0,
+        "premium_type": 0,
+        "category_sku_id": "1382445856384487567",
+        "google_sku_ids": {}
+    }
+];
+
 const user_preview_usernames = [
     {
         id: "643945264868098049",
@@ -520,4 +605,4 @@ const user_preview_usernames = [
         id: "1049207768785100880",
         name: "TrellTrell"
     }
-]
+];
