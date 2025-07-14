@@ -451,22 +451,41 @@ body:has(.notice) .container {
 .my-xp-value-container {
     position: absolute;
     display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 30px;
     left: 5px;
     top: 50%;
-    width: auto;
     transform: translateY(-50%);
-    padding: 7px;
     background-color: var(--input-secondary);
-    border-radius: 5px;
+    border-radius: 999px;
     color: var(--text-primary);
     cursor: pointer;
 }
 
-.my-xp-value-container svg {
-    width: 21px;
-    height: 21px;
-    margin-right: 5px;
+
+.my-xp-value-container .bar {
+    height: 100%;
+    background: var(--color-premium);
+    border-radius: 16px;
+    width: 0%;
+    transition: width 2s ease-out;
+    position: relative;
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.4);
 }
+
+.my-xp-value-container p {
+    position: absolute;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: var(--text-primary);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
 
 .sidebar-button {
     display: flex;
@@ -4060,18 +4079,48 @@ hr {
 
 .xp-balance-modalv3-container {
     display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 30px;
     left: 5px;
-    width: fit-content;
-    padding: 7px;
+    transform: translateY(-0%);
     background-color: var(--input-secondary);
-    border-radius: 5px;
+    border-radius: 999px;
     color: var(--text-primary);
 }
 
-.xp-balance-modalv3-container svg {
-    width: 21px;
-    height: 21px;
-    margin-right: 5px;
+
+.xp-balance-modalv3-container .bar {
+    height: 100%;
+    background: var(--color-premium);
+    border-radius: 16px;
+    width: 0%;
+    transition: width 1s ease;
+    position: relative;
+    box-shadow: 0 0 20px rgba(255, 107, 157, 0.4);
+}
+
+.xp-balance-modalv3-container .bar.shimmer::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent 0%, rgba(255, 255, 255, 0.3) 50%, transparent 100%);
+    animation: shimmer 2s infinite;
+}
+
+.xp-balance-modalv3-container p {
+    position: absolute;
+    display: flex;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 14px;
+    color: var(--text-primary);
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+    z-index: 2;
 }
 
 
@@ -4228,6 +4277,78 @@ hr {
     top: 0;
     mask-image: linear-gradient(to left,#000 50%,rgba(0,0,0,0)100%);
 }
+
+
+
+/* XP Levels Tab */
+
+
+
+.modalv3-xp-levels-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.modalv3-xp-level-card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: var(--modal-block-bg);
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
+    padding: 15px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+}
+
+.modalv3-xp-level-card .desc {
+    color: var(--text-secondary);
+}
+
+.modalv3-xp-level-card .xp-level-card-perks {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.modalv3-xp-level-card .xp-level-card-perks div {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 2px;
+}
+
+.modalv3-xp-level-card .xp-level-card-perks .main {
+    display: unset;
+}
+
+.modalv3-xp-level-card .xp-level-card-perks .sub {
+    color: var(--text-secondary);
+    font-size: 12px;
+}
+
+.modalv3-xp-level-card .xp-level-card-perks .link {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.modalv3-xp-level-card .xp-level-card-perks .main-err {
+    margin-left: auto;
+    display: unset;
+    background-color: var(--bg-feedback-critical);
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.modalv3-xp-level-card .xp-level-card-perks .main-err p:not(.sub) {
+    font-size: 14px;
+}
+
 
 
 

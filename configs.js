@@ -1,5 +1,5 @@
 
-const appVersion = "7.2.11";
+const appVersion = "7.3.2";
 const appType = "Stable";
 
 const endpoints = {
@@ -10,8 +10,7 @@ const endpoints = {
     USER: "/users/@me",
     USERS: "/users/",
     XP_EVENTS: "/xp-events",
-    XP_INVENTORY: "/xp-inventory",
-    XP_SHOP: "/claimables-shop",
+    XP_LEVELS: "/xp-levels",
 
     STABLE_LOGIN_CALLBACK: "/callback",
     DEV_LOGIN_CALLBACK: "/dev/callback",
@@ -362,6 +361,38 @@ const nameplate_palettes = {
 
 const experiments = [
     {
+        title: `Display Name Style Render`,
+        codename: `display_name_style_render`,
+        release_config: {
+            year: `2025`,
+            month: `07`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Enabled`
+            }
+        ]
+    },
+    {
+        title: `Display Name Style XP Level Perk`,
+        codename: `display_name_style_xp_level_perk`,
+        release_config: {
+            year: `2025`,
+            month: `07`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Enabled`
+            }
+        ]
+    },
+    {
         title: `Open Profile Modal On Reviews`,
         codename: `open_profile_modals_on_reviews`,
         release_config: {
@@ -483,7 +514,8 @@ const settings = {
     "staff_show_unpublished_xp_events": 0,
     "staff_show_unpublished_xp_shop": 0,
     "staff_allow_category_only_event_claiming_in_events_tab": 0,
-    "staff_show_test_categories_on_misc_page": 0
+    "staff_show_test_categories_on_misc_page": 0,
+    "staff_auth_remove_none_promt": 0
 };
 
 const leaks_dummy_data = {
