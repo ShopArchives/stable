@@ -1,5 +1,5 @@
 
-const appVersion = "7.3.2";
+const appVersion = "7.3.6";
 const appType = "Stable";
 
 const endpoints = {
@@ -118,7 +118,9 @@ const discord_categories = {
     NAMEPLATES_V3: "1382845914355470457",
     ODDS: "1385035256133849130",
     SUMMER_BLISS: "1385050947985735701",
-    PAPER: "1387888352891764947"
+    PAPER: "1387888352891764947",
+    PETAL: "1394404301496914173",
+    TWO_SQUARED: "1395905165990694922"
 };
 
 const category_client_overrides = [
@@ -359,7 +361,61 @@ const nameplate_palettes = {
     }
 };
 
+const display_name_styles_fonts = {
+    DEFAULT: 11,
+    BANGERS: 1,
+    BIO_RHYME: 2,
+    CHERRY_BOMB: 3,
+    CHICLE: 4,
+    COMPAGNON: 5,
+    MUSEO_MODERNO: 6,
+    NEO_CASTEL: 7,
+    PIXELIFY: 8,
+    RIBES: 9,
+    SINISTRE: 10
+};
+
+const display_name_styles_colors = {
+    SOLID: 1,
+    GRADIENT: 2,
+    NEON: 3,
+    TOON: 4,
+    POP: 5
+};
+
 const experiments = [
+    {
+        title: `Enhanced Account Tab`,
+        codename: `enhanced_account_tab`,
+        release_config: {
+            year: `2025`,
+            month: `07`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Enabled`
+            }
+        ]
+    },
+    {
+        title: `Render User Level Stats`,
+        codename: `render_user_level_stats`,
+        release_config: {
+            year: `2025`,
+            month: `07`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Display level stats on user profiles`
+            }
+        ]
+    },
     {
         title: `Display Name Style Render`,
         codename: `display_name_style_render`,
@@ -379,22 +435,6 @@ const experiments = [
     {
         title: `Display Name Style XP Level Perk`,
         codename: `display_name_style_xp_level_perk`,
-        release_config: {
-            year: `2025`,
-            month: `07`
-        },
-        treatments: [
-            {
-                title: `Not Eligible`
-            },
-            {
-                title: `Enabled`
-            }
-        ]
-    },
-    {
-        title: `Open Profile Modal On Reviews`,
-        codename: `open_profile_modals_on_reviews`,
         release_config: {
             year: `2025`,
             month: `07`

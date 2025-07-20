@@ -1,4 +1,91 @@
 @import url(https://cdn.yapper.shop/custom-collectibles/marketing.css);
+@import url('https://fonts.googleapis.com/css2?family=Bangers&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=BioRhyme:wght@600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cherry+Bomb+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Chicle&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=MuseoModerno:ital,wght@0,600;1,600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@600&display=swap');
+
+.dns-BANGERS {
+    font-family: "Bangers", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dns-BIO_RHYME {
+    font-family: "BioRhyme", serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+}
+
+.dns-CHERRY_BOMB {
+    font-family: "Cherry Bomb One", system-ui;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.dns-CHICLE {
+    font-family: "Chicle", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Compagnon;
+    src: url('https://cdn.yapper.shop/assets/fonts/Compagnon-Bold.ttf') format('truetype');
+}
+
+.dns-COMPAGNON {
+    font-family: Compagnon, serif;
+}
+
+.dns-MUSEO_MODERNO {
+    font-family: "MuseoModerno", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Neo castel;
+    src: url('https://cdn.yapper.shop/assets/fonts/Neo-castel.ttf') format('truetype');
+}
+
+.dns-NEO_CASTEL {
+    font-family: Neo castel, serif;
+}
+
+.dns-PIXELIFY {
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: Ribes;
+    src: url('https://cdn.yapper.shop/assets/fonts/0640a78957378fbd.woff2') format('woff2');
+}
+
+.dns-RIBES {
+    font-family: Ribes, serif;
+}
+
+@font-face {
+    font-family: Sinistre;
+    src: url('https://cdn.yapper.shop/assets/fonts/bccdc9cd3d272519.woff2') format('woff2');
+}
+
+.dns-SINISTRE {
+    font-family: Sinistre, serif;
+}
+
+.dns-gradient-type-2 {
+    background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+}
 
 :root {
     --background-primary: #393A41;
@@ -28,7 +115,7 @@
     --text-feedback-critical: #FF938E;
     --text-feedback-warning: #DAAD78;
     --text-feedback-positive: #6EC487;
-    --text-feedback-info: #5e7eac;
+    --text-feedback-info: #84B3F3;
     --premium-nitro-pink-text: #FF78DA;
 
     --bg-feedback-critical: #a76a6680;
@@ -229,6 +316,10 @@ p, h1, h2, h3, h4, h5, h6, a {
 }
 .toggle-container {
     margin-left: 20px;
+}
+.toggle-container.disabled .toggle {
+    opacity: 0.75;
+    cursor: not-allowed !important;
 }
 .toggle {
     width: 60px;
@@ -2064,7 +2155,6 @@ hr {
 
 
 
-
 /* Modal Category */
 
 .category-modal {
@@ -2449,10 +2539,14 @@ hr {
 
 .review-text-content {
     position: relative;
-    font-family: gg sans five;
+    font-family: 'gg sans five', sans-serif;
     z-index: 2;
     word-break: break-word;
     overflow-wrap: break-word;
+    font-size: 16px;
+    line-height: 1.4;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
 }
 
 .review-rating-container {
@@ -2532,7 +2626,7 @@ hr {
 
 .review-nameplate-container video {
     height: 100%;
-    width: 100%;
+    width: auto;
     object-fit: cover;
     object-position: right;
     position: absolute;
@@ -2543,7 +2637,7 @@ hr {
 
 .review-nameplate-container img {
     height: 100%;
-    width: 100%;
+    width: auto;
     object-fit: cover;
     object-position: right;
     position: absolute;
@@ -2876,6 +2970,7 @@ hr {
 .user-modal-banner-preview {
     position: absolute;
     width: 100%;
+    max-height: 225px;
     object-fit: cover;
     border-radius: 10px 10px 0px 0px;
     mask-image: linear-gradient(to bottom,#000 -50%,rgba(0,0,0,0)100%);
@@ -3568,7 +3663,7 @@ hr {
 
 .modalv3-right-content-container-inner {
     position: relative;
-    max-width: 750px;
+    max-width: 800px;
     height: auto;
     margin-top: 30px;
     margin-left: 80px;
@@ -3600,7 +3695,6 @@ hr {
 }
 
 .modalv3-side-tabs-container hr {
-    width: 90%;
     border-color: var(--modalv3-hr-color2);
 }
 
@@ -3880,6 +3974,117 @@ hr {
 
 
 
+.enhanced-account-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.enhanced-account-block {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: var(--background-secondary);
+}
+
+.enhanced-account-block.title-card {
+    justify-content: space-between;
+}
+
+.enhanced-account-block.profile-card .banner {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 50%;
+    opacity: 0.5;
+    z-index: 1;
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    mask-image: linear-gradient(to right,#000 50%,rgba(0,0,0,0)100%);
+}
+
+.enhanced-account-block.profile-card .section {
+    position: relative;
+    z-index: 2;
+}
+
+.enhanced-account-block.profile-card .section.avatar-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+}
+
+.enhanced-account-block.profile-card .section.avatar-container img {
+    height: 100%;
+    width: auto;
+}
+
+.enhanced-account-block.profile-card .section.avatar-container .avatar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    scale: 0.83;
+    border-radius: 50%;
+    z-index: 1;
+}
+
+.enhanced-account-block.profile-card .section.avatar-container .deco {
+    position: relative;
+    z-index: 2;
+}
+
+.enhanced-account-block .section p {
+    color: var(--text-secondary);
+}
+
+.enhanced-account-block .buttons {
+    display: flex;
+    height: 100%;
+    box-sizing: border-box;
+    gap: 10px;
+}
+
+.enhanced-account-block .buttons .button {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    height: 100%;
+    width: 90px;
+    padding: 10px;
+    box-sizing: border-box;
+    background-color: var(--background-tertiary);
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.theme-midnight .enhanced-account-block .buttons .button {
+    background-color: var(--background-primary);
+}
+
+.enhanced-account-block .buttons .button.blue {
+    color: var(--text-feedback-info);
+}
+.enhanced-account-block .buttons .button.red {
+    color: var(--text-feedback-critical);
+}
+
+.enhanced-account-block .buttons .button p {
+    font-size: 12px;
+}
+
+.enhanced-account-block .buttons .button svg {
+    height: 20px;
+    width: 20px;
+}
+
+
 
 
 /* Tabs */
@@ -4125,117 +4330,7 @@ hr {
 
 
 
-.modalv3-xp-featured-cards-container, .modalv3-xp-shop-cards-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-top: 5px;
-}
 
-.xp-featured-card.loading {
-    animation: shop-fetching-anim 4s infinite;
-}
-
-.xp-featured-card, .xp-shop-card {
-    position: relative;
-    background-color: var(--card-outer);
-    border-radius: 5px;
-    padding: 5px;
-}
-
-.xp-featured-card .xp-card-bottom p, .xp-shop-card .xp-card-bottom p {
-    color: var(--text-secondary);
-}
-
-.xp-card-button-pad {
-    height: 40px;
-}
-
-.xp-featured-card .xp-card-preview, .xp-shop-card .xp-card-preview {
-    position: relative;
-    display: inline-flex;
-    flex-direction: column;
-    gap: 10px;
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-    border-radius: 5px 5px 0px 0px;
-    background-color: var(--background-tertiary);
-}
-
-.xp-card-preview .section-1 {
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    z-index: 2;
-}
-
-.xp-card-preview .section-2 {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 5px;
-    z-index: 2;
-}
-
-.xp-card-preview .section-3 {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 5px;
-    z-index: 2;
-}
-
-.xp-card-preview .section-2 div, .xp-card-preview .section-3 div {
-    background-color: var(--background-primary);
-    border-radius: 50px;
-    height: 20px;
-}
-
-.avatar-container {
-    position: relative;
-    height: 30px;
-    width: 30px;
-}
-
-.xp-card-preview .avatar {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    scale: 0.83;
-    top: 0;
-    left: 0;
-    background-color: var(--background-primary);
-    border-radius: 50%;
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.xp-card-preview .avatar-decoration {
-    position: absolute;
-    height: 100%;
-    width: 100%;
-    top: 0;
-    left: 0;
-}
-
-.xp-card-bottom {
-    position: relative;
-    padding: 5px;
-}
-
-.xp-card-price-container {
-    position: absolute;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-    bottom: 10px;
-    left: 10px;
-}
-
-.xp-card-price-container svg {
-    height: 20px;
-    width: 20px;
-}
 
 .xp-card-nameplate-container {
     position: absolute;
@@ -4258,7 +4353,7 @@ hr {
 
 .xp-card-nameplate-container video {
     height: 100%;
-    width: 100%;
+    width: auto;
     object-fit: cover;
     object-position: right;
     position: absolute;
@@ -4269,7 +4364,7 @@ hr {
 
 .xp-card-nameplate-container img {
     height: 100%;
-    width: 100%;
+    width: auto;
     object-fit: cover;
     object-position: right;
     position: absolute;
@@ -4332,11 +4427,6 @@ hr {
     font-size: 12px;
 }
 
-.modalv3-xp-level-card .xp-level-card-perks .link {
-    text-decoration: underline;
-    cursor: pointer;
-}
-
 .modalv3-xp-level-card .xp-level-card-perks .main-err {
     margin-left: auto;
     display: unset;
@@ -4346,6 +4436,18 @@ hr {
 }
 
 .modalv3-xp-level-card .xp-level-card-perks .main-err p:not(.sub) {
+    font-size: 14px;
+}
+
+.modalv3-xp-level-card .xp-level-card-perks .main-perk {
+    margin-left: auto;
+    display: unset;
+    background-color: var(--bg-feedback-positive);
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.modalv3-xp-level-card .xp-level-card-perks .main-perk p:not(.sub) {
     font-size: 14px;
 }
 
@@ -4438,27 +4540,34 @@ hr {
 
 /* Generic Styles */
 
-.generic-brand-button {
+.generic-button {
     display: inline-flex;
     align-items: center;
     gap: 3px;
     margin: 5px 0;
     padding: 10px 15px;
-    background-color: var(--color-brand);
     color: #fff;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-    width: auto;
+    width: fit-content;
     box-shadow: none;
     transition: box-shadow 0.2s ease;
 }
 
-.generic-brand-button:hover {
+.generic-button.brand {
+    background-color: var(--color-brand);
+}
+
+.generic-button.red {
+    background-color: var(--color-red);
+}
+
+.generic-button:hover {
     box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.3);
 }
 
-.generic-brand-button svg {
+.generic-button svg {
     height: 17px;
     width: auto;
 }
