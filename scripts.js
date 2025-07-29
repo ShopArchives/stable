@@ -18,6 +18,7 @@ let discordCollectiblesShopHomeCache;
 let discordCollectiblesCategoriesCache;
 let discordOrbsCategoriesCache;
 let discordMiscellaneousCategoriesCache;
+let discordQuestsCache;
 
 let hasDroveAdminPanelPlugin = false;
 
@@ -177,6 +178,9 @@ function removeParams(params) {
 
 if (params.get("itemSkuId")) {
     currentOpenModalId = params.get("itemSkuId");
+}
+if (params.get("itemId")) {
+    currentOpenModalId = params.get("itemId");
 }
 
 if (params.get("scrollTo")) {
@@ -425,6 +429,86 @@ function hexToDecimalColor(hex) {
     return parseInt(cleanedHex, 16);
 }
 
+function renderDisplayNameStyle(data) {
+    const font = findDisplayNameStyle(data.font_id);
+    let style;
+
+    if (data.effect_id === 1 && data.colors[0]) {
+        style = {
+            color: decimalToHexColor(data.colors[0])
+        };
+    }
+    else if (data.effect_id === 2 && data.colors[0] && data.colors[1]) {
+        style = {
+            background: `linear-gradient(90deg, ${decimalToHexColor(data.colors[0])} 0%, ${decimalToHexColor(data.colors[1])} 100%)`
+        };
+    }
+    else if (data.effect_id === 3 && data.colors[0]) {
+        style = {
+            textShadow: `0 0 10px ${decimalToHexColor(data.colors[0])}`
+        };
+    }
+
+    return {
+        class: `dns-${font}`,
+        style
+    }
+}
+
+function secondsToMinutes(seconds) {
+    return Math.floor(seconds / 60);
+}
+
+function renderQuestRequirement(quest) {
+    const anyTarget = Object.values(quest.task_config.tasks).find(task => task?.target)?.target;
+
+    let section1 = `Play ${quest.messages.game_title} for ${secondsToMinutes(anyTarget)} minutes `
+    if (quest.task_config.tasks["WATCH_VIDEO"] || quest.task_config.tasks["WATCH_VIDEO_ON_MOBILE"]) {
+        section1 = `Watch the video `;
+    }
+    else if (quest.task_config.tasks["STREAM_ON_DESKTOP"]) {
+        section1 = `Stream ${quest.messages.game_title} to a friend for ${secondsToMinutes(anyTarget)} minutes `;
+    }
+
+    let section2 = ``;
+    if (quest.task_config.tasks["PLAY_ON_DESKTOP"] && !quest.task_config.tasks["PLAY_ON_PLAYSTATION"] && !quest.task_config.tasks["PLAY_ON_XBOX"]) {
+        section2 = `with your Discord client open `
+    }
+
+    let section3 = `and win `
+    if (quest.rewards_config.rewards[0].type === quest_reward_types.COLLECTIBLE) {
+        section3 = `to unlock `
+    }
+    else if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
+        section3 = `to earn `
+    }
+
+    let section4 = quest.rewards_config.rewards[0].messages.name_with_article;
+    if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
+        section4 = `${quest.rewards_config.rewards[0].orb_quantity} Discord Orbs`;
+    }
+
+    let section5 = `.`;
+    if (quest.rewards_config.rewards[0].expiration_mode === 3) {
+        section5 = `. Keep it with Nitro!`
+    }
+    else if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
+        section5 = `!`
+    }
+
+    let task = `${section1}${section2}`;
+    let reward = `${quest.rewards_config.rewards[0].messages.name}.`
+    if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
+        reward = `${quest.rewards_config.rewards[0].orb_quantity} Discord Orbs!`
+    }
+
+    const data = {
+        requirements: `${section1}${section2}${section3} ${section4}${section5}`,
+        task: `${task.trim()}.`,
+        reward
+    }
+    return data;
+}
 
 async function loadSite() {
 
@@ -597,11 +681,43 @@ async function loadSite() {
                 </div>
                 <div class="pagination" id="pagination"></div>
             `
+        },
+        {
+            id: 6,
+            title: "Quests",
+            url: "quests",
+            body: `
+                <div class="quests-wrapper" id="quests-wrapper">
+                    <div class="quest-card loading">
+                    </div>
+                    <div class="quest-card loading">
+                    </div>
+                    <div class="quest-card loading">
+                    </div>
+                    <div class="quest-card loading">
+                    </div>
+                    <div class="quest-card loading">
+                    </div>
+                    <div class="quest-card loading">
+                    </div>
+                    <div class="quest-card loading">
+                    </div>
+                    <div class="quest-card loading">
+                    </div>
+                    <div class="quest-card loading">
+                    </div>
+                </div>
+            `
         }
     ];
 
 
-    if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'xp_system')?.treatment === 1 && currentUserData) {
+    if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'quests_tab')?.treatment === 1 || JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'quests_tab')?.treatment === 2) {
+        document.getElementById('shop-tab-6').classList.remove('hidden');
+        document.getElementById('quests-sidebar-title').classList.remove('hidden');
+    }
+
+    if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'xp_system')?.treatment === 1 && currentUserData && currentUserData.ban_config.ban_type === 0) {
         let xpBalance = document.createElement("div");
 
         const xpNeeded = currentUserData.xp_information.xp_to_level - currentUserData.xp_information.xp_into_level;
@@ -625,19 +741,6 @@ async function loadSite() {
 
         await fetchAndUpdateXpEvents();
         await fetchAndUpdateXpLevels();
-    } else if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'xp_system')?.treatment === 1 && isMobileCache != true) {
-        let xpBalance = document.createElement("div");
-
-        xpBalance.classList.add('my-xp-value-container');
-        xpBalance.addEventListener("click", () => {
-            setModalv3InnerContent('xp_perks');
-        });
-
-        xpBalance.innerHTML = `
-            <p id="my-xp-balance">Level 0</p>
-        `;
-        
-        document.querySelector('.topbar-content').appendChild(xpBalance);
     }
 
     if (currentUserData) {
@@ -2591,7 +2694,7 @@ async function loadSite() {
                                     const date = new Date(review.created_at);
 
                                     const day = String(date.getDate()).padStart(2, '0');
-                                    const month = String(date.getMonth() + 1).padStart(2, '0'); // getMonth is 0-indexed
+                                    const month = String(date.getMonth() + 1).padStart(2, '0');
                                     const year = date.getFullYear();
 
                                     const dateContainer = reviewDiv.querySelector(".review-date-container");
@@ -2856,17 +2959,15 @@ async function loadSite() {
                                     
                                     reviewDiv.querySelector('.review-text-content').textContent = review.text;
 
-                                    const displayname = reviewDiv.querySelector('.review-user-display-name');
-                                    displayname.textContent = review.user.global_name ? review.user.global_name : review.user.username;
+                                    const displayName = reviewDiv.querySelector('.review-user-display-name');
+                                    displayName.textContent = review.user.global_name ? review.user.global_name : review.user.username;
                                     if (review.user.display_name_styles && JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'display_name_style_render')?.treatment === 1) {
-                                        const dns = findDisplayNameStyle(review.user.display_name_styles.font_id);
-                                        displayname.classList.add('dns-'+dns);
-                                        if (review.user.display_name_styles.effect_id === 1 && review.user.display_name_styles.colors[0]) {
-                                            displayname.style.color = decimalToHexColor(review.user.display_name_styles.colors[0]);
-                                        }
-                                        else if (review.user.display_name_styles.effect_id === 2 && review.user.display_name_styles.colors[0] && review.user.display_name_styles.colors[1]) {
-                                            displayname.style.background = `linear-gradient(90deg, ${decimalToHexColor(review.user.display_name_styles.colors[0])} 0%, ${decimalToHexColor(review.user.display_name_styles.colors[1])} 100%)`;
-                                            displayname.classList.add('dns-gradient-type-2');
+                                        const dns = renderDisplayNameStyle(review.user.display_name_styles);
+                                        displayName.classList.add(dns.class);
+                                        Object.assign(displayName.style, dns.style);
+
+                                        if (review.user.display_name_styles.effect_id === 2) {
+                                            displayName.classList.add('dns-gradient-type-2');
                                         }
                                     }
                                 }
@@ -3201,7 +3302,7 @@ async function loadSite() {
                 </div>
             `;
 
-            if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'xp_system')?.treatment === 1 && isMobileCache != true) {
+            if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'xp_system')?.treatment === 1&& currentUserData && currentUserData.ban_config.ban_type === 0) {
                 modal.querySelector("#xp-rewards-tabs-modalv3-container").innerHTML = `
                     <hr>
                     <div class="side-tabs-category-text-container">
@@ -3823,13 +3924,11 @@ async function loadSite() {
                     if (cacheUserData.global_name) displayName.textContent = cacheUserData.global_name;
                     else displayName.textContent = cacheUserData.username;
                     if (cacheUserData.display_name_styles && JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'display_name_style_render')?.treatment === 1) {
-                        const dns = findDisplayNameStyle(cacheUserData.display_name_styles.font_id);
-                        displayName.classList.add('dns-'+dns);
-                        if (cacheUserData.display_name_styles.effect_id === 1 && cacheUserData.display_name_styles.colors[0]) {
-                            displayName.style.color = decimalToHexColor(cacheUserData.display_name_styles.colors[0]);
-                        }
-                        else if (cacheUserData.display_name_styles.effect_id === 2 && cacheUserData.display_name_styles.colors[0] && cacheUserData.display_name_styles.colors[1]) {
-                            displayName.style.background = `linear-gradient(90deg, ${decimalToHexColor(cacheUserData.display_name_styles.colors[0])} 0%, ${decimalToHexColor(cacheUserData.display_name_styles.colors[1])} 100%)`;
+                        const dns = renderDisplayNameStyle(cacheUserData.display_name_styles);
+                        displayName.classList.add(dns.class);
+                        Object.assign(displayName.style, dns.style);
+
+                        if (cacheUserData.display_name_styles.effect_id === 2) {
                             displayName.classList.add('dns-gradient-type-2');
                         }
                     }
@@ -3981,6 +4080,292 @@ async function loadSite() {
                     closeModal();
                 }
             });
+        } else if (type === "discordQuestInfo") {
+
+            const quest = data1;
+
+            modal.setAttribute('data-clear-param', 'itemId');
+            modal.setAttribute('data-clear-cache', 'currentOpenModalId');
+
+            addParams({itemId: quest.id})
+
+            modal.innerHTML = `
+                <div class="category-modal-inner">
+                    <div class="modalv2-tabs-container">
+                        <div class="tab selected" id="category-modal-tab-1">
+                            <svg width="96" height="96" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <circle cx="12" cy="24" r="6" fill="currentColor"/>
+                                <circle cx="12" cy="72" r="6" fill="currentColor"/>
+                                <circle cx="12" cy="48" r="6" fill="currentColor"/>
+                                <rect x="28" y="20" width="60" height="8" rx="4" fill="currentColor"/>
+                                <path d="M72.124 44.0029C64.5284 44.0668 57.6497 47.1046 52.6113 52H32C29.7909 52 28 50.2091 28 48C28 45.7909 29.7909 44 32 44H72C72.0415 44 72.0828 44.0017 72.124 44.0029Z" fill="currentColor"/>
+                                <path d="M44.2852 68C44.0983 69.3065 44 70.6418 44 72C44 73.3582 44.0983 74.6935 44.2852 76H32C29.7909 76 28 74.2091 28 72C28 69.7909 29.7909 68 32 68H44.2852Z" fill="currentColor"/>
+                                <circle cx="72" cy="72" r="16" stroke="currentColor" stroke-width="8"/>
+                                <rect x="81" y="85.9497" width="7" height="16" rx="3.5" transform="rotate(-45 81 85.9497)" fill="currentColor"/>
+                            </svg>
+                            <p>Overview</p>
+                        </div>
+                        <div class="tab" id="category-modal-tab-3">
+                            <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="m13.96 5.46 4.58 4.58a1 1 0 0 0 1.42 0l1.38-1.38a2 2 0 0 0 0-2.82l-3.18-3.18a2 2 0 0 0-2.82 0l-1.38 1.38a1 1 0 0 0 0 1.42ZM2.11 20.16l.73-4.22a3 3 0 0 1 .83-1.61l7.87-7.87a1 1 0 0 1 1.42 0l4.58 4.58a1 1 0 0 1 0 1.42l-7.87 7.87a3 3 0 0 1-1.6.83l-4.23.73a1.5 1.5 0 0 1-1.73-1.73Z" class=""></path>
+                            </svg>
+                            <p>Assets</p>
+                        </div>
+                        <div class="tab hidden disabled" id="category-modal-tab-4">
+                            <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path fill="currentColor" d="M9.25 3.35C7.87 2.45 6 3.38 6 4.96v14.08c0 1.58 1.87 2.5 3.25 1.61l10.85-7.04a1.9 1.9 0 0 0 0-3.22L9.25 3.35Z" class=""></path>
+                            </svg>
+                            <p>Video</p>
+                        </div>
+                        <div class="tab" id="category-modal-tab-2">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M15.7376 3.18925C15.4883 2.93731 15.0814 2.93686 14.8316 3.18824L14.0087 4.01625C13.7618 4.26471 13.7614 4.66581 14.0078 4.91476L20.3804 11.3527C20.6265 11.6013 20.6265 12.0017 20.3804 12.2503L14.0078 18.6882C13.7614 18.9373 13.7618 19.3383 14.0087 19.5867L14.8316 20.4148C15.0814 20.6662 15.4883 20.6658 15.7376 20.4138L23.815 12.2503C24.061 12.0016 24.061 11.6014 23.815 11.3528L15.7376 3.18925Z" fill="currentColor"/>
+                                <path d="M9.99171 4.91476C10.2381 4.66581 10.2377 4.26471 9.99081 4.01625L9.16787 3.18824C8.91804 2.93686 8.51118 2.93731 8.2619 3.18925L0.184466 11.3528C-0.0614893 11.6014 -0.061488 12.0016 0.184466 12.2503L8.2619 20.4138C8.51118 20.6658 8.91803 20.6662 9.16787 20.4148L9.99081 19.5867C10.2377 19.3383 10.2381 18.9373 9.99171 18.6882L3.61906 12.2503C3.37298 12.0017 3.37298 11.6013 3.61906 11.3527L9.99171 4.91476Z" fill="currentColor"/>
+                            </svg>
+                            <p>Raw</p>
+                        </div>
+                    </div>
+
+                    <img class="category-modal-banner-preview" src="https://cdn.discordapp.com/quests/${quest.id}/${quest.assets.hero}">
+                    
+                    <div id="category-modal-inner-content">
+                    </div>
+        
+                    <div data-modal-top-product-buttons>
+                        <div class="has-tooltip" data-tooltip="Close" data-close-product-card-button>
+                            <svg class="modalv2_top_icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'quests_tab')?.treatment === 2) {
+                modal.querySelector('#category-modal-tab-4').classList.remove('hidden');
+            }
+
+            function changeModalTab(tab) {
+                modal.querySelectorAll('.selected').forEach((el) => {
+                    el.classList.remove("selected");
+                });
+        
+                modal.querySelector('#category-modal-tab-'+tab).classList.add('selected');
+        
+                const modalInner = modal.querySelector('#category-modal-inner-content');
+        
+                if (tab === '1') {
+                    const required = renderQuestRequirement(quest);
+
+                    modalInner.innerHTML = `
+                        <div class="category-modal-bottom-container">
+                            <p class="sku_id has-tooltip" data-tooltip="Click To Copy" onclick="copyValue('${quest.id}')">${quest.id}</p>
+                            <h1>${quest.messages.quest_name} Quest</h1>
+                            <div class="quest-modal-block">
+                                <div class="task-icon">
+                                    <img src="https://cdn.discordapp.com/quests/${quest.id}/dark/${quest.assets.game_tile}">
+                                </div>
+                                <div>
+                                    <h2>Task</h2>
+                                    <p>${required.task}</p>
+                                </div>
+                            </div>
+                            <div class="quest-modal-block">
+                                <div class="reward-icon">
+                                    <img src="https://cdn.discordapp.com/quests/${quest.id}/${quest.rewards_config.rewards[0].asset}?format=webp">
+                                </div>
+                                <div>
+                                    <h2>Reward</h2>
+                                    <p>${required.reward}</p>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    const icon = modalInner.querySelector('.reward-icon');
+                    const img = modalInner.querySelector('.reward-icon').querySelector('img');
+
+                    if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
+                        img.src = `https://cdn.discordapp.com/assets/content/fb761d9c206f93cd8c4e7301798abe3f623039a4054f2e7accd019e1bb059fc8.webm?format=webp`;
+                    } else if (quest.rewards_config.rewards[0].type === quest_reward_types.FRACTIONAL_PREMIUM) {
+                        icon.innerHTML = `
+                            <svg width="187" height="187" viewBox="0 0 187 187" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M161.164 3.17212H30.5663C16.8601 3.17212 5.74902 14.3031 5.74902 28.0339V158.866C5.74902 172.597 16.8601 183.728 30.5663 183.728H161.164C174.87 183.728 185.982 172.597 185.982 158.866V28.0339C185.982 14.3031 174.87 3.17212 161.164 3.17212Z" fill="url(#paint0_linear_170_2)"></path>
+                            <g filter="url(#filter0_d_170_2)">
+                            <path d="M100.125 107.318C106.339 107.318 111.376 102.266 111.376 96.0332C111.376 89.8007 106.339 84.7483 100.125 84.7483C93.9113 84.7483 88.874 89.8007 88.874 96.0332C88.874 102.266 93.9113 107.318 100.125 107.318Z" fill="white"></path>
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M55.1214 50.8938C52.0146 50.8938 49.496 53.42 49.496 56.5362C49.496 59.6525 52.0146 62.1787 55.1214 62.1787H71.9979C75.1048 62.1787 77.6235 64.7049 77.6235 67.8211C77.6235 70.9373 75.1048 73.4635 71.9979 73.4635H46.6832C43.5763 73.4635 41.0576 75.9897 41.0576 79.106C41.0576 82.2222 43.5763 84.7484 46.6832 84.7484H60.7469C63.8539 84.7484 66.3724 87.2746 66.3724 90.3908C66.3724 93.5071 63.8539 96.0333 60.7469 96.0333H49.496C46.389 96.0333 43.8704 98.5595 43.8704 101.676C43.8704 104.792 46.389 107.318 49.496 107.318H56.5393C61.5352 126.787 79.1553 141.173 100.125 141.173C124.981 141.173 145.13 120.963 145.13 96.0333C145.13 71.1035 124.981 50.8938 100.125 50.8938H55.1214ZM100.125 118.603C112.553 118.603 122.627 108.498 122.627 96.0333C122.627 83.5683 112.553 73.4635 100.125 73.4635C87.6979 73.4635 77.6235 83.5683 77.6235 96.0333C77.6235 108.498 87.6979 118.603 100.125 118.603Z" fill="white"></path>
+                            <path d="M29.8064 84.7485C32.9133 84.7485 35.4319 82.2223 35.4319 79.1061C35.4319 75.9898 32.9133 73.4636 29.8064 73.4636H26.9936C23.8868 73.4636 21.3682 75.9898 21.3682 79.1061C21.3682 82.2223 23.8868 84.7485 26.9936 84.7485H29.8064Z" fill="white"></path>
+                            </g>
+                            <defs>
+                            <filter id="filter0_d_170_2" x="7.48094" y="42.5615" width="151.536" height="118.053" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+                            <feOffset dy="5.55489"></feOffset>
+                            <feGaussianBlur stdDeviation="6.94361"></feGaussianBlur>
+                            <feComposite in2="hardAlpha" operator="out"></feComposite>
+                            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
+                            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_170_2"></feBlend>
+                            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_170_2" result="shape"></feBlend>
+                            </filter>
+                            <linearGradient id="paint0_linear_170_2" x1="160.748" y1="183.303" x2="46.3474" y2="36.4729" gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#E978E6"></stop>
+                            <stop offset="1" stop-color="#2F3EBB"></stop>
+                            </linearGradient>
+                            </defs>
+                            </svg>
+                        `;
+                    }
+        
+                } else if (tab === '2') {
+                    modalInner.innerHTML = `
+                        <div class="view-raw-modalv2-inner">
+                            <textarea class="view-raw-modal-textbox" readonly>${JSON.stringify(quest, undefined, 4)}</textarea>
+                        </div>
+                    `;
+                    document.querySelectorAll('.view-raw-modal-textbox').forEach(textbox => {
+                        textbox.style.height = 'auto';
+                        textbox.style.width = '100%';
+                        textbox.style.height = textbox.scrollHeight + 'px';
+                    });
+                } else if (tab === '3') {
+                    modalInner.innerHTML = `
+                        <div class="category-modal-assets-container">
+                        </div>
+                    `;
+
+                    const assetsContainer = modalInner.querySelector('.category-modal-assets-container');
+
+                    const allAssets = {
+                        "Hero": quest.assets.hero,
+                        "Logo Type (Dark)": `dark/${quest.assets.logotype}`,
+                        "Logo Type (Light)": `light/${quest.assets.logotype}`,
+                        "Game Tile (Dark)": `dark/${quest.assets.game_tile}`,
+                        "Game Tile (Light)": `light/${quest.assets.game_tile}`,
+                        "Hero Video": quest.assets.hero_video,
+                        "Quest Bar Hero": quest.assets.quest_bar_hero,
+                        "Quest Bar Hero Video": quest.assets.quest_bar_hero_video,
+                        "Reward Asset": quest.rewards_config.rewards[0].asset
+                    };
+
+                    let nullAssets = true;
+
+                    Object.entries(allAssets).forEach(([asset, value]) => {
+                        if (!value) return; // skip null or undefined
+
+                        nullAssets = false;
+
+                        let assetDiv = document.createElement("div");
+
+                        assetDiv.classList.add('asset-div')
+
+                        if (value.includes(".webm") || value.includes(".mp4")) {
+                            assetDiv.innerHTML = `
+                                <h2>${asset}</h2>
+                                <video controls disablepictureinpicture muted loop src="https://cdn.discordapp.com/quests/${quest.id}/${value}"></video> 
+                            `;
+                        } else if (value.includes(".png") || value.includes(".jpg") || value.includes(".jpeg") || value.includes(".svg")) {
+                            assetDiv.innerHTML = `
+                                <h2>${asset}</h2>
+                                <img src="https://cdn.discordapp.com/quests/${quest.id}/${value}"></img> 
+                            `;
+                        }
+
+                        assetsContainer.appendChild(assetDiv);
+                    });
+
+                    if (nullAssets) {
+                        assetsContainer.innerHTML = `
+                            <div class="no-assets-container">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M13.96 5.46002L18.54 10.04C18.633 10.1337 18.7436 10.2081 18.8655 10.2589C18.9873 10.3097 19.118 10.3358 19.25 10.3358C19.3821 10.3358 19.5128 10.3097 19.6346 10.2589C19.7565 10.2081 19.8671 10.1337 19.96 10.04L21.34 8.66002C21.7125 8.28529 21.9216 7.77839 21.9216 7.25002C21.9216 6.72164 21.7125 6.21474 21.34 5.84002L18.16 2.66002C17.7853 2.28751 17.2784 2.07843 16.75 2.07843C16.2217 2.07843 15.7148 2.28751 15.34 2.66002L13.96 4.04002C13.8663 4.13298 13.7919 4.24358 13.7412 4.36544C13.6904 4.4873 13.6642 4.618 13.6642 4.75002C13.6642 4.88203 13.6904 5.01273 13.7412 5.13459C13.7919 5.25645 13.8663 5.36705 13.96 5.46002ZM2.11005 20.16L2.84005 15.94C2.94422 15.3306 3.2341 14.7683 3.67005 14.33L11.54 6.46002C11.633 6.36629 11.7436 6.29189 11.8655 6.24112C11.9873 6.19036 12.118 6.16422 12.25 6.16422C12.3821 6.16422 12.5128 6.19036 12.6346 6.24112C12.7565 6.29189 12.8671 6.36629 12.96 6.46002L17.54 11.04C17.6338 11.133 17.7082 11.2436 17.7589 11.3654C17.8097 11.4873 17.8358 11.618 17.8358 11.75C17.8358 11.882 17.8097 12.0127 17.7589 12.1346C17.7082 12.2565 17.6338 12.3671 17.54 12.46L9.67005 20.33C9.2344 20.7641 8.67585 21.0539 8.07005 21.16L3.84005 21.89C3.60388 21.9301 3.36155 21.9131 3.13331 21.8403C2.90508 21.7676 2.69759 21.6412 2.52821 21.4719C2.35882 21.3025 2.23247 21.095 2.15972 20.8667C2.08697 20.6385 2.06993 20.3962 2.11005 20.16Z" fill="currentColor"/>
+                                    <path d="M5 1L5.81027 3.18973L8 4L5.81027 4.81027L5 7L4.18973 4.81027L2 4L4.18973 3.18973L5 1Z" fill="currentColor"/>
+                                    <path d="M14 19L14.5402 20.4598L16 21L14.5402 21.5402L14 23L13.4598 21.5402L12 21L13.4598 20.4598L14 19Z" fill="currentColor"/>
+                                </svg>
+                                <p>This quest has no assets.</p>
+                            </div>
+                        `;
+                    }
+
+                    document.querySelectorAll('.asset_id').forEach((el) => {
+                        el.addEventListener("click", function () {
+                            el.classList.add('clicked');
+                            setTimeout(() => {
+                                el.classList.remove('clicked');
+                            }, 500);
+                        });
+                    });
+
+                } else if (tab === '4') {
+                    let asset;
+                    if (quest?.task_config_v2?.tasks?.WATCH_VIDEO?.assets?.video?.url) {
+                        asset = quest.task_config_v2.tasks.WATCH_VIDEO.assets.video.url;
+                    }
+                    else if (quest?.task_config_v2?.tasks?.WATCH_VIDEO_ON_MOBILE?.assets?.video?.url) {
+                        asset = quest.task_config_v2.tasks.WATCH_VIDEO_ON_MOBILE.assets.video.url;
+                    }
+                    modalInner.innerHTML = `
+                        <div class="category-modal-bottom-container">
+                            <div class="video-quest-disclaimer">
+                                <p>Watching this video here will not grant you the quest reward.</p>
+                                <p>Watch the video on Discord to claim the quest reward.</p>
+                            </div>
+                            <video controls src="https://cdn.discordapp.com/quests/${quest.id}/${asset}"></video>
+                        </div>
+                    `;
+                    const video = modalInner.querySelector('video');
+                    video.disablePictureInPicture = true;
+                    if (data2 != 'startOnVideoTab') video.muted = true;
+                    if (data2 === 'startOnVideoTab') video.autoplay = true;
+                    video.playsInline = true;
+                    video.volume = 0.1;
+                    video.classList.add('quest-video-player');
+                } else {
+                    modalInner.innerHTML = ``;
+                }
+            }
+            window.changeModalTab = changeModalTab;
+
+            if (data2 === 'startOnVideoTab') {
+                changeModalTab('4')
+            } else {
+                changeModalTab('1')
+            }
+
+            modal.querySelector('#category-modal-tab-1').addEventListener("click", function () {
+                // Overview
+                changeModalTab('1');
+            });
+            modal.querySelector('#category-modal-tab-2').addEventListener("click", function () {
+                // Raw
+                changeModalTab('2');
+            });
+            modal.querySelector('#category-modal-tab-3').addEventListener("click", function () {
+                // Assets
+                changeModalTab('3');
+            });
+
+            const tab = modal.querySelector('#category-modal-tab-4');
+            if (quest.task_config.tasks["WATCH_VIDEO"] || quest.task_config.tasks["WATCH_VIDEO_ON_MOBILE"]) {
+                tab.classList.remove('disabled');
+                tab.classList.remove('has-tooltip');
+                tab.removeAttribute('data-tooltip');
+                tab.addEventListener("click", function () {
+                    // Video
+                    changeModalTab('4');
+                });
+            } else {
+                tab.classList.add('has-tooltip');
+                tab.setAttribute('data-tooltip', 'This is not a video quest');
+            }
+
+
+            modal.querySelector("[data-close-product-card-button]").addEventListener('click', () => {
+                closeModal();
+            });
+
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
         }
 
         if (type != "fromCategoryBanner" && type != "userSettings" && type != "openUserModal" && type != "openLoadingTest") {
@@ -4053,6 +4438,196 @@ async function loadSite() {
     });
 
 
+    async function renderQuest(quests, output) {
+
+        const sorted = quests.sort((a, b) => {
+            const dateA = new Date(a.expires_at);
+            const dateB = new Date(b.expires_at);
+        
+            return dateB - dateA;
+        });
+
+        output.innerHTML = '';
+
+        sorted.forEach(quest => {
+            const expDate = new Date(quest.expires_at);
+
+            const day = String(expDate.getDate()).padStart(2, '0');
+            const month = String(expDate.getMonth() + 1).padStart(2, '0');
+            const year = expDate.getFullYear();
+
+            let formatted = `${month}/${day}/${year}`
+
+            if (settingsStore.non_us_timezone === 1) {
+                formatted = `${day}/${month}/${year}`;
+            }
+
+
+            const card = document.createElement("div");
+            card.classList.add('quest-card');
+            card.setAttribute('data-id', quest.id);
+            card.innerHTML = `
+                <div class="section1">
+                    <img class="hero" src="https://cdn.discordapp.com/quests/${quest.id}/${quest.assets.hero}">
+                    <img class="logo" src="https://cdn.discordapp.com/quests/${quest.id}/dark/${quest.assets.logotype}">
+                    <p class="publisher">Promoted by ${quest.messages.game_publisher}</p>
+                    <p class="date">Ends ${formatted}</p>
+                </div>
+                <div class="section2">
+                    <div class="reward-icon">
+                    </div>
+                    <div class="info-container">
+                        <p class="quest-name">${quest.messages.quest_name.toUpperCase()} QUEST</p>
+                        <p class="reward-name">something idk</p>
+                        <p class="reward-requirements"></p>
+                    </div>
+                </div>
+                <div class="section3">
+                    <button class="generic-button brand">
+                        Open In Discord
+                    </button>
+                </div>
+            `;
+            const rewardRequirements = card.querySelector('.reward-requirements');
+
+            const required = renderQuestRequirement(quest);
+
+            rewardRequirements.textContent = required.requirements;
+
+            const rewardName = card.querySelector('.reward-name');
+            if (quest.rewards_config.rewards[0].type === quest_reward_types.REWARD_CODE || quest.rewards_config.rewards[0].type === quest_reward_types.COLLECTIBLE || quest.rewards_config.rewards[0].type === quest_reward_types.FRACTIONAL_PREMIUM) {
+                rewardName.textContent = `Claim ${quest.rewards_config.rewards[0].messages.name_with_article}`;
+            }
+            else if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
+                rewardName.textContent = `${quest.rewards_config.rewards[0].orb_quantity} Discord Orbs`;
+            }
+            else {
+                rewardName.textContent = quest.rewards_config.rewards[0].messages.name_with_article;
+            }
+
+            const rewardIcon = card.querySelector('.reward-icon');
+            if (quest.rewards_config.rewards[0].type === quest_reward_types.FRACTIONAL_PREMIUM) {
+                rewardIcon.innerHTML = `
+                    <svg width="187" height="187" viewBox="0 0 187 187" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M161.164 3.17212H30.5663C16.8601 3.17212 5.74902 14.3031 5.74902 28.0339V158.866C5.74902 172.597 16.8601 183.728 30.5663 183.728H161.164C174.87 183.728 185.982 172.597 185.982 158.866V28.0339C185.982 14.3031 174.87 3.17212 161.164 3.17212Z" fill="url(#paint0_linear_170_2)"></path>
+                    <g filter="url(#filter0_d_170_2)">
+                    <path d="M100.125 107.318C106.339 107.318 111.376 102.266 111.376 96.0332C111.376 89.8007 106.339 84.7483 100.125 84.7483C93.9113 84.7483 88.874 89.8007 88.874 96.0332C88.874 102.266 93.9113 107.318 100.125 107.318Z" fill="white"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M55.1214 50.8938C52.0146 50.8938 49.496 53.42 49.496 56.5362C49.496 59.6525 52.0146 62.1787 55.1214 62.1787H71.9979C75.1048 62.1787 77.6235 64.7049 77.6235 67.8211C77.6235 70.9373 75.1048 73.4635 71.9979 73.4635H46.6832C43.5763 73.4635 41.0576 75.9897 41.0576 79.106C41.0576 82.2222 43.5763 84.7484 46.6832 84.7484H60.7469C63.8539 84.7484 66.3724 87.2746 66.3724 90.3908C66.3724 93.5071 63.8539 96.0333 60.7469 96.0333H49.496C46.389 96.0333 43.8704 98.5595 43.8704 101.676C43.8704 104.792 46.389 107.318 49.496 107.318H56.5393C61.5352 126.787 79.1553 141.173 100.125 141.173C124.981 141.173 145.13 120.963 145.13 96.0333C145.13 71.1035 124.981 50.8938 100.125 50.8938H55.1214ZM100.125 118.603C112.553 118.603 122.627 108.498 122.627 96.0333C122.627 83.5683 112.553 73.4635 100.125 73.4635C87.6979 73.4635 77.6235 83.5683 77.6235 96.0333C77.6235 108.498 87.6979 118.603 100.125 118.603Z" fill="white"></path>
+                    <path d="M29.8064 84.7485C32.9133 84.7485 35.4319 82.2223 35.4319 79.1061C35.4319 75.9898 32.9133 73.4636 29.8064 73.4636H26.9936C23.8868 73.4636 21.3682 75.9898 21.3682 79.1061C21.3682 82.2223 23.8868 84.7485 26.9936 84.7485H29.8064Z" fill="white"></path>
+                    </g>
+                    <defs>
+                    <filter id="filter0_d_170_2" x="7.48094" y="42.5615" width="151.536" height="118.053" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+                    <feOffset dy="5.55489"></feOffset>
+                    <feGaussianBlur stdDeviation="6.94361"></feGaussianBlur>
+                    <feComposite in2="hardAlpha" operator="out"></feComposite>
+                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
+                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_170_2"></feBlend>
+                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_170_2" result="shape"></feBlend>
+                    </filter>
+                    <linearGradient id="paint0_linear_170_2" x1="160.748" y1="183.303" x2="46.3474" y2="36.4729" gradientUnits="userSpaceOnUse">
+                    <stop stop-color="#E978E6"></stop>
+                    <stop offset="1" stop-color="#2F3EBB"></stop>
+                    </linearGradient>
+                    </defs>
+                    </svg>
+                `;
+            } else {
+
+                if (quest.rewards_config.rewards[0]?.asset?.includes('.mp4') || quest.rewards_config.rewards[0]?.asset?.includes('.webm') || quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
+                    const rewardImg = document.createElement("video");
+                    let src = `https://cdn.discordapp.com/quests/${quest.id}/${quest.rewards_config.rewards[0].asset}`;
+                    if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) src = `https://cdn.discordapp.com/assets/content/fb761d9c206f93cd8c4e7301798abe3f623039a4054f2e7accd019e1bb059fc8.webm`;
+                    rewardImg.src = src;
+
+                    card.addEventListener("mouseenter", () => {
+                        rewardImg.play();
+                    });
+                    card.addEventListener("mouseleave", () => {
+                        rewardImg.pause();
+                        rewardImg.currentTime = 0;
+                    });
+
+                    rewardImg.disablePictureInPicture = true;
+                    rewardImg.muted = true;
+                    rewardImg.loop = true;
+                    rewardImg.playsInline = true;
+
+                    rewardIcon.appendChild(rewardImg);
+                } else {
+                    const rewardImg = document.createElement("img");
+                    let src = `https://cdn.discordapp.com/quests/${quest.id}/${quest.rewards_config.rewards[0].asset}?format=webp`;
+                    rewardImg.src = src;
+
+                    rewardIcon.appendChild(rewardImg);
+                }
+            }
+
+            const openInDiscordButton = card.querySelector('.generic-button');
+
+
+            const now = new Date();
+            const timeDiff = expDate - now;
+        
+            if (timeDiff <= 0) {
+                openInDiscordButton.classList.add('disabled');
+                openInDiscordButton.textContent = `Quest ended ${formatted}`;
+                card.querySelector('.date').remove();
+                openInDiscordButton.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                });
+            } else {
+                openInDiscordButton.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    redirectToLink('https://discord.com/discovery/quests#'+quest.id);
+                });
+            }
+
+            if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'quests_tab')?.treatment === 2) {
+                if (quest.task_config.tasks["WATCH_VIDEO"] || quest.task_config.tasks["WATCH_VIDEO_ON_MOBILE"]) {
+                    let button = document.createElement('button');
+                    button.classList.add('generic-button');
+                    button.classList.add('primary');
+                    button.innerHTML = `
+                        <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M9.25 3.35C7.87 2.45 6 3.38 6 4.96v14.08c0 1.58 1.87 2.5 3.25 1.61l10.85-7.04a1.9 1.9 0 0 0 0-3.22L9.25 3.35Z" class=""></path>
+                        </svg>
+                        Watch Video
+                    `;
+                    button.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        openModal('category-modal', 'discordQuestInfo', quest, 'startOnVideoTab');
+                    });
+                    card.querySelector('.section3').insertBefore(button, openInDiscordButton);
+                }
+            }
+
+            card.addEventListener("click", () => {
+                openModal('category-modal', 'discordQuestInfo', quest);
+            });
+
+            if (currentOpenModalId && currentOpenModalId === quest.id) {
+                setTimeout(() => {
+                    openModal('category-modal', 'discordQuestInfo', quest);
+                }, 500);
+            }
+
+            output.appendChild(card);
+        });
+
+        if (currentOpenModalId != null && currentOpenModalId != undefined) {
+            const targetSkuId = currentOpenModalId;
+            const targetIndex = sorted.findIndex(q => q.id === targetSkuId );
+
+            setTimeout(() => {
+                const el = document.querySelector(`[data-id="${sorted[targetIndex].id}"]`);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            }, 500);
+        }
+    }
 
 
     async function renderProduct(category, product) {
@@ -5192,7 +5767,7 @@ async function loadSite() {
                 </defs>
                 </svg>
                 <h2>Well, this is awkward.</h2>
-                <p>Hmmm, we weren't able to load the shop. Check back later.</p>
+                <p>Hmmm, we weren't able to load this page. Check back later.</p>
                 <p>Status: ${error}</p>
             </div>
         `;
@@ -5388,6 +5963,24 @@ async function loadSite() {
             } else {
                 renderShopData(discordMiscellaneousCategoriesCache, output);
             }
+        } else if (currentPageCache === "quests") {
+            searchInput.classList.add('hidden');   
+            const output = document.getElementById('quests-wrapper');
+            if (!discordQuestsCache || discordQuestsCache && reFetch) {
+                const rawData = await fetch(redneredAPI + endpoints.DISCORD_QUESTS);
+
+                if (!rawData.ok) {
+                    renderShopLoadingError(rawData.status, output);
+                } else {
+                    const data = await rawData.json();
+
+                    discordQuestsCache = data;
+
+                    renderQuest(data, output);
+                }
+            } else {
+                renderQuest(discordQuestsCache, output);
+            }
         } else {
             loadPage('0')
         }
@@ -5437,38 +6030,39 @@ async function loadSite() {
                                 <p>The Discord account linked to Shop Archives.</p>
                             </div>
                             <div class="buttons">
-                                <div class="button has-tooltip" data-tooltip="Open your public user profile" id="profile">
+                                <button class="button has-tooltip" data-tooltip="Open your public user profile" id="profile">
                                     <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M14.0833 10.8334C15.2326 10.8334 16.3348 10.3769 17.1475 9.56421C17.9601 8.75155 18.4167 7.64935 18.4167 6.50008C18.4167 5.35081 17.9601 4.24861 17.1475 3.43595C16.3348 2.62329 15.2326 2.16675 14.0833 2.16675C12.9341 2.16675 11.8319 2.62329 11.0192 3.43595C10.2065 4.24861 9.75 5.35081 9.75 6.50008C9.75 7.64935 10.2065 8.75155 11.0192 9.56421C11.8319 10.3769 12.9341 10.8334 14.0833 10.8334Z" fill="currentColor"/>
                                         <path d="M3.25 5.41667V4.60417C3.25 3.85667 3.85667 3.25 4.60417 3.25C5.35167 3.25 5.9475 3.85667 6.045 4.60417C6.63 9.37083 10.2483 13 14.0833 13H15.1667C17.4652 13 19.6696 13.9131 21.2949 15.5384C22.9202 17.1637 23.8333 19.3681 23.8333 21.6667C23.8333 22.2413 23.6051 22.7924 23.1987 23.1987C22.7924 23.6051 22.2413 23.8333 21.6667 23.8333C21.6179 23.833 21.5705 23.8171 21.5315 23.7878C21.4925 23.7586 21.4639 23.7176 21.45 23.6708C21.122 22.7634 20.6381 21.9201 20.02 21.1792C19.8575 20.9625 19.565 21.1142 19.5975 21.3633L19.8683 23.53C19.89 23.6925 19.76 23.8333 19.5975 23.8333H9.75C9.17536 23.8333 8.62426 23.6051 8.21793 23.1987C7.81161 22.7924 7.58333 22.2413 7.58333 21.6667V19.2617C7.58333 17.5608 6.8575 15.9575 5.92583 14.5275C4.1952 11.8025 3.26779 8.64476 3.25 5.41667Z" fill="currentColor"/>
                                     </svg>
                                     <p>View Profile</p>
-                                </div>
-                                <div class="button blue has-tooltip" data-tooltip="Re-sync your Discord profile with Shop Archives">
+                                </button>
+                                <button class="button blue has-tooltip" data-tooltip="Re-sync your Discord profile with Shop Archives" id="resync">
                                     <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M22.7501 2.16668C23.0374 2.16668 23.313 2.28082 23.5161 2.48398C23.7193 2.68715 23.8334 2.9627 23.8334 3.25001V9.75001C23.8334 10.0373 23.7193 10.3129 23.5161 10.516C23.313 10.7192 23.0374 10.8333 22.7501 10.8333H16.2501C15.9628 10.8333 15.6872 10.7192 15.484 10.516C15.2809 10.3129 15.1667 10.0373 15.1667 9.75001C15.1667 9.4627 15.2809 9.18715 15.484 8.98398C15.6872 8.78082 15.9628 8.66668 16.2501 8.66668H20.5076C19.8814 7.58197 19.0276 6.64587 18.0049 5.92284C16.9822 5.19981 15.8149 4.70704 14.5835 4.47846C13.352 4.24988 12.0857 4.29093 10.8716 4.59877C9.65756 4.90662 8.52465 5.47394 7.55091 6.26168C7.32681 6.44269 7.03997 6.52726 6.75351 6.49679C6.46705 6.46631 6.20443 6.32329 6.02341 6.09918C5.8424 5.87507 5.75783 5.58824 5.78831 5.30178C5.81878 5.01531 5.96181 4.75269 6.18591 4.57168C7.31713 3.65318 8.62233 2.97283 10.0231 2.57149C11.4239 2.17016 12.8914 2.05612 14.3373 2.23623C15.7833 2.41635 17.178 2.8869 18.4375 3.61961C19.697 4.35232 20.7954 5.33208 21.6667 6.50001V3.25001C21.6667 2.9627 21.7809 2.68715 21.984 2.48398C22.1872 2.28082 22.4628 2.16668 22.7501 2.16668ZM3.25008 23.8333C2.96276 23.8333 2.68721 23.7192 2.48405 23.516C2.28088 23.3129 2.16675 23.0373 2.16675 22.75V16.25C2.16675 15.9627 2.28088 15.6871 2.48405 15.484C2.68721 15.2808 2.96276 15.1667 3.25008 15.1667H9.75008C10.0374 15.1667 10.3129 15.2808 10.5161 15.484C10.7193 15.6871 10.8334 15.9627 10.8334 16.25C10.8334 16.5373 10.7193 16.8129 10.5161 17.016C10.3129 17.2192 10.0374 17.3333 9.75008 17.3333H5.49258C6.11876 18.4181 6.9726 19.3542 7.9953 20.0772C9.018 20.8002 10.1853 21.293 11.4167 21.5216C12.6481 21.7501 13.9145 21.7091 15.1286 21.4013C16.3426 21.0934 17.4755 20.5261 18.4492 19.7383C18.5602 19.6487 18.6878 19.5818 18.8246 19.5415C18.9614 19.5012 19.1048 19.4882 19.2467 19.5032C19.3885 19.5183 19.526 19.5612 19.6512 19.6294C19.7765 19.6977 19.8871 19.7899 19.9767 19.9008C20.0664 20.0118 20.1333 20.1393 20.1736 20.2762C20.2139 20.413 20.2269 20.5564 20.2119 20.6983C20.1968 20.8401 20.1539 20.9776 20.0857 21.1028C20.0174 21.2281 19.9252 21.3387 19.8142 21.4283C18.6824 22.3454 17.3771 23.0245 15.9765 23.425C14.576 23.8255 13.109 23.9391 11.6634 23.759C10.2179 23.579 8.82357 23.1089 7.56404 22.3771C6.30451 21.6453 5.20569 20.6667 4.33341 19.5V22.75C4.33341 23.0373 4.21928 23.3129 4.01611 23.516C3.81295 23.7192 3.5374 23.8333 3.25008 23.8333Z" fill="currentColor"/>
                                     </svg>
                                     <p>Re-sync</p>
-                                </div>
-                                <div class="button red has-tooltip" data-tooltip="Log Out">
+                                </button>
+                                <button class="button red has-tooltip" data-tooltip="Log Out" onclick="logoutOfDiscord()">
                                     <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <path d="M9.75033 13C10.0376 13 10.3132 13.1141 10.5164 13.3173C10.7195 13.5205 10.8337 13.796 10.8337 14.0833V16.25C10.8337 16.5373 10.7195 16.8129 10.5164 17.016C10.3132 17.2192 10.0376 17.3333 9.75033 17.3333C9.46301 17.3333 9.18746 17.2192 8.98429 17.016C8.78113 16.8129 8.66699 16.5373 8.66699 16.25V14.0833C8.66699 13.796 8.78113 13.5205 8.98429 13.3173C9.18746 13.1141 9.46301 13 9.75033 13Z" fill="currentColor"/>
                                         <path fill-rule="evenodd" clip-rule="evenodd" d="M2.97949 3.2715C3.28405 2.92483 3.65894 2.64699 4.07922 2.45646C4.4995 2.26593 4.95554 2.16709 5.41699 2.1665H16.2503C17.1123 2.1665 17.9389 2.50891 18.5484 3.11841C19.1579 3.7279 19.5003 4.55455 19.5003 5.4165V13.6932C19.5003 14.1698 18.9045 14.4515 18.4712 14.289C17.7764 14.0307 17.0142 14.0177 16.311 14.252C15.6078 14.4864 15.0059 14.9541 14.605 15.5776C14.2041 16.201 14.0284 16.9428 14.107 17.6798C14.1855 18.4169 14.5137 19.1049 15.037 19.6298L15.0587 19.6623C15.1329 19.738 15.1833 19.8339 15.2035 19.9379C15.2238 20.042 15.2131 20.1498 15.1728 20.2478C15.1324 20.3458 15.0641 20.4299 14.9764 20.4895C14.8888 20.5491 14.7855 20.5817 14.6795 20.5832H14.6253C14.4817 20.5832 14.3439 20.6402 14.2423 20.7418C14.1407 20.8434 14.0837 20.9812 14.0837 21.1248C14.0829 21.5925 13.9611 22.0521 13.73 22.4587C13.4989 22.8653 13.1665 23.2051 12.765 23.4451C12.3636 23.6851 11.9069 23.817 11.4393 23.8281C10.9718 23.8391 10.5093 23.7289 10.097 23.5082L3.81366 20.1607C3.31366 19.8771 2.89782 19.466 2.60854 18.9693C2.31926 18.4725 2.1669 17.908 2.16699 17.3332V5.4165C2.17112 4.62511 2.46387 3.86241 2.99033 3.2715H2.97949ZM4.38783 5.384C4.38213 5.38239 4.37617 5.38196 4.3703 5.38274C4.36443 5.38352 4.35879 5.38549 4.35371 5.38854C4.34864 5.39158 4.34424 5.39563 4.34079 5.40044C4.33734 5.40525 4.33491 5.41072 4.33366 5.4165V17.3332C4.33366 17.7232 4.55033 18.0698 4.86449 18.2648L11.1153 21.6015C11.1979 21.6467 11.2909 21.6696 11.385 21.6679C11.4792 21.6662 11.5712 21.64 11.6522 21.5919C11.7331 21.5438 11.8001 21.4754 11.8465 21.3935C11.893 21.3116 11.9172 21.219 11.917 21.1248V8.68817C11.9156 8.57998 11.8818 8.4747 11.82 8.38588C11.7582 8.29706 11.6713 8.22878 11.5703 8.18984L4.38783 5.37317V5.384Z" fill="currentColor"/>
                                         <path d="M16.575 18.0917C16.4185 17.883 16.3426 17.625 16.3611 17.3649C16.3795 17.1048 16.4912 16.86 16.6756 16.6756C16.86 16.4912 17.1048 16.3795 17.3649 16.3611C17.625 16.3426 17.883 16.4185 18.0917 16.575L22.75 21.2225V17.3333C22.75 17.046 22.8641 16.7705 23.0673 16.5673C23.2705 16.3641 23.546 16.25 23.8333 16.25C24.1207 16.25 24.3962 16.3641 24.5994 16.5673C24.8025 16.7705 24.9167 17.046 24.9167 17.3333V23.8333C24.9167 24.1207 24.8025 24.3962 24.5994 24.5994C24.3962 24.8025 24.1207 24.9167 23.8333 24.9167H17.3333C17.046 24.9167 16.7705 24.8025 16.5673 24.5994C16.3641 24.3962 16.25 24.1207 16.25 23.8333C16.25 23.546 16.3641 23.2705 16.5673 23.0673C16.7705 22.8641 17.046 22.75 17.3333 22.75H21.2225L16.5642 18.0917H16.575Z" fill="currentColor"/>
                                     </svg>
                                     <p>Log Out</p>
-                                </div>
+                                </button>
                             </div>
                         </div>
 
                         <div class="enhanced-account-block profile-card">
                             <div class="banner"></div>
+                            <div class="nameplate"></div>
                             <div class="section avatar-container">
                                 <img class="avatar">
                                 <img class="deco">
                             </div>
                             <div class="section">
-                                <h2 id="global_name"></h2>
+                                <h1 id="global_name"></h1>
                                 <p id="username"></p>
                             </div>
                         </div>
@@ -5480,12 +6074,24 @@ async function loadSite() {
                     const username = tabPageOutput.querySelector('#username');
                     const avatar = tabPageOutput.querySelector('.avatar');
                     const deco = tabPageOutput.querySelector('.deco');
+                    const nameplate = tabPageOutput.querySelector('.nameplate');
 
                     const profileButton = tabPageOutput.querySelector("#profile");
+                    const resyncButton = tabPageOutput.querySelector("#resync");
 
                     if (currentUserData.global_name) displayName.textContent = currentUserData.global_name;
                     else displayName.textContent = currentUserData.username;
                     username.textContent = currentUserData.username;
+
+                    if (currentUserData.display_name_styles && JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'display_name_style_render')?.treatment === 1) {
+                        const dns = renderDisplayNameStyle(currentUserData.display_name_styles);
+                        displayName.classList.add(dns.class);
+                        Object.assign(displayName.style, dns.style);
+
+                        if (currentUserData.display_name_styles.effect_id === 2) {
+                            displayName.classList.add('dns-gradient-type-2');
+                        }
+                    }
 
                     let userAvatar = 'https://cdn.discordapp.com/avatars/'+currentUserData.id+'/'+currentUserData.avatar+'.webp?size=128';
                     if (currentUserData.avatar.includes('a_')) userAvatar = 'https://cdn.discordapp.com/avatars/'+currentUserData.id+'/'+currentUserData.avatar+'.gif?size=128';
@@ -5497,10 +6103,80 @@ async function loadSite() {
 
                     if (currentUserData.banner) tabPageOutput.querySelector(".banner").style.backgroundImage = `url(https://cdn.discordapp.com/banners/${currentUserData.id}/${currentUserData.banner}.png?size=480)`;
 
+                    if (currentUserData.collectibles?.nameplate) {
+                        if (currentUserData.collectibles.nameplate.sa_override_src) {
+                            let nameplatePreview = document.createElement("img");
+
+                            nameplatePreview.src = currentUserData.collectibles.nameplate.sa_override_src;
+    
+                            nameplate.appendChild(nameplatePreview);
+                        } else {
+                            let nameplatePreview = document.createElement("video");
+
+                            nameplatePreview.src = `https://cdn.discordapp.com/assets/collectibles/${currentUserData.collectibles.nameplate.asset}asset.webm`;
+                            nameplatePreview.disablePictureInPicture = true;
+                            nameplatePreview.muted = true;
+                            nameplatePreview.loop = true;
+                            nameplatePreview.playsInline = true;
+                            nameplatePreview.autoplay = true;
+
+                            const bgcolor = nameplate_palettes[currentUserData.collectibles.nameplate.palette].darkBackground;
+    
+                            nameplate.style.backgroundImage = `linear-gradient(90deg, #00000000 0%, ${bgcolor} 200%)`;
+    
+                            nameplate.appendChild(nameplatePreview);
+                        }
+                    }
 
                     profileButton.addEventListener('click', async () => {
                         openModal('user-modal', 'openUserModal', currentUserData.id);
                     });
+                    resyncButton.addEventListener('click', async () => {
+                        resyncButton.disabled = true;
+                        resyncButton.classList.add('svg-spin');
+                        const success = await fetchAndSyncUserInfo();
+                        if (success === true) {
+                            try {
+                                loadPage(currentPageCache, true);
+                                document.getElementById('ubar-displayname').textContent = currentUserData.global_name ? currentUserData.global_name : currentUserData.username;
+                                document.getElementById('ubar-username').textContent = currentUserData.username;
+                            } catch {}
+                            setModalv3InnerContent('account');
+                        } else {
+                            resyncButton.classList.remove('svg-spin');
+                            let syncError = document.createElement("div");
+                            syncError.classList.add('enhanced-account-block');
+                            syncError.classList.add('error-card');
+                            syncError.innerHTML = `
+                                <div class="section">
+                                    <h3>There was an error syncing your profile!</h3>
+                                    <p>Your Discord access token has expired, please login again to sync your profile.</p>
+                                </div>
+                                <div class="section">
+                                    <button class="generic-button brand" onclick="loginWithDiscord();">
+                                        <svg width="59" height="59" viewBox="0 0 59 59" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M48.7541 12.511C45.2046 10.8416 41.4614 9.66246 37.6149 9C37.0857 9.96719 36.6081 10.9609 36.1822 11.9811C32.0905 11.3451 27.9213 11.3451 23.8167 11.9811C23.3908 10.9609 22.9132 9.96719 22.384 9C18.5376 9.67571 14.7815 10.8549 11.2319 12.5243C4.18435 23.2297 2.27404 33.67 3.2292 43.9647C7.35961 47.0915 11.9805 49.4763 16.8854 51C17.9954 49.4763 18.9764 47.8467 19.8154 46.1508C18.2149 45.5413 16.6789 44.7861 15.2074 43.8984C15.5946 43.6069 15.969 43.3155 16.3433 43.024C24.9913 47.1975 35.0076 47.1975 43.6557 43.024C44.03 43.3287 44.4043 43.6334 44.7915 43.8984C43.3201 44.7861 41.7712 45.5413 40.1706 46.164C41.0096 47.8599 41.9906 49.4763 43.1006 51C48.0184 49.4763 52.6393 47.1047 56.7697 43.9647C57.8927 32.0271 54.8594 21.6927 48.7412 12.511H48.7541ZM21.0416 37.6315C18.3827 37.6315 16.1755 35.1539 16.1755 32.1066C16.1755 29.0593 18.2923 26.5552 21.0287 26.5552C23.7651 26.5552 25.9465 29.0593 25.8949 32.1066C25.8432 35.1539 23.7522 37.6315 21.0416 37.6315ZM38.9831 37.6315C36.3113 37.6315 34.1299 35.1539 34.1299 32.1066C34.1299 29.0593 36.2467 26.5552 38.9831 26.5552C41.7195 26.5552 43.888 29.0593 43.8364 32.1066C43.7847 35.1539 41.6937 37.6315 38.9831 37.6315Z" fill="white"/>
+                                        </svg>
+                                        Login with Discord
+                                    </button>
+                                </div>
+                            `;
+                            tabPageOutput.querySelector('.enhanced-account-container').insertBefore(syncError, tabPageOutput.querySelector('.title-card').nextSibling);
+                        }
+                    });
+
+                    if (currentUserData.ban_config.ban_type != 0) {
+                        let syncError = document.createElement("div");
+                        syncError.classList.add('enhanced-account-block');
+                        syncError.classList.add('error-card');
+                        syncError.innerHTML = `
+                            <div class="section">
+                                <h3>You have been banned.</h3>
+                                <p>You have been banned and will not be able to use some features on Shop Archives. This ban cannot be appealed.</p>
+                            </div>
+                        `;
+                        tabPageOutput.querySelector('.enhanced-account-container').insertBefore(syncError, tabPageOutput.querySelector('.title-card').nextSibling);
+                    }
                 } else {
                     tabPageOutput.querySelector('.enhanced-account-container').innerHTML = `
                         <div class="enhanced-account-block title-card">
@@ -6128,25 +6804,6 @@ async function loadSite() {
 
             if (usersXPEventsCache) {
                 refreshXPEventsList()
-            } else {
-                tabPageOutput.innerHTML = `
-                    <h2>XP Events</h2>
-
-                    <hr>
-
-                    <div class="modalv3-content-card-1">
-                        <h2 class="modalv3-content-card-header">You are curently not logged in.</h2>
-                        <p class="modalv3-content-card-summary">Login with Discord to level up and gain sweet perks!</p>
-                        <img style="width: 100%;" src="https://cdn.yapper.shop/assets/204.png">
-                        <button class="log-in-with-discord-button" onclick="loginWithDiscord();">
-                            <svg width="59" height="59" viewBox="0 0 59 59" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M48.7541 12.511C45.2046 10.8416 41.4614 9.66246 37.6149 9C37.0857 9.96719 36.6081 10.9609 36.1822 11.9811C32.0905 11.3451 27.9213 11.3451 23.8167 11.9811C23.3908 10.9609 22.9132 9.96719 22.384 9C18.5376 9.67571 14.7815 10.8549 11.2319 12.5243C4.18435 23.2297 2.27404 33.67 3.2292 43.9647C7.35961 47.0915 11.9805 49.4763 16.8854 51C17.9954 49.4763 18.9764 47.8467 19.8154 46.1508C18.2149 45.5413 16.6789 44.7861 15.2074 43.8984C15.5946 43.6069 15.969 43.3155 16.3433 43.024C24.9913 47.1975 35.0076 47.1975 43.6557 43.024C44.03 43.3287 44.4043 43.6334 44.7915 43.8984C43.3201 44.7861 41.7712 45.5413 40.1706 46.164C41.0096 47.8599 41.9906 49.4763 43.1006 51C48.0184 49.4763 52.6393 47.1047 56.7697 43.9647C57.8927 32.0271 54.8594 21.6927 48.7412 12.511H48.7541ZM21.0416 37.6315C18.3827 37.6315 16.1755 35.1539 16.1755 32.1066C16.1755 29.0593 18.2923 26.5552 21.0287 26.5552C23.7651 26.5552 25.9465 29.0593 25.8949 32.1066C25.8432 35.1539 23.7522 37.6315 21.0416 37.6315ZM38.9831 37.6315C36.3113 37.6315 34.1299 35.1539 34.1299 32.1066C34.1299 29.0593 36.2467 26.5552 38.9831 26.5552C41.7195 26.5552 43.888 29.0593 43.8364 32.1066C43.7847 35.1539 41.6937 37.6315 38.9831 37.6315Z" fill="white"></path>
-                            </svg>
-                            Login with Discord
-                        </button>
-                    </div>
-
-                `;
             }
 
             function refreshXPEventsList() {
@@ -6515,25 +7172,6 @@ async function loadSite() {
 
                     tabPageOutput.querySelector('#all-levels').appendChild(promoCard);
                 });
-            } else {
-                tabPageOutput.innerHTML = `
-                    <h2>XP Levels</h2>
-
-                    <hr>
-
-                    <div class="modalv3-content-card-1">
-                        <h2 class="modalv3-content-card-header">You are curently not logged in.</h2>
-                        <p class="modalv3-content-card-summary">Login with Discord to level up and gain sweet perks!</p>
-                        <img style="width: 100%;" src="https://cdn.yapper.shop/assets/203.png">
-                        <button class="log-in-with-discord-button" onclick="loginWithDiscord();">
-                            <svg width="59" height="59" viewBox="0 0 59 59" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M48.7541 12.511C45.2046 10.8416 41.4614 9.66246 37.6149 9C37.0857 9.96719 36.6081 10.9609 36.1822 11.9811C32.0905 11.3451 27.9213 11.3451 23.8167 11.9811C23.3908 10.9609 22.9132 9.96719 22.384 9C18.5376 9.67571 14.7815 10.8549 11.2319 12.5243C4.18435 23.2297 2.27404 33.67 3.2292 43.9647C7.35961 47.0915 11.9805 49.4763 16.8854 51C17.9954 49.4763 18.9764 47.8467 19.8154 46.1508C18.2149 45.5413 16.6789 44.7861 15.2074 43.8984C15.5946 43.6069 15.969 43.3155 16.3433 43.024C24.9913 47.1975 35.0076 47.1975 43.6557 43.024C44.03 43.3287 44.4043 43.6334 44.7915 43.8984C43.3201 44.7861 41.7712 45.5413 40.1706 46.164C41.0096 47.8599 41.9906 49.4763 43.1006 51C48.0184 49.4763 52.6393 47.1047 56.7697 43.9647C57.8927 32.0271 54.8594 21.6927 48.7412 12.511H48.7541ZM21.0416 37.6315C18.3827 37.6315 16.1755 35.1539 16.1755 32.1066C16.1755 29.0593 18.2923 26.5552 21.0287 26.5552C23.7651 26.5552 25.9465 29.0593 25.8949 32.1066C25.8432 35.1539 23.7522 37.6315 21.0416 37.6315ZM38.9831 37.6315C36.3113 37.6315 34.1299 35.1539 34.1299 32.1066C34.1299 29.0593 36.2467 26.5552 38.9831 26.5552C41.7195 26.5552 43.888 29.0593 43.8364 32.1066C43.7847 35.1539 41.6937 37.6315 38.9831 37.6315Z" fill="white"></path>
-                            </svg>
-                            Login with Discord
-                        </button>
-                    </div>
-
-                `;
             }
 
         } else if (tab === "experiments") {
@@ -7102,6 +7740,7 @@ function loginWithDiscord() {
 
 function logoutOfDiscord() {
     localStorage.removeItem('token');
+    localStorage.removeItem('currentUser');
     location.reload();
 }
 

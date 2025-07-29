@@ -598,6 +598,8 @@ body:has(.notice) .container {
     top: 50%;
     transform: translateY(-50%);
     scale: 0.9;
+    max-height: 20px;
+    max-width: 20px;
     transition: scale 0.2s ease;
 }
 
@@ -1546,8 +1548,179 @@ hr {
 
 
 
+/* Quests */
 
+.quests-wrapper {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(370px, 1fr));
+    max-width: 1400px;
+    width: 100%;
+    gap: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px;
+    box-sizing: border-box;
+}
 
+.quests-wrapper:has(.shop-loading-error-container) {
+    display: block;
+}
+
+.quest-card.loading {
+    animation: shop-fetching-anim 4s infinite;
+    height: 330px;
+}
+
+.quest-card {
+    border-radius: 10px;
+    background-color: var(--card-outer);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.quest-card .section1 {
+    position: relative;
+    height: 150px;
+    flex-shrink: 0;
+}
+
+.quest-card .section1 .hero {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: left;
+    position: absolute;
+    left: 0;
+    top: 0;
+    mask-image: linear-gradient(to bottom,#000 10%,rgba(0,0,0,0)100%);
+    z-index: 1;
+}
+
+.quest-card .section1 p {
+    position: absolute;
+    z-index: 2;
+    color: var(--text-secondary);
+    bottom: 15px;
+}
+
+.quest-card .section1 .publisher {
+    margin-left: 15px;
+}
+
+.quest-card .section1 .date {
+    right: 15px;
+}
+
+.quest-card .section1 .logo {
+    position: absolute;
+    z-index: 2;
+    margin-left: 15px;
+    max-height: 30px;
+    max-width: 125px;
+    bottom: 40px;
+}
+
+.quest-card .section2 {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    gap: 10px;
+    height: 80px;
+}
+
+.quest-card .section2 .reward-icon {
+    height: 80px;
+    width: 80px;
+    flex: 0 0 80px;
+    border-radius: 10px;
+}
+
+.quest-card .section2 .reward-icon img, .quest-card .section2 .reward-icon svg, .quest-card .section2 .reward-icon video {
+    height: 100%;
+    width: 100%;
+}
+
+.quest-card .section2 .info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.quest-card .section2 .quest-name {
+    color: var(--text-feedback-info);
+    font-size: 13px;
+    font-family: gg sans seven;
+}
+
+.quest-card .section2 .reward-name {
+    font-size: 16px;
+}
+
+.quest-card .section2 .reward-requirements {
+    font-size: 13px;
+    color: var(--text-tertiary);
+}
+
+.quest-card .section3 {
+    display: flex;
+    gap: 10px;
+    padding: 15px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-top: 2px solid var(--background-secondary);
+    flex-shrink: 0;
+}
+
+.quest-card .section3 button {
+    width: 100%;
+    justify-content: center;
+}
+
+.quest-video-player {
+    max-height: 500px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: var(--background-primary);
+    border-radius: 10px;
+}
+
+.video-quest-disclaimer {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding: 10px;
+    background-color: var(--bg-feedback-critical);
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.quest-modal-block {
+    background-color: var(--modal-block-bg);
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+    box-sizing: border-box;
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.quest-modal-block .reward-icon, .quest-modal-block .task-icon {
+    height: 80px;
+    width: 80px;
+    border-radius: 5px;
+}
+
+.quest-modal-block .reward-icon *, .quest-modal-block .task-icon * {
+    height: 80px;
+    width: 80px;
+}
+
+.quest-modal-block p {
+    color: var(--text-secondary);
+}
 
 
 
@@ -3667,6 +3840,7 @@ hr {
     height: auto;
     margin-top: 30px;
     margin-left: 80px;
+    margin-right: 80px;
     padding-bottom: 30px;
     top: 0px;
 }
@@ -3994,6 +4168,11 @@ hr {
     justify-content: space-between;
 }
 
+.enhanced-account-block.error-card {
+    justify-content: space-between;
+    background-color: var(--bg-feedback-critical);
+}
+
 .enhanced-account-block.profile-card .banner {
     position: absolute;
     top: 0;
@@ -4008,9 +4187,43 @@ hr {
     mask-image: linear-gradient(to right,#000 50%,rgba(0,0,0,0)100%);
 }
 
+.enhanced-account-block.profile-card .nameplate {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    width: 50%;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+.enhanced-account-block.profile-card .nameplate video, .enhanced-account-block.profile-card .nameplate img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    mask-image: linear-gradient(to left,#000 50%,rgba(0,0,0,0)100%);
+}
+
 .enhanced-account-block.profile-card .section {
     position: relative;
     z-index: 2;
+    overflow: visible;
+}
+
+.enhanced-account-block.profile-card .section h1 {
+    overflow: visible;
+    max-width: 400px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.enhanced-account-block.profile-card .section #username {
+    color: var(--text-primary);
 }
 
 .enhanced-account-block.profile-card .section.avatar-container {
@@ -4050,6 +4263,7 @@ hr {
 }
 
 .enhanced-account-block .buttons .button {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -4062,6 +4276,14 @@ hr {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    color: var(--text-primary);
+    border: none;
+    outline: none;
+}
+
+.enhanced-account-block .buttons .button:disabled {
+    box-shadow: none;
+    cursor: not-allowed;
 }
 
 .theme-midnight .enhanced-account-block .buttons .button {
@@ -4082,6 +4304,10 @@ hr {
 .enhanced-account-block .buttons .button svg {
     height: 20px;
     width: 20px;
+}
+
+.enhanced-account-block .buttons .button.svg-spin svg {
+    animation: spin 1s linear infinite;
 }
 
 
@@ -4563,8 +4789,18 @@ hr {
     background-color: var(--color-red);
 }
 
+.generic-button.primary {
+    background-color: var(--color-primary);
+}
+
 .generic-button:hover {
     box-shadow: inset 0 0 0 2000px rgba(0, 0, 0, 0.3);
+}
+.generic-button.disabled {
+    background-color: var(--color-primary);
+    cursor: not-allowed;
+    box-shadow: none;
+    color: var(--text-secondary);
 }
 
 .generic-button svg {

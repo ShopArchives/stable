@@ -1,5 +1,5 @@
 
-const appVersion = "7.3.6";
+const appVersion = "7.3.11";
 const appType = "Stable";
 
 const endpoints = {
@@ -26,6 +26,8 @@ const endpoints = {
     DISCORD_ORBS_CATEGORIES: "/discord-orbs-categories",
     DISCORD_POTIONS: "/discord-consumables",
     DISCORD_MISCELLANEOUS_CATEGORIES: "/discord-miscellaneous-categories",
+    DISCORD_QUESTS: "/discord-quests",
+
     CATEGORY_MODAL_INFO: "/category/",
     CATEGORY_MODAL_REVIEW: "/review",
     CATEGORY_MODAL_REVIEW_DELETE: "/reviews/",
@@ -54,6 +56,14 @@ const category_types = {
     FEED: 2,
     WIDE_BANNER: 3
 };
+
+const quest_reward_types = {
+    REWARD_CODE: 1,
+    IN_GAME: 2,
+    COLLECTIBLE: 3,
+    VIRTUAL_CURRENCY: 4,
+    FRACTIONAL_PREMIUM: 5
+}
 
 const discord_categories = {
     FANTASY: "1144003461608906824",
@@ -384,6 +394,25 @@ const display_name_styles_colors = {
 };
 
 const experiments = [
+    {
+        title: `Quests Tab`,
+        codename: `quests_tab`,
+        release_config: {
+            year: `2025`,
+            month: `07`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Enabled`
+            },
+            {
+                title: `With Video Player`
+            }
+        ]
+    },
     {
         title: `Enhanced Account Tab`,
         codename: `enhanced_account_tab`,
