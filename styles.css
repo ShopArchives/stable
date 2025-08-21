@@ -693,6 +693,10 @@ hr {
     gap: 5px;
 }
 
+.shop-loading-error-container img {
+    height: 250px;
+}
+
 .categories-container {
     padding: 20px;
     display: flex;
@@ -3625,7 +3629,7 @@ hr {
 [data-modal-top-product-buttons] div {
     height: 34px !important;
     width: 34px !important;
-    border-radius: 50px;
+    border-radius: 8px;
     overflow: hidden;
 }
 
@@ -3639,6 +3643,10 @@ hr {
 
 .modalv2_top_icon:hover {
     color: white;
+}
+
+.fav .modalv2_top_icon {
+    color: #FFEC3E;
 }
 
 .modalv2-tabs-container {
@@ -4809,6 +4817,41 @@ hr {
 }
 
 
+
+.copy-notice-container {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    background-color: #1e1f22;
+    color: var(--white);
+    border-radius: 50px;
+    width: auto;
+    height: 50px;
+    padding: 0 20px;
+    text-align: center;
+    pointer-events: none;
+    animation: gtfin76g7ererg 5s;
+    z-index: 5000;
+}
+
+@keyframes gtfin76g7ererg {
+    0% {opacity: 0; transform: translateY(-50px) translateX(-50%);}
+    10% {opacity: 1; transform: translateY(0px) translateX(-50%);}
+    90% {opacity: 1; transform: translateY(0px) translateX(-50%);}
+    100% {opacity: 0; transform: translateY(-50px) translateX(-50%);}
+}
+
+.copy-notice-container * {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+[data-sku-id="5"] .banner-container {
+    display: none;
+}
 
 
 

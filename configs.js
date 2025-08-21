@@ -1,5 +1,5 @@
 
-const appVersion = "7.3.11";
+const appVersion = "7.3.16";
 const appType = "Stable";
 
 const endpoints = {
@@ -54,7 +54,10 @@ const category_types = {
     HERO: 0,
     FEATURED: 1,
     FEED: 2,
-    WIDE_BANNER: 3
+    WIDE_BANNER: 3,
+    SHELF: 4,
+    COUNTDOWN_TIMER: 5,
+    IMMERSIVE_BANNER: 6
 };
 
 const quest_reward_types = {
@@ -130,7 +133,10 @@ const discord_categories = {
     SUMMER_BLISS: "1385050947985735701",
     PAPER: "1387888352891764947",
     PETAL: "1394404301496914173",
-    TWO_SQUARED: "1395905165990694922"
+    TWO_SQUARED: "1395905165990694922",
+    ROCK: "1400163655689043998",
+    RAWR_XD: "1402782203099746314",
+    SECRET_GARDEN: "1402730228094796314"
 };
 
 const category_client_overrides = [
@@ -382,7 +388,8 @@ const display_name_styles_fonts = {
     NEO_CASTEL: 7,
     PIXELIFY: 8,
     RIBES: 9,
-    SINISTRE: 10
+    SINISTRE: 10,
+    ZILLA_SLAB: 12
 };
 
 const display_name_styles_colors = {
@@ -390,10 +397,27 @@ const display_name_styles_colors = {
     GRADIENT: 2,
     NEON: 3,
     TOON: 4,
-    POP: 5
+    POP: 5,
+    GLOW: 6
 };
 
 const experiments = [
+    {
+        title: `User Item Favorites`,
+        codename: `user_item_favorites`,
+        release_config: {
+            year: `2025`,
+            month: `08`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Enabled`
+            }
+        ]
+    },
     {
         title: `Quests Tab`,
         codename: `quests_tab`,
@@ -574,6 +598,7 @@ const settings = {
     "reviews_filter_setting": 1,
     "category_page_limit": 5,
     "dev": 0,
+
     "staff_force_leaks_dummy": 0,
     "staff_force_viewable_reviews_tab": 0,
     "staff_simulate_ban_type_1": 0,
@@ -584,7 +609,9 @@ const settings = {
     "staff_show_unpublished_xp_shop": 0,
     "staff_allow_category_only_event_claiming_in_events_tab": 0,
     "staff_show_test_categories_on_misc_page": 0,
-    "staff_auth_remove_none_promt": 0
+    "staff_auth_remove_none_promt": 0,
+
+    "dismissible_favorites_tab_new": 0
 };
 
 const leaks_dummy_data = {
@@ -707,3 +734,24 @@ const user_preview_usernames = [
         name: "TrellTrell"
     }
 ];
+
+const favorites_category = {
+    "full_src": true,
+    "sku_id": "5",
+    "name": "My Favorites",
+    "summary": " ",
+    "store_listing_id": null,
+    "banner": null,
+    "unpublished_at": null,
+    "logo": "https://cdn.yapper.shop/assets/210.png",
+    "hero_ranking": null,
+    "mobile_bg": null,
+    "pdp_bg": "https://cdn.yapper.shop/assets/209.png",
+    "success_modal_bg": null,
+    "mobile_banner": null,
+    "featured_block": null,
+    "hero_banner": null,
+    "wide_banner": null,
+    "hero_logo": null,
+    "products": []
+};

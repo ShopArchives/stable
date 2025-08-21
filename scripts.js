@@ -21,13 +21,16 @@ let discordMiscellaneousCategoriesCache;
 let discordQuestsCache;
 
 let hasDroveAdminPanelPlugin = false;
+let baseYapperURL = 'https://yapper.shop/';
+
+if (appType === 'Dev') baseYapperURL = 'https://dev.yapper.shop/';
 
 
 const overridesKey = 'experimentOverrides';
 const serverKey = 'serverExperiments';
 
 const isMobile = navigator.userAgentData && navigator.userAgentData.mobile;
-if (isMobile) {
+if (isMobile || /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
     isMobileCache = true;
     document.body.classList.add('mobile');
 }
@@ -127,6 +130,28 @@ function changeSetting(key, value) {
         console.log(`Setting '${key}' changed to ${value}`);
     } else {
         console.error(`Setting '${key}' does not exist`);
+    }
+}
+
+// Function to toggle a setting (0 or 1)
+function toggleSetting(key) {
+    if (key in settingsStore) {
+        const newValue = settingsStore[key] === 0 ? 1 : 0;
+        changeSetting(key, newValue);
+    }
+}
+
+// Update toggle visual states
+function updateToggleStates() {
+    for (let key in settingsStore) {
+        const toggle = document.getElementById(key + '_toggle');
+        if (toggle) {
+            if (settingsStore[key] === 1) {
+                toggle.classList.add('active');
+            } else {
+                toggle.classList.remove('active');
+            }
+        }
     }
 }
 
@@ -510,6 +535,18 @@ function renderQuestRequirement(quest) {
     return data;
 }
 
+function favorite(type, data) {
+    if (type === "add") {
+        const favorites = JSON.parse(localStorage.getItem("favoritesStore")) || [];
+        favorites.unshift(data);
+        localStorage.setItem("favoritesStore", JSON.stringify(favorites));
+    } else if (type === "remove") {
+        const favorites = JSON.parse(localStorage.getItem("favoritesStore")) || [];
+        const updatedFavorites = favorites.filter(item => String(item.sku_id) !== String(data));
+        localStorage.setItem("favoritesStore", JSON.stringify(updatedFavorites));
+    }
+}
+
 async function loadSite() {
 
     if (localStorage.sa_theme) {
@@ -708,9 +745,54 @@ async function loadSite() {
                     </div>
                 </div>
             `
+        },
+        {
+            id: 7,
+            title: "Favorites",
+            url: "favorites",
+            body: `
+                <div class="categories-container" id="categories-container">
+                    <div class="category-container">
+                        <div class="products-wrapper">
+                            <div class="shop-category-card-loading">
+                                </div>
+                                <div class="shop-category-card-loading">
+                                </div>
+                                <div class="shop-category-card-loading">
+                                </div>
+                                <div class="shop-category-card-loading">
+                                </div>
+                                <div class="shop-category-card-loading">
+                                </div>
+                                <div class="shop-category-card-loading">
+                                </div>
+                                <div class="shop-category-card-loading">
+                                </div>
+                                <div class="shop-category-card-loading">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="pagination" id="pagination"></div>
+            `
         }
     ];
 
+
+    if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'user_item_favorites')?.treatment === 1) {
+        document.getElementById('shop-tab-7').classList.remove('hidden');
+        let favorites;
+        try {
+            favorites = JSON.parse(localStorage.getItem("favoritesStore"));
+            if (!Array.isArray(favorites)) {
+                throw new Error("Not an array");
+            }
+        } catch {
+            favorites = [];
+            localStorage.setItem("favoritesStore", JSON.stringify(favorites));
+        }
+    }
 
     if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'quests_tab')?.treatment === 1 || JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'quests_tab')?.treatment === 2) {
         document.getElementById('shop-tab-6').classList.remove('hidden');
@@ -870,9 +952,43 @@ async function loadSite() {
                         <div class="has-tooltip" data-tooltip="Copy Discord Link">
                             <svg class="modalv2_top_icon" onclick="copyValue('https://canary.discord.com/shop#itemSkuId=${product.sku_id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M16.32 14.72a1 1 0 0 1 0-1.41l2.51-2.51a3.98 3.98 0 0 0-5.62-5.63l-2.52 2.51a1 1 0 0 1-1.41-1.41l2.52-2.52a5.98 5.98 0 0 1 8.45 8.46l-2.52 2.51a1 1 0 0 1-1.41 0ZM7.68 9.29a1 1 0 0 1 0 1.41l-2.52 2.51a3.98 3.98 0 1 0 5.63 5.63l2.51-2.52a1 1 0 0 1 1.42 1.42l-2.52 2.51a5.98 5.98 0 0 1-8.45-8.45l2.51-2.51a1 1 0 0 1 1.42 0Z" class=""></path><path fill="currentColor" d="M14.7 10.7a1 1 0 0 0-1.4-1.4l-4 4a1 1 0 1 0 1.4 1.4l4-4Z" class=""></path></svg>
                         </div>
+                        <div class="has-tooltip" data-tooltip="Share">
+                            <svg class="modalv2_top_icon" onclick="copyValue('${baseYapperURL}?page=${currentPageCache}&itemSkuId=${product.sku_id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M21.7 7.3a1 1 0 0 1 0 1.4l-5 5a1 1 0 0 1-1.4-1.4L18.58 9H13a7 7 0 0 0-7 7v4a1 1 0 1 1-2 0v-4a9 9 0 0 1 9-9h5.59l-3.3-3.3a1 1 0 0 1 1.42-1.4l5 5Z" class=""></path></svg>
+                        </div>
                     </div>
                 </div>
             `;
+            const modalbuttons = modal.querySelector('[data-modal-top-product-buttons]');
+
+            if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'user_item_favorites')?.treatment === 1) {
+                const btn = document.createElement('div');
+                btn.classList.add('has-tooltip');
+                btn.innerHTML = `
+                    <svg class="modalv2_top_icon" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 0L14.6942 8.2918H23.4127L16.3593 13.4164L19.0534 21.7082L12 16.5836L4.94658 21.7082L7.64074 13.4164L0.587322 8.2918H9.30583L12 0Z" fill="currentColor"/></svg>
+                `;
+                if (JSON.parse(localStorage.getItem("favoritesStore"))[JSON.parse(localStorage.getItem("favoritesStore")).findIndex(i => i.sku_id === product.sku_id)]) {
+                    btn.classList.add('fav');
+                    btn.setAttribute('data-tooltip', 'Unfavorite');
+                } else {
+                    btn.setAttribute('data-tooltip', 'Favorite');
+                }
+                btn.addEventListener("click", () => {
+                    if (!btn.classList.contains('fav')) {
+                        copyNotice(3);
+                        btn.setAttribute('data-tooltip', 'Unfavorite');
+                        updateTooltipText('Unfavorite');
+                        favorite("add", product);
+                        btn.classList.add('fav');
+                    } else {
+                        copyNotice(4);
+                        btn.setAttribute('data-tooltip', 'Favorite');
+                        updateTooltipText('Favorite');
+                        favorite("remove", product.sku_id);
+                        btn.classList.remove('fav');
+                    }
+                });
+                modalbuttons.appendChild(btn);
+            }
 
             function changeModalTab(tab) {
                 modal.querySelectorAll('.selected').forEach((el) => {
@@ -1806,6 +1922,9 @@ async function loadSite() {
                     <div data-modal-top-product-buttons>
                         <div class="has-tooltip" data-tooltip="Close" data-close-product-card-button>
                             <svg class="modalv2_top_icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                        </div>
+                        <div class="has-tooltip" data-tooltip="Share">
+                            <svg class="modalv2_top_icon" onclick="copyValue('${baseYapperURL}?page=${currentPageCache}&itemSkuId=${categoryData.sku_id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M21.7 7.3a1 1 0 0 1 0 1.4l-5 5a1 1 0 0 1-1.4-1.4L18.58 9H13a7 7 0 0 0-7 7v4a1 1 0 1 1-2 0v-4a9 9 0 0 1 9-9h5.59l-3.3-3.3a1 1 0 0 1 1.42-1.4l5 5Z" class=""></path></svg>
                         </div>
                     </div>
                 </div>
@@ -4135,6 +4254,12 @@ async function loadSite() {
                         <div class="has-tooltip" data-tooltip="Close" data-close-product-card-button>
                             <svg class="modalv2_top_icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
                         </div>
+                        <div class="has-tooltip" data-tooltip="Copy Discord Link">
+                            <svg class="modalv2_top_icon" onclick="copyValue('https://canary.discord.com/quests/${quest.id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M16.32 14.72a1 1 0 0 1 0-1.41l2.51-2.51a3.98 3.98 0 0 0-5.62-5.63l-2.52 2.51a1 1 0 0 1-1.41-1.41l2.52-2.52a5.98 5.98 0 0 1 8.45 8.46l-2.52 2.51a1 1 0 0 1-1.41 0ZM7.68 9.29a1 1 0 0 1 0 1.41l-2.52 2.51a3.98 3.98 0 1 0 5.63 5.63l2.51-2.52a1 1 0 0 1 1.42 1.42l-2.52 2.51a5.98 5.98 0 0 1-8.45-8.45l2.51-2.51a1 1 0 0 1 1.42 0Z" class=""></path><path fill="currentColor" d="M14.7 10.7a1 1 0 0 0-1.4-1.4l-4 4a1 1 0 1 0 1.4 1.4l4-4Z" class=""></path></svg>
+                        </div>
+                        <div class="has-tooltip" data-tooltip="Share">
+                            <svg class="modalv2_top_icon" onclick="copyValue('${baseYapperURL}?page=quests&itemId=${quest.id}');" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M21.7 7.3a1 1 0 0 1 0 1.4l-5 5a1 1 0 0 1-1.4-1.4L18.58 9H13a7 7 0 0 0-7 7v4a1 1 0 1 1-2 0v-4a9 9 0 0 1 9-9h5.59l-3.3-3.3a1 1 0 0 1 1.42-1.4l5 5Z" class=""></path></svg>
+                        </div>
                     </div>
                 </div>
             `;
@@ -4294,7 +4419,7 @@ async function loadSite() {
                     });
 
                 } else if (tab === '4') {
-                    let asset;
+                    let asset = null;
                     if (quest?.task_config_v2?.tasks?.WATCH_VIDEO?.assets?.video?.url) {
                         asset = quest.task_config_v2.tasks.WATCH_VIDEO.assets.video.url;
                     }
@@ -4317,6 +4442,17 @@ async function loadSite() {
                     video.playsInline = true;
                     video.volume = 0.1;
                     video.classList.add('quest-video-player');
+                    if (asset === null) {
+                        modalInner.innerHTML = `
+                            <div class="category-modal-bottom-container">
+                                <div class="shop-loading-error-container">
+                                    <img src="https://cdn.yapper.shop/assets/207.png">
+                                    <h2>Oopsie, something went wrong.</h2>
+                                    <p>We weren't able to load this quest video.</p>
+                                </div>
+                            </div>
+                        `;
+                    }
                 } else {
                     modalInner.innerHTML = ``;
                 }
@@ -5743,32 +5879,10 @@ async function loadSite() {
     function renderShopLoadingError(error, output) {
         output.innerHTML = `
             <div class="shop-loading-error-container">
-                <svg xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg" width="140" height="131" viewBox="0 0 140 131" fill="none">
-                <g clip-path="url(#clip0_7301_37419)">
-                <path d="M33.585 53.8991C38.405 46.9991 46.485 43.5091 53.085 45.0491C59.685 46.5891 69.975 55.1691 63.625 67.4891L33.585 53.8991Z" fill="black"/>
-                <path d="M92.0151 76.8108C98.0151 75.4008 105.725 77.6908 109.275 84.3208C114.155 93.4308 107.605 104.861 107.605 104.861L84.9551 99.2108L92.0151 76.8108Z" fill="#73767C"/>
-                <path d="M135.955 1.12009C135.775 1.46009 133.425 6.06009 129.835 13.1201L127.085 18.5501L125.505 21.6301C125.055 22.5301 124.585 23.4401 124.105 24.3701L113.535 45.0001L111.895 48.2001C111.102 49.7734 110.302 51.3401 109.495 52.9001L106.715 58.3601L100.265 71.0001L98.455 74.5601L87.205 96.5601L40.665 63.5601L67.605 45.5001L70.745 43.3901L90.615 30.0001L93.615 28.0001L112.685 15.1601L115.595 13.1601C126.645 5.75009 134.545 0.440092 135.085 0.110092C135.222 0.0522836 135.373 0.0393153 135.517 0.0730567C135.662 0.106798 135.792 0.185506 135.888 0.297838C135.985 0.410169 136.044 0.550322 136.056 0.698097C136.068 0.845871 136.032 0.993635 135.955 1.12009Z" fill="#DCDDDE"/>
-                <path d="M127.085 18.5505L124.765 20.4005C125.025 20.8005 125.275 21.2105 125.505 21.6305C125.055 22.5305 124.585 23.4405 124.105 24.3705C123.712 23.5496 123.261 22.7576 122.755 22.0005C117.445 26.1805 111.915 30.4105 106.425 34.5205C109.617 37.3796 112.058 40.9782 113.535 45.0005L111.895 48.2005C110.724 43.4508 108.099 39.1856 104.385 36.0005C97.9054 40.8405 91.5254 45.5105 85.6754 49.7205C90.42 53.1687 94.3211 57.6476 97.0854 62.8205C101.085 59.6905 105.325 56.3305 109.525 52.9205L106.745 58.3805C103.845 60.7005 100.975 62.9705 98.2154 65.1305C99.077 67.0338 99.7729 69.0078 100.295 71.0305L98.4854 74.5905C98.0506 71.8793 97.2814 69.2325 96.1954 66.7105C84.2654 76.0005 74.8154 82.9106 74.6554 83.0005C74.4433 83.1552 74.1879 83.2392 73.9254 83.2405C73.7301 83.2418 73.5373 83.1961 73.3633 83.1074C73.1893 83.0186 73.0391 82.8894 72.9254 82.7306C72.7352 82.4659 72.655 82.1377 72.7016 81.8151C72.7483 81.4926 72.9181 81.2006 73.1754 81.0005C73.3354 80.8805 82.9954 73.7705 95.0654 64.3705C92.3517 59.124 88.397 54.62 83.5454 51.2505C69.3754 61.4405 58.8554 68.6505 58.6454 68.8005C58.4383 68.9401 58.1951 69.0165 57.9454 69.0205C57.6757 69.0241 57.4121 68.9404 57.1939 68.7819C56.9757 68.6233 56.8147 68.3984 56.7348 68.1408C56.6549 67.8832 56.6605 67.6067 56.7507 67.3525C56.841 67.0983 57.011 66.8801 57.2354 66.7305C57.4454 66.5905 67.5354 59.6705 81.2354 49.8105C77.0629 47.3923 72.4097 45.9209 67.6054 45.5005L70.7454 43.3905C75.2565 44.1735 79.5749 45.8167 83.4654 48.2305C89.3354 44.0005 95.7754 39.3005 102.345 34.4005C98.8653 31.9752 94.8321 30.4623 90.6154 30.0005L93.6154 28.0005C97.5252 28.8185 101.21 30.4768 104.415 32.8605C110.065 28.6205 115.775 24.2605 121.245 19.9505C120.175 18.6533 118.885 17.5534 117.435 16.7005C115.983 15.8467 114.362 15.3211 112.685 15.1605L115.595 13.1605C116.674 13.4847 117.711 13.9345 118.685 14.5005C120.41 15.512 121.94 16.8225 123.205 18.3705C125.465 16.5905 127.675 14.8105 129.815 13.0605L127.085 18.5505Z" fill="#B9BBBE"/>
-                <path d="M116.545 95.2996C125.605 85.5696 130.855 77.0896 134.695 65.5696C135.605 62.8296 140.065 64.2796 139.905 66.3596C139.255 75.4196 126.575 90.9196 118.735 97.1196C117.255 98.2796 115.895 95.9996 116.545 95.2996Z" fill="black"/>
-                <path d="M112.738 112.387C118.371 112.275 122.847 107.617 122.734 101.983C122.621 96.3501 117.963 91.8747 112.33 91.9874C106.697 92.1001 102.221 96.7581 102.334 102.391C102.447 108.025 107.105 112.5 112.738 112.387Z" fill="#B9BBBE"/>
-                <path d="M112.555 97.1791C111.055 97.5191 108.675 97.4691 108.615 95.9391C108.555 94.4091 110.165 93.1791 111.695 92.9391C113.225 92.6991 114.775 93.2191 115.035 94.6491C115.295 96.0791 114.085 96.8491 112.555 97.1791Z" fill="#F8F9F9"/>
-                <path d="M120.985 113.78C119.355 102.51 110.405 97.2198 99.9847 99.9798C99.6208 95.8921 98.328 91.9416 96.2047 88.4298C91.2047 80.7298 81.8247 81.6598 77.1447 83.3598C79.1447 74.6998 78.2447 67.6698 72.2847 62.3598C65.5747 56.3798 55.0847 57.9998 50.8147 60.6398C51.2047 51.0198 43.3147 44.5498 35.6047 45.2398C25.6047 46.1398 18.8147 53.7898 18.7647 66.6098C13.4118 71.6689 8.42587 77.1026 3.84468 82.8698C-1.15532 89.2698 -1.04532 98.1698 3.59468 105.18C4.73468 106.92 7.24468 111.18 7.95468 112.3C8.23468 112.73 8.14468 113.21 7.56468 114.03C6.02172 115.939 4.6812 118.004 3.56468 120.19C1.59468 124.3 3.20468 131 9.42468 131C13.4747 131 74.2047 130.87 93.9447 131H123.135C127.375 131 128.785 128.91 128.785 126.15C128.785 122.41 126.865 120.08 122.915 117C122.391 116.622 121.95 116.142 121.618 115.589C121.286 115.035 121.071 114.419 120.985 113.78Z" fill="#73767C"/>
-                <path d="M38.8153 123.551C51.8953 123.931 63.2053 123.851 73.7253 123.551C78.9853 123.431 80.2753 120.991 80.6553 118.041C81.3453 112.791 78.5153 110.661 73.4753 104.801C68.4353 98.9409 54.8953 85.5309 54.8953 85.5309C52.0053 82.5309 48.1053 81.4709 44.4553 84.4109C39.9353 88.0509 35.6453 91.6209 32.7253 96.1009C30.0953 100.101 31.2553 103.521 34.6453 108.431C35.2453 109.291 37.9853 112.431 38.1753 112.991C38.3653 113.551 35.7753 115.131 35.0953 117.561C34.3553 120.221 35.7753 123.461 38.8153 123.551Z" fill="#B9BBBE"/>
-                <path d="M48.7048 102.9C47.5348 101.38 45.5748 99.2203 45.5748 99.2203C45.274 98.8642 44.9058 98.5711 44.4914 98.3577C44.077 98.1442 43.6245 98.0148 43.1599 97.9767C42.6954 97.9386 42.2279 97.9926 41.7842 98.1357C41.3406 98.2787 40.9296 98.508 40.5748 98.8103C39.9668 99.4294 39.5965 100.243 39.5288 101.108C39.4612 101.973 39.7005 102.834 40.2048 103.54C41.1448 104.76 42.2048 106.14 43.4548 107.46C44.1005 108.121 44.9664 108.522 45.8882 108.587C46.8099 108.651 47.7233 108.375 48.4548 107.81C49.109 107.175 49.4984 106.315 49.5448 105.404C49.5911 104.494 49.291 103.599 48.7048 102.9Z" fill="#73767C"/>
-                <path d="M32.3315 82.3655C34.3322 80.4622 34.4112 77.2974 32.5079 75.2967C30.6047 73.2959 27.4398 73.2169 25.4391 75.1202C23.4383 77.0235 23.3593 80.1883 25.2626 82.1891C27.1659 84.1898 30.3307 84.2688 32.3315 82.3655Z" fill="black"/>
-                <path d="M63.1852 115.8C62.2752 114.8 60.4453 114.35 59.4853 113.49C57.6053 111.8 54.7653 108.49 52.4853 110.49C51.0553 111.72 50.9653 113.41 52.1653 115.06C53.1762 116.681 54.5444 118.049 56.1653 119.06C57.9088 119.799 59.8246 120.035 61.6953 119.74C62.1393 119.713 62.5659 119.557 62.9239 119.293C63.282 119.029 63.5561 118.668 63.7135 118.251C63.8708 117.835 63.9047 117.383 63.811 116.948C63.7173 116.513 63.5 116.114 63.1852 115.8Z" fill="#73767C"/>
-                <path d="M99.6054 120.931C99.6611 120.894 99.7145 120.854 99.7654 120.811C100.356 120.235 100.795 119.522 101.044 118.735C101.292 117.949 101.342 117.113 101.188 116.302C101.035 115.491 100.684 114.731 100.166 114.089C99.6473 113.448 98.9783 112.944 98.2181 112.623C97.4579 112.303 96.6303 112.175 95.8089 112.252C94.9875 112.329 94.1979 112.608 93.5105 113.064C92.8232 113.521 92.2593 114.14 91.8694 114.867C91.4794 115.594 91.2753 116.406 91.2754 117.231C92.8776 116.837 94.5654 116.986 96.0733 117.656C97.5813 118.326 98.8237 119.478 99.6054 120.931Z" fill="black"/>
-                <path d="M94.2848 82.7695C93.8848 83.5395 93.4948 84.2995 93.1348 85.0195C95.321 86.74 97.0915 88.9309 98.3148 91.4295C98.4172 91.6365 98.5754 91.8107 98.7715 91.9326C98.9676 92.0546 99.1938 92.1193 99.4248 92.1195C99.6229 92.1169 99.8179 92.069 99.9948 91.9795C100.29 91.8297 100.515 91.5685 100.618 91.2534C100.721 90.9384 100.695 90.5953 100.545 90.2995C99.0997 87.319 96.9513 84.7347 94.2848 82.7695Z" fill="black"/>
-                </g>
-                <defs>
-                <clipPath id="clip0_7301_37419">
-                <rect width="139.83" height="130.95" fill="white" transform="translate(0.0849609)"/>
-                </clipPath>
-                </defs>
-                </svg>
-                <h2>Well, this is awkward.</h2>
-                <p>Hmmm, we weren't able to load this page. Check back later.</p>
-                <p>Status: ${error}</p>
+                <img src="https://cdn.yapper.shop/assets/207.png">
+                <h2>Oopsie, something went wrong.</h2>
+                <p>We weren't able to load this page. Check back later.</p>
+                <p>Error: ${error}</p>
             </div>
         `;
     }
@@ -5829,6 +5943,10 @@ async function loadSite() {
         }
     }
     window.setDiscordLeakedCategoriesCache = setDiscordLeakedCategoriesCache;
+
+    if (settingsStore.dismissible_favorites_tab_new === 1) {
+        document.getElementById('shop-tab-7').classList.add('hide-new-tag');
+    }
 
     async function loadPage(key, firstLoad, reFetch) {
         document.getElementById('searchInput').value = '';
@@ -5980,6 +6098,27 @@ async function loadSite() {
                 }
             } else {
                 renderQuest(discordQuestsCache, output);
+            }
+        } else if (currentPageCache === "favorites") {
+            searchInput.classList.add('hidden');
+            const output = document.getElementById('categories-container');
+            if (settingsStore.dismissible_favorites_tab_new === 0) {
+                changeSetting('dismissible_favorites_tab_new', 1);
+            }
+            document.getElementById('shop-tab-7').classList.add('hide-new-tag')
+
+            let items = JSON.parse(localStorage.getItem("favoritesStore"));
+            const data = [{ ...favorites_category, products: items }];
+            if (Array(items) && items.length !== 0) {
+                renderShopData(data, output);
+            } else {
+                output.innerHTML = `
+                    <div class="shop-loading-error-container">
+                        <img src="https://cdn.yapper.shop/assets/208.png">
+                        <h2>You have no favorites.</h2>
+                        <p>Favorite an item and it will show up here.</p>
+                    </div>
+                `;
             }
         } else {
             loadPage('0')
@@ -6323,28 +6462,6 @@ async function loadSite() {
                         toggleSetting('reviews_filter_setting');
                         updateToggleStates();
                     });
-
-                    // Function to toggle a setting (0 or 1)
-                    function toggleSetting(key) {
-                        if (key in settingsStore) {
-                            const newValue = settingsStore[key] === 0 ? 1 : 0;
-                            changeSetting(key, newValue);
-                        }
-                    }
-
-                    // Update toggle visual states
-                    function updateToggleStates() {
-                        for (let key in settingsStore) {
-                            const toggle = document.getElementById(key + '_toggle');
-                            if (toggle) {
-                                if (settingsStore[key] === 1) {
-                                    toggle.classList.add('active');
-                                } else {
-                                    toggle.classList.remove('active');
-                                }
-                            }
-                        }
-                    }
 
                 } else {
                     tabPageOutput.querySelector('#discord-account-container').innerHTML = `
@@ -7715,7 +7832,12 @@ function updateThemeStore(theme, hasButtons) {
 }
 
 function copyValue(value) {
-    navigator.clipboard.writeText(value)
+    navigator.clipboard.writeText(value);
+    if (value.includes("http")) {
+        copyNotice(2);
+    } else {
+        copyNotice(1);
+    }
 }
 
 function redirectToLink(link) {
@@ -7791,6 +7913,33 @@ async function deleteReviewById(reviewId) {
 };
 
 
+
+function copyNotice(type) {
+    if (type === 1) {
+        string = "Content Copied to Clipboard";
+    } else if (type === 2) {
+        string = "Link Copied to Clipboard";
+    } else if (type === 3) {
+        string = "Item Added to Favorites";
+    } else if (type === 4) {
+        string = "Item Removed from Favorites";
+    } else {
+        string = "Something Went Wrong";
+        console.warn('Invalid copyNotice')
+    }
+
+    let copyNotice = document.createElement("div");
+
+    copyNotice.classList.add('copy-notice-container');
+    copyNotice.innerHTML = `
+        <p>${string}</p>
+    `;
+                 
+    document.body.appendChild(copyNotice);
+    setTimeout(() => {
+        copyNotice.remove();
+    }, 5000);
+}
 
 
 
@@ -7892,7 +8041,43 @@ function cleanupTooltip() {
     currentTarget = null;
 }
 
+function updateTooltipText(text) {
+    if (!tooltip) return false;
+    
+    tooltip.textContent = text;
+    
+    // Reposition tooltip in case the new text changes its size
+    if (currentTarget) {
+        const rect = currentTarget.getBoundingClientRect();
+        const tooltipRect = tooltip.getBoundingClientRect();
+
+        let top = rect.top - tooltipRect.height - 8;
+        let left = rect.left + (rect.width - tooltipRect.width) / 2;
+
+        // Adjust if tooltip would go off screen
+        if (top < 0) {
+            top = rect.bottom + 8;
+        }
+        if (left < 0) {
+            left = 8;
+        } else if (left + tooltipRect.width > window.innerWidth) {
+            left = window.innerWidth - tooltipRect.width - 8;
+        }
+
+        tooltip.style.top = `${top + window.scrollY}px`;
+        tooltip.style.left = `${left + window.scrollX}px`;
+    }
+    
+    return true;
+}
+
 function createTooltip(target, text) {
+    // If tooltip exists and it's for the same target, just update the text
+    if (tooltip && currentTarget === target) {
+        updateTooltipText(text);
+        return;
+    }
+    
     // Clean up any existing tooltip first
     cleanupTooltip();
     
