@@ -1,5 +1,5 @@
 
-const appVersion = "7.3.16";
+const appVersion = "7.3.20";
 const appType = "Stable";
 
 const endpoints = {
@@ -18,6 +18,10 @@ const endpoints = {
 
     USER_LOGIN: "/user-login",
 
+    CATEGORY_PAGES: "/collectibles-pages",
+    CATEGORY_CATALOG: "/catalog",
+    CATEGORY_ORBS: "/orbs",
+    CATEGORY_MISCELLANEOUS: "/miscellaneous",
 
     DISCORD_PROFILE_EFFECTS: "/discord-profile-effects",
     DISCORD_LEAKED_CATEGORIES: "/discord-leaked-categories",
@@ -136,7 +140,9 @@ const discord_categories = {
     TWO_SQUARED: "1395905165990694922",
     ROCK: "1400163655689043998",
     RAWR_XD: "1402782203099746314",
-    SECRET_GARDEN: "1402730228094796314"
+    SECRET_GARDEN: "1402783991349772371",
+    LUNAR_ECLIPSE: "1409898408076116140",
+    BOX: "1409898408392748561"
 };
 
 const category_client_overrides = [
@@ -275,15 +281,22 @@ const category_client_overrides = [
     },
     {
         sku_id: discord_categories.DARK_FANTASY,
-        addAttributionLogo: !0
+        addAttributionLogo: !0,
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/64.png"
     },
     {
         sku_id: discord_categories.ROBERT,
-        showDarkBannerText: !0
+        showDarkBannerText: !0,
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/63.png"
+    },
+    {
+        sku_id: discord_categories.STORM,
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/62.png"
     },
     {
         sku_id: discord_categories.DOJO,
-        showDarkBannerText: !0
+        showDarkBannerText: !0,
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/61.png"
     },
     {
         sku_id: discord_categories.THE_VAULT,
@@ -402,6 +415,22 @@ const display_name_styles_colors = {
 };
 
 const experiments = [
+    {
+        title: `Database Categories Handling`,
+        codename: `database_categories_handling`,
+        release_config: {
+            year: `2025`,
+            month: `09`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Enabled`
+            }
+        ]
+    },
     {
         title: `User Item Favorites`,
         codename: `user_item_favorites`,

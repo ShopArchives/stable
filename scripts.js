@@ -545,6 +545,9 @@ function favorite(type, data) {
         const updatedFavorites = favorites.filter(item => String(item.sku_id) !== String(data));
         localStorage.setItem("favoritesStore", JSON.stringify(updatedFavorites));
     }
+    if (currentPageCache === "favorites") {
+        loadPage(currentPageCache, true, true);
+    }
 }
 
 async function loadSite() {
@@ -589,6 +592,7 @@ async function loadSite() {
             title: "Leaks",
             url: "leaks",
             body: `
+                <div class="pagination" id="pagination"></div>
                 <div class="categories-container" id="categories-container">
                     <div class="category-container">
                         <div class="shop-category-banner-loading"></div>
@@ -621,6 +625,7 @@ async function loadSite() {
             title: "Shop All",
             url: "catalog",
             body: `
+                <div class="pagination" id="pagination"></div>
                 <div class="categories-container" id="categories-container">
                     <div class="category-container">
                         <div class="shop-category-banner-loading"></div>
@@ -653,6 +658,7 @@ async function loadSite() {
             title: "Orbs Exclusives",
             url: "orbs",
             body: `
+                <div class="pagination" id="pagination"></div>
                 <div class="categories-container" id="categories-container">
                     <div class="category-container">
                         <div class="shop-category-banner-loading"></div>
@@ -692,6 +698,7 @@ async function loadSite() {
             title: "Miscellaneous",
             url: "miscellaneous",
             body: `
+                <div class="pagination" id="pagination"></div>
                 <div class="categories-container" id="categories-container">
                     <div class="category-container">
                         <div class="shop-category-banner-loading"></div>
@@ -751,6 +758,7 @@ async function loadSite() {
             title: "Favorites",
             url: "favorites",
             body: `
+                <div class="pagination" id="pagination"></div>
                 <div class="categories-container" id="categories-container">
                     <div class="category-container">
                         <div class="products-wrapper">
@@ -836,7 +844,7 @@ async function loadSite() {
         }
 
         document.getElementById('ubar-avatar').src = userAvatar;
-        document.getElementById('log-in-with-discord-button-ubar').remove();
+        if (document.getElementById('log-in-with-discord-button-ubar')) document.getElementById('log-in-with-discord-button-ubar').remove();
     } else {
         document.getElementById('ubar-displayname').remove();
         document.getElementById('ubar-username').remove();
@@ -1848,7 +1856,7 @@ async function loadSite() {
             });
         } else if (type === "fromCategoryBanner") {
             const categoryData = data1;
-            const modalBanner = data2;
+            const modalBanner = getCategoryBanners(categoryData).modalBanner;
 
             modal.setAttribute('data-clear-param', 'itemSkuId');
             modal.setAttribute('data-clear-cache', 'currentOpenModalId');
@@ -2307,6 +2315,8 @@ async function loadSite() {
                         "Hero Banner Asset (Animated)": categoryData.hero_banner_asset?.animated,
                         "Wide Banner": categoryData.wide_banner,
                         "Hero Logo": categoryData.hero_logo,
+                        "Catalog Banner Asset (Static)": categoryData.catalog_banner_asset?.static,
+                        "Catalog Banner Asset (Animated)": categoryData.catalog_banner_asset?.animated,
                         "Category Background": categoryData.category_bg,
                         "Condensed Banner Left": categoryData.condensed_banner_left,
                         "Condensed Banner Right": categoryData.condensed_banner_right
@@ -4574,6 +4584,56 @@ async function loadSite() {
     });
 
 
+    function getCategoryBanners(categoryData) {
+        const categoryClientDataId = category_client_overrides.findIndex(cat => cat.sku_id === categoryData.sku_id);
+
+        let categoryBanner = null;
+        if (category_client_overrides[categoryClientDataId]?.banner_override) {
+            categoryBanner = category_client_overrides[categoryClientDataId]?.banner_override;
+        }
+        else if (categoryData.banner_asset?.static) {
+            categoryBanner = categoryData.banner_asset?.static;
+        }
+        else if (categoryData.full_src && categoryData.banner) {
+            categoryBanner = categoryData.banner;
+        }
+        else if (categoryData.banner) {
+            categoryBanner = `https://cdn.discordapp.com/app-assets/1096190356233670716/${categoryData.banner}.png?size=4096`;
+        }
+
+        let categoryHeroBanner = null;
+        if (category_client_overrides[categoryClientDataId]?.hero_banner_override) {
+            categoryHeroBanner = category_client_overrides[categoryClientDataId]?.hero_banner_override;
+        }
+        else if (categoryData.hero_banner_asset?.static) {
+            categoryHeroBanner = categoryData.hero_banner_asset?.static;
+        }
+        else if (categoryData.full_src && categoryData.hero_banner) {
+            categoryHeroBanner = categoryData.hero_banner;
+        }
+        else if (categoryData.hero_banner) {
+            categoryHeroBanner = `https://cdn.discordapp.com/app-assets/1096190356233670716/${categoryData.hero_banner}.png?size=4096`;
+        }
+
+        let modalBanner = null;
+        if (category_client_overrides[categoryClientDataId]?.modal_hero_banner) {
+            modalBanner = category_client_overrides[categoryClientDataId]?.modal_hero_banner
+        }
+        else if (categoryHeroBanner) {
+            modalBanner = categoryHeroBanner;
+        }
+        else if (categoryBanner) {
+            modalBanner = categoryBanner;
+        }
+
+        return {
+            categoryBanner,
+            categoryHeroBanner,
+            modalBanner
+        }
+    }
+
+
     async function renderQuest(quests, output) {
 
         const sorted = quests.sort((a, b) => {
@@ -5482,22 +5542,37 @@ async function loadSite() {
     async function renderShopData(data, output) {
         const searchInput = document.getElementById('searchInput');
         searchInput.classList.remove('hidden');
-        const paginationContainer = document.getElementById('pagination');
-        let itemsPerPage = settingsStore.category_page_limit || 5;
+
+        const paginationContainers = [];
     
+        const mainPaginationById = document.getElementById('pagination');
+        if (mainPaginationById) {
+            paginationContainers.push(mainPaginationById);
+        }
+
+        const paginationByClass = document.querySelectorAll('.pagination');
+        paginationByClass.forEach(container => {
+            if (!paginationContainers.includes(container)) {
+                paginationContainers.push(container);
+            }
+        });
+
+        const paginationByDataAttr = document.querySelectorAll('[data-pagination]');
+        paginationByDataAttr.forEach(container => {
+            if (!paginationContainers.includes(container)) {
+                paginationContainers.push(container);
+            }
+        });
+
+        let itemsPerPage = settingsStore.category_page_limit || 5;
         let filteredData = data;
         let currentPage = 1;
     
         const renderPage = (page) => {
-            itemsPerPage = settingsStore.category_page_limit || 5;
             currentPage = page;
             output.innerHTML = '';
             const pageData = paginate(filteredData, page, itemsPerPage);
             output.scrollTo(0,0);
-
-            if (data.length <= settingsStore.category_page_limit) {
-                paginationContainer.classList.add('hidden');
-            }
     
             pageData.forEach((categoryData) => {
                 const category = document.createElement("div");
@@ -5507,44 +5582,9 @@ async function loadSite() {
 
                 const categoryClientDataId = category_client_overrides.findIndex(cat => cat.sku_id === categoryData.sku_id);
 
-                let categoryBanner;
-                if (category_client_overrides[categoryClientDataId]?.banner_override) {
-                    categoryBanner = category_client_overrides[categoryClientDataId]?.banner_override;
-                }
-                else if (categoryData.banner_asset?.static) {
-                    categoryBanner = categoryData.banner_asset?.static;
-                }
-                else if (categoryData.full_src && categoryData.banner) {
-                    categoryBanner = categoryData.banner;
-                }
-                else if (categoryData.banner) {
-                    categoryBanner = `https://cdn.discordapp.com/app-assets/1096190356233670716/${categoryData.banner}.png?size=4096`;
-                }
-
-                let categoryHeroBanner;
-                if (category_client_overrides[categoryClientDataId]?.hero_banner_override) {
-                    categoryHeroBanner = category_client_overrides[categoryClientDataId]?.hero_banner_override;
-                }
-                else if (categoryData.hero_banner_asset?.static) {
-                    categoryHeroBanner = categoryData.hero_banner_asset?.static;
-                }
-                else if (categoryData.full_src && categoryData.hero_banner) {
-                    categoryHeroBanner = categoryData.hero_banner;
-                }
-                else if (categoryData.hero_banner) {
-                    categoryHeroBanner = `https://cdn.discordapp.com/app-assets/1096190356233670716/${categoryData.hero_banner}.png?size=4096`;
-                }
-
-                let modalBanner;
-                if (category_client_overrides[categoryClientDataId]?.modal_hero_banner) {
-                    modalBanner = category_client_overrides[categoryClientDataId]?.modal_hero_banner
-                }
-                else if (categoryHeroBanner) {
-                    modalBanner = categoryHeroBanner;
-                }
-                else if (categoryBanner) {
-                    modalBanner = categoryBanner;
-                }
+                const bannersOutput = getCategoryBanners(categoryData);
+                const categoryBanner = bannersOutput.categoryBanner;
+                const modalBanner = bannersOutput.modalBanner;
     
                 const bannerContainer = document.createElement('div');
                 bannerContainer.classList.add('banner-container');
@@ -5684,9 +5724,21 @@ async function loadSite() {
     
                 output.appendChild(category);
             });
+
+            if (filteredData.length <= itemsPerPage) {
+                paginationContainers.forEach(container => {
+                    container.classList.add('hidden');
+                });
+            } else {
+                paginationContainers.forEach(container => {
+                    container.classList.remove('hidden');
+                });
+            }
     
             const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-            createPaginationControls(paginationContainer, totalPages, page, renderPage);
+            paginationContainers.forEach(container => {
+                createPaginationControls(container, totalPages, page, renderPage);
+            });
     
             scrollToCategoryFromUrl();
         };
@@ -5698,48 +5750,69 @@ async function loadSite() {
             const targetListingId = scrollToCache;
             if (!targetSkuId && !targetListingId) return;
 
-            if (targetListingId) {
-                const targetIndex = filteredData.findIndex(cat =>
-                    cat.store_listing_id === targetListingId ||
-                    (cat.products?.some(p => p.store_listing_id === targetListingId))
-                );
-
-                if (targetIndex !== -1) {
-                    const targetPage = Math.floor(targetIndex / itemsPerPage) + 1;
-                    if (targetPage !== currentPage) {
-                        renderPage(targetPage);
-                    } else {
-                        setTimeout(() => {
-                            const el = document.querySelector(`[data-listing-id="${filteredData[targetIndex].store_listing_id}"]`);
-                            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                            removeParams('scrollTo');
-                            scrollToCache = '';
-                        }, 500);
-                    }
+            const scrollToTarget = (targetIndex, selectorAttr, selectorValue) => {
+                const targetPage = Math.floor(targetIndex / itemsPerPage) + 1;
+                if (targetPage !== currentPage) {
+                    renderPage(targetPage);
+                } else {
+                    setTimeout(() => {
+                        const el = document.querySelector(`[${selectorAttr}="${selectorValue}"]`);
+                        if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                        if (targetListingId) {
+                            removeParams("scrollTo");
+                            scrollToCache = "";
+                        }
+                    }, 500);
                 }
-            } else {
+            };
+        
+            if (targetListingId) {
+                let targetIndex = filteredData.findIndex(cat =>
+                    cat.store_listing_id === targetListingId ||
+                    cat.products?.some(p => p.store_listing_id === targetListingId)
+                );
+            
+                if (targetIndex !== -1) {
+                    scrollToTarget(targetIndex, "data-listing-id", filteredData[targetIndex].store_listing_id);
+                    return;
+                }
+            
+                targetIndex = filteredData.findIndex(cat =>
+                    cat.sku_id === targetListingId ||
+                    cat.products?.some(p => p.sku_id === targetListingId)
+                );
+            
+                if (targetIndex !== -1) {
+                    scrollToTarget(targetIndex, "data-sku-id", filteredData[targetIndex].sku_id);
+                    return;
+                }
+            }
+        
+            if (targetSkuId) {
                 const targetIndex = filteredData.findIndex(cat =>
                     cat.sku_id === targetSkuId ||
-                    (cat.products?.some(p => p.sku_id === targetSkuId))
+                    cat.products?.some(p => p.sku_id === targetSkuId)
                 );
-
+            
                 if (targetIndex !== -1) {
-                    const targetPage = Math.floor(targetIndex / itemsPerPage) + 1;
-                    if (targetPage !== currentPage) {
-                        renderPage(targetPage);
-                    } else {
-                        setTimeout(() => {
-                            const el = document.querySelector(`[data-sku-id="${filteredData[targetIndex].sku_id}"]`);
-                            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                        }, 500);
-                    }
+                    scrollToTarget(targetIndex, "data-sku-id", filteredData[targetIndex].sku_id);
                 }
             }
         };
+
     
         searchInput.addEventListener('input', () => {
             filteredData = filterCategories(data, searchInput.value);
             renderPage(1);
+            if (filteredData.length === 0) {
+                document.querySelector('.categories-container').innerHTML = `
+                    <div class="shop-loading-error-container">
+                        <img src="https://cdn.yapper.shop/assets/207.png">
+                        <h2>Oopsie, no results found.</h2>
+                        <p>We weren't able to find any items that matched your search.</p>
+                    </div>
+                `;
+            }
         });
     
         renderPage(1);
@@ -6018,7 +6091,13 @@ async function loadSite() {
             searchInput.classList.remove('hidden');   
             const output = document.getElementById('categories-container');
             if (!discordCollectiblesCategoriesCache || discordCollectiblesCategoriesCache && reFetch) {
-                const rawData = await fetch(redneredAPI + endpoints.DISCORD_COLLECTIBLES_CATEGORIES);
+                let url = redneredAPI + endpoints.DISCORD_COLLECTIBLES_CATEGORIES;
+
+                if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'database_categories_handling')?.treatment === 1) {
+                    url = redneredAPI + endpoints.CATEGORY_PAGES + endpoints.CATEGORY_CATALOG;
+                }
+
+                const rawData = await fetch(url);
 
                 if (!rawData.ok) {
                     renderShopLoadingError(rawData.status, output);
@@ -6036,7 +6115,13 @@ async function loadSite() {
             searchInput.classList.remove('hidden');   
             const output = document.getElementById('categories-container');
             if (!discordOrbsCategoriesCache || discordOrbsCategoriesCache && reFetch) {
-                const rawData = await fetch(redneredAPI + endpoints.DISCORD_ORBS_CATEGORIES);
+                let url = redneredAPI + endpoints.DISCORD_ORBS_CATEGORIES;
+
+                if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'database_categories_handling')?.treatment === 1) {
+                    url = redneredAPI + endpoints.CATEGORY_PAGES + endpoints.CATEGORY_ORBS;
+                }
+
+                const rawData = await fetch(url);
 
                 if (!rawData.ok) {
                     renderShopLoadingError(rawData.status, output);
@@ -6054,13 +6139,19 @@ async function loadSite() {
             searchInput.classList.remove('hidden');
             const output = document.getElementById('categories-container');
             if (!discordMiscellaneousCategoriesCache || discordMiscellaneousCategoriesCache && reFetch) {
-                url = redneredAPI + endpoints.DISCORD_MISCELLANEOUS_CATEGORIES;
+
+                let url = redneredAPI + endpoints.DISCORD_MISCELLANEOUS_CATEGORIES;
+
+                if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'database_categories_handling')?.treatment === 1) {
+                    url = redneredAPI + endpoints.CATEGORY_PAGES + endpoints.CATEGORY_MISCELLANEOUS;
+                }
+
                 apiUrl = new URL(url);
                 if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'published_items_category')?.treatment === 1) {
-                    apiUrl.searchParams.append("include-published-items-category", "true");
+                    apiUrl.searchParams.append("include_published_items_category", "true");
                 }
                 if (settingsStore.staff_show_test_categories_on_misc_page === 1) {
-                    apiUrl.searchParams.append("include-test-categories", "true");
+                    apiUrl.searchParams.append("include_unpublished", "true");
                 }
                 const rawData = await fetch(apiUrl, {
                     method: "GET",
@@ -6100,7 +6191,6 @@ async function loadSite() {
                 renderQuest(discordQuestsCache, output);
             }
         } else if (currentPageCache === "favorites") {
-            searchInput.classList.add('hidden');
             const output = document.getElementById('categories-container');
             if (settingsStore.dismissible_favorites_tab_new === 0) {
                 changeSetting('dismissible_favorites_tab_new', 1);
@@ -6119,6 +6209,7 @@ async function loadSite() {
                         <p>Favorite an item and it will show up here.</p>
                     </div>
                 `;
+                searchInput.classList.add('hidden');
             }
         } else {
             loadPage('0')
@@ -7432,7 +7523,7 @@ async function loadSite() {
                 <h2>Modal Testing</h2>
 
                 <hr>
-
+                
                 <button class="generic-button brand" onclick="openModal('modalv3', 'userSettings');">Open User Settings Modal (Not Recommended)</button>
 
                 <hr class="inv">
@@ -7457,6 +7548,17 @@ async function loadSite() {
                 <hr class="inv">
 
                 <button class="generic-button brand" id="open-loading-animation-modal">Play Loading Animation</button>
+
+                <hr class="inv">
+
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">Database Item Testing</h2>
+                    <p class="modalv3-content-card-summary">Test modals for items stored on the database</p>
+
+                    <input type="text" class="modalv3-input" autocomplete="off" placeholder="SKU ID" id="api-item-input"></input>
+                    <button class="generic-button brand" id="api-item-modal">Fetch Category Data</button>
+                    <button class="generic-button brand" id="api-item-modal2">Fetch Product Data</button>
+                </div>
             `;
 
             tabPageOutput.querySelector('#open-text-category-button').addEventListener("click", () => {
@@ -7487,6 +7589,23 @@ async function loadSite() {
 
             tabPageOutput.querySelector('#open-loading-animation-modal').addEventListener("click", () => {
                 openModal('modalv2', 'openLoadingTest');
+            });
+
+
+            const input1 = tabPageOutput.querySelector('#api-item-input');
+            tabPageOutput.querySelector('#api-item-modal').addEventListener("click", async () => {
+                if (input1.value.trim().length != 0) {
+                    const data = await fetch(redneredAPI + '/collectibles-categories/' + input1.value.trim());
+                    const json = await data.json()
+                    openModal('modalv2', 'fromCategoryBanner', json);
+                }
+            });
+            tabPageOutput.querySelector('#api-item-modal2').addEventListener("click", async () => {
+                if (input1.value.trim().length != 0) {
+                    const data = await fetch(redneredAPI + '/collectibles-products/' + input1.value.trim());
+                    const json = await data.json()
+                    openModal('modalv2', 'fromCollectibleCard', JSON.parse(textCategory), json);
+                }
             });
 
         } else {
@@ -7764,6 +7883,8 @@ function triggerSafetyBlock() {
     try {
         document.getElementById("title-brick").textContent = "Error!";
         document.getElementById("summary-brick").textContent = 'Unable to verify origin';
+        document.querySelector('.spin-logo').src = "https://cdn.yapper.shop/assets/207.png";
+        document.querySelector('.spin-logo').classList.add('no');
     } catch {
         
     }
@@ -7773,6 +7894,8 @@ function triggerSessionExpiredBlock() {
     try {
         document.getElementById("title-brick").textContent = "Session Expired!";
         document.getElementById("summary-brick").textContent = 'Please log in again or continue as guest';
+        document.querySelector('.spin-logo').src = "https://cdn.yapper.shop/assets/207.png";
+        document.querySelector('.spin-logo').classList.add('no');
         document.querySelector('.brick-wall-buttons-container').innerHTML = `
             <button class="log-in-with-discord-button" onclick="loginWithDiscord();">
                 <svg width="59" height="59" viewBox="0 0 59 59" fill="none" xmlns="http://www.w3.org/2000/svg">
