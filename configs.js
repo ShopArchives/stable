@@ -1,5 +1,5 @@
 
-const appVersion = "7.3.22";
+const appVersion = "7.3.27";
 const appType = "Stable";
 
 const endpoints = {
@@ -11,6 +11,7 @@ const endpoints = {
     USERS: "/users/",
     XP_EVENTS: "/xp-events",
     XP_LEVELS: "/xp-levels",
+    TRADING_CONFIG: "/trading-config",
 
     STABLE_LOGIN_CALLBACK: "/callback",
     DEV_LOGIN_CALLBACK: "/dev/callback",
