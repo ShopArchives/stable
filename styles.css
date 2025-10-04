@@ -151,6 +151,7 @@
 
     --trading-card-bg: #333232;
     --trading-card-brand: linear-gradient(-100deg, #615DED 0%, #764BA2 100%);
+    --trading-card-modal-block: #2c2d3294;
 
     --deco-icon: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTMxIiBoZWlnaHQ9IjUzNSIgdmlld0JveD0iMCAwIDUzMSA1MzUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHk9IjAuNTUyMDAyIiB3aWR0aD0iNTMxIiBoZWlnaHQ9IjUzNC40NDgiIHJ4PSIyNjUuNSIgZmlsbD0iYmxhY2siIGZpbGwtb3BhY2l0eT0iMC4zIi8+CjxwYXRoIGQ9Ik0zNzguMDY1IDE2Mi45NjRDMzU2Ljc2IDE1Mi45NTkgMzM0LjI5MyAxNDUuODkyIDMxMS4yMDYgMTQxLjkyMkMzMDguMDMgMTQ3LjcxOSAzMDUuMTYzIDE1My42NzQgMzAyLjYwNiAxNTkuNzg4QzI3OC4wNDcgMTU1Ljk3NiAyNTMuMDI0IDE1NS45NzYgMjI4LjM4NyAxNTkuNzg4QzIyNS44MyAxNTMuNjc0IDIyMi45NjQgMTQ3LjcxOSAyMTkuNzg4IDE0MS45MjJDMTk2LjcgMTQ1Ljk3MiAxNzQuMTU2IDE1My4wMzkgMTUyLjg1MSAxNjMuMDQzQzExMC41NSAyMjcuMjAxIDk5LjA4NDIgMjg5Ljc3MSAxMDQuODE3IDM1MS40NjdDMTI5LjYwOSAzNzAuMjA2IDE1Ny4zNDQgMzg0LjQ5OSAxODYuNzg0IDM5My42M0MxOTMuNDQ3IDM4NC40OTkgMTk5LjMzNSAzNzQuNzMyIDIwNC4zNyAzNjQuNTY4QzE5NC43NjQgMzYwLjkxNiAxODUuNTQ0IDM1Ni4zOSAxNzYuNzEyIDM1MS4wN0MxNzkuMDM3IDM0OS4zMjMgMTgxLjI4MyAzNDcuNTc2IDE4My41MyAzNDUuODI5QzIzNS40MzcgMzcwLjg0MSAyOTUuNTU2IDM3MC44NDEgMzQ3LjQ2MyAzNDUuODI5QzM0OS43MSAzNDcuNjU2IDM1MS45NTcgMzQ5LjQ4MiAzNTQuMjgxIDM1MS4wN0MzNDUuNDQ5IDM1Ni4zOSAzMzYuMTUyIDM2MC45MTYgMzI2LjU0NiAzNjQuNjQ4QzMzMS41ODEgMzc0LjgxMSAzMzcuNDY5IDM4NC40OTkgMzQ0LjEzMiAzOTMuNjNDMzczLjY0OSAzODQuNDk5IDQwMS4zODUgMzcwLjI4NSA0MjYuMTc2IDM1MS40NjdDNDMyLjkxNiAyNzkuOTI1IDQxNC43MSAyMTcuOTkgMzc3Ljk4OCAxNjIuOTY0SDM3OC4wNjVaTTIxMS43MyAzMTMuNTEyQzE5NS43NzEgMzEzLjUxMiAxODIuNTIzIDI5OC42NjQgMTgyLjUyMyAyODAuNDAxQzE4Mi41MjMgMjYyLjEzOCAxOTUuMjI4IDI0Ny4xMzEgMjExLjY1MyAyNDcuMTMxQzIyOC4wNzcgMjQ3LjEzMSAyNDEuMTcgMjYyLjEzOCAyNDAuODYgMjgwLjQwMUMyNDAuNTUgMjk4LjY2NCAyMjggMzEzLjUxMiAyMTEuNzMgMzEzLjUxMlpNMzE5LjQxOCAzMTMuNTEyQzMwMy4zODEgMzEzLjUxMiAyOTAuMjg4IDI5OC42NjQgMjkwLjI4OCAyODAuNDAxQzI5MC4yODggMjYyLjEzOCAzMDIuOTk0IDI0Ny4xMzEgMzE5LjQxOCAyNDcuMTMxQzMzNS44NDIgMjQ3LjEzMSAzNDguODU4IDI2Mi4xMzggMzQ4LjU0OCAyODAuNDAxQzM0OC4yMzggMjk4LjY2NCAzMzUuNjg4IDMxMy41MTIgMzE5LjQxOCAzMTMuNTEyWiIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC4yIi8+Cjwvc3ZnPgo=);
     --deco-full-icon: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTMxIiBoZWlnaHQ9IjUzNSIgdmlld0JveD0iMCAwIDUzMSA1MzUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHk9IjAuNTUyMDAyIiB3aWR0aD0iNTMxIiBoZWlnaHQ9IjUzNC40NDgiIHJ4PSIyNjUuNSIgZmlsbD0iIzE1MTUxNSIvPgo8cGF0aCBkPSJNMzc4LjA2NSAxNjIuOTY0QzM1Ni43NiAxNTIuOTU5IDMzNC4yOTMgMTQ1Ljg5MiAzMTEuMjA2IDE0MS45MjJDMzA4LjAzIDE0Ny43MTkgMzA1LjE2MyAxNTMuNjc0IDMwMi42MDYgMTU5Ljc4OEMyNzguMDQ3IDE1NS45NzYgMjUzLjAyNCAxNTUuOTc2IDIyOC4zODcgMTU5Ljc4OEMyMjUuODMgMTUzLjY3NCAyMjIuOTY0IDE0Ny43MTkgMjE5Ljc4OCAxNDEuOTIyQzE5Ni43IDE0NS45NzIgMTc0LjE1NiAxNTMuMDM5IDE1Mi44NTEgMTYzLjA0M0MxMTAuNTUgMjI3LjIwMSA5OS4wODQyIDI4OS43NzEgMTA0LjgxNyAzNTEuNDY3QzEyOS42MDkgMzcwLjIwNiAxNTcuMzQ0IDM4NC40OTkgMTg2Ljc4NCAzOTMuNjNDMTkzLjQ0NyAzODQuNDk5IDE5OS4zMzUgMzc0LjczMiAyMDQuMzcgMzY0LjU2OEMxOTQuNzY0IDM2MC45MTYgMTg1LjU0NCAzNTYuMzkgMTc2LjcxMiAzNTEuMDdDMTc5LjAzNyAzNDkuMzIzIDE4MS4yODMgMzQ3LjU3NiAxODMuNTMgMzQ1LjgyOUMyMzUuNDM3IDM3MC44NDEgMjk1LjU1NiAzNzAuODQxIDM0Ny40NjMgMzQ1LjgyOUMzNDkuNzEgMzQ3LjY1NiAzNTEuOTU3IDM0OS40ODIgMzU0LjI4MSAzNTEuMDdDMzQ1LjQ0OSAzNTYuMzkgMzM2LjE1MiAzNjAuOTE2IDMyNi41NDYgMzY0LjY0OEMzMzEuNTgxIDM3NC44MTEgMzM3LjQ2OSAzODQuNDk5IDM0NC4xMzIgMzkzLjYzQzM3My42NDkgMzg0LjQ5OSA0MDEuMzg1IDM3MC4yODUgNDI2LjE3NiAzNTEuNDY3QzQzMi45MTYgMjc5LjkyNSA0MTQuNzEgMjE3Ljk5IDM3Ny45ODggMTYyLjk2NEgzNzguMDY1Wk0yMTEuNzMgMzEzLjUxMkMxOTUuNzcxIDMxMy41MTIgMTgyLjUyMyAyOTguNjY0IDE4Mi41MjMgMjgwLjQwMUMxODIuNTIzIDI2Mi4xMzggMTk1LjIyOCAyNDcuMTMxIDIxMS42NTMgMjQ3LjEzMUMyMjguMDc3IDI0Ny4xMzEgMjQxLjE3IDI2Mi4xMzggMjQwLjg2IDI4MC40MDFDMjQwLjU1IDI5OC42NjQgMjI4IDMxMy41MTIgMjExLjczIDMxMy41MTJaTTMxOS40MTggMzEzLjUxMkMzMDMuMzgxIDMxMy41MTIgMjkwLjI4OCAyOTguNjY0IDI5MC4yODggMjgwLjQwMUMyOTAuMjg4IDI2Mi4xMzggMzAyLjk5NCAyNDcuMTMxIDMxOS40MTggMjQ3LjEzMUMzMzUuODQyIDI0Ny4xMzEgMzQ4Ljg1OCAyNjIuMTM4IDM0OC41NDggMjgwLjQwMUMzNDguMjM4IDI5OC42NjQgMzM1LjY4OCAzMTMuNTEyIDMxOS40MTggMzEzLjUxMloiIGZpbGw9IndoaXRlIiBmaWxsLW9wYWNpdHk9IjAuMiIvPgo8L3N2Zz4K);
@@ -175,6 +176,8 @@
     --profile-badge-background: #1f2024;
     --discord-like-settings-bg: #0C0C0E;
     --discord-like-settings-sidebar: #000000;
+
+    --trading-card-modal-block: #17171a9d;
 
     --deco-full-icon: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTMxIiBoZWlnaHQ9IjUzNSIgdmlld0JveD0iMCAwIDUzMSA1MzUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI1MzEiIGhlaWdodD0iNTM0LjQ0OCIgcng9IjI2NS41IiBmaWxsPSJibGFjayIvPgo8cGF0aCBkPSJNMzc4LjA2NSAxNjIuNDEyQzM1Ni43NiAxNTIuNDA3IDMzNC4yOTMgMTQ1LjM0IDMxMS4yMDYgMTQxLjM3QzMwOC4wMyAxNDcuMTY3IDMwNS4xNjMgMTUzLjEyMiAzMDIuNjA2IDE1OS4yMzZDMjc4LjA0NyAxNTUuNDI0IDI1My4wMjQgMTU1LjQyNCAyMjguMzg3IDE1OS4yMzZDMjI1LjgzIDE1My4xMjIgMjIyLjk2NCAxNDcuMTY3IDIxOS43ODggMTQxLjM3QzE5Ni43IDE0NS40MiAxNzQuMTU2IDE1Mi40ODcgMTUyLjg1MSAxNjIuNDkxQzExMC41NSAyMjYuNjQ5IDk5LjA4NDIgMjg5LjIxOSAxMDQuODE3IDM1MC45MTVDMTI5LjYwOSAzNjkuNjU0IDE1Ny4zNDQgMzgzLjk0NyAxODYuNzg0IDM5My4wNzhDMTkzLjQ0NyAzODMuOTQ3IDE5OS4zMzUgMzc0LjE4IDIwNC4zNyAzNjQuMDE2QzE5NC43NjQgMzYwLjM2NCAxODUuNTQ0IDM1NS44MzggMTc2LjcxMiAzNTAuNTE4QzE3OS4wMzcgMzQ4Ljc3MSAxODEuMjgzIDM0Ny4wMjQgMTgzLjUzIDM0NS4yNzdDMjM1LjQzNyAzNzAuMjg5IDI5NS41NTYgMzcwLjI4OSAzNDcuNDYzIDM0NS4yNzdDMzQ5LjcxIDM0Ny4xMDQgMzUxLjk1NyAzNDguOTMgMzU0LjI4MSAzNTAuNTE4QzM0NS40NDkgMzU1LjgzOCAzMzYuMTUyIDM2MC4zNjQgMzI2LjU0NiAzNjQuMDk2QzMzMS41ODEgMzc0LjI1OSAzMzcuNDY5IDM4My45NDcgMzQ0LjEzMiAzOTMuMDc4QzM3My42NDkgMzgzLjk0NyA0MDEuMzg1IDM2OS43MzMgNDI2LjE3NiAzNTAuOTE1QzQzMi45MTYgMjc5LjM3MyA0MTQuNzEgMjE3LjQzOCAzNzcuOTg4IDE2Mi40MTJIMzc4LjA2NVpNMjExLjczIDMxMi45NkMxOTUuNzcxIDMxMi45NiAxODIuNTIzIDI5OC4xMTIgMTgyLjUyMyAyNzkuODQ5QzE4Mi41MjMgMjYxLjU4NiAxOTUuMjI4IDI0Ni41NzkgMjExLjY1MyAyNDYuNTc5QzIyOC4wNzcgMjQ2LjU3OSAyNDEuMTcgMjYxLjU4NiAyNDAuODYgMjc5Ljg0OUMyNDAuNTUgMjk4LjExMiAyMjggMzEyLjk2IDIxMS43MyAzMTIuOTZaTTMxOS40MTggMzEyLjk2QzMwMy4zODEgMzEyLjk2IDI5MC4yODggMjk4LjExMiAyOTAuMjg4IDI3OS44NDlDMjkwLjI4OCAyNjEuNTg2IDMwMi45OTQgMjQ2LjU3OSAzMTkuNDE4IDI0Ni41NzlDMzM1Ljg0MiAyNDYuNTc5IDM0OC44NTggMjYxLjU4NiAzNDguNTQ4IDI3OS44NDlDMzQ4LjIzOCAyOTguMTEyIDMzNS42ODggMzEyLjk2IDMxOS40MTggMzEyLjk2WiIgZmlsbD0id2hpdGUiIGZpbGwtb3BhY2l0eT0iMC4yIi8+Cjwvc3ZnPgo=)
 }
@@ -265,6 +268,10 @@ p, h1, h2, h3, h4, h5, h6, a {
     height: fit-content;
     width: fit-content;
     font-weight: normal;
+}
+
+* {
+    box-sizing: border-box;
 }
 
 .notice {
@@ -1064,7 +1071,7 @@ hr {
     transition: transform 0.5s, box-shadow 0.2s;
     display: flex;
     flex-direction: column;
-    height: 440px;
+    height: 410px;
     overflow: hidden; 
     position: relative;
     border: 2px solid var(--card-outer);
@@ -1114,7 +1121,7 @@ hr {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 150px;
+    height: 120px;
     box-sizing: border-box;
     backdrop-filter: blur(50px);
     transition: opacity 0.3s ease;
@@ -1259,7 +1266,7 @@ hr {
 
 .nameplate-fade-bottom {
     position: absolute;
-    bottom: 150px;
+    bottom: 110px;
     width: 100%;
     height: 70px;
     background-image: linear-gradient(180deg, rgba(0, 0, 0, 0) 10%,var(--card-inner) 100%);
@@ -1375,6 +1382,22 @@ hr {
     z-index: 15;
 }
 
+.type-1000-preview-container.three-way-bundle .type-0-preview-container {
+    transform: translateY(-70%) rotate(10deg);
+}
+
+.type-1000-preview-container .type-2-preview-container {
+    position: absolute;
+    bottom: 0px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    background-color: var(--card-inner);
+}
+.type-1000-preview-container .type-2-preview-container .nameplate-null-user {
+    margin-bottom: 30px;
+}
+
 
 
 .type-2000-preview-container:has(.type-0-preview-container) {
@@ -1430,7 +1453,7 @@ hr {
     width: 20px;
     border-radius: 50px;
     cursor: pointer;
-    border: 2px solid var(--card-inner);
+    border: 2px solid #00000000;
 }
 
 .shop-card-var-selected {
@@ -2258,10 +2281,17 @@ hr {
 }
 
 .type-1000-modal-preview-container .type-1-effect-preview {
-    position: relative;
+    position: absolute;
     margin: 0;
     margin-left: 50px;
     transform: rotate(-10deg);
+    height: 80%;
+}
+
+.type-1000-modal-preview-container .nameplate-preview {
+    position: relative;
+    top: 250px;
+    margin-left: 50px;
 }
 
 
@@ -3716,6 +3746,7 @@ hr {
     gap: 10px;
     grid-template-columns: repeat(auto-fill, minmax(29px, 1fr));
     z-index: 2;
+    box-sizing: unset;
 }
 
 [data-modal-top-product-buttons] div {
@@ -3723,6 +3754,7 @@ hr {
     width: 34px !important;
     border-radius: 8px;
     overflow: hidden;
+    box-sizing: unset;
 }
 
 
@@ -3731,6 +3763,7 @@ hr {
     padding: 5px;
     color: #B1B5BB;
     background-color: #0000005d;
+    box-sizing: unset;
 }
 
 .modalv2_top_icon:hover {
@@ -3906,7 +3939,6 @@ hr {
     position: fixed;
     z-index: 1001;
     background-color: var(--background-primary);
-    padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
     display: flex;
@@ -4611,6 +4643,8 @@ hr {
 .xp-balance-modalv3-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
+    justify-content: center;
     width: 100%;
     height: 30px;
     left: 5px;
@@ -4622,12 +4656,13 @@ hr {
 
 
 .xp-balance-modalv3-container .bar {
+    position: absolute;
+    left: 0;
     height: 100%;
     background: var(--color-premium);
     border-radius: 16px;
     width: 0%;
     transition: width 1s ease;
-    position: relative;
     box-shadow: 0 0 20px rgba(255, 107, 157, 0.4);
 }
 
@@ -4645,9 +4680,6 @@ hr {
 .xp-balance-modalv3-container p {
     position: absolute;
     display: flex;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     font-size: 14px;
     color: var(--text-primary);
     text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
@@ -4968,21 +5000,22 @@ hr {
 .modal-card-review-container .card-container.v1 {
     transform: translateY(0px);
     opacity: 1;
-    animation: bgv7vf7nn3 500ms;
+    animation: bgv7vf7nn3 1s;
 }
 .modal-card-review-container .card-container.v2 {
     transform: translateY(0px);
     opacity: 1;
-    animation: bgv7vf7nn3 500ms;
+    animation: bgv7vf7nn3 1s;
 }
 .modal-card-review-container .card-container.v3 {
     transform: translateY(0px);
     opacity: 1;
-    animation: bgv7vf7nn3 500ms;
+    animation: bgv7vf7nn3 1s;
 }
 
 @keyframes bgv7vf7nn3 {
     0% {transform: translateY(30px); opacity: 0;}
+    20% {transform: translateY(30px); opacity: 0;}
     100% {transform: translateY(0px); opacity: 1;}
 }
 
@@ -5049,6 +5082,227 @@ hr {
 }
 
 
+
+
+
+.trading-card-browse-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 301;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.trading-card-browse-modal.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.trading-card-browse-modal-inner {
+    position: relative;
+    background-color: var(--background-primary);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    height: 700px;
+    overflow: visible;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.trading-card-browse-modal-back {
+    z-index: 300;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000063;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.trading-card-browse-modal-back.show {
+    opacity: 1;
+}
+
+
+.trading-card-browse-modal-inner > * {
+    z-index: 2;
+}
+
+.trading-card-browse-modal .modal-bg {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+    mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0) 100%);
+    z-index: 1 !important;
+}
+.trading-card-browse-modal .modal-bg-color {
+    background: linear-gradient(-135deg, #374ba1 0%, #764ba2 70%);
+    height: 500px;
+    width: 100%;
+}
+
+
+
+.trading-card-browse-modal .modal-top {
+    display: flex;
+    gap: 10px;
+    height: fit-content;
+}
+
+.trading-card-browse-modal .logo {
+    display: flex;
+    gap: 10px;
+    height: fit-content;
+}
+.trading-card-browse-modal .logo * {
+    font-family: ABC Ginto Nord;
+}
+.trading-card-browse-modal .logo .right-top h1 {
+    margin-top: -7px;
+}
+.trading-card-browse-modal .logo .right-top h2 {
+    font-size: 16px;
+}
+.trading-card-browse-modal .logo svg {
+    height: 58px;
+    width: 58px;
+}
+
+
+.trading-card-browse-modal .modal-top .info-blocks {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+.trading-card-browse-modal .modal-top .info-blocks div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background-color: var(--trading-card-modal-block);
+    border-radius: 5px;
+    height: fit-content;
+}
+.trading-card-browse-modal .modal-top .info-blocks div svg {
+    height: 20px;
+    width: 20px;
+    margin-right: 5px;
+}
+
+
+.trading-card-browse-modal .middle {
+    flex: 1;
+    padding-top: 10px;
+    display: flex;
+    gap: 20px;
+}
+
+.trading-card-browse-modal .middle .left {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background-color: var(--trading-card-modal-block);
+    border-radius: 10px;
+    width: 300px;
+}
+
+.trading-card-browse-modal .middle .left > div {
+    position: relative;
+    display: flex;
+    gap: 5px;
+    flex-direction: column;
+    width: 100%;
+    height: 160px;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+}
+.trading-card-browse-modal .middle .left > div > * {
+    z-index: 2;
+}
+.trading-card-browse-modal .middle .left > div img {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    object-fit: cover;
+    height: 100%;
+    opacity: 25%;
+    z-index: 1;
+    transform: translateX(100%);
+    transition: transform  0.5s ease;
+}
+.trading-card-browse-modal .middle .left > div.selected img {
+    transform: translateX(0%);
+}
+.trading-card-browse-modal .middle .left > div h1 {
+    font-family: ABC Ginto Nord;
+    font-size: 18px;
+}
+
+
+.trading-card-browse-modal .middle .right {
+    flex: 1;
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+}
+
+.trading-card-browse-modal .middle .right .r-top {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--trading-card-modal-block);
+    border-radius: 10px;
+}
+
+.modal-trading-cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    width: 100%;
+    height: fit-content;
+    padding: 10px;
+    overflow-y: auto;
+}
+.modal-trading-cards-container .card {
+    background-color: var(--trading-card-modal-block);
+    border-radius: 10px;
+    height: 250px;
+}
+
+.trading-card-browse-modal .middle .right .r-bottom {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    background-color: var(--trading-card-modal-block);
+    border-radius: 10px;
+    height: 120px;
+    padding: 10px;
+}
+.trading-card-browse-modal .middle .right .r-bottom h1 {
+    font-family: ABC Ginto Nord;
+}
+.trading-card-browse-modal .middle .right .r-bottom .generic-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+}
 
 
 /* Experiments Tab */
@@ -5154,6 +5408,10 @@ hr {
 
 .generic-button.red {
     background-color: var(--color-red);
+}
+
+.generic-button.green {
+    background-color: var(--color-green);
 }
 
 .generic-button.primary {

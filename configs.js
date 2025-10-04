@@ -1,5 +1,5 @@
 
-const appVersion = "7.3.27";
+const appVersion = "7.4.0";
 const appType = "Stable";
 
 const endpoints = {
@@ -144,7 +144,9 @@ const discord_categories = {
     SECRET_GARDEN: "1402783991349772371",
     LUNAR_ECLIPSE: "1409898408076116140",
     BOX: "1409898408392748561",
-    NAMEPLATE_BONANZA: "1416443525192614001"
+    NAMEPLATE_BONANZA: "1416443525192614001",
+    ITS_SHOWTIME: "1420052355516338216",
+    WOODLAND_FRIENDS: "1420045363351654441"
 };
 
 const category_client_overrides = [
@@ -342,6 +344,10 @@ const category_client_overrides = [
     {
         sku_id: discord_categories.NAMEPLATE,
         animatedBanner: "https://cdn.discordapp.com/assets/content/6f72be1e45f627e6b43894ca7dcda02c2851a3120a643a85c5132e87af6b50c4.webm"
+    },
+    {
+        sku_id: discord_categories.ITS_SHOWTIME,
+        modal_hero_banner: "https://cdn.yapper.shop/assets/219.png"
     }
 ];
 
