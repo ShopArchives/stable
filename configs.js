@@ -1,10 +1,11 @@
 
-const appVersion = "7.4.0";
+const appVersion = "7.4.4";
 const appType = "Stable";
 
 const endpoints = {
     MAIN: "https://api.yapper.shop/",
     VERSION: "v3",
+    ADS: "/ads-config",
     VERIFY_ORIGIN: "/heartbeat",
     SERVER_EXPERIMENTS: "/experiments",
     USER: "/users/@me",
@@ -12,6 +13,7 @@ const endpoints = {
     XP_EVENTS: "/xp-events",
     XP_LEVELS: "/xp-levels",
     TRADING_CONFIG: "/trading-config",
+    TRADING_PACK_CLAIM: "/trading-pack-claim/",
 
     STABLE_LOGIN_CALLBACK: "/callback",
     DEV_LOGIN_CALLBACK: "/dev/callback",
@@ -145,8 +147,9 @@ const discord_categories = {
     LUNAR_ECLIPSE: "1409898408076116140",
     BOX: "1409898408392748561",
     NAMEPLATE_BONANZA: "1416443525192614001",
-    ITS_SHOWTIME: "1420052355516338216",
-    WOODLAND_FRIENDS: "1420045363351654441"
+    TRICK_OR_TREAT: "1418326116485038320",
+    WOODLAND_FRIENDS: "1420045363351654441",
+    ITS_SHOWTIME: "1420052355516338216"
 };
 
 const category_client_overrides = [
@@ -424,6 +427,22 @@ const display_name_styles_colors = {
 
 const experiments = [
     {
+        title: `Ads`,
+        codename: `ads_experiment`,
+        release_config: {
+            year: `2025`,
+            month: `10`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Enabled`
+            }
+        ]
+    },
+    {
         title: `XP Revamp`,
         codename: `xp_system_v2`,
         release_config: {
@@ -581,7 +600,6 @@ const reviews_system_types = [
 const settings = {
     "non_us_timezone": 0,
     "profile_effect_tweaks_fix": 0,
-    "reviews_filter_setting": 1,
     "category_page_limit": 5,
     "dev": 0,
 
@@ -747,5 +765,6 @@ const claimable_types = {
     MULTI_CLAIM: 2,
     EXTERNAL: 3,
     CATEGORY: 4,
-    CATEGORY_LEAK: 5
+    CATEGORY_LEAK: 5,
+    TRADING_CARD_PACK: 6
 };
