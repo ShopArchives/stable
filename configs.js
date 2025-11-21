@@ -1,11 +1,11 @@
 
-const appVersion = "7.4.4";
+const appVersion = "7.4.10";
 const appType = "Stable";
 
 const endpoints = {
     MAIN: "https://api.yapper.shop/",
     VERSION: "v3",
-    ADS: "/ads-config",
+    NEWS_UPDATES: "/news-updates",
     VERIFY_ORIGIN: "/heartbeat",
     SERVER_EXPERIMENTS: "/experiments",
     USER: "/users/@me",
@@ -289,21 +289,21 @@ const category_client_overrides = [
     {
         sku_id: discord_categories.DARK_FANTASY,
         addAttributionLogo: !0,
-        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/64.png"
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/65.png"
     },
     {
         sku_id: discord_categories.ROBERT,
         showDarkBannerText: !0,
-        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/63.png"
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/64.png"
     },
     {
         sku_id: discord_categories.STORM,
-        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/62.png"
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/63.png"
     },
     {
         sku_id: discord_categories.DOJO,
         showDarkBannerText: !0,
-        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/61.png"
+        modal_hero_banner: "https://cdn.yapper.shop/discord-assets/62.png"
     },
     {
         sku_id: discord_categories.THE_VAULT,
@@ -426,22 +426,6 @@ const display_name_styles_colors = {
 };
 
 const experiments = [
-    {
-        title: `Ads`,
-        codename: `ads_experiment`,
-        release_config: {
-            year: `2025`,
-            month: `10`
-        },
-        treatments: [
-            {
-                title: `Not Eligible`
-            },
-            {
-                title: `Enabled`
-            }
-        ]
-    },
     {
         title: `XP Revamp`,
         codename: `xp_system_v2`,
@@ -598,9 +582,8 @@ const reviews_system_types = [
 ];
 
 const settings = {
-    "non_us_timezone": 0,
+    "us_time_format": 0,
     "profile_effect_tweaks_fix": 0,
-    "category_page_limit": 5,
     "dev": 0,
 
     "staff_force_leaks_dummy": 0,
@@ -614,7 +597,7 @@ const settings = {
     "staff_show_test_categories_on_misc_page": 0,
     "staff_auth_remove_none_promt": 0,
 
-    "dismissible_favorites_tab_new": 0
+    "dismissible_favorites_tab_new": 1
 };
 
 const leaks_dummy_data = {

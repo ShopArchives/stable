@@ -12,6 +12,7 @@ let usersXPEventsCache;
 let openModalsCache = 0;
 let xpLevelStatsCache;
 let tradingConfigCache;
+let newsUpdatesCache;
 
 let discordProfileEffectsCache;
 let discordLeakedCategoriesCache;
@@ -316,6 +317,21 @@ async function verifyOrigin() {
             syncOverridesWithServer();
         }
 
+
+        const newsRawData = await fetch(redneredAPI + endpoints.NEWS_UPDATES, {
+            method: "GET"
+        });
+
+        if (!newsRawData.ok) {
+            triggerSafetyBlock();
+            return
+        }
+
+        const newsData = await newsRawData.json();
+
+        newsUpdatesCache = newsData;
+
+
         await loadSite();
 
         setTimeout(() => {
@@ -337,17 +353,22 @@ async function fetchAndUpdateXpEvents() {
             apiUrl.searchParams.append("include-unpublished", "true");
         }
 
-        const xpEventsRaw = await fetch(apiUrl, {
+        const res = await fetch(apiUrl, {
             method: "GET",
             headers: {
                 "Authorization": localStorage.token
             }
         });
 
-        if (!xpEventsRaw.ok) {
-            createNotice(`There was an error fetching ${endpoints.USER + endpoints.XP_EVENTS}`, 4);
+        if (!res.ok) {
+            noticeBlock({
+                type: 1,
+                message: `Failed to fetch '${url}': ${res.status}, ${res.statusText}`,
+                autoRemove: true,
+                removeTime: 5000
+            });
         } else {
-            const xpEvents = await xpEventsRaw.json();
+            const xpEvents = await res.json();
 
             usersXPEventsCache = xpEvents;
         }
@@ -359,17 +380,22 @@ async function fetchAndUpdateXpLevels() {
         url = redneredAPI + endpoints.XP_LEVELS;
         apiUrl = new URL(url);
 
-        const xpLevelsRaw = await fetch(apiUrl, {
+        const res = await fetch(apiUrl, {
             method: "GET",
             headers: {
                 "Authorization": localStorage.token
             }
         });
 
-        if (!xpLevelsRaw.ok) {
-            createNotice(`There was an error fetching ${endpoints.XP_LEVELS}`, 4);
+        if (!res.ok) {
+            noticeBlock({
+                type: 1,
+                message: `Failed to fetch '${url}': ${res.status}, ${res.statusText}`,
+                autoRemove: true,
+                removeTime: 5000
+            });
         } else {
-            const xpLevels = await xpLevelsRaw.json();
+            const xpLevels = await res.json();
 
             xpLevelStatsCache = xpLevels;
         }
@@ -427,17 +453,22 @@ async function fetchAndUpdateTradingCache() {
         //     apiUrl.searchParams.append("include-unpublished", "true");
         // }
 
-        const rawData = await fetch(apiUrl, {
+        const res = await fetch(apiUrl, {
             method: "GET",
             headers: {
                 "Authorization": localStorage.token
             }
         });
 
-        if (!rawData.ok) {
-            createNotice(`There was an error fetching ${endpoints.TRADING_CONFIG}`, 4);
+        if (!res.ok) {
+            noticeBlock({
+                type: 1,
+                message: `Failed to fetch '${url}': ${res.status}, ${res.statusText}`,
+                autoRemove: true,
+                removeTime: 5000
+            });
         } else {
-            const data = await rawData.json();
+            const data = await res.json();
 
             tradingConfigCache = data;
         }
@@ -784,6 +815,7 @@ async function loadSite() {
             title: "Quests",
             url: "quests",
             body: `
+                <div class="pagination" id="pagination"></div>
                 <div class="quests-wrapper" id="quests-wrapper">
                     <div class="quest-card loading">
                     </div>
@@ -804,6 +836,7 @@ async function loadSite() {
                     <div class="quest-card loading">
                     </div>
                 </div>
+                <div class="pagination" id="pagination"></div>
             `
         },
         {
@@ -1756,7 +1789,7 @@ async function loadSite() {
 
                                 if (productId && discordProfileEffectsCache) {
                                     // Find the profile effect configuration
-                                    const profileEffect = findProfileEffectByProductId(discordProfileEffectsCache, productId, product.items[0]);
+                                    const profileEffect = findProfileEffectByProductId(discordProfileEffectsCache, productId, selectedVariant.items[0]);
 
                                     if (profileEffect) {
                                         // Set container to full width and auto height
@@ -1845,7 +1878,7 @@ async function loadSite() {
 
                                 if (productId && discordProfileEffectsCache) {
                                     // Find the profile effect configuration
-                                    const profileEffect = findProfileEffectByProductId(discordProfileEffectsCache, productId, product.items[0]);
+                                    const profileEffect = findProfileEffectByProductId(discordProfileEffectsCache, productId, selectedVariant.items[0]);
 
                                     if (profileEffect) {
                                         // Set container to full width and auto height
@@ -2500,7 +2533,7 @@ async function loadSite() {
 
                         assetDiv.classList.add('asset-div')
 
-                        if (value.includes(".webm")) {
+                        if (value.includes(".webm") || asset.includes("Animated")) {
                             assetDiv.innerHTML = `
                                 <h2>${asset}</h2>
                                 <p>This video is built into the client and overrides the existing asset or acts as an alternative.</p>
@@ -2516,7 +2549,7 @@ async function loadSite() {
                             } else {
                                 assetDiv.querySelector('.credits').remove();
                             }
-                        } else if (value.includes(".png") || value.includes(".jpg")) {
+                        } else if (value.includes(".png") || value.includes(".jpg") || asset.includes("Static")) {
                             assetDiv.innerHTML = `
                                 <h2>${asset}</h2>
                                 <p>This image is built into the client and overrides the existing asset or acts as an alternative.</p>
@@ -2546,12 +2579,12 @@ async function loadSite() {
 
                         assetDiv.classList.add('asset-div')
 
-                        if (value.includes(".webm")) {
+                        if (value.includes(".webm") || asset.includes("Animated")) {
                             assetDiv.innerHTML = `
                                 <h2>${asset}</h2>
                                 <video disablepictureinpicture autoplay muted loop src="${value}"></video> 
                             `;
-                        } else if (value.includes(".png") || value.includes(".jpg")) {
+                        } else if (value.includes(".png") || value.includes(".jpg") || asset.includes("Static")) {
                             assetDiv.innerHTML = `
                                 <h2>${asset}</h2>
                                 <img src="${value}"></img> 
@@ -2971,17 +3004,14 @@ async function loadSite() {
 
                                     const dateContainer = reviewDiv.querySelector(".review-date-container");
 
-                                    if (settingsStore.non_us_timezone === 1) {
-                                        const formatted = `${day}/${month}/${year}`;
+                                    let formatted = `${day}/${month}/${year}`;
 
-                                        dateContainer.querySelector('.review-date').textContent = `${formatted}`;
-                                        dateContainer.querySelector('.inv').textContent = `${formatted}`;
-                                    } else {
-                                        const formatted = `${month}/${day}/${year}`;
-
-                                        dateContainer.querySelector('.review-date').textContent = `${formatted}`;
-                                        dateContainer.querySelector('.inv').textContent = `${formatted}`;
+                                    if (settingsStore.us_time_format === 1) {
+                                        formatted = `${month}/${day}/${year}`;
                                     }
+
+                                    dateContainer.querySelector('.review-date').textContent = `${formatted}`;
+                                    dateContainer.querySelector('.inv').textContent = `${formatted}`;
 
                                     if (currentUserData?.id === review.user.id || currentUserData?.types.admin_level >= 1) {
                                         let deleteReviewIcon = document.createElement("div");
@@ -3606,6 +3636,10 @@ async function loadSite() {
                         <p>Modal Testing</p>
                     </div>
 
+                    <div class="side-tabs-button" id="modal-v3-tab-database_testing" onclick="setModalv3InnerContent('database_testing')">
+                        <p>Database Testing</p>
+                    </div>
+
                     <div class="side-tabs-button" id="modal-v3-tab-trading_card_testing" onclick="setModalv3InnerContent('trading_card_testing')">
                         <p>Trading Card Testing</p>
                     </div>
@@ -4161,15 +4195,12 @@ async function loadSite() {
 
                     const dateContainer = modalInner.querySelector(".sa-join-date");
 
-                    if (settingsStore.non_us_timezone === 1) {
-                        const formatted = `${day}/${month}/${year}`;
+                    let formatted = `${month}/${day}/${year}`;
 
-                        dateContainer.textContent = `${formatted}`;
-                    } else {
-                        const formatted = `${month}/${day}/${year}`;
-
-                        dateContainer.textContent = `${formatted}`;
+                    if (settingsStore.us_time_format === 1) {
+                        formatted = `${month}/${day}/${year}`;
                     }
+                    dateContainer.textContent = `${formatted}`;
 
 
                     if (firstTimeOpeningModal) {
@@ -4976,6 +5007,83 @@ async function loadSite() {
                     closeModal();
                 }
             });
+        } else if (type === "newNewsModal") {
+
+            modal.innerHTML = `
+                <div class="new-news-modal-inner">
+                    <div class="modal-bg"><div class="modal-bg-color"></div></div>
+                    <div class="modal-top">
+                        <div class="logo">
+                            <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                <path fill="currentColor" fill-rule="evenodd" d="M5 2a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V5a3 3 0 0 0-3-3H5ZM4 5.5C4 4.67 4.67 4 5.5 4h13c.83 0 1.5.67 1.5 1.5v6c0 .83-.67 1.5-1.5 1.5h-2.65c-.5 0-.85.5-.85 1a3 3 0 1 1-6 0c0-.5-.35-1-.85-1H5.5A1.5 1.5 0 0 1 4 11.5v-6Z" clip-rule="evenodd" class=""></path>
+                            </svg>
+                            <div class="right-top">
+                                <h1>News</h1>
+                                <h2>You will be notified about major Shop Archives news here.</h2>
+                            </div>
+                        </div>
+                        <div class="info-blocks">
+                        </div>
+                    </div>
+
+                    <div class="news-output">
+
+                    </div>
+
+                    <div class="error-output">
+                        <img src="https://cdn.yapper.shop/assets/207.png">
+                        <h2>All is quiet.</h2>
+                        <p>We have no news right now, come back later.</p>
+                    </div>
+
+                    <div data-modal-top-product-buttons>
+                        <div class="has-tooltip" data-tooltip="Close" data-close-product-card-button>
+                            <svg class="modalv2_top_icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // newsUpdatesCache.forEach(news => {
+            //     const card = document.createElement('div');
+            //     card.classList.add('card');
+            //     card.innerHTML = `
+            //         <h2>${news.title}</h2>
+            //         <div class="bottom">
+            //             <img src="${news.img}">
+            //             <p>${news.detail}</p>
+            //         </div>
+            //     `;
+            //     modal.querySelector('.news-output').appendChild(card)
+            // });
+            // if (newsUpdatesCache.length != 0) modal.querySelector('.error-output').remove();
+
+
+
+            document.body.appendChild(modal);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal.classList.add('show');
+                });
+            });
+
+            document.body.appendChild(modal_back);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    modal_back.classList.add('show');
+                });
+            });
+
+
+            modal.querySelector("[data-close-product-card-button]").addEventListener('click', () => {
+                closeModal();
+            });
+
+            modal.addEventListener('click', (event) => {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
         }
 
         if (type != "fromCategoryBanner" && type != "userSettings" && type != "openUserModal" && type != "openLoadingTest" && type != "tradingCardPackOpening" && type != "tradingCardPackBrowse") {
@@ -5097,194 +5205,263 @@ async function loadSite() {
         }
     }
 
-
     async function renderQuest(quests, output) {
 
-        const sorted = quests.sort((a, b) => {
+        const paginationContainers = [];
+    
+        const mainPaginationById = document.getElementById('pagination');
+        if (mainPaginationById) {
+            paginationContainers.push(mainPaginationById);
+        }
+
+        const paginationByClass = document.querySelectorAll('.pagination');
+        paginationByClass.forEach(container => {
+            if (!paginationContainers.includes(container)) {
+                paginationContainers.push(container);
+            }
+        });
+
+        const paginationByDataAttr = document.querySelectorAll('[data-pagination]');
+        paginationByDataAttr.forEach(container => {
+            if (!paginationContainers.includes(container)) {
+                paginationContainers.push(container);
+            }
+        });
+
+        let itemsPerPage = 12;
+        const filteredData = quests.sort((a, b) => {
             const dateA = new Date(a.expires_at);
             const dateB = new Date(b.expires_at);
         
             return dateB - dateA;
         });
+        let currentPage = 1;
+    
+        const renderQuestsPage = (page) => {
+            currentPage = page;
+            output.innerHTML = '';
+            const pageData = paginate(filteredData, page, itemsPerPage);
+            output.scrollTo(0,0);
+    
+            pageData.forEach(quest => {
+                const expDate = new Date(quest.expires_at);
 
-        output.innerHTML = '';
+                const day = String(expDate.getDate()).padStart(2, '0');
+                const month = String(expDate.getMonth() + 1).padStart(2, '0');
+                const year = expDate.getFullYear();
 
-        sorted.forEach(quest => {
-            const expDate = new Date(quest.expires_at);
+                let formatted = `${day}/${month}/${year}`
 
-            const day = String(expDate.getDate()).padStart(2, '0');
-            const month = String(expDate.getMonth() + 1).padStart(2, '0');
-            const year = expDate.getFullYear();
-
-            let formatted = `${month}/${day}/${year}`
-
-            if (settingsStore.non_us_timezone === 1) {
-                formatted = `${day}/${month}/${year}`;
-            }
-
-
-            const card = document.createElement("div");
-            card.classList.add('quest-card');
-            card.setAttribute('data-id', quest.id);
-            card.innerHTML = `
-                <div class="section1">
-                    <img class="hero" src="https://cdn.discordapp.com/quests/${quest.id}/${quest.assets.hero}">
-                    <img class="logo" src="https://cdn.discordapp.com/quests/${quest.id}/dark/${quest.assets.logotype}">
-                    <p class="publisher">Promoted by ${quest.messages.game_publisher}</p>
-                    <p class="date">Ends ${formatted}</p>
-                </div>
-                <div class="section2">
-                    <div class="reward-icon">
-                    </div>
-                    <div class="info-container">
-                        <p class="quest-name">${quest.messages.quest_name.toUpperCase()} QUEST</p>
-                        <p class="reward-name">something idk</p>
-                        <p class="reward-requirements"></p>
-                    </div>
-                </div>
-                <div class="section3">
-                    <button class="generic-button brand">
-                        Open In Discord
-                    </button>
-                </div>
-            `;
-            const rewardRequirements = card.querySelector('.reward-requirements');
-
-            const required = renderQuestRequirement(quest);
-
-            rewardRequirements.textContent = required.requirements;
-
-            const rewardName = card.querySelector('.reward-name');
-            if (quest.rewards_config.rewards[0].type === quest_reward_types.REWARD_CODE || quest.rewards_config.rewards[0].type === quest_reward_types.COLLECTIBLE || quest.rewards_config.rewards[0].type === quest_reward_types.FRACTIONAL_PREMIUM) {
-                rewardName.textContent = `Claim ${quest.rewards_config.rewards[0].messages.name_with_article}`;
-            }
-            else if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
-                rewardName.textContent = `${quest.rewards_config.rewards[0].orb_quantity} Discord Orbs`;
-            }
-            else {
-                rewardName.textContent = quest.rewards_config.rewards[0].messages.name_with_article;
-            }
-
-            const rewardIcon = card.querySelector('.reward-icon');
-            if (quest.rewards_config.rewards[0].type === quest_reward_types.FRACTIONAL_PREMIUM) {
-                rewardIcon.innerHTML = `
-                    <svg width="187" height="187" viewBox="0 0 187 187" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M161.164 3.17212H30.5663C16.8601 3.17212 5.74902 14.3031 5.74902 28.0339V158.866C5.74902 172.597 16.8601 183.728 30.5663 183.728H161.164C174.87 183.728 185.982 172.597 185.982 158.866V28.0339C185.982 14.3031 174.87 3.17212 161.164 3.17212Z" fill="url(#paint0_linear_170_2)"></path>
-                    <g filter="url(#filter0_d_170_2)">
-                    <path d="M100.125 107.318C106.339 107.318 111.376 102.266 111.376 96.0332C111.376 89.8007 106.339 84.7483 100.125 84.7483C93.9113 84.7483 88.874 89.8007 88.874 96.0332C88.874 102.266 93.9113 107.318 100.125 107.318Z" fill="white"></path>
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M55.1214 50.8938C52.0146 50.8938 49.496 53.42 49.496 56.5362C49.496 59.6525 52.0146 62.1787 55.1214 62.1787H71.9979C75.1048 62.1787 77.6235 64.7049 77.6235 67.8211C77.6235 70.9373 75.1048 73.4635 71.9979 73.4635H46.6832C43.5763 73.4635 41.0576 75.9897 41.0576 79.106C41.0576 82.2222 43.5763 84.7484 46.6832 84.7484H60.7469C63.8539 84.7484 66.3724 87.2746 66.3724 90.3908C66.3724 93.5071 63.8539 96.0333 60.7469 96.0333H49.496C46.389 96.0333 43.8704 98.5595 43.8704 101.676C43.8704 104.792 46.389 107.318 49.496 107.318H56.5393C61.5352 126.787 79.1553 141.173 100.125 141.173C124.981 141.173 145.13 120.963 145.13 96.0333C145.13 71.1035 124.981 50.8938 100.125 50.8938H55.1214ZM100.125 118.603C112.553 118.603 122.627 108.498 122.627 96.0333C122.627 83.5683 112.553 73.4635 100.125 73.4635C87.6979 73.4635 77.6235 83.5683 77.6235 96.0333C77.6235 108.498 87.6979 118.603 100.125 118.603Z" fill="white"></path>
-                    <path d="M29.8064 84.7485C32.9133 84.7485 35.4319 82.2223 35.4319 79.1061C35.4319 75.9898 32.9133 73.4636 29.8064 73.4636H26.9936C23.8868 73.4636 21.3682 75.9898 21.3682 79.1061C21.3682 82.2223 23.8868 84.7485 26.9936 84.7485H29.8064Z" fill="white"></path>
-                    </g>
-                    <defs>
-                    <filter id="filter0_d_170_2" x="7.48094" y="42.5615" width="151.536" height="118.053" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                    <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
-                    <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
-                    <feOffset dy="5.55489"></feOffset>
-                    <feGaussianBlur stdDeviation="6.94361"></feGaussianBlur>
-                    <feComposite in2="hardAlpha" operator="out"></feComposite>
-                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
-                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_170_2"></feBlend>
-                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_170_2" result="shape"></feBlend>
-                    </filter>
-                    <linearGradient id="paint0_linear_170_2" x1="160.748" y1="183.303" x2="46.3474" y2="36.4729" gradientUnits="userSpaceOnUse">
-                    <stop stop-color="#E978E6"></stop>
-                    <stop offset="1" stop-color="#2F3EBB"></stop>
-                    </linearGradient>
-                    </defs>
-                    </svg>
-                `;
-            } else {
-
-                if (quest.rewards_config.rewards[0]?.asset?.includes('.mp4') || quest.rewards_config.rewards[0]?.asset?.includes('.webm') || quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
-                    const rewardImg = document.createElement("video");
-                    let src = `https://cdn.discordapp.com/quests/${quest.id}/${quest.rewards_config.rewards[0].asset}`;
-                    if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) src = `https://cdn.discordapp.com/assets/content/fb761d9c206f93cd8c4e7301798abe3f623039a4054f2e7accd019e1bb059fc8.webm`;
-                    rewardImg.src = src;
-
-                    card.addEventListener("mouseenter", () => {
-                        rewardImg.play();
-                    });
-                    card.addEventListener("mouseleave", () => {
-                        rewardImg.pause();
-                        rewardImg.currentTime = 0;
-                    });
-
-                    rewardImg.disablePictureInPicture = true;
-                    rewardImg.muted = true;
-                    rewardImg.loop = true;
-                    rewardImg.playsInline = true;
-
-                    rewardIcon.appendChild(rewardImg);
-                } else {
-                    const rewardImg = document.createElement("img");
-                    let src = `https://cdn.discordapp.com/quests/${quest.id}/${quest.rewards_config.rewards[0].asset}?format=webp`;
-                    rewardImg.src = src;
-
-                    rewardIcon.appendChild(rewardImg);
+                if (settingsStore.us_time_format === 1) {
+                    formatted = `${month}/${day}/${year}`;
                 }
-            }
-
-            const openInDiscordButton = card.querySelector('.generic-button');
 
 
-            const now = new Date();
-            const timeDiff = expDate - now;
-        
-            if (timeDiff <= 0) {
-                openInDiscordButton.classList.add('disabled');
-                openInDiscordButton.textContent = `Quest ended ${formatted}`;
-                card.querySelector('.date').remove();
-                openInDiscordButton.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                });
-            } else {
-                openInDiscordButton.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    redirectToLink('https://discord.com/discovery/quests#'+quest.id);
-                });
-            }
-
-            if (quest.task_config.tasks["WATCH_VIDEO"] || quest.task_config.tasks["WATCH_VIDEO_ON_MOBILE"]) {
-                let button = document.createElement('button');
-                button.classList.add('generic-button');
-                button.classList.add('primary');
-                button.innerHTML = `
-                    <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path fill="currentColor" d="M9.25 3.35C7.87 2.45 6 3.38 6 4.96v14.08c0 1.58 1.87 2.5 3.25 1.61l10.85-7.04a1.9 1.9 0 0 0 0-3.22L9.25 3.35Z" class=""></path>
-                    </svg>
-                    Watch Video
+                const card = document.createElement("div");
+                card.classList.add('quest-card');
+                card.setAttribute('data-id', quest.id);
+                card.innerHTML = `
+                    <div class="section1">
+                        <img class="hero" src="https://cdn.discordapp.com/quests/${quest.id}/${quest.assets.hero}">
+                        <img class="logo" src="https://cdn.discordapp.com/quests/${quest.id}/dark/${quest.assets.logotype}">
+                        <p class="publisher">Promoted by ${quest.messages.game_publisher}</p>
+                        <p class="date">Ends ${formatted}</p>
+                    </div>
+                    <div class="section2">
+                        <div class="reward-icon">
+                        </div>
+                        <div class="info-container">
+                            <p class="quest-name">${quest.messages.quest_name.toUpperCase()} QUEST</p>
+                            <p class="reward-name">something idk</p>
+                            <p class="reward-requirements"></p>
+                        </div>
+                    </div>
+                    <div class="section3">
+                        <button class="generic-button brand">
+                            Open In Discord
+                        </button>
+                    </div>
                 `;
-                button.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    openModal('category-modal', 'discordQuestInfo', quest, 'startOnVideoTab');
-                });
-                card.querySelector('.section3').insertBefore(button, openInDiscordButton);
-            }
+                const rewardRequirements = card.querySelector('.reward-requirements');
 
-            card.addEventListener("click", () => {
-                openModal('category-modal', 'discordQuestInfo', quest);
+                const required = renderQuestRequirement(quest);
+
+                rewardRequirements.textContent = required.requirements;
+
+                const rewardName = card.querySelector('.reward-name');
+                if (quest.rewards_config.rewards[0].type === quest_reward_types.REWARD_CODE || quest.rewards_config.rewards[0].type === quest_reward_types.COLLECTIBLE || quest.rewards_config.rewards[0].type === quest_reward_types.FRACTIONAL_PREMIUM) {
+                    rewardName.textContent = `Claim ${quest.rewards_config.rewards[0].messages.name_with_article}`;
+                }
+                else if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
+                    rewardName.textContent = `${quest.rewards_config.rewards[0].orb_quantity} Discord Orbs`;
+                }
+                else {
+                    rewardName.textContent = quest.rewards_config.rewards[0].messages.name_with_article;
+                }
+
+                const rewardIcon = card.querySelector('.reward-icon');
+                if (quest.rewards_config.rewards[0].type === quest_reward_types.FRACTIONAL_PREMIUM) {
+                    rewardIcon.innerHTML = `
+                        <svg width="187" height="187" viewBox="0 0 187 187" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M161.164 3.17212H30.5663C16.8601 3.17212 5.74902 14.3031 5.74902 28.0339V158.866C5.74902 172.597 16.8601 183.728 30.5663 183.728H161.164C174.87 183.728 185.982 172.597 185.982 158.866V28.0339C185.982 14.3031 174.87 3.17212 161.164 3.17212Z" fill="url(#paint0_linear_170_2)"></path>
+                        <g filter="url(#filter0_d_170_2)">
+                        <path d="M100.125 107.318C106.339 107.318 111.376 102.266 111.376 96.0332C111.376 89.8007 106.339 84.7483 100.125 84.7483C93.9113 84.7483 88.874 89.8007 88.874 96.0332C88.874 102.266 93.9113 107.318 100.125 107.318Z" fill="white"></path>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M55.1214 50.8938C52.0146 50.8938 49.496 53.42 49.496 56.5362C49.496 59.6525 52.0146 62.1787 55.1214 62.1787H71.9979C75.1048 62.1787 77.6235 64.7049 77.6235 67.8211C77.6235 70.9373 75.1048 73.4635 71.9979 73.4635H46.6832C43.5763 73.4635 41.0576 75.9897 41.0576 79.106C41.0576 82.2222 43.5763 84.7484 46.6832 84.7484H60.7469C63.8539 84.7484 66.3724 87.2746 66.3724 90.3908C66.3724 93.5071 63.8539 96.0333 60.7469 96.0333H49.496C46.389 96.0333 43.8704 98.5595 43.8704 101.676C43.8704 104.792 46.389 107.318 49.496 107.318H56.5393C61.5352 126.787 79.1553 141.173 100.125 141.173C124.981 141.173 145.13 120.963 145.13 96.0333C145.13 71.1035 124.981 50.8938 100.125 50.8938H55.1214ZM100.125 118.603C112.553 118.603 122.627 108.498 122.627 96.0333C122.627 83.5683 112.553 73.4635 100.125 73.4635C87.6979 73.4635 77.6235 83.5683 77.6235 96.0333C77.6235 108.498 87.6979 118.603 100.125 118.603Z" fill="white"></path>
+                        <path d="M29.8064 84.7485C32.9133 84.7485 35.4319 82.2223 35.4319 79.1061C35.4319 75.9898 32.9133 73.4636 29.8064 73.4636H26.9936C23.8868 73.4636 21.3682 75.9898 21.3682 79.1061C21.3682 82.2223 23.8868 84.7485 26.9936 84.7485H29.8064Z" fill="white"></path>
+                        </g>
+                        <defs>
+                        <filter id="filter0_d_170_2" x="7.48094" y="42.5615" width="151.536" height="118.053" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                        <feFlood flood-opacity="0" result="BackgroundImageFix"></feFlood>
+                        <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"></feColorMatrix>
+                        <feOffset dy="5.55489"></feOffset>
+                        <feGaussianBlur stdDeviation="6.94361"></feGaussianBlur>
+                        <feComposite in2="hardAlpha" operator="out"></feComposite>
+                        <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"></feColorMatrix>
+                        <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_170_2"></feBlend>
+                        <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_170_2" result="shape"></feBlend>
+                        </filter>
+                        <linearGradient id="paint0_linear_170_2" x1="160.748" y1="183.303" x2="46.3474" y2="36.4729" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#E978E6"></stop>
+                        <stop offset="1" stop-color="#2F3EBB"></stop>
+                        </linearGradient>
+                        </defs>
+                        </svg>
+                    `;
+                } else {
+
+                    if (quest.rewards_config.rewards[0]?.asset?.includes('.mp4') || quest.rewards_config.rewards[0]?.asset?.includes('.webm') || quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) {
+                        const rewardImg = document.createElement("video");
+                        let src = `https://cdn.discordapp.com/quests/${quest.id}/${quest.rewards_config.rewards[0].asset}`;
+                        if (quest.rewards_config.rewards[0].type === quest_reward_types.VIRTUAL_CURRENCY) src = `https://cdn.discordapp.com/assets/content/fb761d9c206f93cd8c4e7301798abe3f623039a4054f2e7accd019e1bb059fc8.webm`;
+                        rewardImg.src = src;
+
+                        card.addEventListener("mouseenter", () => {
+                            rewardImg.play();
+                        });
+                        card.addEventListener("mouseleave", () => {
+                            rewardImg.pause();
+                            rewardImg.currentTime = 0;
+                        });
+
+                        rewardImg.disablePictureInPicture = true;
+                        rewardImg.muted = true;
+                        rewardImg.loop = true;
+                        rewardImg.playsInline = true;
+
+                        rewardIcon.appendChild(rewardImg);
+                    } else {
+                        const rewardImg = document.createElement("img");
+                        let src = `https://cdn.discordapp.com/quests/${quest.id}/${quest.rewards_config.rewards[0].asset}?format=webp`;
+                        rewardImg.src = src;
+
+                        rewardIcon.appendChild(rewardImg);
+                    }
+                }
+
+                const openInDiscordButton = card.querySelector('.generic-button');
+
+
+                const now = new Date();
+                const timeDiff = expDate - now;
+            
+                if (timeDiff <= 0) {
+                    openInDiscordButton.classList.add('disabled');
+                    openInDiscordButton.textContent = `Quest ended ${formatted}`;
+                    card.querySelector('.date').remove();
+                    openInDiscordButton.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                    });
+                } else {
+                    openInDiscordButton.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        redirectToLink('https://discord.com/discovery/quests#'+quest.id);
+                    });
+                }
+
+                if (quest.task_config.tasks["WATCH_VIDEO"] || quest.task_config.tasks["WATCH_VIDEO_ON_MOBILE"]) {
+                    let button = document.createElement('button');
+                    button.classList.add('generic-button');
+                    button.classList.add('primary');
+                    button.innerHTML = `
+                        <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path fill="currentColor" d="M9.25 3.35C7.87 2.45 6 3.38 6 4.96v14.08c0 1.58 1.87 2.5 3.25 1.61l10.85-7.04a1.9 1.9 0 0 0 0-3.22L9.25 3.35Z" class=""></path>
+                        </svg>
+                        Watch Video
+                    `;
+                    button.addEventListener("click", (e) => {
+                        e.stopPropagation();
+                        openModal('category-modal', 'discordQuestInfo', quest, 'startOnVideoTab');
+                    });
+                    card.querySelector('.section3').insertBefore(button, openInDiscordButton);
+                }
+
+                card.addEventListener("click", () => {
+                    openModal('category-modal', 'discordQuestInfo', quest);
+                });
+
+                if (currentOpenModalId && currentOpenModalId === quest.id) {
+                    setTimeout(() => {
+                        openModal('category-modal', 'discordQuestInfo', quest);
+                    }, 500);
+                }
+
+                output.appendChild(card);
             });
 
-            if (currentOpenModalId && currentOpenModalId === quest.id) {
-                setTimeout(() => {
-                    openModal('category-modal', 'discordQuestInfo', quest);
-                }, 500);
+            if (filteredData.length <= itemsPerPage) {
+                paginationContainers.forEach(container => {
+                    container.classList.add('hidden');
+                });
+            } else {
+                paginationContainers.forEach(container => {
+                    container.classList.remove('hidden');
+                });
             }
+    
+            const totalPages = Math.ceil(filteredData.length / itemsPerPage);
+            paginationContainers.forEach(container => {
+                createPaginationControls(container, totalPages, page, renderQuestsPage);
+            });
 
-            output.appendChild(card);
-        });
+            const scrollToCategoryFromUrl = () => {
+                const targetSkuId = currentOpenModalId;
+                const targetListingId = scrollToCache;
+                if (!targetSkuId && !targetListingId) return;
 
-        if (currentOpenModalId != null && currentOpenModalId != undefined) {
-            const targetSkuId = currentOpenModalId;
-            const targetIndex = sorted.findIndex(q => q.id === targetSkuId );
-
-            setTimeout(() => {
-                const el = document.querySelector(`[data-id="${sorted[targetIndex].id}"]`);
-                if (el) {
-                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                const scrollToTarget = (targetIndex, selectorAttr, selectorValue) => {
+                    const targetPage = Math.floor(targetIndex / itemsPerPage) + 1;
+                    if (targetPage !== currentPage) {
+                        renderQuestsPage(targetPage);
+                    } else {
+                        setTimeout(() => {
+                            const el = document.querySelector(`[${selectorAttr}="${selectorValue}"]`);
+                            if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+                            if (targetListingId) {
+                                removeParams("scrollTo");
+                                scrollToCache = "";
+                            }
+                        }, 500);
+                    }
+                };
+            
+                if (targetSkuId) {
+                    const targetIndex = filteredData.findIndex(cat =>
+                        cat.id === targetSkuId
+                    );
+                
+                    if (targetIndex !== -1) {
+                        scrollToTarget(targetIndex, "data-id", filteredData[targetIndex].id);
+                    }
                 }
-            }, 500);
-        }
+            };
+
+
+            scrollToCategoryFromUrl();
+        };
+
+        window.renderQuestsPage = renderQuestsPage;
+    
+        renderQuestsPage(1);
     }
 
 
@@ -6153,7 +6330,7 @@ async function loadSite() {
             }
         });
 
-        let itemsPerPage = settingsStore.category_page_limit || 5;
+        let itemsPerPage = 5;
         let filteredData = data;
         let currentPage = 1;
     
@@ -6516,7 +6693,7 @@ async function loadSite() {
                 `;
                 bannerSummaryAndLogo.appendChild(bannerLogo);
 
-                if (categoryData.banner_asset?.animated && categoryData.banner_asset?.animated.includes("webm")) {
+                if (categoryData.banner_asset?.animated) {
                     const videoBanner = document.createElement("video");
                     videoBanner.disablePictureInPicture = true;
                     videoBanner.autoplay = true;
@@ -6737,12 +6914,19 @@ async function loadSite() {
             searchInput.classList.add('hidden');   
             const output = document.getElementById('categories-container');
             if (!discordCollectiblesShopHomeCache || discordCollectiblesShopHomeCache && reFetch) {
-                const rawData = await fetch(redneredAPI + endpoints.DISCORD_COLLECTIBLES_HOME);
+                let url = redneredAPI + endpoints.DISCORD_COLLECTIBLES_HOME;
+                const res = await fetch(url);
 
-                if (!rawData.ok) {
-                    renderShopLoadingError(rawData.status, output);
+                if (!res.ok) {
+                    renderShopLoadingError(res.status, output);
+                    noticeBlock({
+                        type: 1,
+                        message: `Failed to fetch '${url}': ${res.status}, ${res.statusText}`,
+                        autoRemove: true,
+                        removeTime: 5000
+                    });
                 } else {
-                    const data = await rawData.json();
+                    const data = await res.json();
 
                     discordCollectiblesShopHomeCache = data;
 
@@ -6770,12 +6954,18 @@ async function loadSite() {
                     url = redneredAPI + endpoints.CATEGORY_PAGES + endpoints.CATEGORY_CATALOG;
                 }
 
-                const rawData = await fetch(url);
+                const res = await fetch(url);
 
-                if (!rawData.ok) {
-                    renderShopLoadingError(rawData.status, output);
+                if (!res.ok) {
+                    renderShopLoadingError(res.status, output);
+                    noticeBlock({
+                        type: 1,
+                        message: `Failed to fetch '${url}': ${res.status}, ${res.statusText}`,
+                        autoRemove: true,
+                        removeTime: 5000
+                    });
                 } else {
-                    const data = await rawData.json();
+                    const data = await res.json();
 
                     discordCollectiblesCategoriesCache = data;
 
@@ -6794,12 +6984,18 @@ async function loadSite() {
                     url = redneredAPI + endpoints.CATEGORY_PAGES + endpoints.CATEGORY_ORBS;
                 }
 
-                const rawData = await fetch(url);
+                const res = await fetch(url);
 
-                if (!rawData.ok) {
-                    renderShopLoadingError(rawData.status, output);
+                if (!res.ok) {
+                    renderShopLoadingError(res.status, output);
+                    noticeBlock({
+                        type: 1,
+                        message: `Failed to fetch '${url}': ${res.status}, ${res.statusText}`,
+                        autoRemove: true,
+                        removeTime: 5000
+                    });
                 } else {
-                    const data = await rawData.json();
+                    const data = await res.json();
 
                     discordOrbsCategoriesCache = data;
 
@@ -6826,17 +7022,23 @@ async function loadSite() {
                 if (settingsStore.staff_show_test_categories_on_misc_page === 1) {
                     apiUrl.searchParams.append("include_unpublished", "true");
                 }
-                const rawData = await fetch(apiUrl, {
+                const res = await fetch(apiUrl, {
                     method: "GET",
                     headers: {
                         "Authorization": localStorage.token
                     }
                 });
 
-                if (!rawData.ok) {
-                    renderShopLoadingError(rawData.status, output);
+                if (!res.ok) {
+                    renderShopLoadingError(res.status, output);
+                    noticeBlock({
+                        type: 1,
+                        message: `Failed to fetch '${apiUrl}': ${res.status}, ${res.statusText}`,
+                        autoRemove: true,
+                        removeTime: 5000
+                    });
                 } else {
-                    const data = await rawData.json();
+                    const data = await res.json();
 
                     discordMiscellaneousCategoriesCache = data;
 
@@ -6849,12 +7051,19 @@ async function loadSite() {
             searchInput.classList.add('hidden');   
             const output = document.getElementById('quests-wrapper');
             if (!discordQuestsCache || discordQuestsCache && reFetch) {
-                const rawData = await fetch(redneredAPI + endpoints.DISCORD_QUESTS);
+                let api = redneredAPI + endpoints.DISCORD_QUESTS;
+                const res = await fetch(api);
 
-                if (!rawData.ok) {
-                    renderShopLoadingError(rawData.status, output);
+                if (!res.ok) {
+                    renderShopLoadingError(res.status, output);
+                    noticeBlock({
+                        type: 1,
+                        message: `Failed to fetch '${api}': ${res.status}, ${res.statusText}`,
+                        autoRemove: true,
+                        removeTime: 5000
+                    });
                 } else {
-                    const data = await rawData.json();
+                    const data = await res.json();
 
                     discordQuestsCache = data;
 
@@ -7115,11 +7324,11 @@ async function loadSite() {
                 <div class="modalv3-content-card-1">
                     <div class="setting">
                         <div class="setting-info">
-                            <p class="setting-title">Day-Month-Year Date Format</p>
-                            <p class="setting-description">Changes date formats to DD/MM/YYYY instead of MM/DD/YY.</p>
+                            <p class="setting-title">US Date Format</p>
+                            <p class="setting-description">Changes date formats to MM/DD/YY.</p>
                         </div>
                         <div class="toggle-container">
-                            <div class="toggle" id="non_us_timezone_toggle">
+                            <div class="toggle" id="us_time_format_toggle">
                                 <div class="toggle-circle"></div>
                             </div>
                         </div>
@@ -7135,40 +7344,8 @@ async function loadSite() {
                             </div>
                         </div>
                     </div>
-                    <div class="setting">
-                        <div class="setting-info">
-                            <p class="setting-title">Category page limit</p>
-                            <p class="setting-description">How many categories are shown on a page. Large values may cause lag on low-end devices.</p>
-                        </div>
-                        <div class="toggle-container">
-                            <select id="category_page_limit_select" class="modalv3-experiment-treatment-container">
-                                <option value="1">1</option>
-                                <option value="3">3</option>
-                                <option value="5">5</option>
-                                <option value="10">10</option>
-                                <option value="999">No Limit</option>
-                            </select>
-                        </div>
-                    </div>
                 </div>
             `;
-
-            const selectEl = document.querySelector('#category_page_limit_select');
-
-            for (const option of selectEl.options) {
-                if (option.value === String(settingsStore.category_page_limit)) {
-                    option.selected = true;
-                    break;
-                }
-            }
-
-            selectEl.addEventListener('change', () => {
-                const selectedValue = selectEl.value;
-                changeSetting('category_page_limit', Number(selectedValue));
-                try {
-                    loadPage(currentPageCache, true);
-                } catch {}
-            });
 
             defaultThemes.forEach((theme) => {
                 let themeCard = document.createElement("div");
@@ -7203,8 +7380,8 @@ async function loadSite() {
             
             updateToggleStates();
 
-            tabPageOutput.querySelector('#non_us_timezone_toggle').addEventListener("click", () => {
-                toggleSetting('non_us_timezone');
+            tabPageOutput.querySelector('#us_time_format_toggle').addEventListener("click", () => {
+                toggleSetting('us_time_format');
                 updateToggleStates();
             });
 
@@ -7858,17 +8035,6 @@ async function loadSite() {
                 <hr class="inv">
 
                 <button class="generic-button brand" id="open-loading-animation-modal">Play Loading Animation</button>
-
-                <hr class="inv">
-
-                <div class="modalv3-content-card-1">
-                    <h2 class="modalv3-content-card-header">Database Item Testing</h2>
-                    <p class="modalv3-content-card-summary">Test modals for items stored on the database</p>
-
-                    <input type="text" class="modalv3-input" autocomplete="off" placeholder="SKU ID" id="api-item-input"></input>
-                    <button class="generic-button brand" id="api-item-modal">Fetch Category Data</button>
-                    <button class="generic-button brand" id="api-item-modal2">Fetch Product Data</button>
-                </div>
             `;
 
             tabPageOutput.querySelector('#open-text-category-button').addEventListener("click", () => {
@@ -7899,23 +8065,6 @@ async function loadSite() {
 
             tabPageOutput.querySelector('#open-loading-animation-modal').addEventListener("click", () => {
                 openModal('modalv2', 'openLoadingTest');
-            });
-
-
-            const input1 = tabPageOutput.querySelector('#api-item-input');
-            tabPageOutput.querySelector('#api-item-modal').addEventListener("click", async () => {
-                if (input1.value.trim().length != 0) {
-                    const data = await fetch(redneredAPI + '/collectibles-categories/' + input1.value.trim());
-                    const json = await data.json()
-                    openModal('modalv2', 'fromCategoryBanner', json);
-                }
-            });
-            tabPageOutput.querySelector('#api-item-modal2').addEventListener("click", async () => {
-                if (input1.value.trim().length != 0) {
-                    const data = await fetch(redneredAPI + '/collectibles-products/' + input1.value.trim());
-                    const json = await data.json()
-                    openModal('modalv2', 'fromCollectibleCard', JSON.parse(textCategory), json);
-                }
             });
 
         } else if (tab === "trading_card_testing") {
@@ -8050,6 +8199,122 @@ async function loadSite() {
                 `;
 
                 tabPageOutput.querySelector('#trading-cards-list').appendChild(card)
+            });
+
+        } else if (tab === "database_testing") {
+            const textCategory = JSON.stringify(leaks_dummy_data.categories[0], undefined, 4);
+            tabPageOutput.innerHTML = `
+                <h2>Database Testing</h2>
+
+                <hr>
+
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">Open Item Modal By SKU</h2>
+                    <p class="modalv3-content-card-summary">Test modals for items stored on the database</p>
+
+                    <input type="text" class="modalv3-input" autocomplete="off" placeholder="SKU ID" id="api-item-input"></input>
+                    <button class="generic-button brand" id="api-item-modal">Fetch Category Data</button>
+                    <button class="generic-button brand" id="api-item-modal2">Fetch Product Data</button>
+                </div>
+
+                <hr class="inv">
+
+                <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">POST Data</h2>
+                    <p class="modalv3-content-card-summary">Manually POST api data to the database</p>
+
+                    <hr class="inv">
+
+                    <p class="modalv3-content-card-summary">SKU ID</p>
+                    <input type="text" class="modalv3-input" autocomplete="off" placeholder="1308169595055771749" id="api-item-push-input"></input>
+
+                    <hr class="inv">
+
+                    <p class="modalv3-content-card-summary">Expires At</p>
+                    <input type="text" class="modalv3-input" autocomplete="off" placeholder="2025-02-05T08:00:00+00:00" id="api-item-push-expires_at"></input>
+
+                    <hr class="inv">
+
+                    <p class="modalv3-content-card-summary">Prices</p>
+                    <textarea class="modalv3-input" placeholder="Prices" id="api-item-push-textarea"></textarea>
+
+                    <hr class="inv">
+
+                    <button class="generic-button brand" id="api-item-push">POST Product Data</button>
+
+                    <hr class="inv">
+
+                    <p class="modalv3-content-card-summary">JSON Output</p>
+                    <textarea class="modalv3-input" placeholder="network response" id="api-item-push-textarea-out" readonly></textarea>
+                </div>
+            `;
+
+            const placeholderPriceData = {
+                "0": {
+                    "country_prices": {
+                        "prices": [
+                            {
+                                "amount": 599,
+                                "currency": "usd",
+                                "exponent": 2
+                            }
+                        ],
+                        "country_code": "US"
+                    }
+                },
+                "4": {
+                    "country_prices": {
+                        "prices": [
+                            {
+                              "amount": 499,
+                              "currency": "usd",
+                              "exponent": 2
+                            }
+                        ],
+                        "country_code": "US"
+                    }
+                }
+            };
+
+
+            const input1 = tabPageOutput.querySelector('#api-item-input');
+            tabPageOutput.querySelector('#api-item-modal').addEventListener("click", async () => {
+                if (input1.value.trim().length != 0) {
+                    const data = await fetch(redneredAPI + '/collectibles-categories/' + input1.value.trim());
+                    const json = await data.json()
+                    openModal('modalv2', 'fromCategoryBanner', json);
+                }
+            });
+            tabPageOutput.querySelector('#api-item-modal2').addEventListener("click", async () => {
+                if (input1.value.trim().length != 0) {
+                    const data = await fetch(redneredAPI + '/collectibles-products/' + input1.value.trim());
+                    const json = await data.json()
+                    openModal('modalv2', 'fromCollectibleCard', JSON.parse(textCategory), json);
+                }
+            });
+
+            const input2 = tabPageOutput.querySelector('#api-item-push-input');
+            const input3 = tabPageOutput.querySelector('#api-item-push-textarea');
+            const input_expires_at = tabPageOutput.querySelector('#api-item-push-expires_at');
+            const input4 = tabPageOutput.querySelector('#api-item-push-textarea-out');
+            input3.value = JSON.stringify(placeholderPriceData, undefined, 4);
+            tabPageOutput.querySelector('#api-item-push').addEventListener("click", async () => {
+                input4.value = `fetching...`;
+                if (input2.value.trim().length != 0) {
+                    const res = await fetch(redneredAPI + '/collectibles-products/' + input2.value.trim(), {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            "Authorization": localStorage.token
+                        },
+                        body: JSON.stringify({
+                            prices: input3.value,
+                            expires_at: input_expires_at.value
+                        })
+                    });
+                    const json = await res.json();
+                    input4.value = JSON.stringify(json, undefined, 4);
+                }
             });
 
         } else {
@@ -8280,77 +8545,6 @@ async function loadSite() {
         document.getElementById('dev-tools-icon').classList.remove('hidden');
     }
 
-    if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'ads_experiment')?.treatment === 1) {
-
-        const res = await fetch(redneredAPI + endpoints.ADS);
-        const json = await res.json();
-
-        sideBannerAds()
-        function sideBannerAds() {
-            document.querySelector('.ads-section-1').classList.remove('hidden');
-            const rotator = document.querySelector(".ad-image-here-1");
-
-            let images = [];
-            let currentImage = null;
-
-            // Create image element
-            const img = document.createElement("img");
-            img.style.width = "100%";
-            img.style.cursor = "pointer";
-            rotator.appendChild(img);
-
-            // Click opens redirect in new tab
-            img.addEventListener("click", () => {
-                if (currentImage && currentImage.redirect) {
-                    window.open(currentImage.redirect, "_blank");
-                }
-            });
-
-            async function fetchImages() {
-                try {
-                
-                    // Expecting { side: [ {src, redirect}, ... ] }
-                    if (!json || !Array.isArray(json.side)) {
-                        console.error("Invalid API format. Expected { side: [] }");
-                        return;
-                    }
-                
-                    images = json.side;
-                
-                    if (images.length === 0) {
-                        console.error("No images found in API response.");
-                        return;
-                    }
-                
-                    // Show one immediately
-                    changeImage();
-                
-                    // Rotate randomly every few seconds
-                    setInterval(changeImage, 10000);
-                } catch (err) {
-                    console.error("Failed to fetch images:", err);
-                }
-            }
-
-            function changeImage() {
-                if (images.length === 0) return;
-            
-                // pick random image
-                const randomIndex = Math.floor(Math.random() * images.length);
-                currentImage = images[randomIndex];
-            
-                // fade out, change, fade in
-                img.style.opacity = "0";
-                setTimeout(() => {
-                    img.src = currentImage.src;
-                    img.style.opacity = "1";
-                }, 300);
-            }
-
-            fetchImages();
-        }
-    }
-
 }
 window.loadSite = loadSite;
 
@@ -8562,6 +8756,53 @@ function copyNotice(type) {
     setTimeout(() => {
         copyNotice.remove();
     }, 5000);
+}
+
+
+function noticeBlock({
+    type = 1,
+    message = "",
+    autoRemove = true,
+    removeTime = 5000
+} = {}) {
+    let noticeBlock = document.createElement("div");
+
+    noticeBlock.classList.add('notice-block-container');
+
+    if (type === 1) {
+        noticeBlock.innerHTML = `
+            <svg class="notice-block-close-svg" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path>
+            </svg>
+            <h3>Error</h3>
+            <p>${message}</p>
+        `;
+    }
+
+    noticeBlock.querySelector('.notice-block-close-svg').addEventListener("click", () => {
+        removeNoticeBlock();
+    });
+                 
+    document.querySelector('.notice-block-container-container').appendChild(noticeBlock);
+
+    requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+            noticeBlock.classList.add('show');
+        });
+    });
+
+    if (autoRemove) {
+        noticeBlock.querySelector('.notice-block-close-svg').remove()
+        setTimeout(() => {
+            removeNoticeBlock();
+        }, removeTime);
+    }
+    function removeNoticeBlock() {
+        noticeBlock.classList.remove('show');
+        setTimeout(() => {
+            noticeBlock.remove();
+        }, 500);
+    }
 }
 
 
