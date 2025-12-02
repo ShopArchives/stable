@@ -1,5 +1,5 @@
 
-const appVersion = "7.4.10";
+const appVersion = "7.4.12";
 const appType = "Stable";
 
 const endpoints = {
@@ -26,12 +26,10 @@ const endpoints = {
     CATEGORY_ORBS: "/orbs",
     CATEGORY_MISCELLANEOUS: "/miscellaneous",
 
-    DISCORD_PROFILE_EFFECTS: "/discord-profile-effects",
     DISCORD_LEAKED_CATEGORIES: "/discord-leaked-categories",
     DISCORD_COLLECTIBLES_HOME: "/discord-collectibles-home",
     DISCORD_COLLECTIBLES_CATEGORIES: "/discord-collectibles-categories",
     DISCORD_ORBS_CATEGORIES: "/discord-orbs-categories",
-    DISCORD_POTIONS: "/discord-consumables",
     DISCORD_MISCELLANEOUS_CATEGORIES: "/discord-miscellaneous-categories",
     DISCORD_QUESTS: "/discord-quests",
 
@@ -64,7 +62,8 @@ const category_types = {
     WIDE_BANNER: 3,
     SHELF: 4,
     COUNTDOWN_TIMER: 5,
-    IMMERSIVE_BANNER: 6
+    IMMERSIVE_BANNER: 6,
+    REWARD_HERO: 7
 };
 
 const quest_reward_types = {
@@ -161,27 +160,6 @@ const category_client_overrides = [
     {
         sku_id: "4",
         addLogo: !0
-    },
-    {
-        sku_id: "1344802365307621427",
-        banner_override: "https://cdn.yapper.shop/assets/198.png",
-        modal_hero_banner: "https://cdn.yapper.shop/assets/199.png",
-        banner_override__credits: "1049207768785100880",
-        modal_hero_banner__credits: "1049207768785100880"
-    },
-    {
-        sku_id: "1217175518781243583",
-        banner_override: "https://cdn.yapper.shop/assets/200.png",
-        modal_hero_banner: "https://cdn.yapper.shop/assets/202.png",
-        banner_override__credits: "1049207768785100880",
-        modal_hero_banner__credits: "1049207768785100880"
-    },
-    {
-        sku_id: "1309309974266118144",
-        banner_override: "https://cdn.yapper.shop/assets/201.png",
-        modal_hero_banner: "https://cdn.yapper.shop/assets/202.png",
-        banner_override__credits: "1049207768785100880",
-        modal_hero_banner__credits: "1049207768785100880"
     },
     {
         sku_id: discord_categories.FANTASY,
@@ -561,6 +539,78 @@ const defaultThemes = [
         src: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iODg2IiBoZWlnaHQ9IjQ5OSIgdmlld0JveD0iMCAwIDg4NiA0OTkiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxyZWN0IHdpZHRoPSI4ODUuNDM4IiBoZWlnaHQ9IjQ5OC4wNTkiIGZpbGw9IiMzOTNBNDEiLz4KPHJlY3QgeD0iMTIxLjc0OCIgd2lkdGg9Ijc2My42OSIgaGVpZ2h0PSIyMy45ODA2IiBmaWxsPSJibGFjayIvPgo8cmVjdCB3aWR0aD0iMTIxLjc0OCIgaGVpZ2h0PSI0OTguMDU5IiBmaWxsPSJibGFjayIvPgo8cmVjdCB4PSIxMjIiIHk9IjI0IiB3aWR0aD0iNzYzIiBoZWlnaHQ9IjQ3NCIgZmlsbD0iIzBDMEMwQyIvPgo8cmVjdCB4PSIxNzciIHk9IjUzIiB3aWR0aD0iNjU0IiBoZWlnaHQ9IjE0NyIgcng9IjkiIGZpbGw9ImJsYWNrIiBzdHJva2U9IiMxRTFGMjIiIHN0cm9rZS13aWR0aD0iMiIvPgo8cmVjdCB5PSI0NjQiIHdpZHRoPSIxMjIiIGhlaWdodD0iMzQiIGZpbGw9ImJsYWNrIi8+CjxyZWN0IHg9IjE3NyIgeT0iMjE5IiB3aWR0aD0iMTUyIiBoZWlnaHQ9IjIzOSIgcng9IjkiIGZpbGw9ImJsYWNrIiBzdHJva2U9IiMxRTFGMjIiIHN0cm9rZS13aWR0aD0iMiIvPgo8cmVjdCB4PSI2NzkiIHk9IjIxOSIgd2lkdGg9IjE1MiIgaGVpZ2h0PSIyMzkiIHJ4PSI5IiBmaWxsPSJibGFjayIgc3Ryb2tlPSIjMUUxRjIyIiBzdHJva2Utd2lkdGg9IjIiLz4KPHJlY3QgeD0iMzQ1IiB5PSIyMTkiIHdpZHRoPSIxNTIiIGhlaWdodD0iMjM5IiByeD0iOSIgZmlsbD0iYmxhY2siIHN0cm9rZT0iIzFFMUYyMiIgc3Ryb2tlLXdpZHRoPSIyIi8+CjxyZWN0IHg9IjUxMiIgeT0iMjE5IiB3aWR0aD0iMTUyIiBoZWlnaHQ9IjIzOSIgcng9IjkiIGZpbGw9ImJsYWNrIiBzdHJva2U9IiMxRTFGMjIiIHN0cm9rZS13aWR0aD0iMiIvPgo8cmVjdCB4PSIxMCIgeT0iMjgiIHdpZHRoPSIxMDIiIGhlaWdodD0iMjQiIHJ4PSIzIiBmaWxsPSIjMEMwQzBDIi8+CjxyZWN0IHg9IjEwIiB5PSI1OCIgd2lkdGg9IjEwMiIgaGVpZ2h0PSIyNCIgcng9IjMiIGZpbGw9IiMwQzBDMEMiLz4KPHJlY3QgeD0iMTAiIHk9Ijg4IiB3aWR0aD0iMTAyIiBoZWlnaHQ9IjI0IiByeD0iMyIgZmlsbD0iIzBDMEMwQyIvPgo8cmVjdCB4PSIxMCIgeT0iMTE4IiB3aWR0aD0iMTAyIiBoZWlnaHQ9IjI0IiByeD0iMyIgZmlsbD0iIzBDMEMwQyIvPgo8cmVjdCB4PSIxMCIgeT0iMTQ4IiB3aWR0aD0iMTAyIiBoZWlnaHQ9IjI0IiByeD0iMyIgZmlsbD0iIzBDMEMwQyIvPgo8L3N2Zz4K"
     }
 ];
+
+
+const customCategoryAssets = {
+    0: "https://cdn.yapper.shop/assets/217.png",
+    1: "https://cdn.yapper.shop/assets/231.png",
+    2: "https://cdn.yapper.shop/assets/232.png",
+    3: {
+        sku_id: "1217175518781243583",
+        catalog_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/233.png",
+            credits: "1049207768785100880"
+        },
+        hero_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/202.png",
+            credits: "1049207768785100880"
+        }
+    },
+    4: {
+        sku_id: "1309309974266118144",
+        catalog_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/234.png",
+            credits: "1049207768785100880"
+        },
+        hero_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/202.png",
+            credits: "1049207768785100880"
+        }
+    },
+    5: {
+        sku_id: "1344802365307621427",
+        catalog_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/235.png",
+            credits: "1049207768785100880"
+        },
+        hero_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/199.png",
+            credits: "1049207768785100880"
+        }
+    },
+    6: {
+        sku_id: "1349486948942745691",
+        catalog_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/238.png",
+            credits: "1049207768785100880"
+        },
+        hero_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/239.png",
+            credits: "1049207768785100880"
+        }
+    },
+    7: {
+        sku_id: "1382445856384487567",
+        catalog_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/236.png",
+            credits: "1049207768785100880"
+        },
+        hero_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/202.png",
+            credits: "1049207768785100880"
+        }
+    },
+    8: {
+        sku_id: "1428539043993358497",
+        catalog_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/237.png",
+            credits: "1049207768785100880"
+        },
+        hero_banner_asset: {
+            static: "https://cdn.discordapp.com/app-assets/1096190356233670716/1336165352392097853.png?size=4096"
+        }
+    }
+}
 
 const reviews_system_types = [
     {

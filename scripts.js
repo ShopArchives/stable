@@ -2500,30 +2500,38 @@ async function loadSite() {
 
                     let nullAssets = true;
 
-                    const categoryClientDataId = category_client_overrides.findIndex(cat => cat.sku_id === categoryData.sku_id);
+                    const catalogBannerAssetEntry = Object.values(customCategoryAssets).find(entry =>
+                        typeof entry === "object" && entry.sku_id === categoryData.sku_id
+                    );
 
-                    if (category_client_overrides[categoryClientDataId]?.banner_override__credits) {
-                        doTheAssetThing('Banner', category_client_overrides[categoryClientDataId]?.banner_override, category_client_overrides[categoryClientDataId]?.banner_override__credits);
-                    } else if (category_client_overrides[categoryClientDataId]?.banner_override) {
-                        doTheAssetThing('Banner', category_client_overrides[categoryClientDataId]?.banner_override);
+                    if (catalogBannerAssetEntry?.banner?.static && catalogBannerAssetEntry?.banner?.credits) {
+                        doTheAssetThing('Banner Asset (Static)', catalogBannerAssetEntry?.banner.static, catalogBannerAssetEntry?.banner.credits);
+                    } else if (catalogBannerAssetEntry?.banner?.static) {
+                        doTheAssetThing('Banner Asset (Static)', catalogBannerAssetEntry?.banner.static);
                     }
 
-                    if (category_client_overrides[categoryClientDataId]?.animatedBanner__credits) {
-                        doTheAssetThing('Animated Banner', category_client_overrides[categoryClientDataId]?.animatedBanner, category_client_overrides[categoryClientDataId]?.animatedBanner__credits);
-                    } else if (category_client_overrides[categoryClientDataId]?.animatedBanner) {
-                        doTheAssetThing('Animated Banner', category_client_overrides[categoryClientDataId]?.animatedBanner);
+                    if (catalogBannerAssetEntry?.banner?.animated && catalogBannerAssetEntry?.banner?.credits) {
+                        doTheAssetThing('Banner Asset (Animated)', catalogBannerAssetEntry?.banner.animated, catalogBannerAssetEntry?.banner.credits);
+                    } else if (catalogBannerAssetEntry?.banner?.animated) {
+                        doTheAssetThing('Banner Asset (Animated)', catalogBannerAssetEntry?.banner.animated);
                     }
 
-                    if (category_client_overrides[categoryClientDataId]?.heroBanner?.animationSource__credits) {
-                        doTheAssetThing('Animated Hero Banner', category_client_overrides[categoryClientDataId]?.modal_hero_banner, category_client_overrides[categoryClientDataId]?.heroBanner?.animationSource__credits);
-                    } else if (category_client_overrides[categoryClientDataId]?.heroBanner?.animationSource) {
-                        doTheAssetThing('Animated Hero Banner', category_client_overrides[categoryClientDataId]?.heroBanner?.animationSource);
+                    if (catalogBannerAssetEntry?.hero_banner_asset?.static && catalogBannerAssetEntry?.hero_banner_asset?.credits) {
+                        doTheAssetThing('Hero Banner Asset (Static)', catalogBannerAssetEntry?.hero_banner_asset.static, catalogBannerAssetEntry?.hero_banner_asset.credits);
+                    } else if (catalogBannerAssetEntry?.hero_banner_asset?.static) {
+                        doTheAssetThing('Hero Banner Asset (Static)', catalogBannerAssetEntry?.hero_banner_asset.static);
                     }
 
-                    if (category_client_overrides[categoryClientDataId]?.modal_hero_banner__credits) {
-                        doTheAssetThing('Modal Banner', category_client_overrides[categoryClientDataId]?.modal_hero_banner, category_client_overrides[categoryClientDataId]?.modal_hero_banner__credits);
-                    } else if (category_client_overrides[categoryClientDataId]?.modal_hero_banner) {
-                        doTheAssetThing('Modal Banner', category_client_overrides[categoryClientDataId]?.modal_hero_banner);
+                    if (catalogBannerAssetEntry?.hero_banner_asset?.animated && catalogBannerAssetEntry?.hero_banner_asset?.credits) {
+                        doTheAssetThing('Hero Banner Asset (Animated)', catalogBannerAssetEntry?.hero_banner_asset.animated, catalogBannerAssetEntry?.hero_banner_asset.credits);
+                    } else if (catalogBannerAssetEntry?.hero_banner_asset?.animated) {
+                        doTheAssetThing('Hero Banner Asset (Animated)', catalogBannerAssetEntry?.hero_banner_asset.animated);
+                    }
+
+                    if (catalogBannerAssetEntry?.catalog_banner_asset?.static && catalogBannerAssetEntry?.catalog_banner_asset?.credits) {
+                        doTheAssetThing('Catalog Banner Asset (Static)', catalogBannerAssetEntry?.catalog_banner_asset.static, catalogBannerAssetEntry?.catalog_banner_asset.credits);
+                    } else if (catalogBannerAssetEntry?.catalog_banner_asset?.static) {
+                        doTheAssetThing('Catalog Banner Asset (Static)', catalogBannerAssetEntry?.catalog_banner_asset.static);
                     }
 
                     function doTheAssetThing(asset, value, credits = null) {
@@ -5158,8 +5166,11 @@ async function loadSite() {
 
     function getCategoryBanners(categoryData) {
         const categoryClientDataId = category_client_overrides.findIndex(cat => cat.sku_id === categoryData.sku_id);
+        const categoryAssetEntry = Object.values(customCategoryAssets).find(entry =>
+            typeof entry === "object" && entry.sku_id === categoryData.sku_id
+        );
 
-        let categoryBanner = 'https://cdn.yapper.shop/assets/217.png';
+        let categoryBanner = customCategoryAssets[0];
         if (category_client_overrides[categoryClientDataId]?.banner_override) {
             categoryBanner = category_client_overrides[categoryClientDataId]?.banner_override;
         }
@@ -5173,9 +5184,12 @@ async function loadSite() {
             categoryBanner = `https://cdn.discordapp.com/app-assets/1096190356233670716/${categoryData.banner}.png?size=4096`;
         }
 
-        let categoryHeroBanner = null;
+        let categoryHeroBanner = customCategoryAssets[2];
         if (category_client_overrides[categoryClientDataId]?.hero_banner_override) {
             categoryHeroBanner = category_client_overrides[categoryClientDataId]?.hero_banner_override;
+        }
+        else if (categoryAssetEntry?.hero_banner_asset?.static) {
+            categoryHeroBanner = categoryAssetEntry?.hero_banner_asset?.static;
         }
         else if (categoryData.hero_banner_asset?.static) {
             categoryHeroBanner = categoryData.hero_banner_asset?.static;
@@ -5185,6 +5199,9 @@ async function loadSite() {
         }
         else if (categoryData.hero_banner) {
             categoryHeroBanner = `https://cdn.discordapp.com/app-assets/1096190356233670716/${categoryData.hero_banner}.png?size=4096`;
+        }
+        else if (categoryBanner && categoryBanner !== customCategoryAssets[0]) {
+            categoryHeroBanner = categoryBanner;
         }
 
         let modalBanner = null;
@@ -5198,10 +5215,17 @@ async function loadSite() {
             modalBanner = categoryBanner;
         }
 
+        let catalogBannerAsset = customCategoryAssets[1];
+
+        if (categoryAssetEntry?.catalog_banner_asset) {
+            catalogBannerAsset = categoryAssetEntry?.catalog_banner_asset?.static;
+        }
+
         return {
             categoryBanner,
             categoryHeroBanner,
-            modalBanner
+            modalBanner,
+            catalogBannerAsset
         }
     }
 
@@ -6351,20 +6375,27 @@ async function loadSite() {
                 const bannersOutput = getCategoryBanners(categoryData);
                 const categoryBanner = bannersOutput.categoryBanner;
                 const modalBanner = bannersOutput.modalBanner;
+                const overridenCatalogBannerAsset = bannersOutput.catalogBannerAsset;
     
                 const bannerContainer = document.createElement('div');
-                if (categoryData.catalog_banner_asset) {
+                if (categoryData.catalog_banner_asset || overridenCatalogBannerAsset !== customCategoryAssets[1]) {
                     bannerContainer.classList.add('catalog-banner-container');
-                    bannerContainer.innerHTML = `
-                        <img src="${categoryData.catalog_banner_asset.static}">
-                    `;
-                    if (categoryData.catalog_banner_asset.animated) {
+
+                    if (categoryData.catalog_banner_asset?.static && !categoryData.catalog_banner_asset?.animated) {
+                        bannerContainer.innerHTML = `
+                            <img src="${categoryData.catalog_banner_asset.static}">
+                        `;
+                    } else if (categoryData.catalog_banner_asset?.animated) {
                         bannerContainer.innerHTML = `
                             <video disablepictureinpicture muted loop autoplay src="${categoryData.catalog_banner_asset.animated}"></video>
                             <img src="${categoryData.catalog_banner_asset.static}">
                         `;
+                    } else if (overridenCatalogBannerAsset) {
+                        bannerContainer.innerHTML = `
+                            <img src="${overridenCatalogBannerAsset}">
+                        `;
                     }
-                } else if (categoryBanner) {
+                } else if (categoryBanner !== customCategoryAssets[0]) {
                     bannerContainer.classList.add('banner-container');
                     bannerContainer.style.backgroundImage = `url(${categoryBanner})`;
 
@@ -6473,6 +6504,11 @@ async function loadSite() {
                     if (categoryData.unpublished_at && !isNaN(unpublishedAt.getTime())) {
                         createCategoryTag(null, 1, unpublishedAt)
                     }
+                } else {
+                    bannerContainer.classList.add('catalog-banner-container');
+                    bannerContainer.innerHTML = `
+                        <img src="${overridenCatalogBannerAsset}">
+                    `;
                 }
                 category.appendChild(bannerContainer);
                 
@@ -6661,7 +6697,7 @@ async function loadSite() {
         output.innerHTML = ``;
         data.shop_blocks.forEach((categoryData) => {
             const category = document.createElement("div");
-            if (categoryData.type === category_types.HERO) {
+            if (categoryData.type === category_types.HERO || categoryData.type === category_types.REWARD_HERO) {
                 category.classList.add('category-container');
                 category.classList.add('category-browse-container');
                 category.setAttribute('data-sku-id', categoryData.sku_id);
@@ -6729,6 +6765,9 @@ async function loadSite() {
                 bannerButton.querySelector('svg').addEventListener("click", () => {
                     openModal('category-modal', 'fromCategoryBanner', data.categories[0], categoryData.banner_asset?.static);
                 });
+                if (categoryData.type === category_types.REWARD_HERO) {
+                    bannerButton.querySelector('.home-page-preview-button').remove();
+                }
                 bannerSummaryAndLogo.appendChild(bannerButton);
 
 
@@ -6815,15 +6854,9 @@ async function loadSite() {
     
 
     async function setDiscordProfileEffectsCache() {
-        const rawData = await fetch(redneredAPI + endpoints.DISCORD_PROFILE_EFFECTS);
-
-        if (!rawData.ok) {
-
-        } else {
-            const data = await rawData.json();
-
-            discordProfileEffectsCache = data;
-        }
+        discordProfileEffectsCache = {
+            "profile_effect_configs": []
+        };
     }
     window.setDiscordProfileEffectsCache = setDiscordProfileEffectsCache;
 
