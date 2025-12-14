@@ -2598,6 +2598,12 @@ hr {
 }
 
 
+.updated-date {
+    position: absolute;
+    right: 20px;
+    color: var(--text-secondary);
+}
+
 .category-modal-quick-info-d-container {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
@@ -2876,6 +2882,27 @@ hr {
 }
 
 
+.review-specific-item-container {
+    position: relative;
+    background-color: var(--modal-block-bg);
+    padding: 10px;
+    border-radius: 10px;
+    width: fit-content;
+}
+.review-specific-item-container .sub {
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+.review-specific-item-container .name {
+    font-size: 16px;
+}
+
+.review-specific-item-button {
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+}
+
 .review-text-content {
     position: relative;
     font-family: 'gg sans five', sans-serif;
@@ -2952,7 +2979,7 @@ hr {
     opacity: 0.3;
     transform: rotateY(180deg);
     */
-
+    mask-image: linear-gradient(to left,#000 50%,rgba(0,0,0,0)100%);
 }
 
 .review-nameplate-container:has(img) {
@@ -5662,6 +5689,187 @@ hr {
     object-fit: cover;
     border-radius: 10px;
 }
+
+
+
+
+
+
+/* News Modal */
+
+.choose-item-to-review-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 301;
+    opacity: 0;
+    transform: scale(0);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.choose-item-to-review-modal.show {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.choose-item-to-review-modal-inner {
+    position: relative;
+    background-color: var(--background-primary);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    width: 1000px;
+    height: 700px;
+    overflow: visible;
+    box-sizing: border-box;
+}
+
+.choose-item-to-review-modal-back {
+    z-index: 300;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #00000063;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.choose-item-to-review-modal-back.show {
+    opacity: 1;
+}
+
+
+.choose-item-to-review-modal-inner > * {
+    z-index: 2;
+}
+
+.choose-item-to-review-modal .modal-bg {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    border-radius: 10px 10px 0px 0px;
+    mask-image: linear-gradient(to bottom, #000 0%, rgba(0, 0, 0, 0) 100%);
+    z-index: 1 !important;
+}
+.choose-item-to-review-modal .modal-bg-color {
+    background: linear-gradient(-135deg, #374ba1 0%, #4661aa 70%);
+    height: 500px;
+    width: 100%;
+}
+
+
+.choose-item-to-review-modal .modal-top {
+    display: flex;
+    gap: 10px;
+    height: fit-content;
+    padding: 20px 20px 0px 20px;
+}
+
+.choose-item-to-review-modal .logo {
+    display: flex;
+    gap: 10px;
+    height: fit-content;
+}
+.choose-item-to-review-modal .logo .right-top h1 {
+    margin-top: -7px;
+    font-family: ABC Ginto Nord;
+}
+.choose-item-to-review-modal .logo .right-top h2 {
+    font-size: 16px;
+}
+.choose-item-to-review-modal .logo svg {
+    height: 58px;
+    width: 58px;
+}
+
+
+.choose-item-to-review-modal .items-output {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 10px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    flex: 1;
+    align-content: start;
+}
+.choose-item-to-review-modal .items-output .card {
+    position: relative;
+    background-color: var(--modal-block-bg);
+    width: auto;
+    height: 200px;
+    border-radius: 5px;
+    box-sizing: border-box;
+    flex-shrink: 0;
+    cursor: pointer;
+}
+.choose-item-to-review-modal .items-output .card p {
+    position: absolute;
+    background-color: var(--card-outer);
+    padding: 10px;
+    font-size: 20px;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+}
+
+.choose-item-to-review-modal .items-output .card .deco {
+    position: relative;
+    display: block;
+    width: 120px;
+    height: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    background-image: var(--deco-icon);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 83%;
+}
+.choose-item-to-review-modal .items-output .card .effect {
+    position: relative;
+    width: 100%;
+}
+.choose-item-to-review-modal .items-output .card .nameplate1 {
+    position: relative;
+    display: block;
+    width: 250px;
+    margin-left: 50px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.choose-item-to-review-modal .items-output .card .nameplate2 {
+    position: relative;
+    display: block;
+    width: 250px;
+    margin-left: -130px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.choose-item-to-review-modal .items-output .card svg {
+    position: relative;
+    display: block;
+    width: 120px;
+    height: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+}
+
 
 
 

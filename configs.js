@@ -1,5 +1,5 @@
 
-const appVersion = "7.4.12";
+const appVersion = "7.4.14";
 const appType = "Stable";
 
 const endpoints = {
@@ -405,6 +405,22 @@ const display_name_styles_colors = {
 
 const experiments = [
     {
+        title: `Review Specific Item`,
+        codename: `review_specific_item`,
+        release_config: {
+            year: `2025`,
+            month: `12`
+        },
+        treatments: [
+            {
+                title: `Not Eligible`
+            },
+            {
+                title: `Enabled`
+            }
+        ]
+    },
+    {
         title: `XP Revamp`,
         codename: `xp_system_v2`,
         release_config: {
@@ -603,11 +619,8 @@ const customCategoryAssets = {
     8: {
         sku_id: "1428539043993358497",
         catalog_banner_asset: {
-            static: "https://cdn.yapper.shop/assets/237.png",
+            static: "https://cdn.yapper.shop/assets/240.png",
             credits: "1049207768785100880"
-        },
-        hero_banner_asset: {
-            static: "https://cdn.discordapp.com/app-assets/1096190356233670716/1336165352392097853.png?size=4096"
         }
     }
 }
