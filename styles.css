@@ -1100,6 +1100,14 @@ hr {
     max-height: 430px;
 }
 
+[data-sku-id="6"] .products-wrapper {
+    display: flex;
+    justify-content: center;
+}
+[data-sku-id="6"] .products-wrapper > div {
+    width: 285px !important;
+}
+
 
 .shop-category-card {
     background-color: var(--card-inner);
