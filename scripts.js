@@ -5392,7 +5392,7 @@ async function loadSite() {
                 const objImg2 = card.querySelector('.img2')
                 if (item.type === item_types.AVATAR_DECORATION) {
                     objImg.classList.add('deco');
-                    objImg.src = item.items[0].assets.static_image_url;
+                    objImg.src = item.items[0].assets ? item.items[0].assets.static_image_url : `https://cdn.discordapp.com/avatar-decoration-presets/${item.items[0].asset}.png?size=4096&passthrough=false`;
                     objImg2.remove();
                 }
                 else if (item.type === item_types.PROFILE_EFFECT) {
@@ -5401,11 +5401,13 @@ async function loadSite() {
                     objImg2.remove();
                 }
                 else if (item.type === item_types.NAMEPLATE) {
+                    const nameplateImg = item.items[0].assets ? item.items[0].assets.static_image_url : `https://cdn.discordapp.com/assets/collectibles/${item.items[0].asset}static.png`;
+
                     objImg.classList.add('nameplate1');
-                    objImg.src = item.items[0].assets.static_image_url;
+                    objImg.src = nameplateImg;
 
                     objImg2.classList.add('nameplate2');
-                    objImg2.src = item.items[0].assets.static_image_url;
+                    objImg2.src = nameplateImg;
 
                     const paletteName = item.items[0].palette;
                     const bgcolor = nameplate_palettes[paletteName].darkBackground;
@@ -7415,7 +7417,7 @@ async function loadSite() {
                 output.innerHTML = `
                     <div class="shop-loading-error-container">
                         <img src="https://cdn.yapper.shop/assets/207.png">
-                        <h2>This page as beed disabled.</h2>
+                        <h2>This page has been disabled.</h2>
                         <p>Please turn off Static API Mode in Advanced settings to view this page.</p>
                     </div>
                 `;
