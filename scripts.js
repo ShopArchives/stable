@@ -23,7 +23,6 @@ let discordOrbsCategoriesCache;
 let discordMiscellaneousCategoriesCache;
 let discordQuestsCache;
 
-let hasDroveAdminPanelPlugin = false;
 let baseYapperURL = 'https://yapper.shop/';
 
 if (appType === 'Dev') baseYapperURL = 'https://dev.yapper.shop/';
@@ -951,7 +950,7 @@ async function loadSite() {
         await fetchAndUpdateXpLevels();
     }
 
-    if (JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'xp_system_v2')?.treatment === 1) {
+    if (currentUserData && JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'xp_system_v2')?.treatment === 1) {
         await fetchAndUpdateTradingCache();
     }
 
@@ -1031,6 +1030,9 @@ async function loadSite() {
             if (category.full_src && category.logo) {
                 logoAsset = category.logo;
             }
+            else if (category.logo_url) {
+                logoAsset = category.logo_url;
+            }
             else if (category.logo) {
                 logoAsset = `https://cdn.discordapp.com/app-assets/1096190356233670716/${category.logo}.png?size=4096`;
             }
@@ -1038,6 +1040,9 @@ async function loadSite() {
             let pdpAsset;
             if (category.full_src && category.pdp_bg) {
                 pdpAsset = category.pdp_bg;
+            }
+            else if (category.pdp_bg_url) {
+                pdpAsset = category.pdp_bg_url;
             }
             else if (category.pdp_bg) {
                 pdpAsset = `https://cdn.discordapp.com/app-assets/1096190356233670716/${category.pdp_bg}.png?size=4096`;
@@ -3812,6 +3817,10 @@ async function loadSite() {
                 </div>
             `;
 
+            let redirect = "stable";
+            if (appType === "Dev") {
+                redirect = "developer";
+            }
             modal.querySelector("#modalv3-side-tabs-container").innerHTML = `
                 <div class="remove-on-mobile">
                     <div class="side-tabs-category-text-container">
@@ -3845,9 +3854,13 @@ async function loadSite() {
 
                 <div class="modalv3-side-tabs-app-info-container">
                     <div>
-                        <p>Website made by: </p><a class="link" href="https://github.com/DTACat/">DTACat</a>
+                        <p>Site made by:</p>
+                        <a class="link" href="https://github.com/DTACat/" target="_blank">DTACat</a>
                     </div>
-                    <p>${appType} ${appVersion}</p>
+                    <div>
+                        <p>Shop Archives</p>
+                        <a class="link" href="https://github.com/ShopArchives/${redirect}" target="_blank">${typeof appVersion !== 'undefined' ? appVersion : 'vUnknown'}</a>
+                    </div>
                     <a class="link" href="https://yapper.shop/legal-information/?page=tos">Terms of Service</a>
                     <a class="link" href="https://yapper.shop/legal-information/?page=privacy">Privacy Policy</a>
                 </div>
@@ -4243,7 +4256,7 @@ async function loadSite() {
                 method: "GET"
             };
 
-            if (hasDroveAdminPanelPlugin) {
+            if (currentUserData && currentUserData.types.admin_level > 0) {
                 methodAndHeaders = {
                     method: "GET",
                     headers: {
@@ -4253,7 +4266,7 @@ async function loadSite() {
             }
 
             apiUrl = new URL(redneredAPI + endpoints.USERS + userID);
-            if (hasDroveAdminPanelPlugin) {
+            if (currentUserData && currentUserData.types.admin_level > 0) {
                 apiUrl.searchParams.append("include-debug-info", "true");
             }
             const rawUserData = await fetch(apiUrl,
@@ -4310,6 +4323,14 @@ async function loadSite() {
                             </svg>
                             <p>Edit</p>
                         </div>
+                        <div class="tab" id="user-modal-tab-4">
+                            <svg width="46" height="46" viewBox="0 0 46 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M4.64349 8.16714C4.31747 8.54693 4.15568 9.04068 4.19371 9.53976L5.91422 32.121C5.95225 32.6201 6.18698 33.0836 6.56677 33.4096C6.94656 33.7356 7.4403 33.8974 7.93939 33.8594L26.7573 32.4258C27.2563 32.3878 27.7199 32.1531 28.0459 31.7733C28.3719 31.3935 28.5337 30.8997 28.4957 30.4007L26.7752 7.81943C26.7371 7.32035 26.5024 6.85682 26.1226 6.5308C25.7428 6.20479 25.2491 6.043 24.75 6.08102L19.1046 6.51095L18.8179 2.74738L24.4632 2.31745C25.9605 2.20337 27.4417 2.68874 28.5811 3.66679C29.7205 4.64483 30.4247 6.03544 30.5387 7.53268L32.6894 35.7593C32.8035 37.2565 32.3181 38.7377 31.34 39.8771C30.362 41.0165 28.9714 41.7207 27.4742 41.8348L8.65627 43.2683C7.15903 43.3824 5.67779 42.897 4.53842 41.919C3.39904 40.9409 2.69486 39.5503 2.58078 38.0531L0.430133 9.82651C0.316055 8.32927 0.801426 6.84803 1.77947 5.70866C2.75752 4.56928 4.14812 3.8651 5.64536 3.75102L18.5826 2.7653L18.8694 6.52887L5.93211 7.51459C5.43303 7.55262 4.9695 7.78735 4.64349 8.16714Z" fill="currentColor"></path>
+                                <path d="M18.5826 2.7653L18.8179 2.74738L19.1046 6.51095L18.8694 6.52887L18.5826 2.7653Z" fill="currentColor"></path>
+                                <path d="M35.7864 2.31689C37.2836 2.20282 38.7652 2.68846 39.9045 3.6665C41.0437 4.64449 41.7484 6.03468 41.8625 7.53174L44.0129 35.7583C44.127 37.2555 43.6414 38.7371 42.6633 39.8765C41.6853 41.0158 40.2943 41.7204 38.7971 41.8345L32.2551 42.3325C32.6524 42.0421 33.0173 41.6976 33.3362 41.3013C34.3089 40.0924 34.7868 38.5168 34.6653 36.9214L34.344 32.7095L38.0803 32.4253C38.5793 32.3873 39.0434 32.1526 39.3694 31.7729C39.6954 31.3932 39.8566 30.899 39.8186 30.3999L38.0989 7.81885C38.0609 7.31977 37.8253 6.8558 37.4456 6.52979C37.0658 6.20403 36.5724 6.04257 36.0735 6.08057L32.3167 6.36572C32.1033 4.95926 31.4317 3.66759 30.4094 2.72607L35.7864 2.31689Z" fill="currentColor"></path>
+                            </svg>
+                            <p>Inventory</p>
+                        </div>
                         <div class="tab" id="user-modal-tab-2">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M15.7376 3.18925C15.4883 2.93731 15.0814 2.93686 14.8316 3.18824L14.0087 4.01625C13.7618 4.26471 13.7614 4.66581 14.0078 4.91476L20.3804 11.3527C20.6265 11.6013 20.6265 12.0017 20.3804 12.2503L14.0078 18.6882C13.7614 18.9373 13.7618 19.3383 14.0087 19.5867L14.8316 20.4148C15.0814 20.6662 15.4883 20.6658 15.7376 20.4138L23.815 12.2503C24.061 12.0016 24.061 11.6014 23.815 11.3528L15.7376 3.18925Z" fill="currentColor"/>
@@ -4329,8 +4350,6 @@ async function loadSite() {
                             <svg class="modalv2_top_icon" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path fill="currentColor" d="M17.3 18.7a1 1 0 0 0 1.4-1.4L13.42 12l5.3-5.3a1 1 0 0 0-1.42-1.4L12 10.58l-5.3-5.3a1 1 0 0 0-1.4 1.42L10.58 12l-5.3 5.3a1 1 0 1 0 1.42 1.4L12 13.42l5.3 5.3Z" class=""></path></svg>
                         </div>
                     </div>
-
-                    <textarea id="always-existing-user-json" style="display: none;"></textarea>
                 </div>
             `;
 
@@ -4564,6 +4583,266 @@ async function loadSite() {
                         <div class="admin-panel-edit-user-inner">
                         </div>
                     `;
+                    const target = document.querySelector('.admin-panel-edit-user-inner');
+                    if (target && !target.dataset.overridden) {
+                        target.innerHTML = `
+                            <button class="generic-button" id="drove-user-edit-ban">
+                                Ban User
+                                <svg aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" viewBox="0 0 24 24">
+                                    <path fill="currentColor" d="M15 2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0V4.41l-4.3 4.3a1 1 0 1 1-1.4-1.42L19.58 3H16a1 1 0 0 1-1-1Z" class=""></path>
+                                    <path fill="currentColor" d="M5 2a3 3 0 0 0-3 3v14a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3v-6a1 1 0 1 0-2 0v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h6a1 1 0 1 0 0-2H5Z" class=""></path>
+                                </svg>
+                            </button>
+                            <div class="drove-user-edit-section-1">
+                                <div class="card">
+                                    <p>Experiment Hash</p>
+                                    <input type="text" autocomplete="off" id="user-experiment_hash" value="${cacheUserData.experiment_hash}">
+                                </div>
+                                <div class="card" id="admin_2_only">
+                                    <p>XP Balance</p>
+                                    <input type="text" autocomplete="off" id="user-xp_balance" value="${cacheUserData.profile_information.xp_balance}">
+                                </div>
+                                <div class="card" id="admin_3_only">
+                                    <p>Admin Level</p>
+                                    <select id="user-admin_level">
+                                        <option value="0">None (0)</option>
+                                        <option value="1">Mini Staff (1)</option>
+                                        <option value="2">Staff (2)</option>
+                                        <option value="3">Admin (3)</option>
+                                    </select>
+                                </div>
+                                <div class="card" id="admin_2_only">
+                                    <label>System</label>
+                                    <select class="edit-user-data-input" id="user-system">
+                                        <option value="false">False</option>
+                                        <option value="true">True</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="generic-button brand has-tooltip" id="drove-user-edit-save-changed" data-tooltip="No changes were made" disabled>Save Changes</button>
+                            <hr>
+                        `;
+                        target.dataset.overridden = "true";
+
+                        const banButton = target.querySelector('#drove-user-edit-ban');
+                        if (cacheUserData.ban_config?.ban_type >= 1) {
+                            banButton.classList.add('brand');
+                            banButton.textContent = `Unban`;
+                        } else {
+                            banButton.classList.add('red');
+                            banButton.textContent = `Ban`;
+                        }
+                        if (cacheUserData.types.admin_level >= currentUserData.types.admin_level) {
+                            banButton.classList.add('has-tooltip');
+                            banButton.setAttribute('data-tooltip', 'You cannot ban a user if their Admin Level is equal to or greater than yours');
+                            banButton.disabled = true;
+                        }
+                        else if (cacheUserData.ban_config?.ban_type >= 1) {
+                            banButton.addEventListener("click", async () => {
+                                banButton.disabled = true;
+                                banButton.textContent = `...`;
+                                try {
+                                    await fetch(redneredAPI + endpoints.USERS + cacheUserData.id, {
+                                        method: "POST",
+                                        headers: {
+                                            "Authorization": localStorage.token
+                                        },
+                                        body: JSON.stringify({
+                                            ban_config: {
+                                                "ban_type": 0
+                                            }
+                                        })
+                                    });
+                                    closeModal();
+                                    openModal('user-modal', 'openUserModal', cacheUserData.id);
+                                } catch {}
+                            });
+                        }
+                        else if (cacheUserData.ban_config?.ban_type === 0) {
+                            banButton.addEventListener("click", async () => {
+                                banButton.disabled = true;
+                                banButton.textContent = `...`;
+                                try {
+                                    await fetch(redneredAPI + endpoints.USERS + cacheUserData.id, {
+                                        method: "POST",
+                                        headers: {
+                                            "Authorization": localStorage.token
+                                        },
+                                        body: JSON.stringify({
+                                            ban_config: {
+                                                "ban_type": 2
+                                            }
+                                        })
+                                    });
+                                    closeModal();
+                                    openModal('user-modal', 'openUserModal', cacheUserData.id);
+                                } catch {}
+                            });
+                        }
+
+                        const experiment_hash_El = target.querySelector('#user-experiment_hash');
+                        const xp_balance_El = target.querySelector('#user-xp_balance');
+                        const admin_level_El = target.querySelector('#user-admin_level');
+                        const system_El = target.querySelector('#user-system');
+
+                        experiment_hash_El.addEventListener("input", () => {
+                            experiment_hash_El.value = experiment_hash_El.value.replace(/\D/g, "");
+                            const MAX_LENGTH = 4;
+                            if (experiment_hash_El.value.length > MAX_LENGTH) {
+                                experiment_hash_El.value = experiment_hash_El.value.slice(0, MAX_LENGTH);
+                            }
+                        });
+
+                        xp_balance_El.addEventListener("input", () => {
+                            xp_balance_El.value = xp_balance_El.value.replace(/\D/g, "");
+                            const MAX_LENGTH = 6;
+                            if (xp_balance_El.value.length > MAX_LENGTH) {
+                                xp_balance_El.value = xp_balance_El.value.slice(0, MAX_LENGTH);
+                            }
+                        });
+
+                        if (currentUserData.types.admin_level === cacheUserData.types.admin_level) {
+                            admin_level_El.parentElement.style.opacity = '0.5';
+                            let d = document.createElement("div");
+                            d.classList.add('staff-option-disabled');
+                            d.classList.add('has-tooltip');
+                            d.setAttribute('data-tooltip', 'You cannot modify a users Admin Level if their Admin Level is equal to or greater than yours');
+                            admin_level_El.parentElement.appendChild(d);
+                        }
+
+                        experiment_hash_El.addEventListener("input", () => {
+                            updateSaveButton();
+                        });
+                        xp_balance_El.addEventListener("input", () => {
+                            updateSaveButton();
+                        });
+
+                        if (currentUserData.types.admin_level <= 2) {
+                            target.querySelectorAll('#admin_3_only').forEach((el) => {
+                                el.style.opacity = '0.5';
+                                let d = document.createElement("div");
+                                d.classList.add('staff-option-disabled');
+                                d.classList.add('has-tooltip');
+                                d.setAttribute('data-tooltip', 'Your Admin Level is not high enough to modify this setting');
+                                el.appendChild(d);
+                            });
+                        }
+
+                        if (currentUserData.types.admin_level <= 1) {
+                            target.querySelectorAll('#admin_2_only').forEach((el) => {
+                                el.style.opacity = '0.5';
+                                let d = document.createElement("div");
+                                d.classList.add('staff-option-disabled');
+                                d.classList.add('has-tooltip');
+                                d.setAttribute('data-tooltip', 'Your Admin Level is not high enough to modify this setting');
+                                el.appendChild(d);
+                            });
+                        }
+
+                        if (currentUserData.types.admin_level === 0) {
+                            target.querySelectorAll('.card').forEach((el) => {
+                                el.style.opacity = '0.5';
+                                let d = document.createElement("div");
+                                d.classList.add('staff-option-disabled');
+                                d.classList.add('has-tooltip');
+                                d.setAttribute('data-tooltip', 'Your Admin Level is not high enough to modify this setting');
+                                el.appendChild(d);
+                            });
+                        }
+
+                        for (const option of admin_level_El.options) {
+                            if (option.value === String(cacheUserData.types.admin_level)) {
+                                option.selected = true;
+                                break;
+                            }
+                        }
+                        admin_level_El.addEventListener("click", () => {
+                            updateSaveButton();
+                        });
+
+                        for (const option of system_El.options) {
+                            if (option.value === String(cacheUserData.types.system)) {
+                                option.selected = true;
+                                break;
+                            }
+                        }
+                        system_El.addEventListener("click", () => {
+                            updateSaveButton();
+                        });
+
+                        const btn = target.querySelector('#drove-user-edit-save-changed');
+                        function toggleButton(value) {
+                            if (value === true) {
+                                btn.disabled = false;
+                                btn.classList.remove('has-tooltip');
+                            } else {
+                                btn.disabled = true;
+                                btn.classList.add('has-tooltip');
+                            }
+                        }
+
+                        function normalize(val) {
+                            return String(val).trim();
+                        }
+
+                        function updateSaveButton() {
+                            const isChanged =
+                                normalize(cacheUserData.experiment_hash) !== normalize(experiment_hash_El.value) ||
+                                normalize(cacheUserData.profile_information.xp_balance) !== normalize(xp_balance_El.value) ||
+                                normalize(cacheUserData.types.admin_level) !== normalize(admin_level_El.value) ||
+                                normalize(cacheUserData.types.system) !== normalize(system_El.value);
+                        
+                            toggleButton(isChanged);
+                        }
+
+                        btn.addEventListener("click", async () => {
+                            btn.disabled = true;
+                            btn.textContent = `...`;
+                            const body = {}
+                            if (normalize(cacheUserData.experiment_hash) !== normalize(experiment_hash_El.value)) {
+                                body.experiment_hash = experiment_hash_El.value;
+                            }
+                            if (normalize(cacheUserData.profile_information.xp_balance) !== normalize(xp_balance_El.value)) {
+                                body.xp_balance = xp_balance_El.value;
+                            }
+                            if (normalize(cacheUserData.types.admin_level) !== normalize(admin_level_El.value)) {
+                                body.admin_level = admin_level_El.value;
+                            }
+                            if (normalize(cacheUserData.types.system) !== normalize(system_El.value)) {
+                                body.system = system_El.value;
+                            }
+                            try {
+                                await fetch(redneredAPI + endpoints.USERS + cacheUserData.id, {
+                                    method: "POST",
+                                    headers: {
+                                        "Authorization": localStorage.token
+                                    },
+                                    body: JSON.stringify(body)
+                                });
+                                closeModal();
+                                openModal('user-modal', 'openUserModal', cacheUserData.id);
+                            } catch {}
+                        });
+                    }
+                } else if (tab === '4') {
+                    modalInner.innerHTML = `
+                        <div class="admin-panel-edit-user-inner">
+                            <div class="modal-trading-cards-container">
+                            </div>
+                        </div>
+                    `;
+                    cacheUserData.profile_information.inventory.forEach(data => {
+                        const card = document.createElement('div');
+                        card.classList.add('card');
+                        card.innerHTML = `
+                            <p>XP ${data.value.toLocaleString()}</p>
+                            <img class="bg" src="https://cdn.yapper.shop/trading-cards/bg/${data.bg}.png">
+                            <img class="icon" src="https://cdn.yapper.shop/trading-cards/icon/${data.id}.png">
+                            <h3>${data.name}</h3>
+                            <h2>1/${data.rarity}</h2>
+                        `;
+                        modalInner.querySelector('.modal-trading-cards-container').appendChild(card)
+                    });
                 } else {
                     modalInner.innerHTML = ``;
                 }
@@ -4578,14 +4857,21 @@ async function loadSite() {
                 // Raw
                 changeModalTab('2');
             });
-            if (hasDroveAdminPanelPlugin) {
+            if (currentUserData && currentUserData.types.admin_level > 0) {
                 modal.querySelector('#user-modal-tab-3').addEventListener("click", function () {
                     // Edit
                     changeModalTab('3');
                 });
-                modal.querySelector('#always-existing-user-json').innerHTML = JSON.stringify(cacheUserData, null, 4);
             } else {
                 modal.querySelector('#user-modal-tab-3').classList.add('hidden');
+            }
+            if (currentUserData && JSON.parse(localStorage.getItem(overridesKey)).find(exp => exp.codename === 'xp_system_v2')?.treatment === 1) {
+                modal.querySelector('#user-modal-tab-4').addEventListener("click", function () {
+                    // Inventory
+                    changeModalTab('4');
+                });
+            } else {
+                modal.querySelector('#user-modal-tab-4').classList.add('hidden');
             }
             
 
@@ -5091,7 +5377,7 @@ async function loadSite() {
                         <div class="trading-card-packs-scroll"></div>
                     </div>
                     <div class="l-bottom">
-                        <button class="generic-button brand"><p>Open Inventory</p></button>
+                        <button class="generic-button brand" onclick="setPackPage(null, true)"><p>Inventory</p></button>
                     </div>
                 `;
                 for (const pack of tradingConfigCache.packs) {
@@ -5187,50 +5473,108 @@ async function loadSite() {
             tcbmRefreshStats();
 
 
-            function setPackPage(pack) {
+            function setPackPage(pack, inv) {
                 const selectedPacks = modal.querySelector('.left').querySelectorAll('.selected');
                 selectedPacks.forEach(card => {
                     card.classList.remove('selected');
                 });
-                modal.querySelector('.left').querySelector(`#trading-pack-${pack.id}`).classList.add('selected');
-                modal.querySelector('.right').innerHTML = `
-                    <div class="r-top">
-                        <div class="modal-trading-cards-container">
+                if (inv) {
+                    modal.querySelector('.right').innerHTML = `
+                        <div class="r-top">
+                            <div class="modal-trading-cards-container">
 
+                            </div>
                         </div>
-                    </div>
-                    <div class="r-bottom">
-                        <h1>${pack.title}</h1>
-                        <p>You will receive up to 3 cards upon opening '${pack.title}'.</p>
-                        <button class="generic-button premium" onclick="openModal('modalv2', 'tradingCardPackOpening', ${pack.id})">Open ${pack.title} for ${pack.price} XP</button>
-                    </div>
-                `;
-                if (pack.price > currentUserData.xp_balance) {
-                    const btn = modal.querySelector('.right').querySelector('.r-bottom').querySelector('button');
-                    btn.disabled = true;
-                    btn.classList.add('has-tooltip');
-                    btn.setAttribute('data-tooltip', 'Cannot afford');
-                }
-                const totalWeight = pack.cards.reduce((sum, item) => sum + (1 / item.rarity), 0);
-                pack.cards.forEach(data => {
-                    const probability = (1 / data.rarity) / totalWeight;
-                    const percentage = (probability * 100).toFixed(1);
-                    const card = document.createElement('div');
-                    card.classList.add('card');
-                    card.innerHTML = `
-                        <svg class="hidden" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="none" viewBox="0 0 24 24">
-                            <path fill="currentColor" fill-rule="evenodd" d="M22.06 4.94a1.5 1.5 0 0 1 0 2.12l-12 12a1.5 1.5 0 0 1-2.12 0l-6-6a1.5 1.5 0 0 1 2.12-2.12L9 15.88 19.94 4.94a1.5 1.5 0 0 1 2.12 0Z" clip-rule="evenodd" class=""></path>
-                        </svg>
-                        <p>1/${data.rarity}</p>
-                        <img class="bg" src="https://cdn.yapper.shop/trading-cards/bg/${data.bg}.png">
-                        <img class="icon" src="https://cdn.yapper.shop/trading-cards/icon/${data.id}.png">
-                        <h3>${data.name}</h3>
-                        <h2>${percentage}%</h2>
+                        <div class="r-bottom">
+                            <h1>Your Inventory</h1>
+                            <p>Click on a card to see its details.</p>
+                        </div>
                     `;
-                    if (tradingConfigCache.inventory.find(c => c.id === data.id)) card.querySelector('svg').classList.remove('hidden');
+                    async function deleteCard() {
+                        // openModal('modalv2', 'openLoadingTest');
+                        // await fetchAndUpdateUserInfo();
+                        // await fetchAndUpdateTradingCache();
+                        // await updateXpLevelBar();
+                        // await tcbmRefreshStats();
+                        // setPackPage(null, true);
+                        // closeModal();
+                    }
+                    async function setClickedCard(card) {
+                        const cardSideBottom = modal.querySelector('.right').querySelector('.r-bottom');
+                        const ripValue = card.rarity + card.value;
+                        cardSideBottom.innerHTML = `
+                            <h1>${card.name}</h1>
+                            <p>You had a 1 in ${card.rarity} chance to pull this card.</p>
+                            <div class="buttons">
+                                <button class="generic-button red" id="rip-card-btn">Delete and gain ${ripValue} XP</button>
+                                <button class="generic-button brand">Trade</button>
+                                <button class="generic-button premium">Upgrade</button>
+                            </div>
+                        `;
+                        cardSideBottom.querySelector('#rip-card-btn').addEventListener('click', () => {
+                            deleteCard();
+                        });
+                    }
+                    
+                    tradingConfigCache.inventory.forEach(data => {
+                        const card = document.createElement('div');
+                        card.classList.add('card');
+                        card.classList.add('clickable');
+                        card.innerHTML = `
+                            <p>XP ${data.value.toLocaleString()}</p>
+                            <img class="bg" src="https://cdn.yapper.shop/trading-cards/bg/${data.bg}.png">
+                            <img class="icon" src="https://cdn.yapper.shop/trading-cards/icon/${data.id}.png">
+                            <h3>${data.name}</h3>
+                            <h2>1/${data.rarity}</h2>
+                        `;
+                        card.addEventListener('click', () => {
+                            setClickedCard(data);
+                        });
+                        modal.querySelector('.right').querySelector('.modal-trading-cards-container').appendChild(card)
+                    });
+                } else {
+                    modal.querySelector('.left').querySelector(`#trading-pack-${pack.id}`).classList.add('selected');
+                    modal.querySelector('.right').innerHTML = `
+                        <div class="r-top">
+                            <div class="modal-trading-cards-container">
 
-                    modal.querySelector('.right').querySelector('.modal-trading-cards-container').appendChild(card)
-                });
+                            </div>
+                        </div>
+                        <div class="r-bottom">
+                            <h1>${pack.title}</h1>
+                            <p>You will receive up to 3 cards upon opening '${pack.title}'.</p>
+                            <div class="buttons">
+                                <button class="generic-button premium" onclick="openModal('modalv2', 'tradingCardPackOpening', ${pack.id})">Open ${pack.title} for ${pack.price} XP</button>
+                            </div>
+                        </div>
+                    `;
+                    if (pack.price > currentUserData.xp_balance) {
+                        const btn = modal.querySelector('.right').querySelector('.r-bottom').querySelector('button');
+                        btn.disabled = true;
+                        btn.classList.add('has-tooltip');
+                        btn.setAttribute('data-tooltip', 'Cannot afford');
+                    }
+                    const totalWeight = pack.cards.reduce((sum, item) => sum + (1 / item.rarity), 0);
+                    pack.cards.forEach(data => {
+                        const probability = (1 / data.rarity) / totalWeight;
+                        const percentage = (probability * 100).toFixed(1);
+                        const card = document.createElement('div');
+                        card.classList.add('card');
+                        card.innerHTML = `
+                            <svg class="hidden" aria-hidden="true" role="img" xmlns="http://www.w3.org/2000/svg" width="38" height="38" fill="none" viewBox="0 0 24 24">
+                                <path fill="currentColor" fill-rule="evenodd" d="M22.06 4.94a1.5 1.5 0 0 1 0 2.12l-12 12a1.5 1.5 0 0 1-2.12 0l-6-6a1.5 1.5 0 0 1 2.12-2.12L9 15.88 19.94 4.94a1.5 1.5 0 0 1 2.12 0Z" clip-rule="evenodd" class=""></path>
+                            </svg>
+                            <p>1/${data.rarity}</p>
+                            <img class="bg" src="https://cdn.yapper.shop/trading-cards/bg/${data.bg}.png">
+                            <img class="icon" src="https://cdn.yapper.shop/trading-cards/icon/${data.id}.png">
+                            <h3>${data.name}</h3>
+                            <h2>${percentage}%</h2>
+                        `;
+                        if (tradingConfigCache.inventory.find(c => c.id === data.id)) card.querySelector('svg').classList.remove('hidden');
+
+                        modal.querySelector('.right').querySelector('.modal-trading-cards-container').appendChild(card)
+                    });
+                }
             }
             window.setPackPage = setPackPage;
 
@@ -5548,6 +5892,9 @@ async function loadSite() {
         }
         else if (categoryAssetEntry?.hero_banner_asset?.static) {
             categoryHeroBanner = categoryAssetEntry?.hero_banner_asset?.static;
+        }
+        else if (categoryData.hero_banner_url) {
+            categoryHeroBanner = categoryData.hero_banner_url;
         }
         else if (categoryData.hero_banner_asset?.static) {
             categoryHeroBanner = categoryData.hero_banner_asset?.static;
@@ -7085,23 +7432,23 @@ async function loadSite() {
                 const bannerLogo = document.createElement("div");
                 bannerLogo.classList.add('shop-category-logo-holder')
                 bannerLogo.innerHTML = `
-                    <img class="shop-category-banner-logo" loading="lazy" src="${categoryData.logo_url}">
+                    <img class="shop-category-banner-logo" loading="lazy" src="${categoryData.hero_logo_url}">
                 `;
                 bannerSummaryAndLogo.appendChild(bannerLogo);
 
-                if (categoryData.banner_asset?.animated) {
+                if (categoryData.hero_banner_animated_url) {
                     const videoBanner = document.createElement("video");
                     videoBanner.disablePictureInPicture = true;
                     videoBanner.autoplay = true;
                     videoBanner.muted = true;
                     videoBanner.loop = true;
                     videoBanner.playsInline = true;
-                    videoBanner.src = categoryData.banner_asset.animated;
+                    videoBanner.src = categoryData.hero_banner_animated_url;
                     videoBanner.classList.add('banner-video');
                     bannerContainer.appendChild(videoBanner);
-                } else if (categoryData.banner_asset?.static) {
+                } else if (categoryData.hero_banner_url) {
                     const imageBanner = document.createElement("img");
-                    imageBanner.src = categoryData.banner_asset.static;
+                    imageBanner.src = categoryData.hero_banner_url;
                     imageBanner.classList.add('banner-video');
                     bannerContainer.appendChild(imageBanner);
                 }
@@ -7167,7 +7514,7 @@ async function loadSite() {
                 categoryData.subblocks.forEach(block => {
                     let featuredBlock = document.createElement("div");
 
-                    featuredBlock.style.backgroundImage = `url(${block.banner_url})`;
+                    featuredBlock.style.backgroundImage = `url(${block.asset_url})`;
 
                     featuredBlock.innerHTML = `
                         <button class="take-me-there-home-block-button" onclick="scrollToCache = '${block.category_store_listing_id}'; addParams({scrollTo: '${block.category_store_listing_id}'}); loadPage('2');">Take Me There</button>
@@ -7345,7 +7692,7 @@ async function loadSite() {
                 let url = redneredAPI + endpoints.CATEGORY_PAGES + endpoints.CATEGORY_CATALOG;
                 apiUrl = new URL(url);
 
-                if (settingsStore.staff_api_type_change === 1) {
+                if (settingsStore.api_type_change_catalog === 1) {
                     apiUrl.searchParams.append("static_api", "true");
                 }
 
@@ -7382,7 +7729,7 @@ async function loadSite() {
                 let url = redneredAPI + endpoints.CATEGORY_PAGES + endpoints.CATEGORY_ORBS;
                 apiUrl = new URL(url);
 
-                if (settingsStore.staff_api_type_change === 1) {
+                if (settingsStore.api_type_change_orbs === 1) {
                     apiUrl.searchParams.append("static_api", "true");
                 }
 
@@ -7412,7 +7759,7 @@ async function loadSite() {
                 renderShopData(discordOrbsCategoriesCache, output);
             }
         } else if (currentPageCache === "miscellaneous") {
-            if (settingsStore.staff_api_type_change === 1) {
+            if (settingsStore.api_type_change_misc === 1) {
                 const output = document.getElementById('categories-container');
                 output.innerHTML = `
                     <div class="shop-loading-error-container">
@@ -7875,13 +8222,37 @@ async function loadSite() {
                 <hr>
 
                 <div class="modalv3-content-card-1">
+                    <h2 class="modalv3-content-card-header">Static API Mode</h2>
+                    <p class="modalv3-content-card-summary">Fetches from a static api, avoiding long loading times (Removes Leaks and Miscellaneous collectibles).</p>
+
                     <div class="setting">
                         <div class="setting-info">
-                            <p class="setting-title">Static API Mode</p>
-                            <p class="setting-description">Fetches from a static api, avoiding long loading times (Removes Leaks and Miscellaneous collectibles).</p>
+                            <p class="setting-title">Catalog Tab</p>
                         </div>
                         <div class="toggle-container">
-                            <div class="toggle" id="staff_api_type_change_toggle">
+                            <div class="toggle" id="api_type_change_catalog_toggle">
+                                <div class="toggle-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting">
+                        <div class="setting-info">
+                            <p class="setting-title">Orbs Tab</p>
+                        </div>
+                        <div class="toggle-container">
+                            <div class="toggle" id="api_type_change_orbs_toggle">
+                                <div class="toggle-circle"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setting">
+                        <div class="setting-info">
+                            <p class="setting-title">Miscellaneous Tab</p>
+                        </div>
+                        <div class="toggle-container">
+                            <div class="toggle" id="api_type_change_misc_toggle">
                                 <div class="toggle-circle"></div>
                             </div>
                         </div>
@@ -7892,8 +8263,24 @@ async function loadSite() {
             
             updateToggleStates();
 
-            tabPageOutput.querySelector('#staff_api_type_change_toggle').addEventListener("click", () => {
-                toggleSetting('staff_api_type_change');
+            tabPageOutput.querySelector('#api_type_change_catalog_toggle').addEventListener("click", () => {
+                toggleSetting('api_type_change_catalog');
+                updateToggleStates();
+                console.log(currentPageCache)
+                clearStaticableCache();
+                loadPage(currentPageCache, true, true);
+            });
+
+            tabPageOutput.querySelector('#api_type_change_orbs_toggle').addEventListener("click", () => {
+                toggleSetting('api_type_change_orbs');
+                updateToggleStates();
+                console.log(currentPageCache)
+                clearStaticableCache();
+                loadPage(currentPageCache, true, true);
+            });
+
+            tabPageOutput.querySelector('#api_type_change_misc_toggle').addEventListener("click", () => {
+                toggleSetting('api_type_change_misc');
                 updateToggleStates();
                 console.log(currentPageCache)
                 clearStaticableCache();
@@ -7970,7 +8357,6 @@ async function loadSite() {
                         </div>
                         <div class="button-container">
                             <button class="generic-button green" onclick="openModal('trading-card-browse-modal', 'tradingCardPackBrowse')"><p>View Packs</p></button>
-                            <button class="generic-button brand"><p>Open Inventory</p></button>
                         </div>
                     </div>
                     <hr class="inv">
@@ -9711,8 +10097,8 @@ class ProfileEffectsPlayer {
         const effectElement = document.createElement('img');
         effectElement.src = effect.src + '?' + Date.now() + '_' + Math.random();
         effectElement.style.position = 'absolute';
-        effectElement.style.left = `${effect.position.x}px`;
-        effectElement.style.top = `${effect.position.y}px`;
+        effectElement.style.left = `${effect.position?.x ? effect.position.x : '0'}px`;
+        effectElement.style.top = `${effect.position?.y ? effect.position.y : '0'}px`;
         effectElement.style.width = `100%`;
         effectElement.style.pointerEvents = 'none';
         effectElement.dataset.effectId = effectId;

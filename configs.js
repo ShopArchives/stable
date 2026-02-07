@@ -1,5 +1,5 @@
 
-const appVersion = "7.4.18";
+const appVersion = "7.4.22";
 const appType = "Stable";
 
 const endpoints = {
@@ -628,6 +628,9 @@ const reviews_system_types = [
 const settings = {
     "us_time_format": 0,
     "profile_effect_tweaks_fix": 0,
+    "api_type_change_catalog": 1,
+    "api_type_change_orbs": 1,
+    "api_type_change_misc": 0,
     "dev": 0,
 
     "staff_force_leaks_dummy": 0,
@@ -640,7 +643,6 @@ const settings = {
     "staff_allow_category_only_event_claiming_in_events_tab": 0,
     "staff_show_test_categories_on_misc_page": 0,
     "staff_auth_remove_none_promt": 0,
-    "staff_api_type_change": 1,
 
     "dismissible_daily_tab_new": 0
 };
