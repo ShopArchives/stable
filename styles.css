@@ -1378,6 +1378,54 @@ hr {
     z-index: 22;
 }
 
+.type-3-preview-container * {
+    overflow: visible;
+}
+
+.type-3-preview-container .frameContainer {
+    position: relative;
+    display: flex;
+    justify-self: center;
+    width: 200px;
+    height: 430px;
+    top: 70px;
+    border-radius: 10px;
+}
+
+.type-3-preview-container svg {
+    top: 0;
+    position: absolute;
+    width: 100%;
+    height: fit-content;
+    z-index: 2;
+    background-color: var(--card-inner);
+    border-radius: 10px;
+}
+.type-3-preview-container svg * {
+    opacity: 0.6;
+}
+
+.type-3-preview-container .frameContainerDiv {
+    z-index: 3;
+}
+.type-3-preview-container .frameContainerDivback {
+    z-index: 1;
+}
+.type-3-preview-container .frameContainerDiv img, .type-3-preview-container .frameContainerDivback img {
+    position: absolute;
+    width: 100%;
+    scale: 113%;
+}
+.type-3-preview-container .frameContainerDiv img.a-top, .type-3-preview-container .frameContainerDivback img.a-top {
+    top: -40px;
+}
+.type-3-preview-container .frameContainerDiv img.t-rail, .type-3-preview-container .frameContainerDivback img.t-rail {
+    top: 20px;
+}
+.type-3-preview-container .frameContainerDiv img.a-bottom, .type-3-preview-container .frameContainerDivback img.a-bottom {
+    bottom: -40px;
+}
+
 
 
 

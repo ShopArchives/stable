@@ -1,5 +1,5 @@
 
-const appVersion = "7.4.22";
+const appVersion = "7.4.22 (profile frame preview).1";
 const appType = "Stable";
 
 const endpoints = {
@@ -47,6 +47,7 @@ const item_types = {
     AVATAR_DECORATION: 0,
     PROFILE_EFFECT: 1,
     NAMEPLATE: 2,
+    PROFILE_FRAME: 3,
     BUNDLE: 1e3,
     VARIANTS_GROUP: 2e3,
     EXTERNAL_SKU: 3e3

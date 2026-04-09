@@ -2290,7 +2290,7 @@ async function loadSite() {
                             if (!product.prices) {
                                 return;
                             }
-                            if (product.type === item_types.AVATAR_DECORATION || product.type === item_types.PROFILE_EFFECT || product.type === item_types.NAMEPLATE || product.type === item_types.EXTERNAL_SKU) {
+                            if (product.type === item_types.AVATAR_DECORATION || product.type === item_types.PROFILE_EFFECT || product.type === item_types.NAMEPLATE || product.type === item_types.PROFILE_FRAME || product.type === item_types.EXTERNAL_SKU) {
 
                                 product.prices["0"]?.country_prices?.prices?.forEach(price => {
                                     if (price.currency === "usd") {
@@ -6508,6 +6508,69 @@ async function loadSite() {
             createDudNameplatePreview(2);
             createDudNameplatePreview(1);
 
+        } else if (product.type === item_types.PROFILE_FRAME) {
+
+            previewContainer.classList.add('type-3-preview-container')
+
+            let frameContainer = document.createElement("div");
+
+            frameContainer.classList.add('frameContainer');
+    
+            frameContainer.innerHTML = `
+                <svg width="383" height="764" viewBox="0 0 383 764" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g clip-path="url(#clip0_30_2)">
+                <rect width="383" height="142" fill="#424549"/>
+                <rect y="142" width="383" height="625" fill="#282B30"/>
+                <rect x="21.5" y="90.5" width="99" height="99" rx="49.5" fill="#424549"/>
+                <rect x="21.5" y="90.5" width="99" height="99" rx="49.5" stroke="#282B30" stroke-width="7"/>
+                <path d="M90.5028 121.958C86.8115 120.235 82.9189 119.019 78.9189 118.335C78.3686 119.333 77.8719 120.358 77.429 121.411C73.1739 120.755 68.8383 120.755 64.5699 121.411C64.1269 120.358 63.6303 119.333 63.0799 118.335C59.0799 119.033 55.1739 120.249 51.4826 121.971C44.1537 133.015 42.1671 143.786 43.1604 154.407C47.4557 157.632 52.2611 160.093 57.3618 161.665C58.5162 160.093 59.5363 158.411 60.4088 156.662C58.7443 156.033 57.147 155.254 55.6168 154.338C56.0195 154.038 56.4088 153.737 56.798 153.436C65.7914 157.742 76.2075 157.742 85.2008 153.436C85.5901 153.75 85.9793 154.065 86.382 154.338C84.8518 155.254 83.2411 156.033 81.5766 156.676C82.4491 158.425 83.4693 160.093 84.6236 161.665C89.7377 160.093 94.5431 157.646 98.8384 154.407C100.006 142.091 96.8519 131.43 90.4894 121.958H90.5028ZM61.684 147.873C58.9189 147.873 56.6235 145.317 56.6235 142.173C56.6235 139.03 58.8249 136.446 61.6705 136.446C64.5162 136.446 66.7846 139.03 66.7309 142.173C66.6773 145.317 64.5028 147.873 61.684 147.873ZM80.3417 147.873C77.5632 147.873 75.2947 145.317 75.2947 142.173C75.2947 139.03 77.4961 136.446 80.3417 136.446C83.1874 136.446 85.4424 139.03 85.3887 142.173C85.335 145.317 83.1605 147.873 80.3417 147.873Z" fill="#929292"/>
+                <rect x="90.5" y="159.5" width="23" height="23" rx="11.5" fill="#289960"/>
+                <rect x="90.5" y="159.5" width="23" height="23" rx="11.5" stroke="#282B30" stroke-width="5"/>
+                <rect x="12" y="208" width="359" height="540" rx="9" fill="#1E2124"/>
+                <rect x="27" y="222" width="168" height="25" rx="10" fill="#424549"/>
+                <rect x="27" y="405" width="106" height="25" rx="10" fill="#424549"/>
+                <rect x="120" y="482" width="107" height="29" rx="10" fill="#424549"/>
+                <rect x="27" y="476" width="74" height="74" rx="10" fill="#424549"/>
+                <rect x="27" y="565" width="329" height="36" rx="4" fill="#282B30"/>
+                <rect x="27" y="336" width="316" height="25" rx="10" fill="#424549"/>
+                <rect x="27" y="252" width="83" height="15" rx="7.5" fill="#424549"/>
+                <rect x="27" y="384" width="186" height="15" rx="7.5" fill="#424549"/>
+                <rect x="27" y="453" width="118" height="15" rx="7.5" fill="#424549"/>
+                <rect x="120" y="517" width="69" height="18" rx="9" fill="#424549"/>
+                <rect x="37" y="647" width="18" height="18" rx="9" fill="#424549"/>
+                <rect x="69" y="648" width="106" height="16" rx="8" fill="#424549"/>
+                <path d="M333.564 652.993C333.259 652.726 333.243 652.257 333.53 651.97C333.793 651.707 334.217 651.695 334.494 651.945L338.174 655.257C338.615 655.654 338.615 656.346 338.174 656.743L334.494 660.055C334.217 660.305 333.793 660.293 333.53 660.03C333.243 659.743 333.259 659.274 333.564 659.007L336.14 656.753C336.595 656.354 336.595 655.646 336.14 655.247L333.564 652.993Z" fill="#424549"/>
+                <path d="M333.564 710.493C333.259 710.226 333.243 709.757 333.53 709.47C333.793 709.207 334.217 709.195 334.494 709.445L338.174 712.757C338.615 713.154 338.615 713.846 338.174 714.243L334.494 717.555C334.217 717.805 333.793 717.793 333.53 717.53C333.243 717.243 333.259 716.774 333.564 716.507L336.14 714.253C336.595 713.854 336.595 713.146 336.14 712.747L333.564 710.493Z" fill="#424549"/>
+                <rect x="69" y="706" width="106" height="16" rx="8" fill="#424549"/>
+                <rect x="37" y="705" width="18" height="18" rx="9" fill="#424549"/>
+                <rect x="27" y="315" width="71" height="15" rx="7.5" fill="#424549"/>
+                <rect x="27" y="290" width="329" height="1" rx="0.5" fill="#424549"/>
+                </g>
+                <defs>
+                <clipPath id="clip0_30_2">
+                <rect width="383" height="764" rx="21" fill="white"/>
+                </clipPath>
+                </defs>
+                </svg>
+                <div class="frameContainerDiv"></div>
+                <div class="frameContainerDivback"></div>
+            `;
+            
+            previewContainer.appendChild(frameContainer);
+
+            const frameContainerDiv = frameContainer.querySelector('.frameContainerDiv');
+            const frameContainerDivback = frameContainer.querySelector('.frameContainerDivback');
+            const layers = product.items[0].layers;
+            layers.forEach(layer => {
+                const src = `https://cdn.discordapp.com/media/v1/collectibles-shop/${product.sku_id}/${layer.id}/static`;
+                let img = document.createElement("img");
+                img.src = src;
+                img.classList.add(`a-${layer.anchor}`);
+                img.classList.add(`t-${layer.type}`);
+                if (layer.order === "front") frameContainerDiv.appendChild(img);
+                if (layer.order === "back") frameContainerDivback.appendChild(img);
+            });
+            
         } else if (product.type === item_types.BUNDLE) {
             previewContainer.classList.add('type-1000-preview-container')
 
@@ -7216,6 +7279,14 @@ async function loadSite() {
                     `;
                 }
                 category.appendChild(bannerContainer);
+
+                if (categoryData.sku_id === "1484726324580061185") {
+                    const aaa = document.createElement("div");
+    
+                    aaa.innerHTML = `I was too lazy to add profile frames properly, it's a little janky, but it works`
+    
+                    category.appendChild(aaa);
+                }
                 
     
                 if (categoryData.products?.length) {
