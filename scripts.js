@@ -2419,6 +2419,7 @@ async function loadSite() {
                         let type0count = 0;
                         let type1count = 0;
                         let type2count = 0;
+                        let type3count = 0;
                         let type1000count = 0;
                         let type3000count = 0;
                         
@@ -2432,6 +2433,9 @@ async function loadSite() {
                             } else if (product.type === 2) {
                                 total += 1;
                                 type2count += 1;
+                            } else if (product.type === 3) {
+                                total += 1;
+                                type3count += 1;
                             } else if (product.type === 1000) {
                                 total += 1;
                                 type1000count += 1;
@@ -2482,6 +2486,13 @@ async function loadSite() {
                             let itemCount = document.createElement("p");
         
                             itemCount.textContent = 'Nameplates: '+type2count;
+        
+                            productsDetailBlock.appendChild(itemCount);
+                        }
+                        if (type3count) {
+                            let itemCount = document.createElement("p");
+        
+                            itemCount.textContent = 'Profile Frames: '+type3count;
         
                             productsDetailBlock.appendChild(itemCount);
                         }
@@ -7279,14 +7290,6 @@ async function loadSite() {
                     `;
                 }
                 category.appendChild(bannerContainer);
-
-                if (categoryData.sku_id === "1484726324580061185") {
-                    const aaa = document.createElement("div");
-    
-                    aaa.innerHTML = `I was too lazy to add profile frames properly, it's a little janky, but it works`
-    
-                    category.appendChild(aaa);
-                }
                 
     
                 if (categoryData.products?.length) {

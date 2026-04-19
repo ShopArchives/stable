@@ -1,5 +1,5 @@
 
-const appVersion = "7.4.22 (profile frame preview).1";
+const appVersion = "7.4.22 (profile frame preview).2";
 const appType = "Stable";
 
 const endpoints = {
@@ -602,6 +602,17 @@ const customCategoryAssets = {
         sku_id: "1428539043993358497",
         catalog_banner_asset: {
             static: "https://cdn.yapper.shop/assets/240.png",
+            credits: "1049207768785100880"
+        }
+    },
+    9: {
+        sku_id: "1484726324580061185",
+        catalog_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/241.png",
+            credits: "1049207768785100880"
+        },
+        hero_banner_asset: {
+            static: "https://cdn.yapper.shop/assets/242.png",
             credits: "1049207768785100880"
         }
     }
